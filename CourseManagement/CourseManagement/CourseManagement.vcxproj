@@ -134,6 +134,10 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="CourseManagement.cpp" />
+    <ClCompile Include="Function.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="Function.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

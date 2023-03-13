@@ -7,6 +7,7 @@ struct loginData {
     char* password;
 };
 
+
 void input1Data(loginData& data) {
     data.userName = new char[20];
     cin.get(data.userName, 20, '\n');
