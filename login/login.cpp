@@ -1,4 +1,5 @@
 ﻿#include <iostream>
+#include <string.h>
 #include <fstream>
 using namespace std;
 
@@ -7,25 +8,25 @@ struct account {
     char* password;
 };
 
-
 void input1Account(account& data) 
 {
-    data.userName = new char[20];
-    cin.get(data.userName, 20, '\n');
+    data.userName = new char[21];
+    cin.get(data.userName, 21, '\n');
     cin.ignore(100, '\n');
-    data.password = new char[20];
-    cin.get(data.password, 20, '\n');
+    data.password = new char[21];
+    cin.get(data.password, 21, '\n');
 }
 
 void input1Account(account& data, ifstream& fin) 
 {
-    data.userName = new char[20];
-    fin.get(data.userName, 20, '\n');
+    data.userName = new char[21];
+    fin.get(data.userName, 21, '\n');
     fin.ignore(100, '\n');
-    data.password = new char[20];
-    fin.get(data.password, 20, '\n');
+    data.password = new char[21];
+    fin.get(data.password, 21, '\n');
 }
 
+// if 1st username is null -> crash
 void inputAccounts(account* login_data, int& numberOfAccount, ifstream& fin) 
 {
     numberOfAccount = 0;
@@ -36,7 +37,7 @@ void inputAccounts(account* login_data, int& numberOfAccount, ifstream& fin)
     }
 }
 
-bool checkLoginData(account data1, account data2) 
+bool isDataTheSame(account data1, account data2) 
 {
     bool checkUserName = false;
     if (strcmp(data1.userName, data2.userName) == 0)
@@ -54,8 +55,11 @@ bool checkLoginData(account data1, account data2)
 
 bool login(account* login_data, int n, account inputLoginData)
 {
+    if (inputLoginData.userName == (char*)'\0' || inputLoginData.password == (char*)'\0') {
+        return false;
+    }
     for (int i = 0; i < n; i++)
-        if (checkLoginData(login_data[i], inputLoginData))
+        if (isDataTheSame(login_data[i], inputLoginData))
             return true;
     return false;
 }
@@ -67,10 +71,17 @@ void addinfo(account person, char* filename, ofstream& fout)
     fout << person.password << endl;
 }
 
+bool isPasswordthesame(char* pass1, char* pass2) {
+    if (strcmp(pass1, pass2) == 0)
+        return true;
+    else
+        return false;
+}
+
 int main()
 {
     ifstream fin;
-    fin.open("input.txt");
+    fin.open("input1.txt");
     account* login_data = new account[100];
     int n;
     inputAccounts(login_data, n, fin);
@@ -91,7 +102,7 @@ int main()
     input1Account(newinfo);
 
     ofstream fout;
-    addinfo(newinfo, (char*)"input.txt", fout);
+    addinfo(newinfo, (char*)"input1.txt", fout);
     fout.close();
     delete[] login_data;
     return 0;
