@@ -1,4 +1,6 @@
-#pragma once
+#ifndef  LOGINFUNCTION_H
+#define  LOGINFUNCTION_H
+
 #include <iostream>
 #include <fstream>
 using namespace std;
@@ -13,3 +15,5 @@ void input1Data(loginData& data, ifstream& fin);
 void inputData(loginData login_data[], int& n, ifstream& fin);
 bool checkLoginData(loginData data1, loginData data2);
 bool login(loginData login_data[], int n, loginData inputLoginData);
+
+#endif
