@@ -127,7 +127,11 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="LoginFunction.cpp" />
     <ClCompile Include="testgit.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="LoginFunction.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
