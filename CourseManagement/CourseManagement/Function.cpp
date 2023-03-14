@@ -229,18 +229,13 @@ void ProfilePage(const int screenWidth, const int screenHeight) {
 		ClearBackground(WHITE);
 		BeginDrawing();
 
-		DrawRectangle(0, 0, 1512, 60, DARKGREEN);
-		DrawText(" Welcome, Khang!", 30, 20, 20, WHITE);
-		DrawText("Log Out", 1300, 20, 20, WHITE);
-		DrawText("Change Password", 1000, 20, 20, WHITE);
-
-
-		Texture2D avatar;
-		avatar = LoadTexture("avatar.png");
-		DrawTexture(avatar, 45, 80, WHITE);
-
-		DrawText("NGUYEN VINH KHANG", 260, 140, 50, BLACK);
-		DrawText("nvk01052004@gmail.com", 260, 190, 28, BLACK);
+		Texture2D background;
+		background = LoadTexture("background.png");
+		DrawTexture(background, 0, 60, WHITE);
+		DrawRectangle(0, 0, 1512, 60, WHITE);
+		DrawText(" Welcome, Khang!", 30, 20, 20, DARKBLUE);
+		DrawText("Log Out", 1300, 20, 20, DARKBLUE);
+		DrawText("Change Password", 1000, 20, 20, DARKBLUE);
 
 		EndDrawing();
 	}
@@ -248,7 +243,6 @@ void ProfilePage(const int screenWidth, const int screenHeight) {
 }
 
 void SignUpPage(const int screenWidth, const int screenHeight) {
-	//FRONT_END----------------------------------------------------------------------
 	CloseWindow();
 	InitWindow(screenWidth, screenHeight, "Sign Up");
 	//Initialize---------------------------------------------------------------------
