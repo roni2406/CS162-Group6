@@ -8,6 +8,7 @@ struct account {
     char* password;
 };
 
+// if 1st username is null -> crash
 void input1Account(account& data) 
 {
     data.userName = new char[21];
@@ -26,7 +27,6 @@ void input1Account(account& data, ifstream& fin)
     fin.get(data.password, 21, '\n');
 }
 
-// if 1st username is null -> crash
 void inputAccounts(account* login_data, int& numberOfAccount, ifstream& fin) 
 {
     numberOfAccount = 0;
@@ -55,27 +55,10 @@ bool isDataTheSame(account data1, account data2)
 
 bool login(account* login_data, int n, account inputLoginData)
 {
-    if (inputLoginData.userName == (char*)'\0' || inputLoginData.password == (char*)'\0') {
-        return false;
-    }
     for (int i = 0; i < n; i++)
         if (isDataTheSame(login_data[i], inputLoginData))
             return true;
     return false;
-}
-
-void addinfo(account person, char* filename, ofstream& fout)
-{
-    fout.open(filename, ios::app);
-    fout << person.userName << endl;
-    fout << person.password << endl;
-}
-
-bool isPasswordthesame(char* pass1, char* pass2) {
-    if (strcmp(pass1, pass2) == 0)
-        return true;
-    else
-        return false;
 }
 
 int main()
@@ -90,20 +73,11 @@ int main()
     account inputLoginData;
     input1Account(inputLoginData);
 
-    if (login(login_data, n, inputLoginData)) {
+    if (login(login_data, n, inputLoginData))
         cout << "yes" << endl;
-    }
-    else {
+    else
         cout << "no" << endl;
-    }
 
-    account newinfo;
-    cin.ignore(100, '\n');
-    input1Account(newinfo);
-
-    ofstream fout;
-    addinfo(newinfo, (char*)"input1.txt", fout);
-    fout.close();
     delete[] login_data;
     return 0;
 }
