@@ -64,27 +64,50 @@ struct Class {
     student* stuInClass;
 };
 
+
 // At the beginning of a school year (often in September), an academic staff member will:
-void addSchoolYear(int schoolYear, char* filename, ofstream* fout); // 1
-// add new school to text file.
 
-void createAClass(Class& className, char* filename, ofstream* fout); // 2
+void addSchoolYear(int schoolYear, char* filename, ofstream& fout); // 1
+// user input new school year, let save this year into file
 
-void addAStudentToClass(student newStu, char* filename, ofstream* fout); // 3
-void addStudentToClass(student* newStudents, char* filename, ofstream* fout); // 4
+void createAClass(Class className, char* filename, ofstream& fout); // 2
+// user input info of a new class, let save this into a new class file
+
+void addAStudentToClass(student newStu, char* filename, ofstream& fout); // 3
+// user input info of a new student, let save this into a file
+
+// 4
+// seperate into 2 function
+void inputStudentsToClass(student* newStudents, char* filename, ifstream& fin);
+// user input a file
+void addStudentToClass(student* newStudents, char* filename, ofstream& fout);
+// save the file into text file
 
 // At the beginning of a semester, an academic staff member will:
-void CreateASemester(semester& newSemester, char* filename, ofstream* fout); // 6
-void AddACourse(); // 7
-void addStudentsToCourse(); // 8
+
+void CreateASemester(semester newSemester, char* filename, ofstream* fout); // 6
+// user input info of a new semester, let save this into a semester file
+
+void AddACourse(course newCourse, char* filename, ofstream* fout); // 7
+// user input info of a new course in a semester, let save this into a semester file
+
+// void addStudentsToCourse(); // 8
+// seperate into 2 function
+void inputStudentsToCourse();
+void addStudentsToCourse();
+
 void viewCourses(); // 9
 void updateCourseInformation(); // 10
 void removeStudentToCourse(); // 11
 void addAStudentToCourse(); // 12
 void DeleteACourse(); // 13
 
+
+
 // In a semester, a student still can:
 void viewStudingCourses(); // 14
+
+
 
 // At any time, an academic staff member can:
 void viewClasses(); // 15
@@ -92,12 +115,16 @@ void viewStudentsInAClass(); // 16
 void viewCourses(); // 17
 void viewStudentInACourse(); // 18
 
+
+
 // At the end of a semester, an academic staff member can:
 void exportStudentsInACourse(); // 19
 void importScoreboardOfACourse(); // 20
 void viewScoreboardOfACourse(); // 21
 void updateStudentResult(); // 22
 void importScoreboardOfAClass(); // 23
+
+
 
 // When the scoreboard has been published (by the academic staff member), a student can:
 void viewScoreboard(); // 24
