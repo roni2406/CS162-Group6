@@ -70,7 +70,7 @@ struct Class {
 void addSchoolYear(int schoolYear, char* filename, ofstream& fout); // 1
 // user input new school year, let save this year into file
 
-void createAClass(Class className, char* filename, ofstream& fout); // 2
+void createAClass(Class className, char* filename, ofstream& fout); // 2    - Taken
 // user input info of a new class, let save this into a new class file
 
 void addAStudentToClass(student newStu, char* filename, ofstream& fout); // 3
