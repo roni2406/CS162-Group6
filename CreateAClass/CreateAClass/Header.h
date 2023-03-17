@@ -66,5 +66,5 @@ struct Class {
 };
 
 // Function 
-void createAClass(Class className, char* filename, ofstream& fout); // 2
+void createAClass(Class& className, char* filename, ofstream& fout); // 2
 #endif 
