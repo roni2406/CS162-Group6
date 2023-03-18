@@ -233,7 +233,7 @@ void ProfilePage(const int screenWidth, const int screenHeight) {
 		background = LoadTexture("background.png");
 		DrawTexture(background, 0, 60, WHITE);
 		DrawRectangle(0, 0, 1512, 60, WHITE);
-		DrawText(" Welcome, Khang!", 30, 20, 20, DARKBLUE);
+		DrawText(" Welcome!", 30, 20, 20, DARKBLUE);
 		DrawText("Log Out", 1300, 20, 20, DARKBLUE);
 		DrawText("Change Password", 1000, 20, 20, DARKBLUE);
 
@@ -280,9 +280,15 @@ void SignUpPage(const int screenWidth, const int screenHeight) {
 	bool issignupFalseDisplay = false;
 
 	//// initialize for sign up-------------------------------------------------------------------------------------------------------
+	account* login_account = new account[100];
 	account newinfo;
+	int n;
 	ifstream fin;
+	ofstream fout;
 	fin.open("accounts.txt");
+	inputAccounts(login_account, n, fin);
+	fin.close();
+
 	Vector2 mousePoint = { 0.0f, 0.0f };
 
 	SetTargetFPS(40);
@@ -454,20 +460,19 @@ void SignUpPage(const int screenWidth, const int screenHeight) {
 		}
 		else signupbtnState = 0;
 
-		//inputData.userName = _strdup(name);
-		//inputLoginData.password = _strdup(pass);
+		newinfo.userName = _strdup(name);
+		newinfo.password = _strdup(pass);
 
 		if (signupbtnAction)
 		{
-			CloseWindow();
-			drawloginPage();
-			/*if (login(login_data, n, inputLoginData)) {
-				ProfilePage(screenWidth, screenHeight);
+			if ( strcmp(confirmpass, pass) == 0) {
+				addinfo(newinfo, (char*)"accounts.txt", fout);
+				drawloginPage();
 			}
-			else issignupFalseDisplay = true;*/
+			else issignupFalseDisplay = true;
 
 		}
-		if (issignupFalseDisplay) DrawText("Username have been used!", 477, 520, 20, RED);
+		if (issignupFalseDisplay) DrawText("Username have been used or wrong password! Please try again!", 430, 673, 20, RED);
 
 		// Calculate button frame rectangle to draw depending on button state
 		sourceRecsignupButton.y = signupbtnState * frameHeightsignupButton;
