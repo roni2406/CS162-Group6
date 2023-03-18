@@ -5,14 +5,19 @@
 using namespace std;
 
 #pragma once
-struct loginData {
+
+struct account {
     char* userName;
     char* password;
 };
 
-void input1Data(loginData& data, ifstream& fin);
-void inputData(loginData login_data[], int& n, ifstream& fin);
-bool login(loginData login_data[], int n, loginData inputLoginData);
+void input1Account(account& data, ifstream& fin);
+void inputAccounts(account* login_data, int& numberOfAccount, ifstream& fin);
+bool login(account login_data[], int n, account inputLoginData);
+bool isDataTheSame(account data1, account data2);
 void drawloginPage();
 void ProfilePage(const int screenWidth, const int screenHeight);
 void SignUpPage(const int screenWidth, const int screenHeight);
+void input1Account(account& data);
+void addinfo(account person, char* filename, ofstream& fout);
+bool isPasswordthesame(char* pass1, char* pass2);
