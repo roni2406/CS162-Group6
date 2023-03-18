@@ -52,13 +52,13 @@ void drawloginPage() {
 	////--------------------------------------------------------------------------------------------------------------------------------
 	////initialize for login--------------------------------------------------------------------------------------------------------------
 	ifstream fin;
-	fin.open("input.txt");
-	loginData* login_data = new loginData[100];
+	fin.open("accounts.txt");
+	account* login_data = new account[100];         
 	int n;
-	inputData(login_data, n, fin);
+	inputAccounts(login_data, n, fin);
 	fin.close();
 
-	loginData inputLoginData;
+	account inputLoginData;
 
 	Vector2 mousePoint = { 0.0f, 0.0f };
 
@@ -70,7 +70,7 @@ void drawloginPage() {
 		BeginDrawing();
 
 		DrawTexture(background, 0, 60, WHITE);
-		DrawRectangle(347, 173, 818, 540, WHITE);
+		DrawRectangle(347, 173, 818, 560, WHITE);
 		DrawRectangle(0, 0, 1512, 60, WHITE);
 		DrawText("  Call us : (028) 3835 4266         E - mail : info@fit.hcmus.edu.vn", 0, 20, 20, DARKBLUE);
 		DrawText("You are not logged in.", 1200, 20, 20, DARKBLUE);
@@ -279,6 +279,10 @@ void SignUpPage(const int screenWidth, const int screenHeight) {
 	bool signupbtnAction = false;         // Button action should be activated
 	bool issignupFalseDisplay = false;
 
+	//// initialize for sign up-------------------------------------------------------------------------------------------------------
+	account newinfo;
+	ifstream fin;
+	fin.open("accounts.txt");
 	Vector2 mousePoint = { 0.0f, 0.0f };
 
 	SetTargetFPS(40);
@@ -287,7 +291,7 @@ void SignUpPage(const int screenWidth, const int screenHeight) {
 	while (!WindowShouldClose()) {
 		BeginDrawing();
 		DrawTexture(background, 0, 60, WHITE);
-		DrawRectangle(348, 77, 816, 800, WHITE);
+		DrawRectangle(348, 110, 800, 680, WHITE);
 		DrawRectangle(0, 0, 1512, 60, WHITE);
 		DrawText("  Call us : (028) 3835 4266         E - mail : info@fit.hcmus.edu.vn", 0, 20, 20, DARKBLUE);
 		DrawText("Back to Log in Site", 1300, 20, 20, DARKBLUE);
@@ -480,52 +484,68 @@ void SignUpPage(const int screenWidth, const int screenHeight) {
 
 //BACK_END---------------------------------------------------------
 ////For login and sign up-------------------------------------------------------------------------------------
-void input1Data(loginData& data, ifstream& fin) {
-	data.userName = new char[20];
-	fin.get(data.userName, 20, '\n');
+
+void input1Account(account& data, ifstream& fin)
+{
+	data.userName = new char[21];
+	fin.get(data.userName, 21, '\n');
 	fin.ignore(100, '\n');
-	data.password = new char[20];
-	fin.get(data.password, 20, '\n');
+	data.password = new char[21];
+	fin.get(data.password, 21, '\n');
 }
 
-void inputData(loginData login_data[], int& n, ifstream& fin) {
-	n = 0;
+void inputAccounts(account* login_data, int& numberOfAccount, ifstream& fin)
+{
+	numberOfAccount = 0;
 	while (!fin.eof()) {
-		input1Data(login_data[n], fin);
+		input1Account(login_data[numberOfAccount], fin);
 		fin.ignore(100, '\n');
-		++n;
+		++numberOfAccount;
 	}
 }
 
-bool checkLoginData(loginData data1, loginData data2) {
+bool isDataTheSame(account data1, account data2)
+{
 	bool checkUserName = false;
-	if (strcmp(data1.userName, data2.userName) == 0) {
+	if (strcmp(data1.userName, data2.userName) == 0)
 		checkUserName = true;
-	}
+
 	bool checkPassword = false;
-	if (strcmp(data1.password, data2.password) == 0) {
+	if (strcmp(data1.password, data2.password) == 0)
 		checkPassword = true;
-	}
-	if (checkUserName && checkPassword) {
+
+	if (checkUserName && checkPassword)
 		return true;
-	}
-	else {
+	else
 		return false;
-	}
 }
 
-bool login(loginData login_data[], int n, loginData inputLoginData) {
-	for (int i = 0; i < n; i++) {
-		if (checkLoginData(login_data[i], inputLoginData)) {
+bool login(account* login_data, int n, account inputLoginData)
+{
+	for (int i = 0; i < n; i++)
+		if (isDataTheSame(login_data[i], inputLoginData))
 			return true;
-		}
-	}
 	return false;
 }
+void input1Data(account& data) {
+	data.userName = new char[21];
+	cin.get(data.userName, 21, '\n');
+	cin.ignore(100, '\n');
+	data.password = new char[21];
+	cin.get(data.password, 21, '\n');
+}
 
-void addinfo(loginData person, char* filename, ofstream& fout)
+void addinfo(account person, char* filename, ofstream& fout)
 {
 	fout.open(filename, ios::app);
 	fout << person.userName << endl;
 	fout << person.password << endl;
+	fout.close();
+}
+
+bool isPasswordthesame(char* pass1, char* pass2) {
+	if (strcmp(pass1, pass2) == 0)
+		return true;
+	else
+		return false;
 }
