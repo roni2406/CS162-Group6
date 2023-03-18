@@ -21,9 +21,15 @@
     <ClCompile Include="Function.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="back_end.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Function.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="back_end.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

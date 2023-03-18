@@ -1,6 +1,7 @@
 #include <iostream>
 #include <fstream>
 #include <raylib.h>
+#include "back_end.h"
 #include "Function.h"
 
 using namespace std;
@@ -482,75 +483,4 @@ void SignUpPage(const int screenWidth, const int screenHeight) {
 		EndDrawing();
 	}
 	CloseWindow();
-}
-
-
-
-
-//BACK_END---------------------------------------------------------
-////For login and sign up-------------------------------------------------------------------------------------
-
-void input1Account(account& data, ifstream& fin)
-{
-	data.userName = new char[21];
-	fin.get(data.userName, 21, '\n');
-	fin.ignore(100, '\n');
-	data.password = new char[21];
-	fin.get(data.password, 21, '\n');
-}
-
-void inputAccounts(account* login_data, int& numberOfAccount, ifstream& fin)
-{
-	numberOfAccount = 0;
-	while (!fin.eof()) {
-		input1Account(login_data[numberOfAccount], fin);
-		fin.ignore(100, '\n');
-		++numberOfAccount;
-	}
-}
-
-bool isDataTheSame(account data1, account data2)
-{
-	bool checkUserName = false;
-	if (strcmp(data1.userName, data2.userName) == 0)
-		checkUserName = true;
-
-	bool checkPassword = false;
-	if (strcmp(data1.password, data2.password) == 0)
-		checkPassword = true;
-
-	if (checkUserName && checkPassword)
-		return true;
-	else
-		return false;
-}
-
-bool login(account* login_data, int n, account inputLoginData)
-{
-	for (int i = 0; i < n; i++)
-		if (isDataTheSame(login_data[i], inputLoginData))
-			return true;
-	return false;
-}
-void input1Data(account& data) {
-	data.userName = new char[21];
-	cin.get(data.userName, 21, '\n');
-	cin.ignore(100, '\n');
-	data.password = new char[21];
-	cin.get(data.password, 21, '\n');
-}
-
-void addinfo(account person, char* filename, ofstream& fout)
-{
-	fout.open(filename, ios::app);
-	fout << person.userName << endl;
-	fout << person.password << endl;
-	fout.close();
-}
-
-bool isPasswordthesame(char* pass1, char* pass2) {
-	if (strcmp(pass1, pass2) == 0)
-		return true;
-	else
-		return false;
 }

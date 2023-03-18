@@ -133,10 +133,12 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="back_end.cpp" />
     <ClCompile Include="CourseManagement.cpp" />
     <ClCompile Include="Function.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="back_end.h" />
     <ClInclude Include="Function.h" />
   </ItemGroup>
   <ItemGroup>
