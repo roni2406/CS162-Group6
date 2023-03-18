@@ -282,7 +282,7 @@ void SignUpPage(const int screenWidth, const int screenHeight) {
 	//// initialize for sign up-------------------------------------------------------------------------------------------------------
 	account* login_account = new account[100];
 	account newinfo;
-	int n;
+	int n = 0;
 	ifstream fin;
 	ofstream fout;
 	fin.open("accounts.txt");
