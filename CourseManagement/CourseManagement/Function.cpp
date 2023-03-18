@@ -292,7 +292,7 @@ void SignUpPage(const int screenWidth, const int screenHeight) {
 
 	Vector2 mousePoint = { 0.0f, 0.0f };
 
-	SetTargetFPS(40);
+	//SetTargetFPS(40);
 
 	//Draw----------------------------------------------------------------------------------------------------------------------------
 	while (!WindowShouldClose()) {
@@ -483,4 +483,5 @@ void SignUpPage(const int screenWidth, const int screenHeight) {
 		EndDrawing();
 	}
 	CloseWindow();
+
 }
