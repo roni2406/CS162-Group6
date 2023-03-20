@@ -88,7 +88,7 @@ void addStudentToClass(student* newStudents, char* filename, ofstream& fout);
 void CreateASemester(semester newSemester, char* filename, ofstream* fout); // 6
 // user input info of a new semester, let save this into a semester file
 
-void AddACourse(course newCourse, char* filename, ofstream* fout); // 7
+void AddACourse(course newCourse, char* filename, ofstream* fout); // 7  -Taken
 // user input info of a new course in a semester, let save this into a semester file
 
 // void addStudentsToCourse(); // 8

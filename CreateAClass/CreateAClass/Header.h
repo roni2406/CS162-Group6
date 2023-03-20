@@ -67,4 +67,6 @@ struct Class {
 
 // Function 
 void createAClass(Class& className, char* filename, ofstream& fout); // 2
+void AddACourse(course newCourse, char* filename, ofstream* fout);//7
+void addSchoolYear(int schoolYear, char* filename, ofstream& fout); // 1
 #endif 
