@@ -493,7 +493,6 @@ void SignUpPage(const int screenWidth, const int screenHeight) {
 
 void ProfilePage(const int screenWidth, const int screenHeight) {
 	//Initialize variable---------------------------------------------------------------------------------------------
-	Rectangle ChangePassword = { 170, 780, 200, 50};
 	Vector2 mousePoint = { 0.0f, 0.0f };
 	mousePoint = GetMousePosition();
 
@@ -504,7 +503,6 @@ void ProfilePage(const int screenWidth, const int screenHeight) {
 	while (!WindowShouldClose()) {
 		ClearBackground(WHITE);
 		BeginDrawing();
-		DrawRectangleRec(ChangePassword, WHITE);
 		DrawText("WELCOME!", 670, 15, 40, DARKBLUE);
 
 		Texture2D background;
@@ -521,19 +519,6 @@ void ProfilePage(const int screenWidth, const int screenHeight) {
 		Texture2D changePassBtn = LoadTexture("changePassBtn.png");
 		
 		DrawTexture(changePassBtn, 170, 780, WHITE);
-		
-		if (CheckCollisionPointRec(mousePoint, ChangePassword)) {          // Check button state
-			if (IsMouseButtonPressed(MOUSE_BUTTON_LEFT)) changePassbtnAction = true;
-		}
-		else changePassbtnAction = 0;
-
-
-		if (changePassbtnAction)
-		{
-			CloseWindow();
-			ChangePasswordPage(screenWidth, screenHeight);
-
-		}
 
 		Texture2D logOutBtn = LoadTexture("logOutBtn.png");
 		DrawTexture(logOutBtn, 170, 840, WHITE);
