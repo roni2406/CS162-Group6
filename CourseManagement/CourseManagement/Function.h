@@ -7,5 +7,7 @@
 using namespace std;
 
 void drawloginPage();
-void ProfilePage(const int screenWidth, const int screenHeight);
 void SignUpPage(const int screenWidth, const int screenHeight);
+void ProfilePage(const int screenWidth, const int screenHeight);
+void ChangePasswordPage(const int screenWidth, const int screenHeight);
+

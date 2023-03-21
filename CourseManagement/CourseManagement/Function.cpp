@@ -223,36 +223,6 @@ void drawloginPage() {
 	CloseWindow();
 }
 
-void ProfilePage(const int screenWidth, const int screenHeight) {
-	CloseWindow();
-	InitWindow(screenWidth, screenHeight, "profile");
-	while (!WindowShouldClose()) {
-		ClearBackground(WHITE);
-		BeginDrawing();
-		DrawText("WELCOME!", 670, 15, 40, DARKBLUE);
-
-		Texture2D background;
-		background = LoadTexture("background.png");
-		DrawTexture(background, 0, 60, WHITE);
-
-		DrawRectangle(70, 170, 360, 750, WHITE);
-		DrawRectangle(480, 170, 980, 750, WHITE);
-
-		Texture2D avatar;
-		avatar = LoadTexture("avatar.png");
-		DrawTexture(avatar, 150, 100, WHITE);
-
-		Texture2D changePassBtn = LoadTexture("changePassBtn.png");
-		DrawTexture(changePassBtn, 170, 780, WHITE);
-
-		Texture2D logOutBtn = LoadTexture("logOutBtn.png");
-		DrawTexture(logOutBtn, 170, 840, WHITE);
-
-		EndDrawing();
-	}
-	CloseWindow();
-}
-
 void SignUpPage(const int screenWidth, const int screenHeight) {
 	CloseWindow();
 	InitWindow(screenWidth, screenHeight, "Sign Up");
@@ -268,6 +238,7 @@ void SignUpPage(const int screenWidth, const int screenHeight) {
 	Rectangle textBoxUsername = { 471, 200, 558, 112 };
 	Rectangle textBoxPassword = { 471, 373, 558, 112 };
 	Rectangle textBoxConfirmPassword = { 471, 546, 558, 112 };
+	Rectangle textBoxBacktoLoginSite = { 1300, 20, 200, 30 };
 
 	Texture2D background;
 	background = LoadTexture("background.png");
@@ -275,11 +246,12 @@ void SignUpPage(const int screenWidth, const int screenHeight) {
 	bool mouseOnTextUsername = false;
 	bool mouseOnTextPassword = false;
 	bool mouseOnTextConfirmPassword = false;
+	bool mouseOnTextBacktoLoginSite = false;
 
 	int framesCounterUsername = 0;
 	int framesCounterPassword = 0;
 	int framesCounterConfirmPassword = 0;
-	
+
 	////initialize signup button---------------------------------------------------------------------------------------------------
 	Texture2D signupButton = LoadTexture("signupButton.png");
 	float frameHeightsignupButton = (float)signupButton.height;
@@ -289,6 +261,8 @@ void SignUpPage(const int screenWidth, const int screenHeight) {
 	int signupbtnState = 0;               // Button state: 0-NORMAL, 1-MOUSE_HOVER, 2-PRESSED
 	bool signupbtnAction = false;         // Button action should be activated
 	bool issignupFalseDisplay = false;
+	//Back to login site 
+	bool BacktoLoginSiteAction = false;
 
 	//// initialize for sign up-------------------------------------------------------------------------------------------------------
 	account* login_account = new account[100];
@@ -310,6 +284,7 @@ void SignUpPage(const int screenWidth, const int screenHeight) {
 		DrawTexture(background, 0, 60, WHITE);
 		DrawRectangle(348, 110, 800, 680, WHITE);
 		DrawRectangle(0, 0, 1512, 60, WHITE);
+		DrawRectangleRec(textBoxBacktoLoginSite, WHITE);
 		DrawText("  Call us : (028) 3835 4266         E - mail : info@fit.hcmus.edu.vn", 0, 20, 20, DARKBLUE);
 		DrawText("Back to Log in Site", 1300, 20, 20, DARKBLUE);
 		DrawRectangleRec(textBoxUsername, LIGHTGRAY);
@@ -451,7 +426,7 @@ void SignUpPage(const int screenWidth, const int screenHeight) {
 			issignupFalseDisplay = false;
 		}
 		else DrawRectangleLines((int)textBoxConfirmPassword.x, (int)textBoxConfirmPassword.y, (int)textBoxConfirmPassword.width, (int)textBoxConfirmPassword.height, DARKGRAY);
-		
+
 		DrawText(name, 500, 231, 40, DARKBLUE);
 		DrawText(pass, 500, 400, 40, DARKBLUE);
 		DrawText(confirmpass, 500, 573, 40, DARKBLUE);
@@ -469,21 +444,41 @@ void SignUpPage(const int screenWidth, const int screenHeight) {
 		if (CheckCollisionPointRec(mousePoint, btnBoundssignupButton)) {          // Check button state
 			if (IsMouseButtonPressed(MOUSE_BUTTON_LEFT)) signupbtnAction = true;
 		}
-		else signupbtnState = 0;
+		else signupbtnState = false;
 
 		newinfo.userName = _strdup(name);
 		newinfo.password = _strdup(pass);
 
 		if (signupbtnAction)
 		{
-			if ( strcmp(confirmpass, pass) == 0) {
-				addinfo(newinfo, (char*)"accounts.txt", fout);
-				drawloginPage();
+			for (int i = 0; i < n; ++i) {
+				if (strcmp(newinfo.userName, login_account[i].userName) == 0) {
+					issignupFalseDisplay = true;
+					break;
+				}
+				if (i == n-1) {
+					if (strcmp(confirmpass, pass) == 0) {
+						addinfo(newinfo, (char*)"accounts.txt", fout);
+						CloseWindow();
+						drawloginPage();
+					}
+					else issignupFalseDisplay = true;
+				}
 			}
-			else issignupFalseDisplay = true;
-
 		}
 		if (issignupFalseDisplay) DrawText("Username have been used or wrong password! Please try again!", 430, 673, 20, RED);
+
+		if (CheckCollisionPointRec(mousePoint, textBoxBacktoLoginSite)) {          // Check button state
+			if (IsMouseButtonPressed(MOUSE_BUTTON_LEFT)) BacktoLoginSiteAction = true;
+		}
+		else BacktoLoginSiteAction = false;
+
+
+		if (BacktoLoginSiteAction)
+		{
+			CloseWindow();
+			drawloginPage();
+		}
 
 		// Calculate button frame rectangle to draw depending on button state
 		sourceRecsignupButton.y = signupbtnState * frameHeightsignupButton;
@@ -495,3 +490,67 @@ void SignUpPage(const int screenWidth, const int screenHeight) {
 	CloseWindow();
 
 }
+
+void ProfilePage(const int screenWidth, const int screenHeight) {
+	//Initialize variable---------------------------------------------------------------------------------------------
+	Rectangle ChangePassword = { 170, 780, 200, 50};
+	Vector2 mousePoint = { 0.0f, 0.0f };
+	mousePoint = GetMousePosition();
+
+	bool changePassbtnAction = false;
+	
+	CloseWindow();
+	InitWindow(screenWidth, screenHeight, "profile");
+	while (!WindowShouldClose()) {
+		ClearBackground(WHITE);
+		BeginDrawing();
+		DrawRectangleRec(ChangePassword, WHITE);
+		DrawText("WELCOME!", 670, 15, 40, DARKBLUE);
+
+		Texture2D background;
+		background = LoadTexture("background.png");
+		DrawTexture(background, 0, 60, WHITE);
+
+		DrawRectangle(70, 170, 360, 750, WHITE);
+		DrawRectangle(480, 170, 980, 750, WHITE);
+
+		Texture2D avatar;
+		avatar = LoadTexture("avatar.png");
+		DrawTexture(avatar, 150, 100, WHITE);
+
+		Texture2D changePassBtn = LoadTexture("changePassBtn.png");
+		
+		DrawTexture(changePassBtn, 170, 780, WHITE);
+		
+		if (CheckCollisionPointRec(mousePoint, ChangePassword)) {          // Check button state
+			if (IsMouseButtonPressed(MOUSE_BUTTON_LEFT)) changePassbtnAction = true;
+		}
+		else changePassbtnAction = 0;
+
+
+		if (changePassbtnAction)
+		{
+			CloseWindow();
+			ChangePasswordPage(screenWidth, screenHeight);
+
+		}
+
+		Texture2D logOutBtn = LoadTexture("logOutBtn.png");
+		DrawTexture(logOutBtn, 170, 840, WHITE);
+
+		EndDrawing();
+	}
+	CloseWindow();
+}
+
+void ChangePasswordPage(const int screenWidth, const int screenHeight) {
+	InitWindow(screenWidth, screenHeight, "Change Password");
+	while (!WindowShouldClose()) {
+		ClearBackground(WHITE);
+		BeginDrawing();
+		EndDrawing();
+	}
+	CloseWindow();
+}
+
+
