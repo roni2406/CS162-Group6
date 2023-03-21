@@ -236,7 +236,8 @@ void ProfilePage(const int screenWidth, const int screenHeight) {
 		DrawTexture(background, 0, 60, WHITE);
 
 		DrawRectangle(70, 170, 360, 750, WHITE);
-		
+		DrawRectangle(480, 170, 980, 750, WHITE);
+
 		Texture2D avatar;
 		avatar = LoadTexture("avatar.png");
 		DrawTexture(avatar, 150, 100, WHITE);
