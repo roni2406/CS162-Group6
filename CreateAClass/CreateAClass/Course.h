@@ -1,7 +1,8 @@
 #include <iostream>
 using namespace std;
-#ifndef HEADER_H
-#define HEADER_H
+#ifndef COURSE_H
+#define COURSE_H
+
 struct Date {
     int day;
     int month;
@@ -30,13 +31,6 @@ struct student {
     scoreboard mark;
 };
 
-struct staff {
-    char* headTeacher; // if staff is head teacher -> save the class he/she teaches, otherwise none
-    char* department; // Ex: khoa CNTT, khoa giao vu, khoa luat...
-    char* staffID;
-    person staff;
-};
-
 struct course {
     char* courseID;
     char* courseName;
@@ -50,23 +44,6 @@ struct course {
     student* stuOfCourse;
 };
 
-struct semester {
-    char schoolYear[10];
-    int No;
-    Date startDate;
-    Date endDate;
-    int numOfCourse;
-    course* courseName;
-};
-
-struct Class {
-    char* classID;
-    int numOfStu;
-    student* stuInClass;
-};
-
 // Function 
-void createAClass(Class& className, char* filename, ofstream& fout); // 2
-void AddACourse(course newCourse, char* filename, ofstream* fout);//7
-void addSchoolYear(int schoolYear, char* filename, ofstream& fout); // 1
-#endif 
+void AddACourse(course newCourse, char* filename, ofstream& fout);//7
+#endif
