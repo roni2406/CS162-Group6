@@ -229,14 +229,23 @@ void ProfilePage(const int screenWidth, const int screenHeight) {
 	while (!WindowShouldClose()) {
 		ClearBackground(WHITE);
 		BeginDrawing();
+		DrawText("WELCOME!", 670, 15, 40, DARKBLUE);
 
 		Texture2D background;
 		background = LoadTexture("background.png");
 		DrawTexture(background, 0, 60, WHITE);
-		DrawRectangle(0, 0, 1512, 60, WHITE);
-		DrawText(" Welcome!", 30, 20, 20, DARKBLUE);
-		DrawText("Log Out", 1300, 20, 20, DARKBLUE);
-		DrawText("Change Password", 1000, 20, 20, DARKBLUE);
+
+		DrawRectangle(70, 170, 360, 750, WHITE);
+		
+		Texture2D avatar;
+		avatar = LoadTexture("avatar.png");
+		DrawTexture(avatar, 150, 100, WHITE);
+
+		Texture2D changePassBtn = LoadTexture("changePassBtn.png");
+		DrawTexture(changePassBtn, 170, 780, WHITE);
+
+		Texture2D logOutBtn = LoadTexture("logOutBtn.png");
+		DrawTexture(logOutBtn, 170, 840, WHITE);
 
 		EndDrawing();
 	}
