@@ -498,6 +498,7 @@ void ProfilePage(const int screenWidth, const int screenHeight) {
 
 	Texture2D background;
 	background = LoadTexture("background.png");
+
 	Texture2D avatar;
 	avatar = LoadTexture("avatar.png");
 
@@ -510,6 +511,13 @@ void ProfilePage(const int screenWidth, const int screenHeight) {
 	bool changePassBtnAction = false;         // Button action should be activated
 
 	Texture2D logOutBtn = LoadTexture("logOutBtn.png");
+	float frameHeightlogOutBtn = (float)logOutBtn.height;
+	Rectangle sourceReclogOutBtn = { 0, 0, (float)logOutBtn.width,frameHeightlogOutBtn };
+	// Define button bounds on screen
+	Rectangle btnBoundslogOutBtn = { 170, 730, (float)logOutBtn.width, frameHeightlogOutBtn };
+	int logOutBtnState = 0;               // Button state: 0-NORMAL, 1-MOUSE_HOVER, 2-PRESSED
+	bool logOutBtnAction = false;         // Button action should be activated
+
 	while (!WindowShouldClose()) {
 		ClearBackground(WHITE);
 
@@ -518,21 +526,12 @@ void ProfilePage(const int screenWidth, const int screenHeight) {
 
 		
 		DrawTexture(background, 0, 60, WHITE);
-
 		DrawRectangle(70, 170, 360, 750, WHITE);
 		DrawRectangle(480, 170, 980, 750, WHITE);
-
-		
 		DrawTexture(avatar, 150, 100, WHITE);
-
-		
-		
-		DrawTexture(logOutBtn, 170, 750, WHITE);
-
-
+		////change password button function-----------------------------------------------------------------------------------------------------------
 		mousePoint = GetMousePosition();
 		changePassBtnAction = false;
-
 		if (CheckCollisionPointRec(mousePoint, btnBoundschangePassBtn)) {          // Check button state
 			if (IsMouseButtonPressed(MOUSE_BUTTON_LEFT)) changePassBtnAction = true;
 		}
@@ -540,10 +539,22 @@ void ProfilePage(const int screenWidth, const int screenHeight) {
 		if (changePassBtnAction) {
 			ChangePasswordPage(screenWidth, screenHeight);
 		}
-
 		// Calculate button frame rectangle to draw depending on button state
 		sourceRecchangePassBtn.y = changePassBtnState * frameHeightchangePassBtn;
 		DrawTextureRec(changePassBtn, sourceRecchangePassBtn, { btnBoundschangePassBtn.x, btnBoundschangePassBtn.y }, WHITE); // Draw button frame
+		////log out button function-------------------------------------------------------------------------------------------------------------------
+		mousePoint = GetMousePosition();
+		logOutBtnAction = false;
+		if (CheckCollisionPointRec(mousePoint, btnBoundslogOutBtn)) {          // Check button state
+			if (IsMouseButtonPressed(MOUSE_BUTTON_LEFT)) logOutBtnAction = true;
+		}
+		else logOutBtnState = 0;
+		if (logOutBtnAction) {
+			drawloginPage();
+		}
+		// Calculate button frame rectangle to draw depending on button state
+		sourceReclogOutBtn.y = logOutBtnState * frameHeightlogOutBtn;
+		DrawTextureRec(logOutBtn, sourceReclogOutBtn, { btnBoundslogOutBtn.x, btnBoundslogOutBtn.y }, WHITE); // Draw button frame
 
 		EndDrawing();
 	}
