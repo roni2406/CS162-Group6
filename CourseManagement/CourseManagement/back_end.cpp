@@ -74,3 +74,11 @@ bool signUp(account* login_data, int n, account newAcc, char* confirmPass) {
 			return false;
 	return true;
 }
+
+bool changePass(account& Acc, char* oldPass, char* newPass, char* checkNewPass) {
+	if (oldPass != Acc.password || newPass != checkNewPass) {
+		return false;
+	}
+	Acc.password = newPass;
+	return true;
+}
