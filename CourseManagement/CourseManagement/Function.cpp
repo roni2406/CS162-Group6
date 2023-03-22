@@ -500,7 +500,15 @@ void ProfilePage(const int screenWidth, const int screenHeight) {
 	background = LoadTexture("background.png");
 	Texture2D avatar;
 	avatar = LoadTexture("avatar.png");
+
 	Texture2D changePassBtn = LoadTexture("changePassBtn.png");
+	float frameHeightchangePassBtn = (float)changePassBtn.height;
+	Rectangle sourceRecchangePassBtn = { 0, 0, (float)changePassBtn.width,frameHeightchangePassBtn };
+	// Define button bounds on screen
+	Rectangle btnBoundschangePassBtn = { 170, 800, (float)changePassBtn.width, frameHeightchangePassBtn };
+	int changePassBtnState = 0;               // Button state: 0-NORMAL, 1-MOUSE_HOVER, 2-PRESSED
+	bool changePassBtnAction = false;         // Button action should be activated
+
 	Texture2D logOutBtn = LoadTexture("logOutBtn.png");
 	while (!WindowShouldClose()) {
 		ClearBackground(WHITE);
@@ -519,10 +527,23 @@ void ProfilePage(const int screenWidth, const int screenHeight) {
 
 		
 		
-		DrawTexture(changePassBtn, 170, 780, WHITE);
+		DrawTexture(logOutBtn, 170, 750, WHITE);
 
-		
-		DrawTexture(logOutBtn, 170, 840, WHITE);
+
+		mousePoint = GetMousePosition();
+		changePassBtnAction = false;
+
+		if (CheckCollisionPointRec(mousePoint, btnBoundschangePassBtn)) {          // Check button state
+			if (IsMouseButtonPressed(MOUSE_BUTTON_LEFT)) changePassBtnAction = true;
+		}
+		else changePassBtnState = 0;
+		if (changePassBtnAction) {
+			ChangePasswordPage(screenWidth, screenHeight);
+		}
+
+		// Calculate button frame rectangle to draw depending on button state
+		sourceRecchangePassBtn.y = changePassBtnState * frameHeightchangePassBtn;
+		DrawTextureRec(changePassBtn, sourceRecchangePassBtn, { btnBoundschangePassBtn.x, btnBoundschangePassBtn.y }, WHITE); // Draw button frame
 
 		EndDrawing();
 	}
