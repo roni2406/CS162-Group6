@@ -12,8 +12,8 @@ int main()
     const int screenWidth = 1512;
     const int screenHeight = 982;
     InitWindow(screenWidth, screenHeight, "MainPage");
-    drawloginPage();
-
+    //drawloginPage();
+    ChangePasswordPage(screenWidth, screenHeight);
 
     CloseWindow();
     return 0;

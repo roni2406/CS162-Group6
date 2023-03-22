@@ -529,9 +529,30 @@ void ProfilePage(const int screenWidth, const int screenHeight) {
 }
 
 void ChangePasswordPage(const int screenWidth, const int screenHeight) {
+	Rectangle textBoxOldPass = { 477, 239,558,106 };
+	Rectangle textBoxNewPass = { 477, 403,558,106 };
+	Rectangle textBoxNewPassConfirm{ 477, 567, 558, 106 };
+
+	Texture2D background;
+	background = LoadTexture("background.png");
+
 	while (!WindowShouldClose()) {
 		ClearBackground(WHITE);
 		BeginDrawing();
+
+		DrawTexture(background, 0, 60, WHITE);
+		DrawRectangle(347, 173, 818, 560, WHITE);
+		DrawRectangle(0, 0, 1512, 60, WHITE);
+		DrawText("  Call us : (028) 3835 4266         E - mail : info@fit.hcmus.edu.vn", 0, 20, 20, DARKBLUE);
+		DrawText("You are not logged in.", 1200, 20, 20, DARKBLUE);
+		DrawRectangleRec(textBoxOldPass, LIGHTGRAY);
+		DrawRectangleRec(textBoxNewPass, LIGHTGRAY);
+		DrawRectangleRec(textBoxNewPassConfirm, LIGHTGRAY);
+		DrawText("* Old Password", 477, 200, 30, DARKBLUE);
+		DrawText("* New Password", 477, 364, 30, DARKBLUE);
+		DrawText("* Confirm New Password", 477, 528, 30, DARKBLUE);
+
+
 		EndDrawing();
 	}
 }
