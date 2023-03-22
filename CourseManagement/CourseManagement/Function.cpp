@@ -188,10 +188,15 @@ void drawloginPage() {
 		inputLoginData.userName = _strdup(name);
 		inputLoginData.password = _strdup(pass);
 
+		account CurrentUser;
+
 		if (loginbtnAction)
 		{
+			
 			if (login(login_data, n, inputLoginData)) {
-				ProfilePage(screenWidth, screenHeight);
+				CurrentUser.password = pass;
+				CurrentUser.userName = name;
+				ProfilePage(screenWidth, screenHeight, CurrentUser);
 			}
 			else isLoginFalseDisplay = true;
 		}
@@ -211,7 +216,7 @@ void drawloginPage() {
 		}
 		else signupbtnState = 0;
 		if (signupbtnAction) {
-			SignUpPage(screenWidth, screenHeight);
+			SignUpPage(screenWidth, screenHeight, CurrentUser);
 		}
 
 		sourceRecsignupButton.y = signupbtnState * frameHeightsignupButton;
@@ -221,7 +226,7 @@ void drawloginPage() {
 	}
 }
 
-void SignUpPage(const int screenWidth, const int screenHeight) {
+void SignUpPage(const int screenWidth, const int screenHeight, account& CurrentUser) {
 
 	//Initialize---------------------------------------------------------------------
 	char name[21] = "\0";
@@ -489,12 +494,10 @@ void SignUpPage(const int screenWidth, const int screenHeight) {
 
 }
 
-void ProfilePage(const int screenWidth, const int screenHeight) {
+void ProfilePage(const int screenWidth, const int screenHeight, account& CurrentUser) {
 	//Initialize variable---------------------------------------------------------------------------------------------
 	Vector2 mousePoint = { 0.0f, 0.0f };
 	mousePoint = GetMousePosition();
-
-	bool changePassbtnAction = false;
 
 	Texture2D background;
 	background = LoadTexture("background.png");
@@ -537,7 +540,7 @@ void ProfilePage(const int screenWidth, const int screenHeight) {
 		}
 		else changePassBtnState = 0;
 		if (changePassBtnAction) {
-			ChangePasswordPage(screenWidth, screenHeight);
+			ChangePasswordPage(screenWidth, screenHeight, CurrentUser);
 		}
 		// Calculate button frame rectangle to draw depending on button state
 		sourceRecchangePassBtn.y = changePassBtnState * frameHeightchangePassBtn;
@@ -560,7 +563,10 @@ void ProfilePage(const int screenWidth, const int screenHeight) {
 	}
 }
 
-void ChangePasswordPage(const int screenWidth, const int screenHeight) {
+void ChangePasswordPage(const int screenWidth, const int screenHeight, account& CurrentUser) {
+	Vector2 mousePoint = { 0.0f, 0.0f };
+	mousePoint = GetMousePosition();
+
 	Rectangle textBoxOldPass = { 477, 239,558,106 };
 	Rectangle textBoxNewPass = { 477, 403,558,106 };
 	Rectangle textBoxNewPassConfirm{ 477, 567, 558, 106 };
@@ -568,15 +574,22 @@ void ChangePasswordPage(const int screenWidth, const int screenHeight) {
 	Texture2D background;
 	background = LoadTexture("background.png");
 
+	Texture2D confirmBtn = LoadTexture("confirmBtn.png");
+	float frameHeightconfirmBtn = (float)confirmBtn.height;
+	Rectangle sourceRecconfirmBtn = { 0, 0, (float)confirmBtn.width,frameHeightconfirmBtn };
+	// Define button bounds on screen
+	Rectangle btnBoundsconfirmBtn = { 650, 710, (float)confirmBtn.width, frameHeightconfirmBtn };
+	int confirmBtnState = 0;               // Button state: 0-NORMAL, 1-MOUSE_HOVER, 2-PRESSED
+	bool confirmBtnAction = false;         // Button action should be activated
+
 	while (!WindowShouldClose()) {
 		ClearBackground(WHITE);
 		BeginDrawing();
 
 		DrawTexture(background, 0, 60, WHITE);
-		DrawRectangle(347, 173, 818, 560, WHITE);
+		DrawRectangle(347, 173, 818, 630, WHITE);
 		DrawRectangle(0, 0, 1512, 60, WHITE);
 		DrawText("  Call us : (028) 3835 4266         E - mail : info@fit.hcmus.edu.vn", 0, 20, 20, DARKBLUE);
-		DrawText("You are not logged in.", 1200, 20, 20, DARKBLUE);
 		DrawRectangleRec(textBoxOldPass, LIGHTGRAY);
 		DrawRectangleRec(textBoxNewPass, LIGHTGRAY);
 		DrawRectangleRec(textBoxNewPassConfirm, LIGHTGRAY);
@@ -584,7 +597,18 @@ void ChangePasswordPage(const int screenWidth, const int screenHeight) {
 		DrawText("* New Password", 477, 364, 30, DARKBLUE);
 		DrawText("* Confirm New Password", 477, 528, 30, DARKBLUE);
 
-
+		mousePoint = GetMousePosition();
+		confirmBtnAction = false;
+		if (CheckCollisionPointRec(mousePoint, btnBoundsconfirmBtn)) {          // Check button state
+			if (IsMouseButtonPressed(MOUSE_BUTTON_LEFT)) confirmBtnAction = true;
+		}
+		else confirmBtnState = 0;
+		if (confirmBtnAction) {
+			//if (changePass(CurrentUser,))
+		}
+		// Calculate button frame rectangle to draw depending on button state
+		sourceRecconfirmBtn.y = confirmBtnState * frameHeightconfirmBtn;
+		DrawTextureRec(confirmBtn, sourceRecconfirmBtn, { btnBoundsconfirmBtn.x, btnBoundsconfirmBtn.y }, WHITE); // Draw button frame
 		EndDrawing();
 	}
 }

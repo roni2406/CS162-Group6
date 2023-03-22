@@ -17,3 +17,4 @@ bool login(account* login_data, int n, account inputLoginData);
 
 void addinfo(account person, char* filename, ofstream& fout);
 bool signUp(account* login_data, int n, account newAcc, char* confirmPass);
+bool changePass(account& Acc, char* oldPass, char* newPass, char* checkNewPass);
