@@ -11,7 +11,6 @@ using namespace std;
 void drawloginPage() {
 	const int screenWidth = 1512;
 	const int screenHeight = 982;
-	InitWindow(screenWidth, screenHeight, "MainPage");
 	//Initialize-------------------------------------------------------
 	char name[21] = "\0";
 	char pass[21] = "\0";
@@ -68,6 +67,7 @@ void drawloginPage() {
 	//------------------------------------------------------------------------------------------------------------------------------------------------------
 	//Draw--------------------------------------------------------------------------------------------------------------------------------------------------
 	while (!WindowShouldClose()) {
+		ClearBackground(WHITE);
 		BeginDrawing();
 
 		DrawTexture(background, 0, 60, WHITE);
@@ -219,13 +219,10 @@ void drawloginPage() {
 
 		EndDrawing();
 	}
-
-	CloseWindow();
 }
 
 void SignUpPage(const int screenWidth, const int screenHeight) {
-	CloseWindow();
-	InitWindow(screenWidth, screenHeight, "Sign Up");
+
 	//Initialize---------------------------------------------------------------------
 	char name[21] = "\0";
 	char pass[21] = "\0";
@@ -280,6 +277,8 @@ void SignUpPage(const int screenWidth, const int screenHeight) {
 
 	//Draw----------------------------------------------------------------------------------------------------------------------------
 	while (!WindowShouldClose()) {
+		ClearBackground(WHITE);
+
 		BeginDrawing();
 		DrawTexture(background, 0, 60, WHITE);
 		DrawRectangle(348, 110, 800, 680, WHITE);
@@ -487,7 +486,6 @@ void SignUpPage(const int screenWidth, const int screenHeight) {
 
 		EndDrawing();
 	}
-	CloseWindow();
 
 }
 
@@ -497,45 +495,45 @@ void ProfilePage(const int screenWidth, const int screenHeight) {
 	mousePoint = GetMousePosition();
 
 	bool changePassbtnAction = false;
-	
-	CloseWindow();
-	InitWindow(screenWidth, screenHeight, "profile");
+
+	Texture2D background;
+	background = LoadTexture("background.png");
+	Texture2D avatar;
+	avatar = LoadTexture("avatar.png");
+	Texture2D changePassBtn = LoadTexture("changePassBtn.png");
+	Texture2D logOutBtn = LoadTexture("logOutBtn.png");
 	while (!WindowShouldClose()) {
 		ClearBackground(WHITE);
+
 		BeginDrawing();
 		DrawText("WELCOME!", 670, 15, 40, DARKBLUE);
 
-		Texture2D background;
-		background = LoadTexture("background.png");
+		
 		DrawTexture(background, 0, 60, WHITE);
 
 		DrawRectangle(70, 170, 360, 750, WHITE);
 		DrawRectangle(480, 170, 980, 750, WHITE);
 
-		Texture2D avatar;
-		avatar = LoadTexture("avatar.png");
+		
 		DrawTexture(avatar, 150, 100, WHITE);
 
-		Texture2D changePassBtn = LoadTexture("changePassBtn.png");
+		
 		
 		DrawTexture(changePassBtn, 170, 780, WHITE);
 
-		Texture2D logOutBtn = LoadTexture("logOutBtn.png");
+		
 		DrawTexture(logOutBtn, 170, 840, WHITE);
 
 		EndDrawing();
 	}
-	CloseWindow();
 }
 
 void ChangePasswordPage(const int screenWidth, const int screenHeight) {
-	InitWindow(screenWidth, screenHeight, "Change Password");
 	while (!WindowShouldClose()) {
 		ClearBackground(WHITE);
 		BeginDrawing();
 		EndDrawing();
 	}
-	CloseWindow();
 }
 
 
