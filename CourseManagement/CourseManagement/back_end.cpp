@@ -76,7 +76,7 @@ bool signUp(account* login_data, int n, account newAcc, char* confirmPass) {
 }
 
 bool changePass(account& Acc, char* oldPass, char* newPass, char* checkNewPass) {
-	if (oldPass != Acc.password || newPass != checkNewPass) {
+	if (strcmp(oldPass, Acc.password) != 0 || strcmp(newPass, checkNewPass) != 0) {
 		return false;
 	}
 	Acc.password = newPass;
