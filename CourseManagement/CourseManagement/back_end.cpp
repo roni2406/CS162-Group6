@@ -146,11 +146,12 @@ bool usechangePassFunction(account& Acc, char* oldPass, char* newPass, char* che
 	if (acc_position == -1) {
 		delete[] login_data;
 		return false;
-	if (changePass(login_data[acc_position], oldPass, newPass, checkNewPass)) {
-		updateAccToFile(login_data, n);
+		if (changePass(login_data[acc_position], oldPass, newPass, checkNewPass)) {
+			updateAccToFile(login_data, n);
+			delete[] login_data;
+			return true;
+		}
 		delete[] login_data;
-		return true;
+		return false;
 	}
-	delete[] login_data;
-	return false;
 }

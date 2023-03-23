@@ -191,7 +191,7 @@ void drawloginPage() {
 		if (loginbtnAction)
 		{
 			
-			if (login(login_data, n, inputLoginData)) {
+			if (login(login_data, n, inputLoginData) && name[0] != '\0' && pass[0] != '\0') {
 				CurrentUser.password = pass;
 				CurrentUser.userName = name;
 				ProfilePage(screenWidth, screenHeight, CurrentUser);
