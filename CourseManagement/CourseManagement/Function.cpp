@@ -710,7 +710,7 @@ void ChangePasswordPage(const int screenWidth, const int screenHeight, account& 
 			{
 				letterCountNewPassConfirm--;
 				if (letterCountNewPassConfirm < 0) letterCountNewPassConfirm = 0;
-				OldPass[letterCountNewPassConfirm] = '\0';
+				NewPassConfirm[letterCountNewPassConfirm] = '\0';
 			}
 		}
 		else SetMouseCursor(MOUSE_CURSOR_DEFAULT);
@@ -757,7 +757,7 @@ void ChangePasswordPage(const int screenWidth, const int screenHeight, account& 
 		}
 		else confirmBtnState = 0;
 		if (confirmBtnAction) {
-			if (changePass(CurrentUser, OldPass, NewPass, NewPassConfirm)) {
+			if (usechangePassFunction(CurrentUser, OldPass, NewPass, NewPassConfirm) && OldPass[0] != '\0' && NewPass[0] != '\0' && NewPassConfirm[0] != '\0') {
 				ProfilePage(screenWidth, screenHeight, CurrentUser);
 			}
 			else {
