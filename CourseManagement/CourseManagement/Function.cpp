@@ -222,6 +222,7 @@ void drawloginPage() {
 
 		EndDrawing();
 	}
+	CloseWindow();
 }
 
 void SignUpPage(const int screenWidth, const int screenHeight, account& CurrentUser) {
@@ -461,7 +462,6 @@ void SignUpPage(const int screenWidth, const int screenHeight, account& CurrentU
 				if (i == n-1) {
 					if (strcmp(confirmpass, pass) == 0) {
 						addinfo(newinfo, (char*)"accounts.txt", fout);
-						CloseWindow();
 						drawloginPage();
 					}
 					else issignupFalseDisplay = true;
@@ -478,7 +478,6 @@ void SignUpPage(const int screenWidth, const int screenHeight, account& CurrentU
 
 		if (BacktoLoginSiteAction)
 		{
-			CloseWindow();
 			drawloginPage();
 		}
 
@@ -489,6 +488,7 @@ void SignUpPage(const int screenWidth, const int screenHeight, account& CurrentU
 
 		EndDrawing();
 	}
+	CloseWindow();
 
 }
 
@@ -559,6 +559,7 @@ void ProfilePage(const int screenWidth, const int screenHeight, account CurrentU
 
 		EndDrawing();
 	}
+	CloseWindow();
 }
 
 void ChangePasswordPage(const int screenWidth, const int screenHeight, account& CurrentUser) {
@@ -770,6 +771,7 @@ void ChangePasswordPage(const int screenWidth, const int screenHeight, account& 
 		DrawTextureRec(confirmBtn, sourceRecconfirmBtn, { btnBoundsconfirmBtn.x, btnBoundsconfirmBtn.y }, WHITE); // Draw button frame
 		EndDrawing();
 	}
+	CloseWindow();
 }
 
 
