@@ -129,6 +129,10 @@ void importScoreboardOfAClass(); // 23
 // When the scoreboard has been published (by the academic staff member), a student can:
 void viewScoreboard(); // 24
 
+
+// Other Functions: Function that solved unexpected problems while computing
+void create_txt_file(Class& className, char* filename);
+
 int main()
 {
     return 0;

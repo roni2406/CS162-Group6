@@ -14,22 +14,36 @@ void read_input_user_createAClass(Class& className)
 	cin >> className.numOfStu;
 }
 
-
-
 void AddAClassToList(Class& className, ofstream& fout)
 {
 	fout.open("List of Classes.txt",ios::app);
-	fout << "Class: " << className.classID << '\n';
-	fout << "Number of Students: " << className.numOfStu << '\n';
+	fout << className.classID << " ";
+	fout << className.numOfStu << '\n';
 	fout << '\n';
 	fout.close();
 }
 
 void CreateASingleClassList(Class& className, char* filename, ofstream& fout)
 {
-	filename = className.classID;
+	create_txt_file(className, filename);
 	fout.open(filename);
-	fout << "Class: " << className.classID << '\n';
-	fout << "Number of Students: " << className.numOfStu << '\n';
+	fout << className.classID << " ";
+	fout << className.numOfStu << '\n';
 	fout.close();
+	delete[]filename;
+	filename = nullptr;
+}
+
+void viewClasses() // 15
+{
+
+}
+
+void create_txt_file(Class className, char* &filename) 
+{
+	int n = strlen(className.classID);
+	filename = new char[n + 5];
+	for (int i = 0; i < n; i++)
+		filename[i] = className.classID[i];
+	filename[n] = '.'; filename[n + 1] = 't'; filename[n + 2] = 'x'; filename[n + 3] = 't'; filename[n + 4] = '\0';
 }

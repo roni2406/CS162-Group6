@@ -41,4 +41,11 @@ struct Class {
 void read_input_user_createAClass(Class& className);
 void AddAClassToList(Class& className, ofstream& fout);
 void CreateASingleClassList(Class& className, char* filename, ofstream& fout);
+
+void viewClasses(); // 15
+
+
+// Other Function
+void create_txt_file(Class className, char* &filename);
+
 #endif 
