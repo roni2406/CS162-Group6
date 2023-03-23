@@ -82,3 +82,13 @@ bool changePass(account& Acc, char* oldPass, char* newPass, char* checkNewPass) 
 	Acc.password = newPass;
 	return true;
 }
+
+void updateAcc(account* login_data, int n) {
+	ofstream fout;
+	fout.open("accounts.txt");
+	for (int i = 0; i < n; i++) {
+		fout << login_data[i].userName << endl;
+		fout << login_data[i].password << endl;
+	}
+	fout.close();
+}
