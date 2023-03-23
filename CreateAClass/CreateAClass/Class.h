@@ -38,5 +38,7 @@ struct Class {
 };
 
 // Function 
-void createAClass(Class& className, char* filename, ofstream& fout); // 2
+void read_input_user_createAClass(Class& className);
+void AddAClassToList(Class& className, ofstream& fout);
+void CreateASingleClassList(Class& className, char* filename, ofstream& fout);
 #endif 
