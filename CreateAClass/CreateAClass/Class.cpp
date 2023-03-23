@@ -1,4 +1,5 @@
 #include <iostream>
+#include <bits/stdc++.h>
 #include <fstream>
 #include "Class.h"
 using namespace std;
