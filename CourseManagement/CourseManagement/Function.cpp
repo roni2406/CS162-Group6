@@ -48,12 +48,6 @@ void drawloginPage() {
 	bool signupbtnAction = false;         // Button action should be activated
 	////--------------------------------------------------------------------------------------------------------------------------------
 	////initialize for login--------------------------------------------------------------------------------------------------------------
-	ifstream fin;
-	fin.open("accounts.txt");
-	account* login_data = new account[100];         
-	int n;
-	inputAccounts(login_data, n, fin);
-	fin.close();
 
 	account inputLoginData;
 
@@ -192,7 +186,7 @@ void drawloginPage() {
 		if (loginbtnAction)
 		{
 			
-			if (login(login_data, n, inputLoginData) && name[0] != '\0' && pass[0] != '\0') {
+			if (LoginFunction(inputLoginData) && name[0] != '\0' && pass[0] != '\0') {
 				CurrentUser.password = pass;
 				CurrentUser.userName = name;
 				ProfilePage(screenWidth, screenHeight, CurrentUser);
@@ -266,14 +260,7 @@ void SignUpPage(const int screenWidth, const int screenHeight, account& CurrentU
 	bool BacktoLoginSiteAction = false;
 
 	//// initialize for sign up-------------------------------------------------------------------------------------------------------
-	account* login_account = new account[100];
 	account newinfo;
-	int n = 0;
-	ifstream fin;
-	ofstream fout;
-	fin.open("accounts.txt");
-	inputAccounts(login_account, n, fin);
-	fin.close();
 
 	Vector2 mousePoint = { 0.0f, 0.0f };
 
@@ -454,7 +441,13 @@ void SignUpPage(const int screenWidth, const int screenHeight, account& CurrentU
 
 		if (signupbtnAction)
 		{
-			for (int i = 0; i < n; ++i) {
+			if (SignupFunction(newinfo, confirmpass)) {
+				issignupFalseDisplay = false;
+				drawloginPage();
+			}
+			else
+				issignupFalseDisplay = true;
+			/*for (int i = 0; i < n; ++i) {
 				if (strcmp(newinfo.userName, login_account[i].userName) == 0) {
 					issignupFalseDisplay = true;
 					break;
@@ -466,7 +459,7 @@ void SignUpPage(const int screenWidth, const int screenHeight, account& CurrentU
 					}
 					else issignupFalseDisplay = true;
 				}
-			}
+			}*/
 		}
 		if (issignupFalseDisplay) DrawText("Username have been used or wrong password! Please try again!", 430, 673, 20, RED);
 
