@@ -58,11 +58,29 @@ bool login(account* login_data, int n, account inputLoginData)
 	return false;
 }
 
+bool LoginFunction(account inputLoginData) {
+	ifstream fin;
+	fin.open("accounts.txt");
+	account* login_data = new account[1000];
+	int n;
+	inputAccounts(login_data, n, fin);
+	fin.close();
+	if (login(login_data, n, inputLoginData)) {
+		delete[] login_data;
+		return true;
+	}
+	else {
+		delete[] login_data;
+		return false;
+	}
+}
+
 void addinfo(account person, char* filename, ofstream& fout)
 {
 	fout.open(filename, ios::app);
+	fout << endl;
 	fout << person.userName << endl;
-	fout << person.password << endl;
+	fout << person.password;
 	fout.close();
 }
 
@@ -75,6 +93,25 @@ bool signUp(account* login_data, int n, account newAcc, char* confirmPass) {
 	return true;
 }
 
+bool SignupFunction(account newAcc, char* confirmPass) {
+	ifstream fin;
+	fin.open("accounts.txt");
+	account* login_data = new account[1000];
+	int n;
+	inputAccounts(login_data, n, fin);
+	fin.close();
+	if (signUp(login_data, n, newAcc, confirmPass)) {
+		ofstream fout;
+		addinfo(newAcc, (char*)"accounts.txt", fout);
+		delete[] login_data;
+		return true;
+	}
+	else {
+		delete[] login_data;
+		return false;
+	}
+}
+
 bool changePass(account& Acc, char* oldPass, char* newPass, char* checkNewPass) {
 	if (strcmp(oldPass, Acc.password) != 0 || strcmp(newPass, checkNewPass) != 0) {
 		return false;
@@ -83,12 +120,40 @@ bool changePass(account& Acc, char* oldPass, char* newPass, char* checkNewPass) 
 	return true;
 }
 
-void updateAcc(account* login_data, int n) {
+void updateAccToFile(account* login_data, int n) {
 	ofstream fout;
 	fout.open("accounts.txt");
 	for (int i = 0; i < n; i++) {
 		fout << login_data[i].userName << endl;
-		fout << login_data[i].password << endl;
+		fout << login_data[i].password;
+		if (i != n - 1) fout << endl;
 	}
 	fout.close();
+}
+
+bool usechangePassFunction(account& Acc, char* oldPass, char* newPass, char* checkNewPass) {
+	ifstream fin;
+	fin.open("accounts.txt");
+	account* login_data = new account[1000];
+	int n;
+	inputAccounts(login_data, n, fin);
+	fin.close();
+	int acc_position = -1;
+	for (int i = 0; i < n; i++) {
+		if(strcmp(Acc.userName, login_data[i].userName) == 0){
+			acc_position = i;
+			break;
+		}
+	}
+	if (acc_position == -1) {
+		delete[] login_data;
+		return false;
+	}
+	if (changePass(login_data[acc_position], oldPass, newPass, checkNewPass)) {
+		updateAccToFile(login_data, n);
+		delete[] login_data;
+		return true;
+	}
+	delete[] login_data;
+	return false;
 }
