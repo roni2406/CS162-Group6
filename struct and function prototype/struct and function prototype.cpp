@@ -70,8 +70,14 @@ struct Class {
 void addSchoolYear(int schoolYear, char* filename, ofstream& fout); // 1
 // user input new school year, let save this year into file
 
-void createAClass(Class className, char* filename, ofstream& fout); // 2    - Taken
+// 2
+// void createAClass(Class className, char* filename, ofstream& fout); // 2    
 // user input info of a new class, let save this into a new class file
+void read_input_user_createAClass(Class& className);
+void AddAClassToList(Class& className, ofstream& fout);
+void CreateASingleClassList(Class className, ofstream& fout);
+
+
 
 void addAStudentToClass(student newStu, char* filename, ofstream& fout); // 3
 // user input info of a new student, let save this into a file
@@ -128,10 +134,6 @@ void importScoreboardOfAClass(); // 23
 
 // When the scoreboard has been published (by the academic staff member), a student can:
 void viewScoreboard(); // 24
-
-
-// Other Functions: Function that solved unexpected problems while computing
-void create_txt_file(Class& className, char* filename);
 
 int main()
 {

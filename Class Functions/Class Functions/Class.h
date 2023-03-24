@@ -38,6 +38,7 @@ struct Class {
 };
 
 // Function 
+// 2
 void read_input_user_createAClass(Class& className);
 void AddAClassToList(Class& className, ofstream& fout);
 void CreateASingleClassList(Class className, ofstream& fout);
