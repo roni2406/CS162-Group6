@@ -78,8 +78,9 @@ bool LoginFunction(account inputLoginData) {
 void addinfo(account person, char* filename, ofstream& fout)
 {
 	fout.open(filename, ios::app);
+	fout << endl;
 	fout << person.userName << endl;
-	fout << person.password << endl;
+	fout << person.password;
 	fout.close();
 }
 
