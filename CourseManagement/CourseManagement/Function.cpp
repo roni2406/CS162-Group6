@@ -16,14 +16,14 @@ void drawloginPage() {
 	//Initialize-------------------------------------------------------
 	char name[21] = "\0";
 	char pass[21] = "\0";
+	char HiddenPass[21] = "\0";
+	int letterCountHiddenPass = 0;
 	int letterCountUsername = 0;
 	int letterCountPassword = 0;
 	Rectangle textBoxUsername = { 477, 239,558,106 };
 	Rectangle textBoxPassword = { 477, 403,558,106 };
 	bool mouseOnTextUsername = false;
 	bool mouseOnTextPassword = false;
-	int framesCounterUsername = 0;
-	int framesCounterPassword = 0;
 
 
 	Texture2D background;
@@ -117,8 +117,6 @@ void drawloginPage() {
 			}
 		}
 		else SetMouseCursor(MOUSE_CURSOR_DEFAULT);
-		if (mouseOnTextUsername) framesCounterUsername++;
-		else framesCounterUsername = 0;
 
 		if (mouseOnTextPassword)
 		{
@@ -137,6 +135,10 @@ void drawloginPage() {
 					pass[letterCountPassword] = (char)key;
 					pass[letterCountPassword + 1] = '\0'; // Add null terminator at the end of the string.
 					letterCountPassword++;
+
+					HiddenPass[letterCountHiddenPass] = '*';
+					HiddenPass[letterCountHiddenPass + 1] = '\0';
+					letterCountHiddenPass++;
 				}
 
 				key = GetCharPressed();  // Check next character in the queue
@@ -147,11 +149,13 @@ void drawloginPage() {
 				letterCountPassword--;
 				if (letterCountPassword < 0) letterCountPassword = 0;
 				pass[letterCountPassword] = '\0';
+
+				letterCountHiddenPass--;
+				if (letterCountHiddenPass < 0) letterCountHiddenPass = 0;
+				HiddenPass[letterCountHiddenPass] = '\0';
 			}
 		}
 		else SetMouseCursor(MOUSE_CURSOR_DEFAULT);
-		if (mouseOnTextPassword) framesCounterPassword++;
-		else framesCounterPassword = 0;
 
 		if (mouseOnTextUsername) {
 			DrawRectangleLines((int)textBoxUsername.x, (int)textBoxUsername.y, (int)textBoxUsername.width, (int)textBoxUsername.height, BLUE);
@@ -170,7 +174,8 @@ void drawloginPage() {
 		else DrawRectangleLines((int)textBoxPassword.x, (int)textBoxPassword.y, (int)textBoxPassword.width, (int)textBoxPassword.height, DARKGRAY);
 
 		DrawText(name, 500, 270, 40, DARKBLUE);
-		DrawText(pass, 500, 430, 40, DARKBLUE);
+		//DrawText(pass, 500, 430, 40, DARKBLUE);
+		DrawText(HiddenPass, 500, 440, 40, DARKBLUE);
 
 		DrawText(TextFormat("%i/%i", letterCountUsername, MAX_INPUT_CHARS), 1050, 280, 20, DARKBLUE);
 		DrawText(TextFormat("%i/%i", letterCountPassword, MAX_INPUT_CHARS), 1050, 450, 20, DARKBLUE);
