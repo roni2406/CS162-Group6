@@ -5,7 +5,8 @@
 #include "Function.h"
 
 using namespace std;
-#define MAX_INPUT_CHARS 20
+const int MAX_INPUT_CHARS = 18;
+
 
 //FRONT_END--------------------------------------------------------
 void drawloginPage() {
@@ -14,9 +15,9 @@ void drawloginPage() {
 
 	account CurrentUser;
 	//Initialize-------------------------------------------------------
-	char name[21] = "\0";
-	char pass[21] = "\0";
-	char HiddenPass[21] = "\0";
+	char name[MAX_INPUT_CHARS + 1] = "\0";
+	char pass[MAX_INPUT_CHARS + 1] = "\0";
+	char HiddenPass[MAX_INPUT_CHARS + 1] = "\0";
 	int letterCountHiddenPass = 0;
 	int letterCountUsername = 0;
 	int letterCountPassword = 0;
@@ -233,9 +234,9 @@ void drawloginPage() {
 void SignUpPage(const int screenWidth, const int screenHeight, account& CurrentUser) {
 
 	//Initialize---------------------------------------------------------------------
-	char name[21] = "\0";
-	char pass[21] = "\0";
-	char confirmpass[21] = "\0";
+	char name[MAX_INPUT_CHARS + 1] = "\0";
+	char pass[MAX_INPUT_CHARS + 1] = "\0";
+	char confirmpass[MAX_INPUT_CHARS + 1] = "\0";
 
 	int letterCountUsername = 0;
 	int letterCountPassword = 0;
@@ -535,6 +536,8 @@ void ProfilePage(const int screenWidth, const int screenHeight, account CurrentU
 		DrawRectangle(70, 170, 360, 750, WHITE);
 		DrawRectangle(480, 170, 980, 750, WHITE);
 		DrawTexture(avatar, 150, 100, WHITE);
+		DrawText("Username: ", 90, 330, 20, DARKBLUE);
+		DrawText(CurrentUser.userName, 200, 330, 20, DARKGRAY);
 		////change password button function-----------------------------------------------------------------------------------------------------------
 		mousePoint = GetMousePosition();
 		changePassBtnAction = false;
@@ -571,9 +574,9 @@ void ChangePasswordPage(const int screenWidth, const int screenHeight, account& 
 	Vector2 mousePoint = { 0.0f, 0.0f };
 	mousePoint = GetMousePosition();
 
-	char OldPass[21] = "\0";
-	char NewPass[21] = "\0";
-	char NewPassConfirm[21] = "\0";
+	char OldPass[MAX_INPUT_CHARS + 1] = "\0";
+	char NewPass[MAX_INPUT_CHARS + 1] = "\0";
+	char NewPassConfirm[MAX_INPUT_CHARS + 1] = "\0";
 	int letterCountOldPass = 0;
 	int letterCountNewPass = 0;
 	int letterCountNewPassConfirm = 0;
