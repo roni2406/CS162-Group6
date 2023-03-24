@@ -78,8 +78,9 @@ bool LoginFunction(account inputLoginData) {
 void addinfo(account person, char* filename, ofstream& fout)
 {
 	fout.open(filename, ios::app);
+	fout << endl;
 	fout << person.userName << endl;
-	fout << person.password << endl;
+	fout << person.password;
 	fout.close();
 }
 
@@ -124,7 +125,8 @@ void updateAccToFile(account* login_data, int n) {
 	fout.open("accounts.txt");
 	for (int i = 0; i < n; i++) {
 		fout << login_data[i].userName << endl;
-		fout << login_data[i].password << endl;
+		fout << login_data[i].password;
+		if (i != n - 1) fout << endl;
 	}
 	fout.close();
 }
