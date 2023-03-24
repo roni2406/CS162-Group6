@@ -66,7 +66,7 @@ void drawloginPage() {
 	while (!WindowShouldClose()) {
 		ClearBackground(WHITE);
 		BeginDrawing();
-		DrawRectangleGradientEx(background, DARKBLUE, BLUE, SKYBLUE, WHITE);
+		DrawRectangleGradientEx(background, WHITE,BLUE, WHITE,BLUE);
 		DrawRectangle(347, 173, 818, 560, WHITE);
 		DrawRectangle(0, 0, 1512, 60, WHITE);
 		DrawText("  Call us : (028) 3835 4266         E - mail : info@fit.hcmus.edu.vn", 0, 20, 20, DARKBLUE);
@@ -284,7 +284,7 @@ void SignUpPage(const int screenWidth, const int screenHeight, account& CurrentU
 		ClearBackground(WHITE);
 
 		BeginDrawing();
-		DrawRectangleGradientEx(background, DARKBLUE, BLUE, SKYBLUE, WHITE);
+		DrawRectangleGradientEx(background, WHITE, BLUE, WHITE, BLUE);
 		DrawRectangle(348, 110, 800, 680, WHITE);
 		DrawRectangle(0, 0, 1512, 60, WHITE);
 		DrawRectangleRec(textBoxBacktoLoginSite, WHITE);
@@ -531,7 +531,7 @@ void ProfilePage(const int screenWidth, const int screenHeight, account CurrentU
 		BeginDrawing();
 		DrawText("WELCOME!", 670, 15, 40, DARKBLUE);
 
-		DrawRectangleGradientEx(background, DARKBLUE, BLUE, SKYBLUE, WHITE);
+		DrawRectangleGradientEx(background, WHITE, BLUE, WHITE, BLUE);
 		DrawRectangle(70, 170, 360, 750, WHITE);
 		DrawRectangle(480, 170, 980, 750, WHITE);
 		DrawTexture(avatar, 150, 100, WHITE);
@@ -617,7 +617,7 @@ void ChangePasswordPage(const int screenWidth, const int screenHeight, account& 
 		ClearBackground(WHITE);
 		BeginDrawing();
 
-		DrawRectangleGradientEx(background, DARKBLUE, BLUE, SKYBLUE, WHITE);
+		DrawRectangleGradientEx(background, WHITE, BLUE, WHITE, BLUE);
 		DrawRectangle(347, 173, 818, 630, WHITE);
 		DrawRectangle(0, 0, 1512, 60, WHITE);
 		DrawText("  Call us : (028) 3835 4266         E - mail : info@fit.hcmus.edu.vn", 0, 20, 20, DARKBLUE);
@@ -800,9 +800,9 @@ void createSchoolYearPage() {
 		BeginDrawing();
 
 		DrawText("  Call us : (028) 3835 4266         E - mail : info@fit.hcmus.edu.vn", 0, 20, 20, DARKBLUE);
-		DrawRectangleGradientEx(background, DARKBLUE, BLUE, SKYBLUE, WHITE);
+		DrawRectangleGradientEx(background, WHITE, BLUE, WHITE, BLUE);
 
-		DrawRectangleGradientH(347, 173, 818, 560, DARKBLUE,DARKPURPLE);
+		DrawRectangle(347, 173, 818, 560, WHITE);
 
 		EndDrawing();
 	}
