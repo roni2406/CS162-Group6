@@ -13,6 +13,8 @@ int main()
     const int screenHeight = 982;
     InitWindow(screenWidth, screenHeight, "MainPage");
     drawloginPage();
+    
+    
     return 0;
 }
 
