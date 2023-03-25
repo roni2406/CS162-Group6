@@ -43,5 +43,7 @@ void read_input_user_createAClass(Class& className);
 void AddAClassToList(Class& className, ofstream& fout);
 void CreateASingleClassList(Class className, ofstream& fout);
 
-void viewClasses(); // 15
+// 15
+void viewClasses_PrepareData(Class* ClassList, ifstream& fin);
+void viewClasses_OutputToConsole(Class* ClassList);
 #endif 

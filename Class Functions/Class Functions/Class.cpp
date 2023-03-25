@@ -3,7 +3,6 @@
 #include <fstream>
 #include "Class.h"
 using namespace std;
-
 void read_input_user_createAClass(Class& className)
 {
 	className.classID = new char[9];
@@ -33,7 +32,40 @@ void CreateASingleClassList(Class className, ofstream& fout)
 	fout.close();
 }
 
-void viewClasses() // 15
+void viewClasses_PrepareData(Class* ClassList, ifstream& fin) // 15
+{
+	fin.open("List of Classes.txt");
+	ClassList = new Class[1000];
+	int i = 0;
+	char* str = nullptr;
+	int tmp = 0;
+	while (!fin.eof())
+	{
+		str = new char[11];
+		fin >> str;
+		ClassList[i].classID = str;
+		fin.ignore(101, '\n');
+		fin >> tmp;
+		ClassList[i].numOfStu = tmp;
+		fin.ignore(101, '\n');
+		++i;
+		delete[]str;
+		str = nullptr;
+	}
+	cout << "Number of Classes: " << i + 1 << '\n';
+	for (int j = 0; j < i; ++j)
+	{
+		cout << "Class " << j + 1 << ": " << ClassList[j].classID << '\n';
+		cout << "Number of Students: " << ClassList[j].numOfStu << '\n';
+		cout << '\n';
+	}
+	fin.close();
+	delete[] ClassList;
+	ClassList = nullptr;
+}
+
+void viewClasses_OutputToConsole(Class* ClassList)
 {
 
 }
+
