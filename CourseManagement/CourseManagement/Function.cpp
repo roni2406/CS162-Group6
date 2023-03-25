@@ -563,7 +563,7 @@ void ProfilePage(const int screenWidth, const int screenHeight, account CurrentU
 		}
 		else createSchoolYearBtnState = 0;
 		if (createSchoolYearBtnAction) {
-			createSchoolYearPage();
+			createSchoolYearPage(screenWidth, screenHeight, CurrentUser);
 		}
 		// Calculate button frame rectangle to draw depending on button state
 		sourceReccreateSchoolYearBtn.y = createSchoolYearBtnState * frameHeightcreateSchoolYearBtn;
@@ -784,7 +784,7 @@ void ChangePasswordPage(const int screenWidth, const int screenHeight, account& 
 	CloseWindow();
 }
 
-void createSchoolYearPage() {
+void createSchoolYearPage(const int screenWidth,const int screenHeight, account CurrentUser) {
 	Vector2 mousePoint = { 0.0f, 0.0f };
 	mousePoint = GetMousePosition();
 	Rectangle background = { 0,0,1512,982 };
@@ -863,7 +863,7 @@ void createSchoolYearPage() {
 		}
 		else confirmBtnState = 0;
 		if (confirmBtnAction) {
-			//ProfilePage(screenWidth, screenHeight, CurrentUser);
+			ProfilePage(screenWidth, screenHeight, CurrentUser);
 		}
 
 		// Calculate button frame rectangle to draw depending on button state

@@ -11,5 +11,5 @@ void drawloginPage();
 void SignUpPage(const int screenWidth, const int screenHeight, account& CurrentUser);
 void ProfilePage(const int screenWidth, const int screenHeight, account CurrentUser);
 void ChangePasswordPage(const int screenWidth, const int screenHeight, account& CurrentUser);
-void createSchoolYearPage();
+void createSchoolYearPage(const int screenWidth,const int screenHeight, account CurrentUser);
 
