@@ -60,7 +60,7 @@ void drawloginPage() {
 	while (!WindowShouldClose()) {
 		ClearBackground(WHITE);
 		BeginDrawing();
-		DrawRectangleGradientEx(background, WHITE,BLUE, WHITE,BLUE);
+		DrawRectangleGradientEx(background, SKYBLUE,DARKBLUE,DARKBLUE,SKYBLUE);
 		DrawRectangle(347, 173, 818, 560, WHITE);
 		DrawRectangle(0, 0, 1512, 60, WHITE);
 		DrawText("  Call us : (028) 3835 4266         E - mail : info@fit.hcmus.edu.vn", 0, 20, 20, DARKBLUE);
@@ -270,7 +270,7 @@ void SignUpPage(const int screenWidth, const int screenHeight, account& CurrentU
 		ClearBackground(WHITE);
 
 		BeginDrawing();
-		DrawRectangleGradientEx(background, WHITE, BLUE, WHITE, BLUE);
+		DrawRectangleGradientEx(background, SKYBLUE, DARKBLUE, DARKBLUE, SKYBLUE);
 		DrawRectangle(348, 110, 800, 680, WHITE);
 		DrawRectangle(0, 0, 1512, 60, WHITE);
 		DrawRectangleRec(textBoxBacktoLoginSite, WHITE);
@@ -523,9 +523,21 @@ void ProfilePage(const int screenWidth, const int screenHeight, account CurrentU
 		BeginDrawing();
 		DrawText("WELCOME!", 670, 15, 40, DARKBLUE);
 
-		DrawRectangleGradientEx(background, WHITE, BLUE, WHITE, BLUE);
+		DrawRectangleGradientEx(background, SKYBLUE, DARKBLUE, DARKBLUE, SKYBLUE);
+
 		DrawRectangle(70, 170, 360, 750, WHITE);
+		DrawRectangleLines(69, 169, 362, 752, BLACK);
+		DrawRectangleLines(68, 168, 364, 754, BLACK);
+
 		DrawRectangle(480, 170, 980, 750, WHITE);
+		DrawRectangleLines(479, 169, 982, 752, BLACK);
+		DrawRectangleLines(478, 168, 984, 754, BLACK);
+
+		DrawRectangle(480, 108, 250, 60, WHITE);
+		DrawRectangleLines(479, 107, 252, 62, BLACK);
+		DrawRectangleLines(478, 106, 254, 64, BLACK);
+		DrawText("School Years", 500, 123, 30, DARKBLUE);
+
 		DrawTexture(avatar, 150, 100, WHITE);
 		DrawText("Username: ", 90, 330, 20, DARKBLUE);
 		DrawText(CurrentUser.userName, 200, 330, 20, DARKGRAY);
@@ -609,7 +621,7 @@ void ChangePasswordPage(const int screenWidth, const int screenHeight, account& 
 		ClearBackground(WHITE);
 		BeginDrawing();
 
-		DrawRectangleGradientEx(background, WHITE, BLUE, WHITE, BLUE);
+		DrawRectangleGradientEx(background, SKYBLUE, DARKBLUE, DARKBLUE, SKYBLUE);
 		DrawRectangle(347, 173, 818, 630, WHITE);
 		DrawRectangle(0, 0, 1512, 60, WHITE);
 		DrawText("  Call us : (028) 3835 4266         E - mail : info@fit.hcmus.edu.vn", 0, 20, 20, DARKBLUE);
@@ -807,7 +819,7 @@ void createSchoolYearPage(const int screenWidth,const int screenHeight, account 
 		BeginDrawing();
 
 		DrawText("  Call us : (028) 3835 4266         E - mail : info@fit.hcmus.edu.vn", 0, 20, 20, DARKBLUE);
-		DrawRectangleGradientEx(background, WHITE, BLUE, WHITE, BLUE);
+		DrawRectangleGradientEx(background, SKYBLUE, DARKBLUE, DARKBLUE, SKYBLUE);
 		DrawRectangle(347, 173, 818, 373, WHITE);
 
 		DrawRectangleRec(textBoxschoolYearName, LIGHTGRAY);
@@ -870,6 +882,87 @@ void createSchoolYearPage(const int screenWidth,const int screenHeight, account 
 		sourceRecconfirmBtn.y = confirmBtnState * frameHeightconfirmBtn;
 		DrawTextureRec(confirmBtn, sourceRecconfirmBtn, { btnBoundsconfirmBtn.x, btnBoundsconfirmBtn.y }, WHITE); // Draw button frame
 
+		EndDrawing();
+	}
+	CloseWindow();
+}
+
+void SemestersNClassesPage(const int screenWidth, const int screenHeight, account CurrentUser) {
+	//Initialize variable---------------------------------------------------------------------------------------------
+	Vector2 mousePoint = { 0.0f, 0.0f };
+	mousePoint = GetMousePosition();
+
+	Rectangle background = { 0,0,1512,982 };
+
+	Texture2D avatar;
+	avatar = LoadTexture("avatar.png");
+
+	Texture2D changePassBtn = LoadTexture("changePassBtn.png");
+	float frameHeightchangePassBtn = (float)changePassBtn.height;
+	Rectangle sourceRecchangePassBtn = { 0, 0, (float)changePassBtn.width,frameHeightchangePassBtn };
+	// Define button bounds on screen
+	Rectangle btnBoundschangePassBtn = { 170, 800, (float)changePassBtn.width, frameHeightchangePassBtn };
+	int changePassBtnState = 0;               // Button state: 0-NORMAL, 1-MOUSE_HOVER, 2-PRESSED
+	bool changePassBtnAction = false;         // Button action should be activated
+
+	Texture2D logOutBtn = LoadTexture("logOutBtn.png");
+	float frameHeightlogOutBtn = (float)logOutBtn.height;
+	Rectangle sourceReclogOutBtn = { 0, 0, (float)logOutBtn.width,frameHeightlogOutBtn };
+	// Define button bounds on screen
+	Rectangle btnBoundslogOutBtn = { 170, 730, (float)logOutBtn.width, frameHeightlogOutBtn };
+	int logOutBtnState = 0;               // Button state: 0-NORMAL, 1-MOUSE_HOVER, 2-PRESSED
+	bool logOutBtnAction = false;         // Button action should be activated
+
+	while (!WindowShouldClose()) {
+		ClearBackground(WHITE);
+
+		BeginDrawing();
+		DrawText("WELCOME!", 670, 15, 40, DARKBLUE);
+
+		DrawRectangleGradientEx(background, SKYBLUE, DARKBLUE, DARKBLUE, SKYBLUE);
+		DrawRectangle(70, 170, 360, 750, WHITE);
+		DrawRectangleLines(69, 169, 362, 752, BLACK);
+		DrawRectangleLines(68, 168, 364, 754, BLACK);
+
+		DrawRectangle(480, 170, 980, 750, WHITE);
+		DrawRectangleLines(479, 169, 982, 752, BLACK);
+		DrawRectangleLines(478, 168, 984, 754, BLACK);
+
+		DrawRectangle(480, 108, 250, 60, WHITE);
+		DrawRectangleLines(479, 107, 252, 62, BLACK);
+		DrawRectangleLines(478, 106, 254, 64, BLACK);
+		DrawText("School Years", 500, 123, 30, DARKBLUE);
+
+		DrawTexture(avatar, 150, 100, WHITE);
+		DrawText("Username: ", 90, 330, 20, DARKBLUE);
+		DrawText(CurrentUser.userName, 200, 330, 20, DARKGRAY);
+		////change password button function-----------------------------------------------------------------------------------------------------------
+		mousePoint = GetMousePosition();
+		changePassBtnAction = false;
+		if (CheckCollisionPointRec(mousePoint, btnBoundschangePassBtn)) {          // Check button state
+			if (IsMouseButtonPressed(MOUSE_BUTTON_LEFT)) changePassBtnAction = true;
+		}
+		else changePassBtnState = 0;
+		if (changePassBtnAction) {
+			ChangePasswordPage(screenWidth, screenHeight, CurrentUser);
+		}
+		// Calculate button frame rectangle to draw depending on button state
+		sourceRecchangePassBtn.y = changePassBtnState * frameHeightchangePassBtn;
+		DrawTextureRec(changePassBtn, sourceRecchangePassBtn, { btnBoundschangePassBtn.x, btnBoundschangePassBtn.y }, WHITE); // Draw button frame
+		////log out button function-------------------------------------------------------------------------------------------------------------------
+		mousePoint = GetMousePosition();
+		logOutBtnAction = false;
+		if (CheckCollisionPointRec(mousePoint, btnBoundslogOutBtn)) {          // Check button state
+			if (IsMouseButtonPressed(MOUSE_BUTTON_LEFT)) logOutBtnAction = true;
+		}
+		else logOutBtnState = 0;
+		if (logOutBtnAction) {
+			drawloginPage();
+		}
+		// Calculate button frame rectangle to draw depending on button state
+		sourceReclogOutBtn.y = logOutBtnState * frameHeightlogOutBtn;
+		DrawTextureRec(logOutBtn, sourceReclogOutBtn, { btnBoundslogOutBtn.x, btnBoundslogOutBtn.y }, WHITE); // Draw button frame
+		
 		EndDrawing();
 	}
 	CloseWindow();
