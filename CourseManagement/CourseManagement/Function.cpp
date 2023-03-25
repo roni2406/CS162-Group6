@@ -5,26 +5,21 @@
 #include "Function.h"
 
 using namespace std;
-const int MAX_INPUT_CHARS = 18;
 
 
 //FRONT_END--------------------------------------------------------
-void drawloginPage() {
-	const int screenWidth = 1512;
-	const int screenHeight = 982;
+
+void LogInPage(const int screenWidth, const int screenHeight, account& CurrentUser) {
+
 	Rectangle background = { 0,0,1512,982 };
-	account CurrentUser;
-	//Initialize-------------------------------------------------------
-	char name[MAX_INPUT_CHARS + 1] = "\0";
-	char pass[MAX_INPUT_CHARS + 1] = "\0";
-	char HiddenPass[MAX_INPUT_CHARS + 1] = "\0";
-	int letterCountHiddenPass = 0;
-	int letterCountUsername = 0;
-	int letterCountPassword = 0;
-	Rectangle textBoxUsername = { 477, 239,558,106 };
-	Rectangle textBoxPassword = { 477, 403,558,106 };
-	bool mouseOnTextUsername = false;
-	bool mouseOnTextPassword = false;
+
+	//Initialize textbox-------------------------------------------------------
+	Textbox1 username;
+	username.textbox = { 477, 239,558,106 };
+
+	Textbox2 password;
+	password.textbox = { 477, 403,558,106 };
+	
 
 	////initialize login button---------------------------------------------------------------------------------------------------
 	Texture2D loginButton = LoadTexture("loginButton.png");
@@ -37,23 +32,19 @@ void drawloginPage() {
 	int loginbtnState = 0;               // Button state: 0-NORMAL, 1-MOUSE_HOVER, 2-PRESSED
 	bool loginbtnAction = false;         // Button action should be activated
 	bool isLoginFalseDisplay = false;
-    ////----------------------------------------------------------------------------------------------------------------------------------4
+   
 	////initialize signup button---------------------------------------------------------------------------------------------------
-	Texture2D signupButton = LoadTexture("signupButton.png");
-	float frameHeightsignupButton = (float)signupButton.height;
-	Rectangle sourceRecsignupButton = { 0, 0, (float)signupButton.width, frameHeightsignupButton };
-	Rectangle btnBoundssignupButton = { (screenWidth / 2.0f - loginButton.width / 2.0f) - 10, 650, (float)signupButton.width, frameHeightsignupButton };
+	Button1 SignUp;
+	SignUp.texture = LoadTexture("signupButton.png");
+	SignUp.frameHeight = (float)SignUp.texture.height;
+	SignUp.sourceRec = { 0, 0, (float)SignUp.texture.width, SignUp.frameHeight };
+	SignUp.btnBounds = { (screenWidth / 2.0f - SignUp.texture.width / 2.0f) - 10, 650, (float)SignUp.texture.width, SignUp.frameHeight };
 
-	int signupbtnState = 0;               // Button state: 0-NORMAL, 1-MOUSE_HOVER, 2-PRESSED
-	bool signupbtnAction = false;         // Button action should be activated
-	////--------------------------------------------------------------------------------------------------------------------------------
 	////initialize for login--------------------------------------------------------------------------------------------------------------
 
 	account inputLoginData;
-
 	Vector2 mousePoint = { 0.0f, 0.0f };
-
-
+	
 	SetTargetFPS(40);
 	//------------------------------------------------------------------------------------------------------------------------------------------------------
 	//Draw--------------------------------------------------------------------------------------------------------------------------------------------------
@@ -65,110 +56,21 @@ void drawloginPage() {
 		DrawRectangle(0, 0, 1512, 60, WHITE);
 		DrawText("  Call us : (028) 3835 4266         E - mail : info@fit.hcmus.edu.vn", 0, 20, 20, DARKBLUE);
 		DrawText("You are not logged in.", 1200, 20, 20, DARKBLUE);
-		DrawRectangleRec(textBoxUsername, LIGHTGRAY);
-		DrawRectangleRec(textBoxPassword, LIGHTGRAY);
+		DrawRectangleRec(username.textbox, LIGHTGRAY);
+		DrawRectangleRec(password.textbox, LIGHTGRAY);
 		DrawText("* Username", 477, 200, 30, DARKBLUE);
 		DrawText("* Password", 477, 364, 30, DARKBLUE);
 		DrawText("or", 735, 615, 30,DARKBLUE);
 
 		////Function_of_TextInputBoxes_----------------------------------------------------------------------------------------------------------------------
-		if (CheckCollisionPointRec(GetMousePosition(), textBoxUsername)) mouseOnTextUsername = true;
-		else mouseOnTextUsername = false;
-		if (CheckCollisionPointRec(GetMousePosition(), textBoxPassword)) mouseOnTextPassword = true;
-		else mouseOnTextPassword = false;
+		username.worktextbox(isLoginFalseDisplay);
+		password.worktextbox(isLoginFalseDisplay);
 
-		if (mouseOnTextUsername)
-		{
-			// Set the window's cursor to the I-Beam
-			SetMouseCursor(MOUSE_CURSOR_IBEAM);
 
-			// Get char pressed (unicode character) on the queue
-			int key = GetCharPressed();
-
-			// Check if more characters have been pressed on the same frame
-			while (key > 0)
-			{
-				// NOTE: Only allow keys in range [32..125]
-				if ((key >= 32) && (key <= 125) && (letterCountUsername < MAX_INPUT_CHARS))
-				{
-					name[letterCountUsername] = (char)key;
-					name[letterCountUsername + 1] = '\0'; // Add null terminator at the end of the string.
-					letterCountUsername++;
-				}
-
-				key = GetCharPressed();  // Check next character in the queue
-			}
-
-			if (IsKeyPressed(KEY_BACKSPACE))
-			{
-				letterCountUsername--;
-				if (letterCountUsername < 0) letterCountUsername = 0;
-				name[letterCountUsername] = '\0';
-			}
-		}
-		else SetMouseCursor(MOUSE_CURSOR_DEFAULT);
-
-		if (mouseOnTextPassword)
-		{
-			// Set the window's cursor to the I-Beam
-			SetMouseCursor(MOUSE_CURSOR_IBEAM);
-
-			// Get char pressed (unicode character) on the queue
-			int key = GetCharPressed();
-
-			// Check if more characters have been pressed on the same frame
-			while (key > 0)
-			{
-				// NOTE: Only allow keys in range [32..125]
-				if ((key >= 32) && (key <= 125) && (letterCountPassword < MAX_INPUT_CHARS))
-				{
-					pass[letterCountPassword] = (char)key;
-					pass[letterCountPassword + 1] = '\0'; // Add null terminator at the end of the string.
-					letterCountPassword++;
-
-					HiddenPass[letterCountHiddenPass] = '*';
-					HiddenPass[letterCountHiddenPass + 1] = '\0';
-					letterCountHiddenPass++;
-				}
-
-				key = GetCharPressed();  // Check next character in the queue
-			}
-
-			if (IsKeyPressed(KEY_BACKSPACE))
-			{
-				letterCountPassword--;
-				if (letterCountPassword < 0) letterCountPassword = 0;
-				pass[letterCountPassword] = '\0';
-
-				letterCountHiddenPass--;
-				if (letterCountHiddenPass < 0) letterCountHiddenPass = 0;
-				HiddenPass[letterCountHiddenPass] = '\0';
-			}
-		}
-		else SetMouseCursor(MOUSE_CURSOR_DEFAULT);
-
-		if (mouseOnTextUsername) {
-			DrawRectangleLines((int)textBoxUsername.x, (int)textBoxUsername.y, (int)textBoxUsername.width, (int)textBoxUsername.height, BLUE);
-			DrawRectangleLines((int)textBoxUsername.x - 1, (int)textBoxUsername.y - 1, (int)textBoxUsername.width + 2, (int)textBoxUsername.height + 2, BLUE);
-			DrawRectangleLines((int)textBoxUsername.x - 2, (int)textBoxUsername.y - 2, (int)textBoxUsername.width + 4, (int)textBoxUsername.height + 4, BLUE);
-			isLoginFalseDisplay = false;
-		}
-		else DrawRectangleLines((int)textBoxUsername.x, (int)textBoxUsername.y, (int)textBoxUsername.width, (int)textBoxUsername.height, DARKGRAY);
-
-		if (mouseOnTextPassword) {
-			DrawRectangleLines((int)textBoxPassword.x, (int)textBoxPassword.y, (int)textBoxPassword.width, (int)textBoxPassword.height, BLUE);
-			DrawRectangleLines((int)textBoxPassword.x - 1, (int)textBoxPassword.y - 1, (int)textBoxPassword.width + 2, (int)textBoxPassword.height + 2, BLUE);
-			DrawRectangleLines((int)textBoxPassword.x - 2, (int)textBoxPassword.y - 2, (int)textBoxPassword.width + 4, (int)textBoxPassword.height + 4, BLUE);
-			isLoginFalseDisplay = false;
-		}
-		else DrawRectangleLines((int)textBoxPassword.x, (int)textBoxPassword.y, (int)textBoxPassword.width, (int)textBoxPassword.height, DARKGRAY);
-
-		DrawText(name, 500, 270, 40, DARKBLUE);
-		DrawText(HiddenPass, 500, 440, 40, DARKBLUE);
-
-		DrawText(TextFormat("%i/%i", letterCountUsername, MAX_INPUT_CHARS), 1050, 280, 20, DARKBLUE);
-		DrawText(TextFormat("%i/%i", letterCountPassword, MAX_INPUT_CHARS), 1050, 450, 20, DARKBLUE);
-		////-------------------------------------------------------------------------------------------------------------------------------------------------
+		DrawText(username.text, 500, 270, 40, DARKBLUE);
+		DrawText(TextFormat("%i/%i", username.lettercount, MAX_INPUT_CHARS), 1050, 280, 20, DARKBLUE);
+		DrawText(password.hiddentext, 500, 440, 40, DARKBLUE);
+		DrawText(TextFormat("%i/%i", password.lettercount, MAX_INPUT_CHARS), 1050, 450, 20, DARKBLUE);
 
 		////Function of login button-------------------------------------------------------------------------------------------------------------------------
 		mousePoint = GetMousePosition();
@@ -179,15 +81,15 @@ void drawloginPage() {
 		}
 		else loginbtnState = 0;
 
-		inputLoginData.userName = _strdup(name);
-		inputLoginData.password = _strdup(pass);
+		inputLoginData.userName = _strdup(username.text);
+		inputLoginData.password = _strdup(password.text);
 
 		if (loginbtnAction)
 		{
 			
-			if (LoginFunction(inputLoginData) && name[0] != '\0' && pass[0] != '\0') {
-				CurrentUser.password = pass;
-				CurrentUser.userName = name;
+			if (LoginFunction(inputLoginData)) {
+				CurrentUser.password = password.text;
+				CurrentUser.userName = username.text;
 				ProfilePage(screenWidth, screenHeight, CurrentUser);
 			}
 			else isLoginFalseDisplay = true;
@@ -200,20 +102,7 @@ void drawloginPage() {
 		//--------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 		
 		////Function of signup button-------------------------------------------------------------------------------------------------------------------------
-		mousePoint = GetMousePosition();
-		signupbtnAction = false;
-
-		if (CheckCollisionPointRec(mousePoint, btnBoundssignupButton)) {          // Check button state
-			if (IsMouseButtonPressed(MOUSE_BUTTON_LEFT)) signupbtnAction = true;
-		}
-		else signupbtnState = 0;
-		if (signupbtnAction) {
-			SignUpPage(screenWidth, screenHeight, CurrentUser);
-		}
-
-		sourceRecsignupButton.y = signupbtnState * frameHeightsignupButton;
-		DrawTextureRec(signupButton, sourceRecsignupButton, { btnBoundssignupButton.x, btnBoundssignupButton.y }, WHITE);
-
+		SignUp.workbutton(mousePoint, CurrentUser, SignUpPage);
 		EndDrawing();
 	}
 	CloseWindow();
@@ -223,28 +112,17 @@ void SignUpPage(const int screenWidth, const int screenHeight, account& CurrentU
 	Rectangle background = { 0,0,1512,982 };
 
 	//Initialize---------------------------------------------------------------------
-	char name[MAX_INPUT_CHARS + 1] = "\0";
-	char pass[MAX_INPUT_CHARS + 1] = "\0";
-	char confirmpass[MAX_INPUT_CHARS + 1] = "\0";
+	Textbox1 username;
+	username.textbox = { 471, 200, 558, 112 };
 
-	int letterCountUsername = 0;
-	int letterCountPassword = 0;
-	int letterCountConfirmPassword = 0;
+	Textbox2 password;
+	password.textbox = { 471, 373, 558, 112 };
+	Textbox2 confirmpass;
+	confirmpass.textbox = { 471, 546, 558, 112 };
 
-	Rectangle textBoxUsername = { 471, 200, 558, 112 };
-	Rectangle textBoxPassword = { 471, 373, 558, 112 };
-	Rectangle textBoxConfirmPassword = { 471, 546, 558, 112 };
 	Rectangle textBoxBacktoLoginSite = { 1300, 20, 200, 30 };
-
-
-	bool mouseOnTextUsername = false;
-	bool mouseOnTextPassword = false;
-	bool mouseOnTextConfirmPassword = false;
 	bool mouseOnTextBacktoLoginSite = false;
 
-	int framesCounterUsername = 0;
-	int framesCounterPassword = 0;
-	int framesCounterConfirmPassword = 0;
 
 	////initialize signup button---------------------------------------------------------------------------------------------------
 	Texture2D signupButton = LoadTexture("signupButton.png");
@@ -276,153 +154,26 @@ void SignUpPage(const int screenWidth, const int screenHeight, account& CurrentU
 		DrawRectangleRec(textBoxBacktoLoginSite, WHITE);
 		DrawText("  Call us : (028) 3835 4266         E - mail : info@fit.hcmus.edu.vn", 0, 20, 20, DARKBLUE);
 		DrawText("Back to Log in Site", 1300, 20, 20, DARKBLUE);
-		DrawRectangleRec(textBoxUsername, LIGHTGRAY);
-		DrawRectangleRec(textBoxPassword, LIGHTGRAY);
-		DrawRectangleRec(textBoxConfirmPassword, LIGHTGRAY);
+		DrawRectangleRec(username.textbox, LIGHTGRAY);
+		DrawRectangleRec(password.textbox, LIGHTGRAY);
+		DrawRectangleRec(confirmpass.textbox, LIGHTGRAY);
 		DrawText("* Username", 471, 165, 30, DARKBLUE);
 		DrawText("* Password", 471, 338, 30, DARKBLUE);
 		DrawText("* Confirm Password", 471, 511, 30, DARKBLUE);
 
 		////Function_of_TextInputBoxes_----------------------------------------------------------------------------------------------------------------------
-		if (CheckCollisionPointRec(GetMousePosition(), textBoxUsername)) mouseOnTextUsername = true;
-		else mouseOnTextUsername = false;
-		if (CheckCollisionPointRec(GetMousePosition(), textBoxPassword)) mouseOnTextPassword = true;
-		else mouseOnTextPassword = false;
-		if (CheckCollisionPointRec(GetMousePosition(), textBoxConfirmPassword)) mouseOnTextConfirmPassword = true;
-		else mouseOnTextConfirmPassword = false;
+		username.worktextbox(issignupFalseDisplay);
+		password.worktextbox(issignupFalseDisplay);
+		confirmpass.worktextbox(issignupFalseDisplay);
+		
 
-		if (mouseOnTextUsername)
-		{
-			// Set the window's cursor to the I-Beam
-			SetMouseCursor(MOUSE_CURSOR_IBEAM);
+		DrawText(username.text, 500, 231, 40, DARKBLUE);
+		DrawText(password.hiddentext, 500, 400, 40, DARKBLUE);
+		DrawText(confirmpass.hiddentext, 500, 573, 40, DARKBLUE);
 
-			// Get char pressed (unicode character) on the queue
-			int key = GetCharPressed();
-
-			// Check if more characters have been pressed on the same frame
-			while (key > 0)
-			{
-				// NOTE: Only allow keys in range [32..125]
-				if ((key >= 32) && (key <= 125) && (letterCountUsername < MAX_INPUT_CHARS))
-				{
-					name[letterCountUsername] = (char)key;
-					name[letterCountUsername + 1] = '\0'; // Add null terminator at the end of the string.
-					letterCountUsername++;
-				}
-
-				key = GetCharPressed();  // Check next character in the queue
-			}
-
-			if (IsKeyPressed(KEY_BACKSPACE))
-			{
-				letterCountUsername--;
-				if (letterCountUsername < 0) letterCountUsername = 0;
-				name[letterCountUsername] = '\0';
-			}
-		}
-		else SetMouseCursor(MOUSE_CURSOR_DEFAULT);
-		if (mouseOnTextUsername) framesCounterUsername++;
-		else framesCounterUsername = 0;
-
-		if (mouseOnTextPassword)
-		{
-			// Set the window's cursor to the I-Beam
-			SetMouseCursor(MOUSE_CURSOR_IBEAM);
-
-			// Get char pressed (unicode character) on the queue
-			int key = GetCharPressed();
-
-			// Check if more characters have been pressed on the same frame
-			while (key > 0)
-			{
-				// NOTE: Only allow keys in range [32..125]
-				if ((key >= 32) && (key <= 125) && (letterCountPassword < MAX_INPUT_CHARS))
-				{
-					pass[letterCountPassword] = (char)key;
-					pass[letterCountPassword + 1] = '\0'; // Add null terminator at the end of the string.
-					letterCountPassword++;
-				}
-
-				key = GetCharPressed();  // Check next character in the queue
-			}
-
-			if (IsKeyPressed(KEY_BACKSPACE))
-			{
-				letterCountPassword--;
-				if (letterCountPassword < 0) letterCountPassword = 0;
-				pass[letterCountPassword] = '\0';
-			}
-		}
-		else SetMouseCursor(MOUSE_CURSOR_DEFAULT);
-		if (mouseOnTextPassword) framesCounterPassword++;
-		else framesCounterPassword = 0;
-
-		if (mouseOnTextConfirmPassword)
-		{
-			// Set the window's cursor to the I-Beam
-			SetMouseCursor(MOUSE_CURSOR_IBEAM);
-
-			// Get char pressed (unicode character) on the queue
-			int key = GetCharPressed();
-
-			// Check if more characters have been pressed on the same frame
-			while (key > 0)
-			{
-				// NOTE: Only allow keys in range [32..125]
-				if ((key >= 32) && (key <= 125) && (letterCountConfirmPassword < MAX_INPUT_CHARS))
-				{
-					confirmpass[letterCountConfirmPassword] = (char)key;
-					confirmpass[letterCountConfirmPassword + 1] = '\0'; // Add null terminator at the end of the string.
-					letterCountConfirmPassword++;
-				}
-
-				key = GetCharPressed();  // Check next character in the queue
-			}
-
-			if (IsKeyPressed(KEY_BACKSPACE))
-			{
-				letterCountConfirmPassword--;
-				if (letterCountConfirmPassword < 0) letterCountConfirmPassword = 0;
-				confirmpass[letterCountConfirmPassword] = '\0';
-			}
-		}
-
-		else SetMouseCursor(MOUSE_CURSOR_DEFAULT);
-		if (mouseOnTextConfirmPassword) framesCounterConfirmPassword++;
-		else framesCounterConfirmPassword = 0;
-
-		if (mouseOnTextUsername) {
-			DrawRectangleLines((int)textBoxUsername.x, (int)textBoxUsername.y, (int)textBoxUsername.width, (int)textBoxUsername.height, BLUE);
-			DrawRectangleLines((int)textBoxUsername.x - 1, (int)textBoxUsername.y - 1, (int)textBoxUsername.width + 2, (int)textBoxUsername.height + 2, BLUE);
-			DrawRectangleLines((int)textBoxUsername.x - 2, (int)textBoxUsername.y - 2, (int)textBoxUsername.width + 4, (int)textBoxUsername.height + 4, BLUE);
-			issignupFalseDisplay = false;
-		}
-		else DrawRectangleLines((int)textBoxUsername.x, (int)textBoxUsername.y, (int)textBoxUsername.width, (int)textBoxUsername.height, DARKGRAY);
-
-		if (mouseOnTextPassword) {
-			DrawRectangleLines((int)textBoxPassword.x, (int)textBoxPassword.y, (int)textBoxPassword.width, (int)textBoxPassword.height, BLUE);
-			DrawRectangleLines((int)textBoxPassword.x - 1, (int)textBoxPassword.y - 1, (int)textBoxPassword.width + 2, (int)textBoxPassword.height + 2, BLUE);
-			DrawRectangleLines((int)textBoxPassword.x - 2, (int)textBoxPassword.y - 2, (int)textBoxPassword.width + 4, (int)textBoxPassword.height + 4, BLUE);
-			issignupFalseDisplay = false;
-
-		}
-		else DrawRectangleLines((int)textBoxPassword.x, (int)textBoxPassword.y, (int)textBoxPassword.width, (int)textBoxPassword.height, DARKGRAY);
-
-		if (mouseOnTextConfirmPassword) {
-			DrawRectangleLines((int)textBoxConfirmPassword.x, (int)textBoxConfirmPassword.y, (int)textBoxConfirmPassword.width, (int)textBoxConfirmPassword.height, BLUE);
-			DrawRectangleLines((int)textBoxConfirmPassword.x - 1, (int)textBoxConfirmPassword.y - 1, (int)textBoxConfirmPassword.width + 2, (int)textBoxConfirmPassword.height + 2, BLUE);
-			DrawRectangleLines((int)textBoxConfirmPassword.x - 2, (int)textBoxConfirmPassword.y - 2, (int)textBoxConfirmPassword.width + 4, (int)textBoxConfirmPassword.height + 4, BLUE);
-			issignupFalseDisplay = false;
-		}
-		else DrawRectangleLines((int)textBoxConfirmPassword.x, (int)textBoxConfirmPassword.y, (int)textBoxConfirmPassword.width, (int)textBoxConfirmPassword.height, DARKGRAY);
-
-		DrawText(name, 500, 231, 40, DARKBLUE);
-		DrawText(pass, 500, 400, 40, DARKBLUE);
-		DrawText(confirmpass, 500, 573, 40, DARKBLUE);
-
-		DrawText(TextFormat("%i/%i", letterCountUsername, MAX_INPUT_CHARS), 1050, 280, 20, DARKBLUE);
-		DrawText(TextFormat("%i/%i", letterCountPassword, MAX_INPUT_CHARS), 1050, 450, 20, DARKBLUE);
-		DrawText(TextFormat("%i/%i", letterCountConfirmPassword, MAX_INPUT_CHARS), 1050, 620, 20, DARKBLUE);
+		DrawText(TextFormat("%i/%i", username.lettercount, MAX_INPUT_CHARS), 1050, 280, 20, DARKBLUE);
+		DrawText(TextFormat("%i/%i", password.lettercount, MAX_INPUT_CHARS), 1050, 450, 20, DARKBLUE);
+		DrawText(TextFormat("%i/%i", confirmpass.lettercount, MAX_INPUT_CHARS), 1050, 620, 20, DARKBLUE);
 		////-------------------------------------------------------------------------------------------------------------------------------------------------
 
 		////Function of signup button------------------------------------------------------------------------------------------------------------------------
@@ -435,30 +186,17 @@ void SignUpPage(const int screenWidth, const int screenHeight, account& CurrentU
 		}
 		else signupbtnState = false;
 
-		newinfo.userName = _strdup(name);
-		newinfo.password = _strdup(pass);
+		newinfo.userName = _strdup(username.text);
+		newinfo.password = _strdup(password.text);
 
 		if (signupbtnAction)
 		{
-			if (SignupFunction(newinfo, confirmpass)) {
+			if (SignupFunction(newinfo, confirmpass.text)) {
 				issignupFalseDisplay = false;
-				drawloginPage();
+				LogInPage(screenWidth, screenHeight, CurrentUser);
 			}
 			else
 				issignupFalseDisplay = true;
-			/*for (int i = 0; i < n; ++i) {
-				if (strcmp(newinfo.userName, login_account[i].userName) == 0) {
-					issignupFalseDisplay = true;
-					break;
-				}
-				if (i == n-1) {
-					if (strcmp(confirmpass, pass) == 0) {
-						addinfo(newinfo, (char*)"accounts.txt", fout);
-						drawloginPage();
-					}
-					else issignupFalseDisplay = true;
-				}
-			}*/
 		}
 		if (issignupFalseDisplay) DrawText("Username have been used or wrong password! Please try again!", 430, 673, 20, RED);
 
@@ -470,7 +208,7 @@ void SignUpPage(const int screenWidth, const int screenHeight, account& CurrentU
 
 		if (BacktoLoginSiteAction)
 		{
-			drawloginPage();
+			LogInPage(screenWidth, screenHeight, CurrentUser);
 		}
 
 		// Calculate button frame rectangle to draw depending on button state
@@ -484,39 +222,32 @@ void SignUpPage(const int screenWidth, const int screenHeight, account& CurrentU
 
 }
 
-void ProfilePage(const int screenWidth, const int screenHeight, account CurrentUser) {
+void ProfilePage(const int screenWidth, const int screenHeight, account& CurrentUser) {
 	//Initialize variable---------------------------------------------------------------------------------------------
-	Vector2 mousePoint = { 0.0f, 0.0f };
-	mousePoint = GetMousePosition();
-
-	Rectangle background = { 0,0,1512,982 };
-
 	Texture2D avatar;
 	avatar = LoadTexture("avatar.png");
 
-	Texture2D changePassBtn = LoadTexture("changePassBtn.png");
-	float frameHeightchangePassBtn = (float)changePassBtn.height;
-	Rectangle sourceRecchangePassBtn = { 0, 0, (float)changePassBtn.width,frameHeightchangePassBtn };
-	// Define button bounds on screen
-	Rectangle btnBoundschangePassBtn = { 170, 800, (float)changePassBtn.width, frameHeightchangePassBtn };
-	int changePassBtnState = 0;               // Button state: 0-NORMAL, 1-MOUSE_HOVER, 2-PRESSED
-	bool changePassBtnAction = false;         // Button action should be activated
+	Vector2 mousePoint = { 0.0f, 0.0f };
+	Rectangle background = { 0,0,1512,982 };
+	
+	Button1 ChangePass;
+	ChangePass.texture = LoadTexture("changePassBtn.png");
+	ChangePass.frameHeight = (float)ChangePass.texture.height;
+	ChangePass.sourceRec = { 0, 0, (float)ChangePass.texture.width, ChangePass.frameHeight };
+	ChangePass.btnBounds = { 170, 800, (float)ChangePass.texture.width, ChangePass.frameHeight };
 
-	Texture2D logOutBtn = LoadTexture("logOutBtn.png");
-	float frameHeightlogOutBtn = (float)logOutBtn.height;
-	Rectangle sourceReclogOutBtn = { 0, 0, (float)logOutBtn.width,frameHeightlogOutBtn };
-	// Define button bounds on screen
-	Rectangle btnBoundslogOutBtn = { 170, 730, (float)logOutBtn.width, frameHeightlogOutBtn };
-	int logOutBtnState = 0;               // Button state: 0-NORMAL, 1-MOUSE_HOVER, 2-PRESSED
-	bool logOutBtnAction = false;         // Button action should be activated
+	Button1 LogOut;
+	LogOut.texture = LoadTexture("logOutBtn.png");
+	LogOut.frameHeight = (float)LogOut.texture.height;
+	LogOut.sourceRec = { 0, 0, (float)LogOut.texture.width,LogOut.frameHeight };
+	LogOut.btnBounds = { 170, 730, (float)LogOut.texture.width,LogOut.frameHeight };
 
-	Texture2D createSchoolYearBtn = LoadTexture("createSchoolYearBtn.png");
-	float frameHeightcreateSchoolYearBtn = (float)createSchoolYearBtn.height;
-	Rectangle sourceReccreateSchoolYearBtn = { 0, 0, (float)createSchoolYearBtn.width,frameHeightcreateSchoolYearBtn };
-	// Define button bounds on screen
-	Rectangle btnBoundscreateSchoolYearBtn = { 544, 200, (float)createSchoolYearBtn.width, frameHeightcreateSchoolYearBtn };
-	int createSchoolYearBtnState = 0;               // Button state: 0-NORMAL, 1-MOUSE_HOVER, 2-PRESSED
-	bool createSchoolYearBtnAction = false;         // Button action should be activated
+	Button1 CreateSchoolYear;
+	CreateSchoolYear.texture = LoadTexture("createSchoolYearBtn.png");
+	CreateSchoolYear.frameHeight = (float)CreateSchoolYear.texture.height;
+	CreateSchoolYear.sourceRec = { 0, 0, (float)CreateSchoolYear.texture.width, CreateSchoolYear.frameHeight };
+	CreateSchoolYear.btnBounds = { 544, 200, (float)CreateSchoolYear.texture.width, CreateSchoolYear.frameHeight };
+	
 	while (!WindowShouldClose()) {
 		ClearBackground(WHITE);
 
@@ -541,74 +272,32 @@ void ProfilePage(const int screenWidth, const int screenHeight, account CurrentU
 		DrawTexture(avatar, 150, 100, WHITE);
 		DrawText("Username: ", 90, 330, 20, DARKBLUE);
 		DrawText(CurrentUser.userName, 200, 330, 20, DARKGRAY);
+
+		mousePoint = GetMousePosition();
 		////change password button function-----------------------------------------------------------------------------------------------------------
-		mousePoint = GetMousePosition();
-		changePassBtnAction = false;
-		if (CheckCollisionPointRec(mousePoint, btnBoundschangePassBtn)) {          // Check button state
-			if (IsMouseButtonPressed(MOUSE_BUTTON_LEFT)) changePassBtnAction = true;
-		}
-		else changePassBtnState = 0;
-		if (changePassBtnAction) {
-			ChangePasswordPage(screenWidth, screenHeight, CurrentUser);
-		}
-		// Calculate button frame rectangle to draw depending on button state
-		sourceRecchangePassBtn.y = changePassBtnState * frameHeightchangePassBtn;
-		DrawTextureRec(changePassBtn, sourceRecchangePassBtn, { btnBoundschangePassBtn.x, btnBoundschangePassBtn.y }, WHITE); // Draw button frame
-		////log out button function-------------------------------------------------------------------------------------------------------------------
-		mousePoint = GetMousePosition();
-		logOutBtnAction = false;
-		if (CheckCollisionPointRec(mousePoint, btnBoundslogOutBtn)) {          // Check button state
-			if (IsMouseButtonPressed(MOUSE_BUTTON_LEFT)) logOutBtnAction = true;
-		}
-		else logOutBtnState = 0;
-		if (logOutBtnAction) {
-			drawloginPage();
-		}
-		// Calculate button frame rectangle to draw depending on button state
-		sourceReclogOutBtn.y = logOutBtnState * frameHeightlogOutBtn;
-		DrawTextureRec(logOutBtn, sourceReclogOutBtn, { btnBoundslogOutBtn.x, btnBoundslogOutBtn.y }, WHITE); // Draw button frame
-		////Create School Year Button Function------------------------------------------------------------------------------------------------------------
-		mousePoint = GetMousePosition();
-		createSchoolYearBtnAction = false;
-		if (CheckCollisionPointRec(mousePoint, btnBoundscreateSchoolYearBtn)) {          // Check button state
-			if (IsMouseButtonPressed(MOUSE_BUTTON_LEFT)) createSchoolYearBtnAction = true;
-		}
-		else createSchoolYearBtnState = 0;
-		if (createSchoolYearBtnAction) {
-			createSchoolYearPage(screenWidth, screenHeight, CurrentUser);
-		}
-		// Calculate button frame rectangle to draw depending on button state
-		sourceReccreateSchoolYearBtn.y = createSchoolYearBtnState * frameHeightcreateSchoolYearBtn;
-		DrawTextureRec(createSchoolYearBtn, sourceReccreateSchoolYearBtn, { btnBoundscreateSchoolYearBtn.x, btnBoundscreateSchoolYearBtn.y }, WHITE); // Draw button frame
+		ChangePass.workbutton(mousePoint, CurrentUser, ChangePasswordPage);
+		LogOut.workbutton(mousePoint, CurrentUser, LogInPage);
+		CreateSchoolYear.workbutton(mousePoint, CurrentUser, CreateSchoolYearPage);
 		EndDrawing();
 	}
 	CloseWindow();
 }
 
 void ChangePasswordPage(const int screenWidth, const int screenHeight, account& CurrentUser) {
+	Rectangle background = { 0,0,1512,982 };
 	Vector2 mousePoint = { 0.0f, 0.0f };
 	mousePoint = GetMousePosition();
 
-	char OldPass[MAX_INPUT_CHARS + 1] = "\0";
-	char NewPass[MAX_INPUT_CHARS + 1] = "\0";
-	char NewPassConfirm[MAX_INPUT_CHARS + 1] = "\0";
-	int letterCountOldPass = 0;
-	int letterCountNewPass = 0;
-	int letterCountNewPassConfirm = 0;
-	Rectangle textBoxOldPass = { 477, 239,558,106 };
-	Rectangle textBoxNewPass = { 477, 403,558,106 };
-	Rectangle textBoxNewPassConfirm{ 477, 567, 558, 106 };
-	bool mouseOnTextOldPass = false;
-	bool mouseOnTextNewPass = false;
-	bool mouseOnTextNewPassConfirm = false;
-	int framesCounterOldPass = 0;
-	int framesCounterNewPass = 0;
-	int framesCounterNewPassConfirm = 0;
+	Textbox2 oldpass;
+	oldpass.textbox = { 477, 239, 558, 106 };
+
+	Textbox2 newpass;
+	newpass.textbox = { 477, 403, 558, 106 };
+
+	Textbox2 confirmnewpass;
+	confirmnewpass.textbox = { 477, 567, 558, 106 };
 
 	bool isChangePassFalseDisplay = false;
-
-	Rectangle background = { 0,0,1512,982 };
-
 	Texture2D confirmBtn = LoadTexture("confirmBtn.png");
 	float frameHeightconfirmBtn = (float)confirmBtn.height;
 	Rectangle sourceRecconfirmBtn = { 0, 0, (float)confirmBtn.width,frameHeightconfirmBtn };
@@ -625,151 +314,26 @@ void ChangePasswordPage(const int screenWidth, const int screenHeight, account& 
 		DrawRectangle(347, 173, 818, 630, WHITE);
 		DrawRectangle(0, 0, 1512, 60, WHITE);
 		DrawText("  Call us : (028) 3835 4266         E - mail : info@fit.hcmus.edu.vn", 0, 20, 20, DARKBLUE);
-		DrawRectangleRec(textBoxOldPass, LIGHTGRAY);
-		DrawRectangleRec(textBoxNewPass, LIGHTGRAY);
-		DrawRectangleRec(textBoxNewPassConfirm, LIGHTGRAY);
+		DrawRectangleRec(oldpass.textbox, LIGHTGRAY);
+		DrawRectangleRec(newpass.textbox, LIGHTGRAY);
+		DrawRectangleRec(confirmnewpass.textbox, LIGHTGRAY);
 		DrawText("* Old Password", 477, 200, 30, DARKBLUE);
 		DrawText("* New Password", 477, 364, 30, DARKBLUE);
 		DrawText("* Confirm New Password", 477, 528, 30, DARKBLUE);
 
 		////Buttons function-----------------------------------------------------------------------------------------------------------------------------------------
-		if (CheckCollisionPointRec(GetMousePosition(), textBoxOldPass)) mouseOnTextOldPass = true;
-		else mouseOnTextOldPass = false;
-		if (CheckCollisionPointRec(GetMousePosition(), textBoxNewPass)) mouseOnTextNewPass = true;
-		else mouseOnTextNewPass = false;
-		if (CheckCollisionPointRec(GetMousePosition(), textBoxNewPassConfirm)) mouseOnTextNewPassConfirm = true;
-		else mouseOnTextNewPassConfirm = false;
+		oldpass.worktextbox(isChangePassFalseDisplay);
+		newpass.worktextbox(isChangePassFalseDisplay);
+		confirmnewpass.worktextbox(isChangePassFalseDisplay);
 
-		if (mouseOnTextOldPass)
-		{
-			// Set the window's cursor to the I-Beam
-			SetMouseCursor(MOUSE_CURSOR_IBEAM);
+		
+		DrawText(oldpass.hiddentext, 500, 270, 40, DARKBLUE);
+		DrawText(newpass.hiddentext, 500, 435, 40, DARKBLUE);
+		DrawText(confirmnewpass.hiddentext, 500, 600, 40, DARKBLUE);
 
-			// Get char pressed (unicode character) on the queue
-			int key = GetCharPressed();
-
-			// Check if more characters have been pressed on the same frame
-			while (key > 0)
-			{
-				// NOTE: Only allow keys in range [32..125]
-				if ((key >= 32) && (key <= 125) && (letterCountOldPass < MAX_INPUT_CHARS))
-				{
-					OldPass[letterCountOldPass] = (char)key;
-					OldPass[letterCountOldPass + 1] = '\0'; // Add null terminator at the end of the string.
-					letterCountOldPass++;
-				}
-
-				key = GetCharPressed();  // Check next character in the queue
-			}
-
-			if (IsKeyPressed(KEY_BACKSPACE))
-			{
-				letterCountOldPass--;
-				if (letterCountOldPass < 0) letterCountOldPass = 0;
-				OldPass[letterCountOldPass] = '\0';
-			}
-		}
-		else SetMouseCursor(MOUSE_CURSOR_DEFAULT);
-		if (mouseOnTextOldPass) framesCounterOldPass++;
-		else framesCounterOldPass = 0;
-
-		if (mouseOnTextNewPass)
-		{
-			// Set the window's cursor to the I-Beam
-			SetMouseCursor(MOUSE_CURSOR_IBEAM);
-
-			// Get char pressed (unicode character) on the queue
-			int key = GetCharPressed();
-
-			// Check if more characters have been pressed on the same frame
-			while (key > 0)
-			{
-				// NOTE: Only allow keys in range [32..125]
-				if ((key >= 32) && (key <= 125) && (letterCountNewPass < MAX_INPUT_CHARS))
-				{
-					NewPass[letterCountNewPass] = (char)key;
-					NewPass[letterCountNewPass + 1] = '\0'; // Add null terminator at the end of the string.
-					letterCountNewPass++;
-				}
-
-				key = GetCharPressed();  // Check next character in the queue
-			}
-
-			if (IsKeyPressed(KEY_BACKSPACE))
-			{
-				letterCountNewPass--;
-				if (letterCountNewPass < 0) letterCountNewPass = 0;
-				NewPass[letterCountNewPass] = '\0';
-			}
-		}
-		else SetMouseCursor(MOUSE_CURSOR_DEFAULT);
-		if (mouseOnTextNewPass) framesCounterNewPass++;
-		else framesCounterNewPass = 0;
-
-		if (mouseOnTextNewPassConfirm)
-		{
-			// Set the window's cursor to the I-Beam
-			SetMouseCursor(MOUSE_CURSOR_IBEAM);
-
-			// Get char pressed (unicode character) on the queue
-			int key = GetCharPressed();
-
-			// Check if more characters have been pressed on the same frame
-			while (key > 0)
-			{
-				// NOTE: Only allow keys in range [32..125]
-				if ((key >= 32) && (key <= 125) && (letterCountNewPassConfirm < MAX_INPUT_CHARS))
-				{
-					NewPassConfirm[letterCountNewPassConfirm] = (char)key;
-					NewPassConfirm[letterCountNewPassConfirm + 1] = '\0'; // Add null terminator at the end of the string.
-					letterCountNewPassConfirm++;
-				}
-
-				key = GetCharPressed();  // Check next character in the queue
-			}
-
-			if (IsKeyPressed(KEY_BACKSPACE))
-			{
-				letterCountNewPassConfirm--;
-				if (letterCountNewPassConfirm < 0) letterCountNewPassConfirm = 0;
-				NewPassConfirm[letterCountNewPassConfirm] = '\0';
-			}
-		}
-		else SetMouseCursor(MOUSE_CURSOR_DEFAULT);
-		if (mouseOnTextNewPassConfirm) framesCounterNewPassConfirm++;
-		else framesCounterNewPassConfirm = 0;
-
-		if (mouseOnTextOldPass) {
-			DrawRectangleLines((int)textBoxOldPass.x, (int)textBoxOldPass.y, (int)textBoxOldPass.width, (int)textBoxOldPass.height, BLUE);
-			DrawRectangleLines((int)textBoxOldPass.x - 1, (int)textBoxOldPass.y - 1, (int)textBoxOldPass.width + 2, (int)textBoxOldPass.height + 2, BLUE);
-			DrawRectangleLines((int)textBoxOldPass.x - 2, (int)textBoxOldPass.y - 2, (int)textBoxOldPass.width + 4, (int)textBoxOldPass.height + 4, BLUE);
-			isChangePassFalseDisplay = false;
-		}
-		else DrawRectangleLines((int)textBoxOldPass.x, (int)textBoxOldPass.y, (int)textBoxOldPass.width, (int)textBoxOldPass.height, DARKGRAY);
-
-		if (mouseOnTextNewPass) {
-			DrawRectangleLines((int)textBoxNewPass.x, (int)textBoxNewPass.y, (int)textBoxNewPass.width, (int)textBoxNewPass.height, BLUE);
-			DrawRectangleLines((int)textBoxNewPass.x - 1, (int)textBoxNewPass.y - 1, (int)textBoxNewPass.width + 2, (int)textBoxNewPass.height + 2, BLUE);
-			DrawRectangleLines((int)textBoxNewPass.x - 2, (int)textBoxNewPass.y - 2, (int)textBoxNewPass.width + 4, (int)textBoxNewPass.height + 4, BLUE);
-			isChangePassFalseDisplay = false;
-		}
-		else DrawRectangleLines((int)textBoxNewPass.x, (int)textBoxNewPass.y, (int)textBoxNewPass.width, (int)textBoxNewPass.height, DARKGRAY);
-
-		if (mouseOnTextNewPassConfirm) {
-			DrawRectangleLines((int)textBoxNewPassConfirm.x, (int)textBoxNewPassConfirm.y, (int)textBoxNewPassConfirm.width, (int)textBoxNewPassConfirm.height, BLUE);
-			DrawRectangleLines((int)textBoxNewPassConfirm.x - 1, (int)textBoxNewPassConfirm.y - 1, (int)textBoxNewPassConfirm.width + 2, (int)textBoxNewPassConfirm.height + 2, BLUE);
-			DrawRectangleLines((int)textBoxNewPassConfirm.x - 2, (int)textBoxNewPassConfirm.y - 2, (int)textBoxNewPassConfirm.width + 4, (int)textBoxNewPassConfirm.height + 4, BLUE);
-			isChangePassFalseDisplay = false;
-		}
-		else DrawRectangleLines((int)textBoxNewPassConfirm.x, (int)textBoxNewPassConfirm.y, (int)textBoxNewPassConfirm.width, (int)textBoxNewPassConfirm.height, DARKGRAY);
-
-		DrawText(OldPass, 500, 270, 40, DARKBLUE);
-		DrawText(NewPass, 500, 435, 40, DARKBLUE);
-		DrawText(NewPassConfirm, 500, 600, 40, DARKBLUE);
-
-		DrawText(TextFormat("%i/%i", letterCountOldPass, MAX_INPUT_CHARS), 1050, 280, 20, DARKBLUE);
-		DrawText(TextFormat("%i/%i", letterCountNewPass, MAX_INPUT_CHARS), 1050, 450, 20, DARKBLUE);
-		DrawText(TextFormat("%i/%i", letterCountNewPassConfirm, MAX_INPUT_CHARS), 1050, 620, 20, DARKBLUE);
+		DrawText(TextFormat("%i/%i", oldpass.lettercount, MAX_INPUT_CHARS), 1050, 280, 20, DARKBLUE);
+		DrawText(TextFormat("%i/%i", newpass.lettercount, MAX_INPUT_CHARS), 1050, 450, 20, DARKBLUE);
+		DrawText(TextFormat("%i/%i", confirmnewpass.lettercount, MAX_INPUT_CHARS), 1050, 620, 20, DARKBLUE);
 		////-------------------------------------------------------------------------------------------------------------------------
 
 		mousePoint = GetMousePosition();
@@ -779,7 +343,7 @@ void ChangePasswordPage(const int screenWidth, const int screenHeight, account& 
 		}
 		else confirmBtnState = 0;
 		if (confirmBtnAction) {
-			if (usechangePassFunction(CurrentUser, OldPass, NewPass, NewPassConfirm) && OldPass[0] != '\0' && NewPass[0] != '\0' && NewPassConfirm[0] != '\0') {
+			if (usechangePassFunction(CurrentUser, oldpass.text, newpass.text, confirmnewpass.text) && oldpass.text[0] != '\0' && newpass.text[0] != '\0' && confirmnewpass.text[0] != '\0') {
 				ProfilePage(screenWidth, screenHeight, CurrentUser);
 			}
 			else {
@@ -796,7 +360,7 @@ void ChangePasswordPage(const int screenWidth, const int screenHeight, account& 
 	CloseWindow();
 }
 
-void createSchoolYearPage(const int screenWidth,const int screenHeight, account CurrentUser) {
+void CreateSchoolYearPage(const int screenWidth,const int screenHeight, account& CurrentUser) {
 	Vector2 mousePoint = { 0.0f, 0.0f };
 	mousePoint = GetMousePosition();
 	Rectangle background = { 0,0,1512,982 };
@@ -887,7 +451,7 @@ void createSchoolYearPage(const int screenWidth,const int screenHeight, account 
 	CloseWindow();
 }
 
-void SemestersNClassesPage(const int screenWidth, const int screenHeight, account CurrentUser) {
+void SemestersNClassesPage(const int screenWidth, const int screenHeight, account& CurrentUser) {
 	//Initialize variable---------------------------------------------------------------------------------------------
 	Vector2 mousePoint = { 0.0f, 0.0f };
 	mousePoint = GetMousePosition();
@@ -957,7 +521,7 @@ void SemestersNClassesPage(const int screenWidth, const int screenHeight, accoun
 		}
 		else logOutBtnState = 0;
 		if (logOutBtnAction) {
-			drawloginPage();
+			LogInPage(screenWidth, screenHeight, CurrentUser);
 		}
 		// Calculate button frame rectangle to draw depending on button state
 		sourceReclogOutBtn.y = logOutBtnState * frameHeightlogOutBtn;
@@ -966,4 +530,115 @@ void SemestersNClassesPage(const int screenWidth, const int screenHeight, accoun
 		EndDrawing();
 	}
 	CloseWindow();
+}
+
+/// function used for objects
+
+// Button
+void Button1::workbutton(Vector2 mousePoint, account& CurrentUser, void(* func)(const int screenWidth, const int screenHeight, account& CurrentUser)) {
+	if (CheckCollisionPointRec(mousePoint, btnBounds)) {          // Check button state
+		if (IsMouseButtonPressed(MOUSE_BUTTON_LEFT)) Action = true;
+	}
+	else State = 0;
+	if (Action) {
+		func(screenWidth, screenHeight, CurrentUser);
+	}
+	// Calculate button frame rectangle to draw depending on button state
+	sourceRec.y = State * frameHeight;
+	DrawTextureRec(texture, sourceRec, { btnBounds.x, btnBounds.y }, WHITE); // Draw button frame
+}
+
+// Textbox
+void Textbox1::worktextbox(bool& somethingfalsedisplay) {
+	if (CheckCollisionPointRec(GetMousePosition(), textbox)) mouseontextbox = true;
+	else mouseontextbox = false;
+	if (mouseontextbox)
+	{
+		// Set the window's cursor to the I-Beam
+		SetMouseCursor(MOUSE_CURSOR_IBEAM);
+
+		// Get char pressed (unicode character) on the queue
+		int key = GetCharPressed();
+
+		// Check if more characters have been pressed on the same frame
+		while (key > 0)
+		{
+			// NOTE: Only allow keys in range [32..125]
+			if ((key >= 32) && (key <= 125) && (lettercount < MAX_INPUT_CHARS))
+			{
+				text[lettercount] = (char)key;
+				text[lettercount + 1] = '\0'; // Add null terminator at the end of the string.
+				lettercount++;
+			}
+
+			key = GetCharPressed();  // Check next character in the queue
+		}
+
+		if (IsKeyPressed(KEY_BACKSPACE))
+		{
+			lettercount--;
+			if (lettercount < 0) lettercount = 0;
+			text[lettercount] = '\0';
+		}
+	}
+	else SetMouseCursor(MOUSE_CURSOR_DEFAULT);
+	if (mouseontextbox) {
+		DrawRectangleLines((int)textbox.x, (int)textbox.y, (int)textbox.width, (int)textbox.height, BLUE);
+		DrawRectangleLines((int)textbox.x - 1, (int)textbox.y - 1, (int)textbox.width + 2, (int)textbox.height + 2, BLUE);
+		DrawRectangleLines((int)textbox.x - 2, (int)textbox.y - 2, (int)textbox.width + 4, (int)textbox.height + 4, BLUE);
+		somethingfalsedisplay = false;
+	}
+	else DrawRectangleLines((int)textbox.x, (int)textbox.y, (int)textbox.width, (int)textbox.height, DARKGRAY);
+
+}
+
+void Textbox2::worktextbox(bool& somethingfalsedisplay) {
+	if (CheckCollisionPointRec(GetMousePosition(), textbox)) mouseontextbox = true;
+	else mouseontextbox = false;
+	if (mouseontextbox)
+	{
+		// Set the window's cursor to the I-Beam
+		SetMouseCursor(MOUSE_CURSOR_IBEAM);
+
+		// Get char pressed (unicode character) on the queue
+		int key = GetCharPressed();
+
+		// Check if more characters have been pressed on the same frame
+		while (key > 0)
+		{
+			// NOTE: Only allow keys in range [32..125]
+			if ((key >= 32) && (key <= 125) && (lettercount < MAX_INPUT_CHARS))
+			{
+				text[lettercount] = (char)key;
+				text[lettercount + 1] = '\0'; // Add null terminator at the end of the string.
+				lettercount++;
+
+				hiddentext[lettercounthidden] = '*';
+				hiddentext[lettercounthidden + 1] = '\0';
+				lettercounthidden++;
+			}
+
+			key = GetCharPressed();  // Check next character in the queue
+		}
+
+		if (IsKeyPressed(KEY_BACKSPACE))
+		{
+			lettercount--;
+			if (lettercount < 0) lettercount = 0;
+			text[lettercount] = '\0';
+
+			lettercounthidden--;
+			if (lettercounthidden < 0) lettercounthidden = 0;
+			hiddentext[lettercounthidden] = '\0';
+		}
+	}
+	else SetMouseCursor(MOUSE_CURSOR_DEFAULT);
+
+	if (mouseontextbox) {
+		DrawRectangleLines((int)textbox.x, (int)textbox.y, (int)textbox.width, (int)textbox.height, BLUE);
+		DrawRectangleLines((int)textbox.x - 1, (int)textbox.y - 1, (int)textbox.width + 2, (int)textbox.height + 2, BLUE);
+		DrawRectangleLines((int)textbox.x - 2, (int)textbox.y - 2, (int)textbox.width + 4, (int)textbox.height + 4, BLUE);
+		somethingfalsedisplay = false;
+	}
+	else DrawRectangleLines((int)textbox.x, (int)textbox.y, (int)textbox.width, (int)textbox.height, DARKGRAY);
 }
