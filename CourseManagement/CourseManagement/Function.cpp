@@ -164,7 +164,6 @@ void drawloginPage() {
 		else DrawRectangleLines((int)textBoxPassword.x, (int)textBoxPassword.y, (int)textBoxPassword.width, (int)textBoxPassword.height, DARKGRAY);
 
 		DrawText(name, 500, 270, 40, DARKBLUE);
-		//DrawText(pass, 500, 430, 40, DARKBLUE);
 		DrawText(HiddenPass, 500, 440, 40, DARKBLUE);
 
 		DrawText(TextFormat("%i/%i", letterCountUsername, MAX_INPUT_CHARS), 1050, 280, 20, DARKBLUE);
@@ -786,7 +785,22 @@ void ChangePasswordPage(const int screenWidth, const int screenHeight, account& 
 }
 
 void createSchoolYearPage() {
+	Vector2 mousePoint = { 0.0f, 0.0f };
+	mousePoint = GetMousePosition();
 	Rectangle background = { 0,0,1512,982 };
+
+	char schoolYearName[MAX_INPUT_CHARS + 1] = "\0";
+	int letterCountschoolYearName = 0;
+	Rectangle textBoxschoolYearName = { 477, 239,558,106 };
+	bool mouseOnTextschoolYearName = false;
+
+	Texture2D confirmBtn = LoadTexture("confirmBtn.png");
+	float frameHeightconfirmBtn = (float)confirmBtn.height;
+	Rectangle sourceRecconfirmBtn = { 0, 0, (float)confirmBtn.width,frameHeightconfirmBtn };
+	// Define button bounds on screen
+	Rectangle btnBoundsconfirmBtn = { 650, 400, (float)confirmBtn.width, frameHeightconfirmBtn };
+	int confirmBtnState = 0;               // Button state: 0-NORMAL, 1-MOUSE_HOVER, 2-PRESSED
+	bool confirmBtnAction = false;         // Button action should be activated
 
 	while (!WindowShouldClose()) {
 		ClearBackground(WHITE);
@@ -794,8 +808,67 @@ void createSchoolYearPage() {
 
 		DrawText("  Call us : (028) 3835 4266         E - mail : info@fit.hcmus.edu.vn", 0, 20, 20, DARKBLUE);
 		DrawRectangleGradientEx(background, WHITE, BLUE, WHITE, BLUE);
+		DrawRectangle(347, 173, 818, 373, WHITE);
 
-		DrawRectangle(347, 173, 818, 560, WHITE);
+		DrawRectangleRec(textBoxschoolYearName, LIGHTGRAY);
+		DrawText("* School Year Name (YYYY-YYYY)", 477, 200, 30, DARKBLUE);
+		////Function_of_TextInputBoxes_----------------------------------------------------------------------------------------------------------------------
+		if (CheckCollisionPointRec(GetMousePosition(), textBoxschoolYearName)) mouseOnTextschoolYearName = true;
+		else mouseOnTextschoolYearName = false;
+
+		if (mouseOnTextschoolYearName)
+		{
+			// Set the window's cursor to the I-Beam
+			SetMouseCursor(MOUSE_CURSOR_IBEAM);
+
+			// Get char pressed (unicode character) on the queue
+			int key = GetCharPressed();
+
+			// Check if more characters have been pressed on the same frame
+			while (key > 0)
+			{
+				// NOTE: Only allow keys in range [32..125]
+				if ((key >= 32) && (key <= 125) && (letterCountschoolYearName < MAX_INPUT_CHARS))
+				{
+					schoolYearName[letterCountschoolYearName] = (char)key;
+					schoolYearName[letterCountschoolYearName + 1] = '\0'; // Add null terminator at the end of the string.
+					letterCountschoolYearName++;
+				}
+
+				key = GetCharPressed();  // Check next character in the queue
+			}
+
+			if (IsKeyPressed(KEY_BACKSPACE))
+			{
+				letterCountschoolYearName--;
+				if (letterCountschoolYearName < 0) letterCountschoolYearName = 0;
+				schoolYearName[letterCountschoolYearName] = '\0';
+			}
+		}
+		else SetMouseCursor(MOUSE_CURSOR_DEFAULT);
+		if (mouseOnTextschoolYearName) {
+			DrawRectangleLines((int)textBoxschoolYearName.x, (int)textBoxschoolYearName.y, (int)textBoxschoolYearName.width, (int)textBoxschoolYearName.height, BLUE);
+			DrawRectangleLines((int)textBoxschoolYearName.x - 1, (int)textBoxschoolYearName.y - 1, (int)textBoxschoolYearName.width + 2, (int)textBoxschoolYearName.height + 2, BLUE);
+			DrawRectangleLines((int)textBoxschoolYearName.x - 2, (int)textBoxschoolYearName.y - 2, (int)textBoxschoolYearName.width + 4, (int)textBoxschoolYearName.height + 4, BLUE);
+		}
+		else DrawRectangleLines((int)textBoxschoolYearName.x, (int)textBoxschoolYearName.y, (int)textBoxschoolYearName.width, (int)textBoxschoolYearName.height, DARKGRAY);
+
+		DrawText(schoolYearName, 500, 270, 40, DARKBLUE);
+		DrawText(TextFormat("%i/%i", letterCountschoolYearName, MAX_INPUT_CHARS), 1050, 280, 20, DARKBLUE);
+
+		mousePoint = GetMousePosition();
+		confirmBtnAction = false;
+		if (CheckCollisionPointRec(mousePoint, btnBoundsconfirmBtn)) {          // Check button state
+			if (IsMouseButtonPressed(MOUSE_BUTTON_LEFT)) confirmBtnAction = true;
+		}
+		else confirmBtnState = 0;
+		if (confirmBtnAction) {
+			//ProfilePage(screenWidth, screenHeight, CurrentUser);
+		}
+
+		// Calculate button frame rectangle to draw depending on button state
+		sourceRecconfirmBtn.y = confirmBtnState * frameHeightconfirmBtn;
+		DrawTextureRec(confirmBtn, sourceRecconfirmBtn, { btnBoundsconfirmBtn.x, btnBoundsconfirmBtn.y }, WHITE); // Draw button frame
 
 		EndDrawing();
 	}
