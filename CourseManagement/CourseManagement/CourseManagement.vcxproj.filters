@@ -21,7 +21,13 @@
     <ClCompile Include="Function.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="back_end.cpp">
+    <ClCompile Include="account.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="schoolYear.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Date.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -29,7 +35,25 @@
     <ClInclude Include="Function.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="back_end.h">
+    <ClInclude Include="account.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="schoolYear.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Class.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="users.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Date.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="scoreboard.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="course.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

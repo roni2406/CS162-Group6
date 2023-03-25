@@ -133,13 +133,21 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="back_end.cpp" />
+    <ClCompile Include="account.cpp" />
     <ClCompile Include="CourseManagement.cpp" />
+    <ClCompile Include="Date.cpp" />
     <ClCompile Include="Function.cpp" />
+    <ClCompile Include="schoolYear.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="back_end.h" />
+    <ClInclude Include="account.h" />
+    <ClInclude Include="Class.h" />
+    <ClInclude Include="course.h" />
+    <ClInclude Include="Date.h" />
     <ClInclude Include="Function.h" />
+    <ClInclude Include="schoolYear.h" />
+    <ClInclude Include="scoreboard.h" />
+    <ClInclude Include="users.h" />
   </ItemGroup>
   <ItemGroup>
     <Text Include="accounts.txt" />

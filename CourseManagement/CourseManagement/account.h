@@ -1,8 +1,9 @@
-#pragma once
-
 #include <iostream>
 #include <fstream>
 using namespace std;
+
+#ifndef ACCOUNT_H
+#define ACCOUNT_H
 
 struct account {
     char* userName;
@@ -28,3 +29,5 @@ bool changePass(account& Acc, char* oldPass, char* newPass, char* checkNewPass);
 void updateAccToFile(account* login_data, int n);
 // front_end use:
 bool usechangePassFunction(account& Acc, char* oldPass, char* newPass, char* checkNewPass);
+
+#endif
