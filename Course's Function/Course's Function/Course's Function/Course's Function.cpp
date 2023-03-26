@@ -1,6 +1,7 @@
 #include <iostream>
 #include <fstream>
 #include "Course.h"
+#include"raylib.h"
 using namespace std;
 
 void course::Input_Course() {
@@ -100,20 +101,40 @@ void course:: Add_Course( char* coursefile, ofstream& fout) {
 void View_Course(course* course,int k) {
 	int i = 0;
 	while (i<k) {
-		cout << course[i].courseName <<'\n'
-			 << course[i].courseID << '\n'
-			 << course[i].teacherName << '\n'
-			 << course[i].numOfCre << '\n'
-			 << course[i].dayofweek << '\n'
-			 << course[i].sessionHour << '\n' << '\n';
+		cout <<"Coures Name : "<< course[i].courseName << '\n'
+			 <<"ID : "<<course[i].courseID << '\n'	
+			 <<"Teacher : "<< course[i].teacherName << '\n'
+			 <<"Number of Credit : "<< course[i].numOfCre << '\n'
+			 <<"Course Day : "<<course[i].dayofweek << '\n'
+			 <<"Session Hours : " << course[i].sessionHour << '\n' << '\n';
 		i++;
 	}
 }
+
 int main() {
-	int press=-1,i=0;
-	course courses[1000];
-	while (i < 2) {
-		courses[i++].Input_Course();
+	course  course[10];
+	int Pos = 00;
+	int scrollSpeed = 25;
+	InitWindow(1620, 920, "cs2");
+	while (!WindowShouldClose()) {
+		Pos -= (GetMouseWheelMove() * scrollSpeed);
+		if (Pos > 0)Pos = 0;
+		if (Pos < -1500)Pos = -1500;//num of course/6*wight
+		BeginDrawing();
+		ClearBackground(WHITE);
+		float mouseWheelMovement = GetMouseWheelMove();
+
+		int i = 0;//k=num of courses
+		for (int k = 0; k < 10; k++) {
+			DrawText(TextFormat("Course: ",course[k].courseName), 17, Pos + (i += 20), 20, RED);
+			DrawText(TextFormat("ID: ", course[k].courseID), 17, Pos + (i += 20), 20, RED);
+			DrawText(TextFormat("Teacher: ", course[k].teacherName), 17, Pos + (i += 20), 20, RED);
+			DrawText(TextFormat("Number of Credit: ", course[k].numOfCre), 17, Pos + (i += 20), 20, RED);
+			DrawText(TextFormat("Course Day: ", course[k].dayofweek), 17, Pos + (i += 20), 20, RED);
+			DrawText(TextFormat("Session Hours: ", course[k].dayofweek), 17, Pos + (i += 20), 20, RED);
+			i += 50;
+		}
+		EndDrawing();
 	}
-	View_Course(courses,i);
+	CloseWindow();
 }
