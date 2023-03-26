@@ -46,8 +46,12 @@ char** changestrtochar(string* sYear) {
     int n = countSchoolYear();
     char** get = new char* [n];
     for (int i = 0; i < n; i++) {
+        get[i] = new char[sYear[i].length() + 1];
+    }
+    for (int i = 0; i < n; i++) {
         for (int j = 0; j < sYear[i].length(); j++)
             get[i][j] = (char)sYear[i][j];
+        get[i][sYear[i].length()] = '\0';
     }
     return get;
 }

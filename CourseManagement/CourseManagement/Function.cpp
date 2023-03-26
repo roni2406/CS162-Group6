@@ -455,15 +455,18 @@ void CreateSchoolYearPage(const int screenWidth,const int screenHeight, account&
 	CloseWindow();
 }
 void ViewSchoolYearPage(const int screenWidth, const int screenHeight, account& CurrentUser) {
+	char** Years = getSchoolYearArr();
+	int n = countSchoolYear();
 	Vector2 mousePoint = { 0.0f, 0.0f };
-	mousePoint = GetMousePosition();
 
 	Rectangle background = { 0,0,1512,982 };
 
 	Texture2D avatar;
 	avatar = LoadTexture("avatar.png");
-	int x_schoolyear;
-	int y_schoolyear;
+
+	int y_schoolyear = 202;
+	int x_schoolyear = 200;
+	bool schoolyearadded = false;
 	while (!WindowShouldClose()) {
 		ClearBackground(WHITE);
 
@@ -474,11 +477,13 @@ void ViewSchoolYearPage(const int screenWidth, const int screenHeight, account& 
 		DrawRectangle(70, 170, 360, 750, WHITE);
 		DrawRectangleLines(69, 169, 362, 752, BLACK);
 		DrawRectangleLines(68, 168, 364, 754, BLACK);
-
-
-
-
-
+		mousePoint = GetMousePosition();
+		for (int i = 0; i < n; ++i) {
+			DrawRectangle(x_schoolyear - 5, y_schoolyear -5, 220, 50, BLACK);
+			DrawText(Years[i], x_schoolyear, y_schoolyear, 40, WHITE);
+			y_schoolyear += 100;
+		}
+		y_schoolyear = 202;
 		EndDrawing();
 	}
 	CloseWindow();
