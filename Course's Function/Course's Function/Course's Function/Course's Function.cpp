@@ -3,21 +3,10 @@
 #include "Course.h"
 using namespace std;
 
-void course:: Add_Courses(course newCourse, char* filename, ofstream& fout)
-{
-	fout.open(filename, ios::app);
-	fout << "Course : " << newCourse.courseName << '\n'
-		<< "ID : " << newCourse.courseID << '\n'
-		<< "Teacher : " << newCourse.teacherName << '\n'
-		<< "Number of Credit : " << newCourse.numOfCre << '\n'
-		<< "Course Day : " << newCourse.dayofweek << '\n'
-		<< "Session Hours : " << newCourse.sessionHour << '\n';
-	fout.close();
-}
 void course::Input_Course() {
 	cout << "You have created a new Course. Please enter the name of Course: ";
 	cin.get(courseName, '\n');
-	cin.ignore(100, '\n');	
+	cin.ignore(100, '\n');
 	cout << "Course ID : ";
 	cin.get(courseID, '\n');
 	cin.ignore(100, '\n');
@@ -34,26 +23,25 @@ void course::Input_Course() {
 	cin.ignore(100, '\n');
 }
 void course::Input_1_Stu(student* newStudents) {
-	if (numOfStu < 50) {
-		stuOfCourse[numOfStu] = newStudents;
-		numOfStu++;
+	if (numOfStu <= 50) {
+		stuOfCourse[++numOfStu] = newStudents;
 	}
 	else cout << "Cant add more student";
 }
-void course::Add_Stus(char*filename) {
+void course::Load_Stus(char* studentfile) {
 	ifstream f;
-	f.open(filename);
-	while (!f.eof() && numOfStu < 50) {
-		f>> stuOfCourse[numOfStu]->No
-		 >>	stuOfCourse[numOfStu]->stuID
-		 >>	stuOfCourse[numOfStu]->person.firstName
-		 >>	stuOfCourse[numOfStu]->person.lastName
-		 >>	stuOfCourse[numOfStu]->person.gender
-		 >>	stuOfCourse[numOfStu]->person.dob.day
-		 >>	stuOfCourse[numOfStu]->person.dob.month
-		 >>	stuOfCourse[numOfStu]->person.dob.year
-		 >>	stuOfCourse[numOfStu]->person.socialID;
+	f.open(studentfile, ios::app);
+	while (!f.eof() && numOfStu <= 50) {
 		numOfStu++;
+		f >> stuOfCourse[numOfStu]->No
+			>> stuOfCourse[numOfStu]->stuID
+			>> stuOfCourse[numOfStu]->person.firstName
+			>> stuOfCourse[numOfStu]->person.lastName
+			>> stuOfCourse[numOfStu]->person.gender
+			>> stuOfCourse[numOfStu]->person.dob.day
+			>> stuOfCourse[numOfStu]->person.dob.month
+			>> stuOfCourse[numOfStu]->person.dob.year
+			>> stuOfCourse[numOfStu]->person.socialID;
 	}
 	if (numOfStu > 50)cout << "Cant adds more student";
 }
@@ -71,7 +59,43 @@ void course::Delete_1_Stu() {
 	}
 	numOfStu--;
 }
-
+void course::Update_Course(int press) {
+	switch (press) {
+	case 1:
+		cin >> courseName;
+	case 2:
+		cin >> courseID;
+	case 3:
+		cin >> teacherName;
+	case 4:
+		cin >> numOfCre;
+	case 5:
+		cin >> dayofweek;
+	case 6:
+		cin >> sessionHour;
+	}
+}
+void course:: Add_Course( char* coursefile, ofstream& fout) {
+	fout.open(coursefile, ios::app);
+	fout << "Course : " << courseName << '\n'
+		<< "ID : " << courseID << '\n'
+		<< "Teacher : " << teacherName << '\n'
+		<< "Number of Credit : " << numOfCre << '\n'
+		<< "Course Day : " << dayofweek << '\n'
+		<< "Session Hours : " << sessionHour << '\n';
+	for (int i = 1; i <= numOfStu; i++) {
+		fout << stuOfCourse[numOfStu]->No
+			<< stuOfCourse[numOfStu]->stuID
+			<< stuOfCourse[numOfStu]->person.firstName
+			<< stuOfCourse[numOfStu]->person.lastName
+			<< stuOfCourse[numOfStu]->person.gender
+			<< stuOfCourse[numOfStu]->person.dob.day
+			<< stuOfCourse[numOfStu]->person.dob.month
+			<< stuOfCourse[numOfStu]->person.dob.year
+			<< stuOfCourse[numOfStu]->person.socialID;
+	}
+	fout.close();
+}
 int main() {
 
 }
