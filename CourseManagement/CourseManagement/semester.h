@@ -16,5 +16,5 @@ struct semester {
     void inputASemester(schoolYear Year, )
 };
 
-void inputASemester(char* Year, int No, Date startDate,)
+void inputASemester(char* Year, int No, Date startDate, Date )
 #endif

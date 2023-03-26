@@ -13,11 +13,12 @@ struct schoolYear {
 	void createASchoolYear();
 };
 
-void getSchoolYear(string* sYear, int& n, ifstream& fin);
+void getSchoolYear(string* sYear, int& n);
 
 // front end use
 bool createASchoolYear(char* schoolyear);
 int countSchoolYear();
+char** getSchoolYearArr();
 // schoolyear must have 8 chars and must larger than prev year. Otherwise, return false.
 
 #endif
