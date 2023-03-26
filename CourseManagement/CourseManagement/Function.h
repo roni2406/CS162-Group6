@@ -30,22 +30,33 @@ struct Button1 {
 	float frameHeight;
 	Rectangle sourceRec;
 	Rectangle btnBounds;
-	int State = 0;					// Button state: 0-NORMAL, 1-MOUSE_HOVER, 2-PRESSED
-	bool Action = false;			// Button action should be activated
+	int state = 0;					// Button state: 0-NORMAL, 1-MOUSE_HOVER, 2-PRESSED
+	bool action = false;			// Button action should be activated
 	void workbutton(Vector2 mousePoint, account& CurrentUser, void(*func)(const int screenWidth, const int screenHeight, account& CurrentUser));
 };
 
-// used for "bo-goc" button and have 2 cases display (in process)
+// used for "bo-goc" button and have 2 cases display			IN PROCESS, CAN'T USE NOW
 struct Button2 {
 	const int screenHeight = 982;
 	Texture2D texture;
 	float frameHeight;
 	Rectangle sourceRec;
 	Rectangle btnBounds;
-	int State;
-	bool Action;
-	bool Display;
+	int state;
+	bool action;
+	bool display;
 	void workbutton(Vector2 mousePoint, account& CurrentUser, void(*func)(const int screenWidth, const int screenHeight, account& CurrentUser));
+};
+
+// used for just-text button
+struct Button3 {
+	const int screenWidth = 1512;
+	const int screenHeight = 982;
+	Rectangle button;
+	bool mouseonbutton = false;
+	bool action = false;
+	void workbutton(Vector2 mousePoint, account& CurrentUser, void(*func)(const int screenWidth, const int screenHeight, account& CurrentUser));
+
 };
 
 /// textbox
@@ -69,5 +80,7 @@ struct Textbox2 {
 	bool mouseontextbox = false;
 	void worktextbox(bool& somethingfalsedisplay);
 };
+
+// schoolyear text (use for multiple page (global variable))
 
 
