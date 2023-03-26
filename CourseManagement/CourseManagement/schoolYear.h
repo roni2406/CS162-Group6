@@ -1,17 +1,22 @@
 #include <iostream>
+#include <fstream>
 using namespace std;
 
 #ifndef SCHOOLYEAR_H
 #define SCHOOLYEAR_H
 
 struct schoolYear {
-	char* sYear;
+	string sYear;
 
+	bool checkdata();
 	void inputASchoolYear(char* year);
 	void createASchoolYear();
 };
 
+void getSchoolYear(string* sYear, int& n, ifstream& fin);
+
 // front end use
-void createASchoolYear(char* schoolyear);
+bool createASchoolYear(char* schoolyear);
+// schoolyear must have 8 chars and must larger than prev year. Otherwise, return false.
 
 #endif

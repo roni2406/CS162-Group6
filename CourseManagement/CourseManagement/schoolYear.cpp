@@ -1,11 +1,28 @@
 #include <iostream>
 #include <direct.h>
 #include <fstream>
+#include <string>
 #include "schoolYear.h"
 using namespace std;
 
 void schoolYear::inputASchoolYear(char* year) {
-	sYear = _strdup(year);
+	sYear = string(year);
+}
+
+bool schoolYear::checkdata() {
+    ifstream fin;
+    fin.open("../data/schoolYear.txt");
+    string* Years = new string[100];
+    int n;
+    getSchoolYear(Years, n, fin);
+    fin.close();
+
+    if (sYear.length() != 9 || sYear <= Years[n - 1]) {
+        delete[] Years;
+        return false;
+    }
+    delete[] Years;
+    return true;
 }
 
 void schoolYear::createASchoolYear() {
@@ -19,8 +36,19 @@ void schoolYear::createASchoolYear() {
     if (_mkdir(("../data/" + stringSchoolYear).c_str()));
 }
 
-void createASchoolYear(char* schoolyear) {
+void getSchoolYear(string* sYear, int& n, ifstream& fin) {
+    n = 0;
+    while (!fin.eof()) {
+        getline(fin, sYear[n++]);
+    }
+}
+
+bool createASchoolYear(char* schoolyear) {
     schoolYear s;
     s.inputASchoolYear(schoolyear);
-    s.createASchoolYear();
+    if (s.checkdata()) {
+        s.createASchoolYear();
+        return true;
+    }
+    return false;
 }
