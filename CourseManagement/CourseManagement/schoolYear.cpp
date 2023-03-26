@@ -17,7 +17,7 @@ bool schoolYear::checkdata() {
     getSchoolYear(Years, n, fin);
     fin.close();
 
-    if (sYear.length() != 9 || sYear <= Years[n - 1]) {
+    if (sYear[4] != '-' || sYear.length() != 9 || sYear <= Years[n - 1]) {
         delete[] Years;
         return false;
     }
@@ -51,4 +51,15 @@ bool createASchoolYear(char* schoolyear) {
         return true;
     }
     return false;
+}
+
+int countSchoolYear() {
+    ifstream fin;
+    fin.open("../data/schoolYear.txt");
+    int cnt = 0;
+    while (!fin.eof()) {
+        ++cnt;
+    }
+    fin.close();
+    return cnt;
 }
