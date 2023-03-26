@@ -240,13 +240,25 @@ void ProfilePage(const int screenWidth, const int screenHeight, account& Current
 	CreateSchoolYear.texture = LoadTexture("createSchoolYearBtn.png");
 	CreateSchoolYear.frameHeight = (float)CreateSchoolYear.texture.height;
 	CreateSchoolYear.sourceRec = { 0, 0, (float)CreateSchoolYear.texture.width, CreateSchoolYear.frameHeight };
-	CreateSchoolYear.btnBounds = { 574, 200, (float)CreateSchoolYear.texture.width, CreateSchoolYear.frameHeight };
+	CreateSchoolYear.btnBounds = { 552, 277, (float)CreateSchoolYear.texture.width, CreateSchoolYear.frameHeight };
 	
 	Button1 ViewSchoolYear;
 	ViewSchoolYear.texture = LoadTexture("viewschoolyearbtn.png");
 	ViewSchoolYear.frameHeight = (float)ViewSchoolYear.texture.height;
 	ViewSchoolYear.sourceRec = { 0, 0, (float)ViewSchoolYear.texture.width, ViewSchoolYear.frameHeight };
-	ViewSchoolYear.btnBounds = { 1049, 200, (float)ViewSchoolYear.texture.width, ViewSchoolYear.frameHeight };
+	ViewSchoolYear.btnBounds = { 1081, 277, (float)ViewSchoolYear.texture.width, ViewSchoolYear.frameHeight };
+
+	Button1 CreateClass;
+	CreateClass.texture = LoadTexture("createClassBtn.png");
+	CreateClass.frameHeight = (float)CreateClass.texture.height;
+	CreateClass.sourceRec = { 0, 0, (float)CreateClass.texture.width, CreateClass.frameHeight };
+	CreateClass.btnBounds = { 552, 605, (float)CreateClass.texture.width, CreateClass.frameHeight };
+
+	Button1 ViewClass;
+	ViewClass.texture = LoadTexture("createClassBtn.png");
+	ViewClass.frameHeight = (float)ViewClass.texture.height;
+	ViewClass.sourceRec = { 0, 0, (float)ViewClass.texture.width, ViewClass.frameHeight };
+	ViewClass.btnBounds = { 1081, 605, (float)ViewClass.texture.width, ViewClass.frameHeight };
 	
 	//Position of schoolyear---------------------------------------------------------------------------------------------
 	while (!WindowShouldClose()) {
@@ -280,6 +292,8 @@ void ProfilePage(const int screenWidth, const int screenHeight, account& Current
 		LogOut.workbutton(mousePoint, CurrentUser, LogInPage);
 		CreateSchoolYear.workbutton(mousePoint, CurrentUser, CreateSchoolYearPage);
 		ViewSchoolYear.workbutton(mousePoint, CurrentUser, ViewSchoolYearPage);
+		CreateClass.workbutton(mousePoint, CurrentUser, CreateSchoolYearPage);
+		ViewClass.workbutton(mousePoint, CurrentUser, ViewSchoolYearPage);
 
 		//// display schoolyear from createschoolyear page--------------------------------------------------------------------------------------------
 		EndDrawing();
@@ -460,6 +474,11 @@ void ViewSchoolYearPage(const int screenWidth, const int screenHeight, account& 
 		DrawRectangle(70, 170, 360, 750, WHITE);
 		DrawRectangleLines(69, 169, 362, 752, BLACK);
 		DrawRectangleLines(68, 168, 364, 754, BLACK);
+
+
+
+
+
 		EndDrawing();
 	}
 	CloseWindow();
@@ -667,4 +686,3 @@ void Textbox2::worktextbox(bool& somethingfalsedisplay) {
 	}
 	else DrawRectangleLines((int)textbox.x, (int)textbox.y, (int)textbox.width, (int)textbox.height, DARKGRAY);
 }
-
