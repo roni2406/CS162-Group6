@@ -5,9 +5,13 @@ using namespace std;
 #define SCHOOLYEAR_H
 
 struct schoolYear {
-	char* schoolYear[9];
+	char* sYear;
 
+	void inputASchoolYear(char* year);
 	void createASchoolYear();
 };
+
+// front end use
+void createASchoolYear(char* schoolyear);
 
 #endif
