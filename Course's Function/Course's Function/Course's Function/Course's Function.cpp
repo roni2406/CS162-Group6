@@ -4,8 +4,8 @@
 using namespace std;
 
 void course::Input_Course() {
-	cout << "You have created a new Course. Please enter the name of Course: ";
-	cin.get(courseName, '\n');
+	cout << "You have created a new Course. Please enter:\nName of Course: ";
+	cin.get(courseName,'\n');
 	cin.ignore(100, '\n');
 	cout << "Course ID : ";
 	cin.get(courseID, '\n');
@@ -15,6 +15,7 @@ void course::Input_Course() {
 	cin.ignore(100, '\n');
 	cout << "Number of Course Credit : ";
 	cin >> numOfCre;
+	cin.ignore(100, '\n');
 	cout << "Course will occur on : ";
 	cin.get(dayofweek, '\n');
 	cin.ignore(100, '\n');
@@ -23,7 +24,7 @@ void course::Input_Course() {
 	cin.ignore(100, '\n');
 }
 void course::Input_1_Stu(student* newStudents) {
-	if (numOfStu <= 50) {
+	if (numOfStu < 50) {
 		stuOfCourse[++numOfStu] = newStudents;
 	}
 	else cout << "Cant add more student";
@@ -96,6 +97,23 @@ void course:: Add_Course( char* coursefile, ofstream& fout) {
 	}
 	fout.close();
 }
+void View_Course(course* course,int k) {
+	int i = 0;
+	while (i<k) {
+		cout << course[i].courseName <<'\n'
+			 << course[i].courseID << '\n'
+			 << course[i].teacherName << '\n'
+			 << course[i].numOfCre << '\n'
+			 << course[i].dayofweek << '\n'
+			 << course[i].sessionHour << '\n' << '\n';
+		i++;
+	}
+}
 int main() {
-
+	int press=-1,i=0;
+	course courses[1000];
+	while (i < 2) {
+		courses[i++].Input_Course();
+	}
+	View_Course(courses,i);
 }
