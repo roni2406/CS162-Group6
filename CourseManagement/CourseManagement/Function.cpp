@@ -216,9 +216,6 @@ void SignUpPage(const int screenWidth, const int screenHeight, account& CurrentU
 	CloseWindow();
 
 }
-
-char schoolyears[MAX_SCHOOLYEARS][MAX_INPUT_CHARS + 1];
-int num_schoolyears = 0;
 void ProfilePage(const int screenWidth, const int screenHeight, account& CurrentUser) {
 	////Initialize variable---------------------------------------------------------------------------------------------
 	Texture2D avatar;
@@ -243,11 +240,15 @@ void ProfilePage(const int screenWidth, const int screenHeight, account& Current
 	CreateSchoolYear.texture = LoadTexture("createSchoolYearBtn.png");
 	CreateSchoolYear.frameHeight = (float)CreateSchoolYear.texture.height;
 	CreateSchoolYear.sourceRec = { 0, 0, (float)CreateSchoolYear.texture.width, CreateSchoolYear.frameHeight };
-	CreateSchoolYear.btnBounds = { 544, 200, (float)CreateSchoolYear.texture.width, CreateSchoolYear.frameHeight };
+	CreateSchoolYear.btnBounds = { 574, 200, (float)CreateSchoolYear.texture.width, CreateSchoolYear.frameHeight };
+	
+	Button1 ViewSchoolYear;
+	ViewSchoolYear.texture = LoadTexture("viewschoolyearbtn.png");
+	ViewSchoolYear.frameHeight = (float)ViewSchoolYear.texture.height;
+	ViewSchoolYear.sourceRec = { 0, 0, (float)ViewSchoolYear.texture.width, ViewSchoolYear.frameHeight };
+	ViewSchoolYear.btnBounds = { 1049, 200, (float)ViewSchoolYear.texture.width, ViewSchoolYear.frameHeight };
 	
 	//Position of schoolyear---------------------------------------------------------------------------------------------
-	int x_schoolyear = 1048;
-	int y_schoolyear = 252;
 	while (!WindowShouldClose()) {
 		ClearBackground(WHITE);
 
@@ -264,10 +265,10 @@ void ProfilePage(const int screenWidth, const int screenHeight, account& Current
 		DrawRectangleLines(479, 169, 982, 752, BLACK);
 		DrawRectangleLines(478, 168, 984, 754, BLACK);
 
-		DrawRectangle(1030, 108, 250, 60, WHITE);
-		DrawRectangleLines(1029, 107, 252, 62, BLACK);
-		DrawRectangleLines(1028, 106, 254, 64, BLACK);
-		DrawText("School Years", 1050, 123, 30, DARKBLUE);
+		DrawRectangle(480, 108, 250, 60, WHITE);
+		DrawRectangleLines(479, 107, 252, 62, BLACK);
+		DrawRectangleLines(478, 106, 254, 64, BLACK);
+		DrawText("School Years", 500, 123, 30, DARKBLUE);
 
 		DrawTexture(avatar, 150, 100, WHITE);
 		DrawText("Username: ", 90, 330, 20, DARKBLUE);
@@ -278,13 +279,9 @@ void ProfilePage(const int screenWidth, const int screenHeight, account& Current
 		ChangePass.workbutton(mousePoint, CurrentUser, ChangePasswordPage);
 		LogOut.workbutton(mousePoint, CurrentUser, LogInPage);
 		CreateSchoolYear.workbutton(mousePoint, CurrentUser, CreateSchoolYearPage);
+		ViewSchoolYear.workbutton(mousePoint, CurrentUser, ViewSchoolYearPage);
 
 		//// display schoolyear from createschoolyear page--------------------------------------------------------------------------------------------
-		for (int i = 0; i < num_schoolyears; ++i) {
-			DrawText(schoolyears[i], x_schoolyear, y_schoolyear, 40, DARKGRAY);
-			y_schoolyear += 100;
-		}
-		y_schoolyear = 202;
 		EndDrawing();
 	}
 	CloseWindow();
@@ -425,18 +422,13 @@ void CreateSchoolYearPage(const int screenWidth,const int screenHeight, account&
 		}
 		else confirmBtnState = 0;
 		if (confirmBtnAction) {
-			if (num_schoolyears >= MAX_SCHOOLYEARS) {
-				confirmBtnFalseDisplay = true;
-			}
-			else {
-				for (int i = 0; i < MAX_INPUT_CHARS; ++i) {
-					schoolyears[num_schoolyears][i] = schoolyear.text[i];
-				}
-				++num_schoolyears;
+			if (createASchoolYear(schoolyear.text)) {
+				confirmBtnFalseDisplay = false;
 				ProfilePage(screenWidth, screenHeight, CurrentUser);
 			}
+			else confirmBtnFalseDisplay = true;
 		}
-		if (confirmBtnFalseDisplay) DrawText("Couldn't add more school years. Delete previous schoolyears to add.", 400, 350, 20, RED);
+		if (confirmBtnFalseDisplay) DrawText("Schoolyear must be in right form. Try again!", 500, 360, 20, RED);
 		// Calculate button frame rectangle to draw depending on button state
 		sourceRecconfirmBtn.y = confirmBtnState * frameHeightconfirmBtn;
 		DrawTextureRec(confirmBtn, sourceRecconfirmBtn, { btnBoundsconfirmBtn.x, btnBoundsconfirmBtn.y }, WHITE); // Draw button frame
@@ -448,7 +440,31 @@ void CreateSchoolYearPage(const int screenWidth,const int screenHeight, account&
 	}
 	CloseWindow();
 }
+void ViewSchoolYearPage(const int screenWidth, const int screenHeight, account& CurrentUser) {
+	Vector2 mousePoint = { 0.0f, 0.0f };
+	mousePoint = GetMousePosition();
 
+	Rectangle background = { 0,0,1512,982 };
+
+	Texture2D avatar;
+	avatar = LoadTexture("avatar.png");
+	int x_schoolyear;
+	int y_schoolyear;
+	while (!WindowShouldClose()) {
+		ClearBackground(WHITE);
+
+		BeginDrawing();
+		DrawText("WELCOME!", 670, 15, 40, DARKBLUE);
+
+		DrawRectangleGradientEx(background, SKYBLUE, DARKBLUE, DARKBLUE, SKYBLUE);
+		DrawRectangle(70, 170, 360, 750, WHITE);
+		DrawRectangleLines(69, 169, 362, 752, BLACK);
+		DrawRectangleLines(68, 168, 364, 754, BLACK);
+		EndDrawing();
+	}
+	CloseWindow();
+
+}
 void SemestersNClassesPage(const int screenWidth, const int screenHeight, account& CurrentUser) {
 	//Initialize variable---------------------------------------------------------------------------------------------
 	Vector2 mousePoint = { 0.0f, 0.0f };
@@ -651,3 +667,4 @@ void Textbox2::worktextbox(bool& somethingfalsedisplay) {
 	}
 	else DrawRectangleLines((int)textbox.x, (int)textbox.y, (int)textbox.width, (int)textbox.height, DARKGRAY);
 }
+

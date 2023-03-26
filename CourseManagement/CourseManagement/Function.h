@@ -11,7 +11,8 @@ using namespace std;
 const int screenWidth = 1512;
 const int screenHeight = 982;
 const int MAX_INPUT_CHARS = 18;
-const int MAX_SCHOOLYEARS = 1;
+const int MAX_SCHOOLYEARS = 10;
+
 
 //// Page
 void LogInPage(const int screenWidth, const int screenHeight, account& CurrentUser);
@@ -19,6 +20,8 @@ void SignUpPage(const int screenWidth, const int screenHeight, account& CurrentU
 void ProfilePage(const int screenWidth, const int screenHeight, account& CurrentUser);
 void ChangePasswordPage(const int screenWidth, const int screenHeight, account& CurrentUser);
 void CreateSchoolYearPage(const int screenWidth,const int screenHeight, account& CurrentUser); 
+void ViewSchoolYearPage(const int screenWidth, const int screenHeight, account& CurrentUser);
+
 
 //// Objects
 
