@@ -44,9 +44,11 @@ struct course {
     // A course will be taught in only one session in a week
     student* stuOfCourse[50];
     void Input_Course();
-    void Add_Courses(course newCourse, char* filename, ofstream& fout);
+    void Add_Course(char* filename, ofstream& fout);
     void Input_1_Stu(student* newStudents);
     void Add_Stus(char* filename);
+    void Load_Stus(char* filename);
     void Delete_1_Stu();
+    void Update_Course(int press);
 };
 #endif
