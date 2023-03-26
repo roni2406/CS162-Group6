@@ -3,12 +3,13 @@
 #include <raylib.h>
 #include "account.h"
 #include "Function.h"
+#include "schoolYear.h"
 
 using namespace std;
 
 
 //FRONT_END--------------------------------------------------------
-char schoolyears[MAX_INPUT_CHARS + 1] = "\0";
+
 void LogInPage(const int screenWidth, const int screenHeight, account& CurrentUser) {
 
 	Rectangle background = { 0,0,1512,982 };
@@ -215,7 +216,9 @@ void SignUpPage(const int screenWidth, const int screenHeight, account& CurrentU
 	CloseWindow();
 
 }
-int y_schoolyear = 102;
+
+char schoolyears[MAX_SCHOOLYEARS][MAX_INPUT_CHARS + 1];
+int num_schoolyears = 0;
 void ProfilePage(const int screenWidth, const int screenHeight, account& CurrentUser) {
 	////Initialize variable---------------------------------------------------------------------------------------------
 	Texture2D avatar;
@@ -243,9 +246,8 @@ void ProfilePage(const int screenWidth, const int screenHeight, account& Current
 	CreateSchoolYear.btnBounds = { 544, 200, (float)CreateSchoolYear.texture.width, CreateSchoolYear.frameHeight };
 	
 	//Position of schoolyear---------------------------------------------------------------------------------------------
-	int x_schoolyear = 1049;
-	y_schoolyear += 100;
-	bool schoolyearadded = false;
+	int x_schoolyear = 1048;
+	int y_schoolyear = 252;
 	while (!WindowShouldClose()) {
 		ClearBackground(WHITE);
 
@@ -262,10 +264,10 @@ void ProfilePage(const int screenWidth, const int screenHeight, account& Current
 		DrawRectangleLines(479, 169, 982, 752, BLACK);
 		DrawRectangleLines(478, 168, 984, 754, BLACK);
 
-		DrawRectangle(780, 108, 250, 60, WHITE);
-		DrawRectangleLines(779, 107, 252, 62, BLACK);
-		DrawRectangleLines(778, 106, 254, 64, BLACK);
-		DrawText("School Years", 800, 123, 30, DARKBLUE);
+		DrawRectangle(1030, 108, 250, 60, WHITE);
+		DrawRectangleLines(1029, 107, 252, 62, BLACK);
+		DrawRectangleLines(1028, 106, 254, 64, BLACK);
+		DrawText("School Years", 1050, 123, 30, DARKBLUE);
 
 		DrawTexture(avatar, 150, 100, WHITE);
 		DrawText("Username: ", 90, 330, 20, DARKBLUE);
@@ -278,15 +280,11 @@ void ProfilePage(const int screenWidth, const int screenHeight, account& Current
 		CreateSchoolYear.workbutton(mousePoint, CurrentUser, CreateSchoolYearPage);
 
 		//// display schoolyear from createschoolyear page--------------------------------------------------------------------------------------------
-		if (!schoolyearadded) {
-			schoolyearadded = true;
-			schoolyears[0] = '\0';
+		for (int i = 0; i < num_schoolyears; ++i) {
+			DrawText(schoolyears[i], x_schoolyear, y_schoolyear, 40, DARKGRAY);
+			y_schoolyear += 100;
 		}
-		DrawText(schoolyears, x_schoolyear, y_schoolyear, 25, DARKBLUE);
-		if (schoolyears[0] != '\0') {
-			schoolyearadded = false;
-		}
-
+		y_schoolyear = 202;
 		EndDrawing();
 	}
 	CloseWindow();
@@ -305,6 +303,9 @@ void ChangePasswordPage(const int screenWidth, const int screenHeight, account& 
 	Textbox2 confirmnewpass;
 	confirmnewpass.textbox = { 477, 567, 558, 106 };
 
+	Button3 backtoprofilepage;
+	backtoprofilepage.button = { 1270, 20, 200, 30 };
+
 	bool isChangePassFalseDisplay = false;
 	Texture2D confirmBtn = LoadTexture("confirmBtn.png");
 	float frameHeightconfirmBtn = (float)confirmBtn.height;
@@ -319,9 +320,12 @@ void ChangePasswordPage(const int screenWidth, const int screenHeight, account& 
 		BeginDrawing();
 
 		DrawRectangleGradientEx(background, SKYBLUE, DARKBLUE, DARKBLUE, SKYBLUE);
-		DrawRectangle(347, 173, 818, 630, WHITE);
 		DrawRectangle(0, 0, 1512, 60, WHITE);
 		DrawText("  Call us : (028) 3835 4266         E - mail : info@fit.hcmus.edu.vn", 0, 20, 20, DARKBLUE);
+		DrawRectangleRec(backtoprofilepage.button, WHITE);
+		DrawText("Back to Profile Page", 1280, 20, 20, DARKBLUE);
+
+		DrawRectangle(347, 173, 818, 630, WHITE);
 		DrawRectangleRec(oldpass.textbox, LIGHTGRAY);
 		DrawRectangleRec(newpass.textbox, LIGHTGRAY);
 		DrawRectangleRec(confirmnewpass.textbox, LIGHTGRAY);
@@ -329,7 +333,7 @@ void ChangePasswordPage(const int screenWidth, const int screenHeight, account& 
 		DrawText("* New Password", 477, 364, 30, DARKBLUE);
 		DrawText("* Confirm New Password", 477, 528, 30, DARKBLUE);
 
-		////Buttons function-----------------------------------------------------------------------------------------------------------------------------------------
+		////Textbox function-----------------------------------------------------------------------------------------------------------------------------------------
 		oldpass.worktextbox(isChangePassFalseDisplay);
 		newpass.worktextbox(isChangePassFalseDisplay);
 		confirmnewpass.worktextbox(isChangePassFalseDisplay);
@@ -345,6 +349,8 @@ void ChangePasswordPage(const int screenWidth, const int screenHeight, account& 
 		////-------------------------------------------------------------------------------------------------------------------------
 
 		mousePoint = GetMousePosition();
+		////Button function----------------------------------------------------------------------------------------------------------
+		///Confirm button
 		confirmBtnAction = false;
 		if (CheckCollisionPointRec(mousePoint, btnBoundsconfirmBtn)) {          // Check button state
 			if (IsMouseButtonPressed(MOUSE_BUTTON_LEFT)) confirmBtnAction = true;
@@ -363,6 +369,9 @@ void ChangePasswordPage(const int screenWidth, const int screenHeight, account& 
 		// Calculate button frame rectangle to draw depending on button state
 		sourceRecconfirmBtn.y = confirmBtnState * frameHeightconfirmBtn;
 		DrawTextureRec(confirmBtn, sourceRecconfirmBtn, { btnBoundsconfirmBtn.x, btnBoundsconfirmBtn.y }, WHITE); // Draw button frame
+
+		/// Back to profile page button
+		backtoprofilepage.workbutton(mousePoint, CurrentUser, ProfilePage);
 		EndDrawing();
 	}
 	CloseWindow();
@@ -373,8 +382,9 @@ void CreateSchoolYearPage(const int screenWidth,const int screenHeight, account&
 
 	Textbox1 schoolyear;
 	schoolyear.textbox = { 477, 239, 558, 106 };
-	bool nothing;
 	
+	Button3 backtoprofilepage;
+	backtoprofilepage.button = { 1270, 20, 200, 30 };
 
 	Texture2D confirmBtn = LoadTexture("confirmBtn.png");
 	float frameHeightconfirmBtn = (float)confirmBtn.height;
@@ -383,38 +393,56 @@ void CreateSchoolYearPage(const int screenWidth,const int screenHeight, account&
 	Rectangle btnBoundsconfirmBtn = { 650, 400, (float)confirmBtn.width, frameHeightconfirmBtn };
 	int confirmBtnState = 0;               // Button state: 0-NORMAL, 1-MOUSE_HOVER, 2-PRESSED
 	bool confirmBtnAction = false;         // Button action should be activated
-
+	bool confirmBtnFalseDisplay = false;
 	while (!WindowShouldClose()) {
 		ClearBackground(WHITE);
 		BeginDrawing();
 
 		DrawText("  Call us : (028) 3835 4266         E - mail : info@fit.hcmus.edu.vn", 0, 20, 20, DARKBLUE);
 		DrawRectangleGradientEx(background, SKYBLUE, DARKBLUE, DARKBLUE, SKYBLUE);
-		DrawRectangle(347, 173, 818, 373, WHITE);
+		DrawRectangle(0, 0, 1512, 60, WHITE);
+		
+		DrawRectangleRec(backtoprofilepage.button, WHITE);
+		DrawText("Back to Profile Page", 1280, 20, 20, DARKBLUE);
 
+		DrawRectangle(347, 173, 818, 373, WHITE);
 		DrawRectangleRec(schoolyear.textbox, LIGHTGRAY);
-		DrawText("* School Year Name (YYYY-YYYY)", 477, 200, 30, DARKBLUE);
+		DrawText("* School Year (YYYY-YYYY)", 477, 200, 30, DARKBLUE);
+		
 		////Function_of_TextInputBoxes_----------------------------------------------------------------------------------------------------------------------
-		schoolyear.worktextbox(nothing);
+		schoolyear.worktextbox(confirmBtnFalseDisplay);
 
 		DrawText(schoolyear.text, 500, 270, 40, DARKBLUE);
 		DrawText(TextFormat("%i/%i", schoolyear.lettercount, MAX_INPUT_CHARS), 1050, 280, 20, DARKBLUE);
 
+		////Function of buttons------------------------------------------------------------------------------------------------------------------------------
 		mousePoint = GetMousePosition();
+
+		///Confirm button
 		confirmBtnAction = false;
 		if (CheckCollisionPointRec(mousePoint, btnBoundsconfirmBtn)) {          // Check button state
 			if (IsMouseButtonPressed(MOUSE_BUTTON_LEFT)) confirmBtnAction = true;
 		}
 		else confirmBtnState = 0;
 		if (confirmBtnAction) {
-			for (int i = 0; i < MAX_INPUT_CHARS; ++i) {
-				schoolyears[i] = schoolyear.text[i];
+			if (num_schoolyears >= MAX_SCHOOLYEARS) {
+				confirmBtnFalseDisplay = true;
 			}
-			ProfilePage(screenWidth, screenHeight, CurrentUser);
+			else {
+				for (int i = 0; i < MAX_INPUT_CHARS; ++i) {
+					schoolyears[num_schoolyears][i] = schoolyear.text[i];
+				}
+				++num_schoolyears;
+				ProfilePage(screenWidth, screenHeight, CurrentUser);
+			}
 		}
+		if (confirmBtnFalseDisplay) DrawText("Couldn't add more school years. Delete previous schoolyears to add.", 400, 350, 20, RED);
 		// Calculate button frame rectangle to draw depending on button state
 		sourceRecconfirmBtn.y = confirmBtnState * frameHeightconfirmBtn;
 		DrawTextureRec(confirmBtn, sourceRecconfirmBtn, { btnBoundsconfirmBtn.x, btnBoundsconfirmBtn.y }, WHITE); // Draw button frame
+
+		/// Back to profile page button
+		backtoprofilepage.workbutton(mousePoint, CurrentUser, ProfilePage);
 
 		EndDrawing();
 	}

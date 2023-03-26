@@ -5,11 +5,13 @@
 #include <raylib.h>
 #include <fstream>
 #include "account.h"
+#include "schoolYear.h"
 using namespace std;
 
 const int screenWidth = 1512;
 const int screenHeight = 982;
 const int MAX_INPUT_CHARS = 18;
+const int MAX_SCHOOLYEARS = 1;
 
 //// Page
 void LogInPage(const int screenWidth, const int screenHeight, account& CurrentUser);
