@@ -147,6 +147,7 @@
     <ClInclude Include="Function.h" />
     <ClInclude Include="schoolYear.h" />
     <ClInclude Include="scoreboard.h" />
+    <ClInclude Include="semester.h" />
     <ClInclude Include="users.h" />
   </ItemGroup>
   <ItemGroup>

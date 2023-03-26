@@ -17,6 +17,7 @@ void getSchoolYear(string* sYear, int& n, ifstream& fin);
 
 // front end use
 bool createASchoolYear(char* schoolyear);
+int countSchoolYear();
 // schoolyear must have 8 chars and must larger than prev year. Otherwise, return false.
 
 #endif

@@ -56,10 +56,10 @@ bool createASchoolYear(char* schoolyear) {
 int countSchoolYear() {
     ifstream fin;
     fin.open("../data/schoolYear.txt");
-    int cnt = 0;
-    while (!fin.eof()) {
-        ++cnt;
-    }
+    string* Years = new string[100];
+    int cnt;
+    getSchoolYear(Years, cnt, fin);
     fin.close();
+    delete[] Years;
     return cnt;
 }
