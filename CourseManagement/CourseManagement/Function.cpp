@@ -455,8 +455,8 @@ void CreateSchoolYearPage(const int screenWidth,const int screenHeight, account&
 	CloseWindow();
 }
 void ViewSchoolYearPage(const int screenWidth, const int screenHeight, account& CurrentUser) {
-	char** Years = getSchoolYearArr();
 	int n = countSchoolYear();
+	char** Years = getSchoolYearArr();
 	Vector2 mousePoint = { 0.0f, 0.0f };
 
 	Rectangle background = { 0,0,1512,982 };
@@ -464,28 +464,44 @@ void ViewSchoolYearPage(const int screenWidth, const int screenHeight, account& 
 	Texture2D avatar;
 	avatar = LoadTexture("avatar.png");
 
-	int y_schoolyear = 202;
-	int x_schoolyear = 200;
+	Button3* schoolyear = new Button3[n];
+
+
+	Button3 backtoprofilepage;
+	backtoprofilepage.button = { 1270, 20, 200, 30 };
+
+	int scrollspeed = 25;
+	float y_schoolyear = 257;
+	float x_schoolyear = 668;
 	bool schoolyearadded = false;
 	while (!WindowShouldClose()) {
+		y_schoolyear += ((GetMouseWheelMove() * scrollspeed) - (IsKeyDown(KEY_DOWN) - IsKeyDown(KEY_UP)));
+		if (y_schoolyear > 202) y_schoolyear = 202;
 		ClearBackground(WHITE);
-
 		BeginDrawing();
-		DrawText("WELCOME!", 670, 15, 40, DARKBLUE);
-
 		DrawRectangleGradientEx(background, SKYBLUE, DARKBLUE, DARKBLUE, SKYBLUE);
-		DrawRectangle(70, 170, 360, 750, WHITE);
-		DrawRectangleLines(69, 169, 362, 752, BLACK);
-		DrawRectangleLines(68, 168, 364, 754, BLACK);
+		DrawRectangle(0, 0, 1512, 60, WHITE);
+		DrawText("SCHOOLYEARS", 620, 15, 40, DARKBLUE);
+		DrawRectangleRec(backtoprofilepage.button, WHITE);
+		DrawText("Back to Profile Page", 1280, 20, 20, DARKBLUE);
+		DrawRectangle(322, 136, 870, 806, WHITE);
+		DrawRectangleLines(321, 135, 872, 807, BLACK);
 		mousePoint = GetMousePosition();
+
+		int j = 0;
 		for (int i = 0; i < n; ++i) {
-			DrawRectangle(x_schoolyear - 5, y_schoolyear -5, 220, 50, BLACK);
-			DrawText(Years[i], x_schoolyear, y_schoolyear, 40, WHITE);
+			schoolyear[i].button = { x_schoolyear - 122, y_schoolyear - 12, 421, 59 };
+			DrawRectangleRec(schoolyear[i].button, LIGHTGRAY);
+			schoolyear[i].workbutton(mousePoint, CurrentUser, ProfilePage);
+			DrawText(Years[i], x_schoolyear, y_schoolyear, 32, DARKBLUE);
 			y_schoolyear += 100;
 		}
-		y_schoolyear = 202;
+		/// Back to profile page button
+		backtoprofilepage.workbutton(mousePoint, CurrentUser, ProfilePage);
+		delete[] schoolyear;
 		EndDrawing();
 	}
+	
 	CloseWindow();
 
 }

@@ -57,7 +57,7 @@ struct Button2 {
 struct Button3 {
 	const int screenWidth = 1512;
 	const int screenHeight = 982;
-	Rectangle button;
+	Rectangle button = { 0, 0, 0, 0 };
 	bool mouseonbutton = false;
 	bool action = false;
 	void workbutton(Vector2 mousePoint, account& CurrentUser, void(*func)(const int screenWidth, const int screenHeight, account& CurrentUser));
