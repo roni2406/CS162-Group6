@@ -11,4 +11,6 @@ struct scoreboard {
     double otherMark;
 };
 
+scoreboard* getScoreBoard();
+
 #endif

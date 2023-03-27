@@ -10,7 +10,7 @@ struct Date {
     int y; // year
 
     void inputADate(int day, int month, int year);
-    void inputADateWithFile(char* date);
+    void inputADateWithChar(char* date);
     void outputADateToFile(ofstream& fout);
 };
 
