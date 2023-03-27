@@ -4,7 +4,7 @@
 #include"raylib.h"
 using namespace std;
 
-void course::Input_Course() {
+/*void course::Input_Course() {
 	cout << "You have created a new Course. Please enter:\nName of Course: ";
 	cin.get(courseName,'\n');
 	cin.ignore(100, '\n');
@@ -23,7 +23,7 @@ void course::Input_Course() {
 	cout << "Course will begin at : ";
 	cin.get(sessionHour, '\n');
 	cin.ignore(100, '\n');
-}
+}*/
 void course::Input_1_Stu(student* newStudents) {
 	if (numOfStu < 50) {
 		stuOfCourse[++numOfStu] = newStudents;
@@ -77,15 +77,15 @@ void course::Update_Course(int press) {
 		cin >> sessionHour;
 	}
 }
-void course:: Add_Course( char* coursefile, ofstream& fout) {
-	fout.open(coursefile, ios::app);
+void course:: Add_Course( char* semeterfile, ofstream& fout) {
+	fout.open(semeterfile, ios::app);
 	fout << "Course : " << courseName << '\n'
 		<< "ID : " << courseID << '\n'
 		<< "Teacher : " << teacherName << '\n'
 		<< "Number of Credit : " << numOfCre << '\n'
 		<< "Course Day : " << dayofweek << '\n'
 		<< "Session Hours : " << sessionHour << '\n';
-	for (int i = 1; i <= numOfStu; i++) {
+	/*for (int i = 1; i <= numOfStu; i++) {
 		fout << stuOfCourse[numOfStu]->No
 			<< stuOfCourse[numOfStu]->stuID
 			<< stuOfCourse[numOfStu]->person.firstName
@@ -95,10 +95,10 @@ void course:: Add_Course( char* coursefile, ofstream& fout) {
 			<< stuOfCourse[numOfStu]->person.dob.month
 			<< stuOfCourse[numOfStu]->person.dob.year
 			<< stuOfCourse[numOfStu]->person.socialID;
-	}
+	}*/
 	fout.close();
 }
-void View_Course(course* course,int k) {
+/*void View_Course(course* course, int k) {
 	int i = 0;
 	while (i<k) {
 		cout <<"Coures Name : "<< course[i].courseName << '\n'
@@ -109,27 +109,34 @@ void View_Course(course* course,int k) {
 			 <<"Session Hours : " << course[i].sessionHour << '\n' << '\n';
 		i++;
 	}
-}
+}*/
+void overall_page() {
 
+}
 int main() {
+
 	course  course[10];
 	int Pos = 00;
 	int scrollSpeed = 25;
 	InitWindow(1620, 920, "cs2");
+	char str[6] = "";
 	while (!WindowShouldClose()) {
-		Pos -= (GetMouseWheelMove() * scrollSpeed);
+		Pos += (GetMouseWheelMove() * scrollSpeed);
 		if (Pos > 0)Pos = 0;
 		if (Pos < -1500)Pos = -1500;//num of course/6*wight
 		BeginDrawing();
 		ClearBackground(WHITE);
 		float mouseWheelMovement = GetMouseWheelMove();
-
 		int i = 0;//k=num of courses
 		for (int k = 0; k < 10; k++) {
-			DrawText(TextFormat("Course: ",course[k].courseName), 17, Pos + (i += 20), 20, RED);
-			DrawText(TextFormat("ID: ", course[k].courseID), 17, Pos + (i += 20), 20, RED);
+			DrawText(TextFormat("Course: " ), 17, Pos + (i += 20), 20, RED);
+			DrawText(str,100, Pos+(i), 20, RED);
+			DrawText(TextFormat("ID: "), 17, Pos + (i += 20), 20, RED);
+			DrawText(str, 50, Pos + (i), 20, RED);
 			DrawText(TextFormat("Teacher: ", course[k].teacherName), 17, Pos + (i += 20), 20, RED);
+			DrawText(str, 115, Pos + (i), 20, RED);
 			DrawText(TextFormat("Number of Credit: ", course[k].numOfCre), 17, Pos + (i += 20), 20, RED);
+			DrawText(str, 205, Pos + (i), 20, RED);
 			DrawText(TextFormat("Course Day: ", course[k].dayofweek), 17, Pos + (i += 20), 20, RED);
 			DrawText(TextFormat("Session Hours: ", course[k].dayofweek), 17, Pos + (i += 20), 20, RED);
 			i += 50;

@@ -51,6 +51,7 @@ struct course {
     void Delete_1_Stu();
     void Update_Course(int press);
 };
+
 struct ListCourse {
     course course;
     ListCourse* next;
