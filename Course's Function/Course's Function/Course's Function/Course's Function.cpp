@@ -117,27 +117,27 @@ int main() {
 
 	course  course[10];
 	int Pos = 00;
-	int scrollSpeed = 25;
+	int scrollSpeed = 35;
 	InitWindow(1620, 920, "cs2");
 	char str[6] = "";
 	while (!WindowShouldClose()) {
-		Pos += ((GetMouseWheelMove() * scrollSpeed) - (IsKeyDown(KEY_DOWN) - IsKeyDown(KEY_UP))*3);//Mouse wheel + key up down|| chua co scroll bar
+		Pos += ((GetMouseWheelMove() * scrollSpeed) - (IsKeyDown(KEY_DOWN) - IsKeyDown(KEY_UP))*2);//Mouse wheel + key up down|| chua co scroll bar
 		if (Pos > 0)Pos = 0;
 		if (Pos < -1500)Pos = -1500;//num of course/6*wight
 		BeginDrawing();
 		ClearBackground(WHITE);
 		int i = 0;//k=num of courses
 		for (int k = 0; k < 10; k++) {
-			DrawText(TextFormat("Course: " ), 17, Pos + (i += 20), 20, RED);
-			DrawText(str,100, Pos+(i), 20, RED);
-			DrawText(TextFormat("ID: "), 17, Pos + (i += 20), 20, RED);
-			DrawText(str, 50, Pos + (i), 20, RED);
-			DrawText(TextFormat("Teacher: ", course[k].teacherName), 17, Pos + (i += 20), 20, RED);
-			DrawText(str, 115, Pos + (i), 20, RED);
-			DrawText(TextFormat("Number of Credit: ", course[k].numOfCre), 17, Pos + (i += 20), 20, RED);
-			DrawText(str, 205, Pos + (i), 20, RED);
-			DrawText(TextFormat("Course Day: ", course[k].dayofweek), 17, Pos + (i += 20), 20, RED);
-			DrawText(TextFormat("Session Hours: ", course[k].dayofweek), 17, Pos + (i += 20), 20, RED);
+			DrawText(TextFormat("Course: " ), 17, Pos + (i += 20), 20,MAROON);
+			DrawText(str,100, Pos+(i), 20, MAROON);
+			DrawText(TextFormat("ID: "), 17, Pos + (i += 20), 20, MAROON);
+			DrawText(str, 50, Pos + (i), 20, MAROON);
+			DrawText(TextFormat("Teacher: ", course[k].teacherName), 17, Pos + (i += 20), 20, MAROON);
+			DrawText(str, 115, Pos + (i), 20, MAROON);
+			DrawText(TextFormat("Number of Credit: ", course[k].numOfCre), 17, Pos + (i += 20), 20, MAROON);
+			DrawText(str, 205, Pos + (i), 20, MAROON);
+			DrawText(TextFormat("Course Day: ", course[k].dayofweek), 17, Pos + (i += 20), 20, MAROON);
+			DrawText(TextFormat("Session Hours: ", course[k].dayofweek), 17, Pos + (i += 20), 20, MAROON);
 			i += 50;
 		}
 		EndDrawing();
