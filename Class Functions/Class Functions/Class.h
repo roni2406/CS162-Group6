@@ -44,6 +44,6 @@ void AddAClassToList(Class& className, ofstream& fout);
 void CreateASingleClassList(Class className, ofstream& fout);
 
 // 15
-void viewClasses_PrepareData(Class* ClassList, ifstream& fin);
-void viewClasses_OutputToConsole(Class* ClassList);
+void viewClasses_PrepareData_SavedToClassArray(Class*& ClassList, ifstream& fin, int& numOfClasses); // 15
+void viewClasses_OutputToConsole(Class* ClassList, int numOfClasses);
 #endif 

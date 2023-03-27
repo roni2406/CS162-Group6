@@ -118,7 +118,8 @@ void viewStudingCourses(); // 14
 // At any time, an academic staff member can:
 // void viewClasses(); // 15
 // 15
-void viewClasses_PrepareData(Class* ClassList, ifstream& fin);
+void viewClasses_PrepareData_SavedToClassArray(Class*& ClassList, ifstream& fin, int& numOfClasses); 
+void viewClasses_OutputToConsole(Class* ClassList, int numOfClasses);
 
 void viewStudentsInAClass(); // 16
 void viewCourses(); // 17
