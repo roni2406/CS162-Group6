@@ -116,7 +116,10 @@ void viewStudingCourses(); // 14
 
 
 // At any time, an academic staff member can:
-void viewClasses(); // 15
+// void viewClasses(); // 15
+// 15
+void viewClasses_PrepareData(Class* ClassList, ifstream& fin);
+
 void viewStudentsInAClass(); // 16
 void viewCourses(); // 17
 void viewStudentInACourse(); // 18
