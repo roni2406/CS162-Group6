@@ -33,36 +33,37 @@ void CreateASingleClassList(Class className, ofstream& fout)
 	fout.close();
 }
 
-void viewClasses_PrepareData(Class* ClassList, ifstream& fin) // 15
+void viewClasses_PrepareData_SavedToClassArray(Class*& ClassList, ifstream& fin, int& numOfClasses) // 15
 {
 	fin.open("List of Classes.txt");
 	ClassList = new Class[1000];
-	int i = 0;
+	numOfClasses = 0;
 	char* str = nullptr;
 	int tmp = 0;
 	while (!fin.eof())
 	{
 		str = new char[11];
 		fin >> str;
-		ClassList[i].classID = str;
-		fin.ignore(1, '\n');
+		ClassList[numOfClasses].classID = _strdup(str);
 		fin >> tmp;
-		ClassList[i].numOfStu = tmp;
-		cout << "Class " << i + 1 << ": " << ClassList[i].classID << '\n';
-		cout << "Number of Students: " << ClassList[i].numOfStu << '\n';
-		cout << '\n';
-		++i;
+		ClassList[numOfClasses].numOfStu = tmp;
+		++numOfClasses;
 		delete[]str;
 		str = nullptr;
 	}
-
 	fin.close();
-	delete[] ClassList;
-	ClassList = nullptr;
 }
 
-void viewClasses_OutputToConsole(Class* ClassList)
+void viewClasses_OutputToConsole(Class* ClassList, int numOfClasses)
 {
-
+	cout << "Number of Classes: " << numOfClasses << '\n';
+	for (int i = 0; i < numOfClasses; ++i)
+	{
+		cout << "Class " << i + 1 << ": " << ClassList[i].classID << '\n';
+		cout << "Number of Students: " << ClassList[i].numOfStu << '\n';
+		cout << '\n';
+	}
+	delete[] ClassList;
+	ClassList = nullptr;
 }
 
