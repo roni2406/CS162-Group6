@@ -121,12 +121,11 @@ int main() {
 	InitWindow(1620, 920, "cs2");
 	char str[6] = "";
 	while (!WindowShouldClose()) {
-		Pos += (GetMouseWheelMove() * scrollSpeed);
+		Pos += ((GetMouseWheelMove() * scrollSpeed) - (IsKeyDown(KEY_DOWN) - IsKeyDown(KEY_UP))*3);//Mouse wheel + key up down|| chua co scroll bar
 		if (Pos > 0)Pos = 0;
 		if (Pos < -1500)Pos = -1500;//num of course/6*wight
 		BeginDrawing();
 		ClearBackground(WHITE);
-		float mouseWheelMovement = GetMouseWheelMove();
 		int i = 0;//k=num of courses
 		for (int k = 0; k < 10; k++) {
 			DrawText(TextFormat("Course: " ), 17, Pos + (i += 20), 20, RED);
