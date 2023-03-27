@@ -8,11 +8,10 @@ using namespace std;
 
 
 int main()
-{
-    const int screenWidth = 1512;
-    const int screenHeight = 982;
+{   
+    account CurrentUser;
     InitWindow(screenWidth, screenHeight, "MainPage");
-    drawloginPage();
+    LogInPage(screenWidth, screenHeight, CurrentUser);
     
     
     return 0;
