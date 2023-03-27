@@ -139,12 +139,17 @@ int main() {
 		ClearBackground(WHITE);
 		DrawTexture(button_up,1590,0,WHITE);
 		DrawTexture(button_down, 1590,890, WHITE);
-		if (IsMouseButtonDown(MOUSE_BUTTON_LEFT)) {
-			if (CheckCollisionPointRec(GetMousePosition(), UP)) {
+		if (CheckCollisionPointRec(GetMousePosition(), UP)) {
+			DrawTexture(button_up, 1590, 0, LIGHTGRAY);
+				if (IsMouseButtonDown(MOUSE_BUTTON_LEFT)) {
+				DrawTexture(button_up, 1590, 0,GRAY);
 				Pos += 1;
 			}
-		}if (IsMouseButtonDown(MOUSE_BUTTON_LEFT)) {
-			if (CheckCollisionPointRec(GetMousePosition(), DOWN)) {
+		}
+		if (CheckCollisionPointRec(GetMousePosition(), DOWN)) {
+			DrawTexture(button_down, 1590, 890, LIGHTGRAY);
+			if (IsMouseButtonDown(MOUSE_BUTTON_LEFT)) {
+				DrawTexture(button_down, 1590, 890, GRAY);
 				Pos -= 1;
 			}
 		}
