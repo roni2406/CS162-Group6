@@ -16,8 +16,9 @@ void read_input_user_createAClass(Class& className)
 void AddAClassToList(Class& className, ofstream& fout)
 {
 	fout.open("List of Classes.txt", ios::app);
+	fout << '\n';
 	fout << className.classID << " ";
-	fout << className.numOfStu << '\n';
+	fout << className.numOfStu;
 	fout.close();
 }
 
@@ -28,7 +29,7 @@ void CreateASingleClassList(Class className, ofstream& fout)
 	for (int i = 0; i < strlen(className.classID) - 4; ++i)
 		fout << className.classID[i];
 	fout << " ";
-	fout << className.numOfStu << '\n';
+	fout << className.numOfStu;
 	fout.close();
 }
 
@@ -44,21 +45,17 @@ void viewClasses_PrepareData(Class* ClassList, ifstream& fin) // 15
 		str = new char[11];
 		fin >> str;
 		ClassList[i].classID = str;
-		fin.ignore(101, '\n');
+		fin.ignore(1, '\n');
 		fin >> tmp;
 		ClassList[i].numOfStu = tmp;
-		fin.ignore(101, '\n');
+		cout << "Class " << i + 1 << ": " << ClassList[i].classID << '\n';
+		cout << "Number of Students: " << ClassList[i].numOfStu << '\n';
+		cout << '\n';
 		++i;
 		delete[]str;
 		str = nullptr;
 	}
-	cout << "Number of Classes: " << i + 1 << '\n';
-	for (int j = 0; j < i; ++j)
-	{
-		cout << "Class " << j + 1 << ": " << ClassList[j].classID << '\n';
-		cout << "Number of Students: " << ClassList[j].numOfStu << '\n';
-		cout << '\n';
-	}
+
 	fin.close();
 	delete[] ClassList;
 	ClassList = nullptr;

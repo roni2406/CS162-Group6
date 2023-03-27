@@ -8,9 +8,9 @@ int main()
 {
     Class ObjectClass;
     Class* ClassList = nullptr;
-   /* read_input_user_createAClass(ObjectClass);
+    read_input_user_createAClass(ObjectClass);
     AddAClassToList(ObjectClass, fout);
-    CreateASingleClassList(ObjectClass, fout);*/
+    CreateASingleClassList(ObjectClass, fout);
     viewClasses_PrepareData(ClassList, fin);
     return 0;
 }
