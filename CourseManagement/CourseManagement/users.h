@@ -1,4 +1,5 @@
 #include <iostream>
+#include "account.h"
 #include "Date.h"
 #include "scoreboard.h"
 using namespace std;
@@ -19,17 +20,20 @@ struct person {
 };
 
 struct student {
+    account stuAcc;
     int No;
     person Student;
     char* stuID;
     scoreboard mark;
 
-    void inputAStudent(int positionInList, char* student_id, person stu);
-    void outputAStudentToFile(ofstream& fout);
+    void inputAStudent(ifstream& fin, char* student_id, person stu);
+    void outputAStudentToFile(char* filename);
     void inputStudentsWithCSVFile(ifstream& fin);
+    bool StudentLogin(char* userName, char* password);
 };
 
 struct staff {
+    account staffAcc;
     person Staff;
     //char* headTeacher; // if staff is head teacher -> save the class he/she teaches, otherwise none
     //char* department; // Ex: khoa CNTT, khoa giao vu, khoa luat...
@@ -37,9 +41,10 @@ struct staff {
 
     void inputAStaff(char* staff_id, person sta);
     void outputAStaffToFile(ofstream& fout);
+    bool StaffLogin(char* userName, char* password);
 };
 
-//function
+
 void addAStudent(char* first_name, char* last_name, bool Gender, char* DoB,
     char* social_ID, int positionInList, char* student_id);
 

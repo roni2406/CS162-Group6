@@ -26,7 +26,7 @@ void person::inputPersonsWithCSVFile(ifstream& fin) {
 	fin.get(firstName, 100, ',');
 	fin.ignore(100, ',');
 	fin.get(lastName, 100, ',');
-	
+
 	char* tmp = new char[10];
 	fin.ignore(100, ',');
 	fin.get(tmp, 100, ',');
@@ -45,20 +45,34 @@ void person::inputPersonsWithCSVFile(ifstream& fin) {
 }
 
 //student
-void student::inputAStudent(int positionInList, char* student_id, person stu) {
-	No = positionInList;
-	stuID = student_id;
-	Student = stu; // can use?
+void student::inputAStudent(ifstream& fin, char* student_id, person stu) {
+	stuID = _strdup(student_id);
+	Student = stu;
+	stuAcc.userName = _strdup(stuID);
+	stuAcc.password = (char*)"123";
 }
-void student::outputAStudentToFile(ofstream& fout) {
+void student::outputAStudentToFile(char* filename) {
+	ifstream fin;
+	fin.open(filename);
+	int cnt = 0;
+	while (!fin.eof()) {
+		char* tmp = new char[200];
+		cnt++;
+		cin.get(tmp, 200, '\n');
+		delete[] tmp;
+	}
+	No = cnt;
+	fin.close();
+	ofstream fout;
+	fout.open(filename, ios::app);
 	fout << endl << No << ",";
 	Student.outputAPersonToFile(fout);
 	fout << "," << stuID;
-}
+	fout.close();
 
+	addinfo(stuAcc, (char*)"student_account", fout);
+}
 void student::inputStudentsWithCSVFile(ifstream& fin) {
-	fin >> No;
-	fin.ignore(100, ',');
 	Student.inputPersonsWithCSVFile(fin);
 	fin.ignore(100, ',');
 	fin.get(stuID, 100, '\0');
@@ -75,22 +89,26 @@ void staff::outputAStaffToFile(ofstream& fout) {
 	fout << "," << staffID;
 }
 
-//function:
-void addAStudent(char* first_name, char* last_name, bool Gender, char* DoB,
-	char* social_ID, int positionInList, char* student_id) {
+//other
+//filename is a file which data will be add to
+void addAStudent(char* filename, char* first_name, char* last_name, bool Gender, char* DoB,
+	char* social_ID, char* student_id) {
 
+	ifstream fin;
+	fin.open(filename);
 	student s;
 	person a;
 	a.inputAPerson(first_name, last_name, Gender, DoB, social_ID);
-	s.inputAStudent(positionInList, student_id, a);
+	s.inputAStudent(fin, student_id, a);
+	fin.close();
 
 	ofstream fout;
-	fout.open("../data/listOfStudent.txt", ios::app);
-	s.outputAStudentToFile(fout);
+	fout.open(filename, ios::app);
+	s.outputAStudentToFile(filename);
 	fout.close();
 }
 
-void addAStaff(char* first_name, char* last_name, bool Gender, char* DoB,
+void addAStaff(char* filename, char* first_name, char* last_name, bool Gender, char* DoB,
 	char* social_ID, char* staff_id) {
 
 	staff s;
@@ -99,18 +117,18 @@ void addAStaff(char* first_name, char* last_name, bool Gender, char* DoB,
 	s.inputAStaff(staff_id, a);
 
 	ofstream fout;
-	fout.open("../data/listOfStudent.txt", ios::app);
+	fout.open(filename, ios::app);
 	s.outputAStaffToFile(fout);
 	fout.close();
 }
 
-void addStudentsWithCSV(char* fileName, ofstream& fout) {
+void addStudentsWithCSV(char* fileNameIn, char* filenameOut) {
 	ifstream fin;
-	fin.open(fileName);
+	fin.open(fileNameIn);
 	while (!fin.eof()) {
 		student s;
 		s.inputStudentsWithCSVFile(fin);
-		s.outputAStudentToFile(fout);
+		s.outputAStudentToFile(filenameOut);
 	}
 	fin.close();
 }
