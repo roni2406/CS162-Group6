@@ -13,5 +13,6 @@ int main()
     AddAClassToList(ObjectClass, fout);
     CreateASingleClassList(ObjectClass, fout);
     viewClasses_PrepareData_SavedToClassArray(ClassList, fin, numOfClasses); // 15
-    // viewClasses_OutputToConsole(ClassList, numOfClasses);
+    viewClasses_OutputToConsole(ClassList, numOfClasses);
+    return 0;
 }
