@@ -15,9 +15,11 @@ const int MAX_SCHOOLYEARS = 10;
 
 
 //// Page
-void LogInPage(const int screenWidth, const int screenHeight, account& CurrentUser);
+void StudentorStaffPage(const int screenWidth, const int screenHeight, account& CurrentUser);
+void LogInPageStudent(const int screenWidth, const int screenHeight, account& CurrentUser);
+void LogInPageStaff(const int screenWidth, const int screenHeight, account& CurrentUser);
 void SignUpPage(const int screenWidth, const int screenHeight, account& CurrentUser);
-void ProfilePage(const int screenWidth, const int screenHeight, account& CurrentUser);
+void ProfilePageStaff(const int screenWidth, const int screenHeight, account& CurrentUser);
 void ChangePasswordPage(const int screenWidth, const int screenHeight, account& CurrentUser);
 void CreateSchoolYearPage(const int screenWidth,const int screenHeight, account& CurrentUser); 
 void ViewSchoolYearPage(const int screenWidth, const int screenHeight, account& CurrentUser);

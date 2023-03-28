@@ -11,7 +11,7 @@ int main()
 {   
     account CurrentUser;
     InitWindow(screenWidth, screenHeight, "MainPage");
-    LogInPage(screenWidth, screenHeight, CurrentUser);
+    StudentorStaffPage(screenWidth, screenHeight, CurrentUser);
     
     
     return 0;
