@@ -15,6 +15,7 @@ struct person {
 
     void inputAPerson(char* first_name, char* last_name, bool Gender, char* DoB, char* social_ID);
     void outputAPersonToFile(ofstream& fout);
+    void inputPersonsWithCSVFile(ifstream& fin);
 };
 
 struct student {
@@ -25,23 +26,26 @@ struct student {
 
     void inputAStudent(int positionInList, char* student_id, person stu);
     void outputAStudentToFile(ofstream& fout);
+    void inputStudentsWithCSVFile(ifstream& fin);
 };
 
 struct staff {
     person Staff;
-    //string headTeacher; // if staff is head teacher -> save the class he/she teaches, otherwise none
-    //string department; // Ex: khoa CNTT, khoa giao vu, khoa luat...
-    string staffID;
+    //char* headTeacher; // if staff is head teacher -> save the class he/she teaches, otherwise none
+    //char* department; // Ex: khoa CNTT, khoa giao vu, khoa luat...
+    char* staffID;
 
     void inputAStaff(char* staff_id, person sta);
     void outputAStaffToFile(ofstream& fout);
 };
 
-
-//front-end
+//function
 void addAStudent(char* first_name, char* last_name, bool Gender, char* DoB,
     char* social_ID, int positionInList, char* student_id);
 
 void addAStaff(char* first_name, char* last_name, bool Gender, char* DoB,
     char* social_ID, char* staff_id);
+
+void addStudentsWithCSV(char* fileName, ofstream& fout);
+// staff will input filename, fout is used for adding to class or course 
 #endif
