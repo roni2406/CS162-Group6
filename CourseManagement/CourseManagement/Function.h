@@ -22,6 +22,7 @@ void ChangePasswordPage(const int screenWidth, const int screenHeight, account& 
 void CreateSchoolYearPage(const int screenWidth,const int screenHeight, account& CurrentUser); 
 void ViewSchoolYearPage(const int screenWidth, const int screenHeight, account& CurrentUser);
 void createClassPage(const int screenWidth, const int screenHeight, account& CurrentUser);
+void ViewClassesPage(const int screenWidth, const int screenHeight, account& CurrentUser);
 
 //// Objects
 
