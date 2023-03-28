@@ -30,6 +30,8 @@ void StudentorStaffPage(const int screenWidth, const int screenHeight, account& 
 		DrawRectangleGradientEx(background, SKYBLUE, DARKBLUE, DARKBLUE, SKYBLUE);
 		DrawRectangle(0, 0, screenWidth, 60, WHITE);
 		DrawText("COURSE MANAGEMENT SYSTEM", 430, 10, 40, DARKBLUE);
+		DrawRectangle(552, 148, 408, 59, WHITE);
+		DrawText("Are you a?", 651, 148, 32, BLACK);
 		DrawRectangleRec(Student.button, WHITE);
 		DrawRectangleRec(Staff.button, WHITE);
 
@@ -83,9 +85,9 @@ void LogInPageStaff(const int screenWidth, const int screenHeight, account& Curr
 	SignUp.sourceRec = { 0, 0, (float)SignUp.texture.width, SignUp.frameHeight };
 	SignUp.btnBounds = { (screenWidth / 2.0f - SignUp.texture.width / 2.0f) - 10, 650, (float)SignUp.texture.width, SignUp.frameHeight };
 
+	bool stafforstudent = true;
 	////initialize for login--------------------------------------------------------------------------------------------------------------
 
-	account inputLoginData;
 	Vector2 mousePoint = { 0.0f, 0.0f };
 	
 	SetTargetFPS(40);
@@ -125,13 +127,11 @@ void LogInPageStaff(const int screenWidth, const int screenHeight, account& Curr
 		}
 		else loginbtnState = 0;
 
-		inputLoginData.userName = _strdup(username.text);
-		inputLoginData.password = _strdup(password.text);
 
 		if (loginbtnAction)
 		{
 			
-			if (LoginFunction(inputLoginData)) {
+			if (LoginFunction(username.text, password.text, stafforstudent)) {
 				CurrentUser.password = password.text;
 				CurrentUser.userName = username.text;
 				ProfilePageStaff(screenWidth, screenHeight, CurrentUser);
@@ -238,7 +238,7 @@ void SignUpPage(const int screenWidth, const int screenHeight, account& CurrentU
 			if (username.text[0] == '\0' || password.text[0] == '\0' || confirmpass.text[0] == '\0') {
 				issignupFalseDisplay = true;
 			}
-			else if (SignupFunction(newinfo, confirmpass.text)) {
+			else if (StaffSignup(newinfo, confirmpass.text)) {
 				issignupFalseDisplay = false;
 				LogInPageStaff(screenWidth, screenHeight, CurrentUser);
 			}
@@ -370,6 +370,7 @@ void ChangePasswordPage(const int screenWidth, const int screenHeight, account& 
 	int confirmBtnState = 0;               // Button state: 0-NORMAL, 1-MOUSE_HOVER, 2-PRESSED
 	bool confirmBtnAction = false;         // Button action should be activated
 
+	bool stafforstudent = true;
 	while (!WindowShouldClose()) {
 		ClearBackground(WHITE);
 		BeginDrawing();
@@ -412,7 +413,7 @@ void ChangePasswordPage(const int screenWidth, const int screenHeight, account& 
 		}
 		else confirmBtnState = 0;
 		if (confirmBtnAction) {
-			if (usechangePassFunction(CurrentUser, oldpass.text, newpass.text, confirmnewpass.text) && oldpass.text[0] != '\0' && newpass.text[0] != '\0' && confirmnewpass.text[0] != '\0') {
+			if (usechangePassFunction(CurrentUser, oldpass.text, newpass.text, confirmnewpass.text, stafforstudent) && oldpass.text[0] != '\0' && newpass.text[0] != '\0' && confirmnewpass.text[0] != '\0') {
 				ProfilePageStaff(screenWidth, screenHeight, CurrentUser);
 			}
 			else {

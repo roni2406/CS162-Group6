@@ -101,14 +101,14 @@ bool signUp(account* login_data, int n, account newAcc, char* confirmPass) {
 
 bool StaffSignup(account newAcc, char* confirmPass) {
 	ifstream fin;
-	fin.open("staff_account.txt");
+	fin.open("../data/staff_account.txt");
 	account* login_data = new account[1000];
 	int n;
 	inputAccounts(login_data, n, fin);
 	fin.close();
 	if (signUp(login_data, n, newAcc, confirmPass)) {
 		ofstream fout;
-		addinfo(newAcc, (char*)"staff_account.txt", fout);
+		addinfo(newAcc, (char*)"../data/staff_account.txt", fout);
 		delete[] login_data;
 		return true;
 	}
