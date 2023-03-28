@@ -126,9 +126,9 @@ bool changePass(account& Acc, char* oldPass, char* newPass, char* checkNewPass) 
 	return true;
 }
 
-void updateAccToFile(account* login_data, int n) {
+void updateAccToFile(account* login_data, int n, char* filename) {
 	ofstream fout;
-	fout.open("accounts.txt");
+	fout.open(filename);
 	for (int i = 0; i < n; i++) {
 		fout << login_data[i].userName << endl;
 		fout << login_data[i].password;
@@ -143,7 +143,6 @@ bool usechangePassFunction(account& Acc, char* oldPass, char* newPass, char* che
 	else filename = _strdup("../data/student_account.txt");
 	ifstream fin;
 	fin.open(filename);
-	delete[] filename;
 	account* login_data = new account[1000];
 	int n;
 	inputAccounts(login_data, n, fin);
@@ -160,10 +159,12 @@ bool usechangePassFunction(account& Acc, char* oldPass, char* newPass, char* che
 		return false;
 	}
 	if (changePass(login_data[acc_position], oldPass, newPass, checkNewPass)) {
-		updateAccToFile(login_data, n);
+		updateAccToFile(login_data, n, filename);
+		delete[] filename;
 		delete[] login_data;
 		return true;
 	}
+	delete[] filename;
 	delete[] login_data;
 	return false;
 }
