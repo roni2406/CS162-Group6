@@ -15,13 +15,18 @@ const int MAX_SCHOOLYEARS = 10;
 
 
 //// Page
-void LogInPage(const int screenWidth, const int screenHeight, account& CurrentUser);
+void StudentorStaffPage(const int screenWidth, const int screenHeight, account& CurrentUser);
+void LogInPageStudent(const int screenWidth, const int screenHeight, account& CurrentUser);
+void LogInPageStaff(const int screenWidth, const int screenHeight, account& CurrentUser);
 void SignUpPage(const int screenWidth, const int screenHeight, account& CurrentUser);
-void ProfilePage(const int screenWidth, const int screenHeight, account& CurrentUser);
+void ProfilePageStaff(const int screenWidth, const int screenHeight, account& CurrentUser);
 void ChangePasswordPage(const int screenWidth, const int screenHeight, account& CurrentUser);
 void CreateSchoolYearPage(const int screenWidth,const int screenHeight, account& CurrentUser); 
 void ViewSchoolYearPage(const int screenWidth, const int screenHeight, account& CurrentUser);
+void createClassPage(const int screenWidth, const int screenHeight, account& CurrentUser);
+void ViewClassesPage(const int screenWidth, const int screenHeight, account& CurrentUser);
 
+void CreateSemesterPage(const int screenWidth, const int screenHeight, account& CurrentUser);
 
 //// Objects
 
@@ -57,7 +62,7 @@ struct Button2 {
 struct Button3 {
 	const int screenWidth = 1512;
 	const int screenHeight = 982;
-	Rectangle button;
+	Rectangle button = { 0, 0, 0, 0 };
 	bool mouseonbutton = false;
 	bool action = false;
 	void workbutton(Vector2 mousePoint, account& CurrentUser, void(*func)(const int screenWidth, const int screenHeight, account& CurrentUser));

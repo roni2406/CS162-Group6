@@ -1,4 +1,5 @@
 #include <iostream>
+#include "account.h"
 #include "Date.h"
 #include "scoreboard.h"
 using namespace std;
@@ -9,23 +10,47 @@ using namespace std;
 struct person {
     char* firstName;
     char* lastName;
-    bool gender; // 0(false) : male; 1(true) : female
+    bool gender; // 0(false) : female; 1(true) : male
     Date dob;
     char* socialID;
+
+    void inputAPerson(char* first_name, char* last_name, bool Gender, char* DoB, char* social_ID);
+    void outputAPersonToFile(ofstream& fout);
+    void inputPersonsWithCSVFile(ifstream& fin);
 };
 
 struct student {
+    account stuAcc;
     int No;
-    char stuID[9];
-    person student;
+    person Student;
+    char* stuID;
     scoreboard mark;
+
+    void inputAStudent(ifstream& fin, char* student_id, person stu);
+    void outputAStudentToFile(char* filename);
+    void inputStudentsWithCSVFile(ifstream& fin);
+    bool StudentLogin(char* userName, char* password);
 };
 
 struct staff {
-    char* headTeacher; // if staff is head teacher -> save the class he/she teaches, otherwise none
-    char* department; // Ex: khoa CNTT, khoa giao vu, khoa luat...
+    account staffAcc;
+    person Staff;
+    //char* headTeacher; // if staff is head teacher -> save the class he/she teaches, otherwise none
+    //char* department; // Ex: khoa CNTT, khoa giao vu, khoa luat...
     char* staffID;
-    person staff;
+
+    void inputAStaff(char* staff_id, person sta);
+    void outputAStaffToFile(ofstream& fout);
+    bool StaffLogin(char* userName, char* password);
 };
 
+
+void addAStudent(char* first_name, char* last_name, bool Gender, char* DoB,
+    char* social_ID, int positionInList, char* student_id);
+
+void addAStaff(char* first_name, char* last_name, bool Gender, char* DoB,
+    char* social_ID, char* staff_id);
+
+void addStudentsWithCSV(char* fileName, ofstream& fout);
+// staff will input filename, fout is used for adding to class or course 
 #endif

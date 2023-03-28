@@ -138,6 +138,7 @@
     <ClCompile Include="Date.cpp" />
     <ClCompile Include="Function.cpp" />
     <ClCompile Include="schoolYear.cpp" />
+    <ClCompile Include="users.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="account.h" />
