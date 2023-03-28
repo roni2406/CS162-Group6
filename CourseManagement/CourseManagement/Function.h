@@ -26,6 +26,8 @@ void ViewSchoolYearPage(const int screenWidth, const int screenHeight, account& 
 void createClassPage(const int screenWidth, const int screenHeight, account& CurrentUser);
 void ViewClassesPage(const int screenWidth, const int screenHeight, account& CurrentUser);
 
+void CreateSemesterPage(const int screenWidth, const int screenHeight, account& CurrentUser);
+
 //// Objects
 
 /// button:
