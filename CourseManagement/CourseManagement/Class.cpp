@@ -26,7 +26,7 @@ void CreateASingleClassList(Class className, ofstream& fout)
 
 void AddAClassToList(Class& className, ofstream& fout)
 {
-	fout.open("List of Classes.txt", ios::app);
+	fout.open("../data/Classes/List of Classes.txt", ios::app);
 	fout << '\n';
 	fout << className.classID << " ";
 	fout << className.numOfStu;
@@ -37,7 +37,7 @@ void AddAClassToList(Class& className, ofstream& fout)
 // Note: YOU'VE BEEN WARNED!
 void viewClasses_PrepareData_SavedToClassArray(Class*& ClassList, ifstream& fin, int& numOfClasses) // 15
 {
-	fin.open("List of Classes.txt");
+	fin.open("../data/Classes/List of Classes.txt");
 	ClassList = new Class[1000];
 	numOfClasses = 0;
 	char* str = nullptr;
