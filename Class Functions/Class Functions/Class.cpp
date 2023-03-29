@@ -67,3 +67,20 @@ void viewClasses_OutputToConsole(Class* ClassList, int numOfClasses)
 	ClassList = nullptr;
 }
 
+Class* viewClasses()
+{
+	ifstream fin;
+	Class* ClassList = nullptr;
+	int numOfClasses = 0;
+	viewClasses_PrepareData_SavedToClassArray(ClassList, fin, numOfClasses);
+	return ClassList;
+}
+
+int countClasses()
+{
+	ifstream fin;
+	Class* ClassList = nullptr;
+	int numOfClasses = 0;
+	viewClasses_PrepareData_SavedToClassArray(ClassList, fin, numOfClasses);
+	return numOfClasses;
+}
