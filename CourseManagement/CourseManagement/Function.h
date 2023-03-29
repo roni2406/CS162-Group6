@@ -19,8 +19,10 @@ void StudentorStaffPage(const int screenWidth, const int screenHeight, account& 
 void LogInPageStudent(const int screenWidth, const int screenHeight, account& CurrentUser);
 void LogInPageStaff(const int screenWidth, const int screenHeight, account& CurrentUser);
 void SignUpPage(const int screenWidth, const int screenHeight, account& CurrentUser);
+void ProfilePageStudent(const int screenWidth, const int screenHeight, account& CurrentUser);
 void ProfilePageStaff(const int screenWidth, const int screenHeight, account& CurrentUser);
-void ChangePasswordPage(const int screenWidth, const int screenHeight, account& CurrentUser);
+void ChangePasswordPageStudent(const int screenWidth, const int screenHeight, account& CurrentUser);
+void ChangePasswordPageStaff(const int screenWidth, const int screenHeight, account& CurrentUser);
 void CreateSchoolYearPage(const int screenWidth,const int screenHeight, account& CurrentUser); 
 void ViewSchoolYearPage(const int screenWidth, const int screenHeight, account& CurrentUser);
 void createClassPage(const int screenWidth, const int screenHeight, account& CurrentUser);

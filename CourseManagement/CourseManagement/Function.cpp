@@ -13,15 +13,15 @@ void StudentorStaffPage(const int screenWidth, const int screenHeight, account& 
 	Rectangle background = { 0,0,screenWidth,screenHeight};
 	Vector2 mousePoint = { 0.0f, 0.0f };
 
-	Texture2D student = LoadTexture("student.png");
-	Texture2D staff = LoadTexture("staff.png");
+	Texture2D Student = LoadTexture("Student.png");
+	Texture2D Staff = LoadTexture("Staff.png");
 
 
-	Button3 Student;
-	Student.button = { 53, 295, 645, 518 };
+	Button3 student;
+	student.button = { 23, 295, 645, 518 };
 
-	Button3 Staff;
-	Staff.button = { 839, 295, 645, 518 };
+	Button3 staff;
+	staff.button = { 839, 295, 645, 518 };
 
 	SetTargetFPS(40);
 	while (!WindowShouldClose()) {
@@ -31,13 +31,17 @@ void StudentorStaffPage(const int screenWidth, const int screenHeight, account& 
 		DrawRectangle(0, 0, screenWidth, 60, WHITE);
 		DrawText("COURSE MANAGEMENT SYSTEM", 430, 10, 40, DARKBLUE);
 		DrawRectangle(552, 148, 408, 59, WHITE);
-		DrawText("Are you a?", 651, 148, 32, BLACK);
-		DrawRectangleRec(Student.button, WHITE);
-		DrawRectangleRec(Staff.button, WHITE);
+		DrawText("You are a", 660, 157, 40, DARKBLUE);
+		DrawRectangleRec(student.button, WHITE);
+		DrawText("STUDENT", 260, 333, 36, DARKBLUE);
+		DrawTexture(Student, 200, 390, RAYWHITE);
+		DrawRectangleRec(staff.button, WHITE);
+		DrawText("STAFF", 1107, 333, 36, DARKBLUE);
+		DrawTexture(Staff, 996, 407, RAYWHITE);
 
 		mousePoint = GetMousePosition();
-		Staff.workbutton(mousePoint, CurrentUser, LogInPageStaff);
-		Student.workbutton(mousePoint, CurrentUser, LogInPageStudent);
+		staff.workbutton(mousePoint, CurrentUser, LogInPageStaff);
+		student.workbutton(mousePoint, CurrentUser, LogInPageStudent);
 		EndDrawing();
 	}
 	CloseWindow();
@@ -45,10 +49,90 @@ void StudentorStaffPage(const int screenWidth, const int screenHeight, account& 
 }
 void LogInPageStudent(const int screenWidth, const int screenHeight, account& CurrentUser) {
 	Rectangle background = { 0,0,screenWidth,screenHeight };
+
+	//Initialize textbox-------------------------------------------------------
+	Textbox1 username;
+	username.textbox = { 477, 289,558,106 };
+
+	Textbox2 password;
+	password.textbox = { 477, 453,558,106 };
+
+	Button3 backtopreviouspage;
+	backtopreviouspage.button = { 1200, 20, 300, 30 };
+	////initialize login button---------------------------------------------------------------------------------------------------
+	Texture2D loginButton = LoadTexture("loginButton.png");
+
+	float frameHeightloginButton = (float)loginButton.height;
+	Rectangle sourceRecloginButton = { 0, 0, (float)loginButton.width, frameHeightloginButton };
+	// Define button bounds on screen
+	Rectangle btnBoundsloginButton = { (screenWidth / 2.0f - loginButton.width / 2.0f) - 10, 600, (float)loginButton.width, frameHeightloginButton };
+
+	int loginbtnState = 0;               // Button state: 0-NORMAL, 1-MOUSE_HOVER, 2-PRESSED
+	bool loginbtnAction = false;         // Button action should be activated
+	bool isLoginFalseDisplay = false;
+
+	bool stafforstudent = false;
+	////initialize for login--------------------------------------------------------------------------------------------------------------
+
+	Vector2 mousePoint = { 0.0f, 0.0f };
+
+	SetTargetFPS(40);
+	//------------------------------------------------------------------------------------------------------------------------------------------------------
+	//Draw--------------------------------------------------------------------------------------------------------------------------------------------------
 	while (!WindowShouldClose()) {
 		ClearBackground(WHITE);
 		BeginDrawing();
 		DrawRectangleGradientEx(background, SKYBLUE, DARKBLUE, DARKBLUE, SKYBLUE);
+		DrawRectangle(347, 173, 818, 560, WHITE);
+		DrawRectangle(0, 0, screenWidth, 60, WHITE);
+		DrawText("  Call us : (028) 3835 4266         E - mail : info@fit.hcmus.edu.vn", 0, 20, 20, DARKBLUE);
+		DrawRectangleRec(username.textbox, LIGHTGRAY);
+		DrawRectangleRec(backtopreviouspage.button, WHITE);
+		DrawText("Back to the previous page", 1200, 20, 20, DARKBLUE);
+		DrawRectangleRec(password.textbox, LIGHTGRAY);
+		DrawText("* Username", 477, 250, 30, DARKBLUE);
+		DrawText("* Password", 477, 414, 30, DARKBLUE);
+
+		////Function_of_TextInputBoxes_----------------------------------------------------------------------------------------------------------------------
+		username.worktextbox(isLoginFalseDisplay);
+		password.worktextbox(isLoginFalseDisplay);
+
+
+		DrawText(username.text, 500, 320, 40, DARKBLUE);
+		DrawText(TextFormat("%i/%i", username.lettercount, MAX_INPUT_CHARS), 1050, 330, 20, DARKBLUE);
+		DrawText(password.hiddentext, 500, 490, 40, DARKBLUE);
+		DrawText(TextFormat("%i/%i", password.lettercount, MAX_INPUT_CHARS), 1050, 500, 20, DARKBLUE);
+
+		////Function of login button-------------------------------------------------------------------------------------------------------------------------
+		mousePoint = GetMousePosition();
+		loginbtnAction = false;
+
+		if (CheckCollisionPointRec(mousePoint, btnBoundsloginButton)) {          // Check button state
+			if (IsMouseButtonPressed(MOUSE_BUTTON_LEFT)) loginbtnAction = true;
+		}
+		else loginbtnState = 0;
+
+
+		if (loginbtnAction)
+		{
+
+			if (LoginFunction(username.text, password.text, stafforstudent)) {
+				CurrentUser.password = password.text;
+				CurrentUser.userName = username.text;
+				EndDrawing();
+				ProfilePageStudent(screenWidth, screenHeight, CurrentUser);
+			}
+			else isLoginFalseDisplay = true;
+		}
+		if (isLoginFalseDisplay) DrawText("Invalid username or password!", 477, 570, 20, RED);
+
+		// Calculate button frame rectangle to draw depending on button state
+		sourceRecloginButton.y = loginbtnState * frameHeightloginButton;
+		DrawTextureRec(loginButton, sourceRecloginButton, { btnBoundsloginButton.x, btnBoundsloginButton.y }, WHITE); // Draw button frame
+		//--------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+		////Function of signup button-------------------------------------------------------------------------------------------------------------------------
+		backtopreviouspage.workbutton(mousePoint, CurrentUser, StudentorStaffPage);
 		EndDrawing();
 	}
 	CloseWindow();
@@ -100,9 +184,9 @@ void LogInPageStaff(const int screenWidth, const int screenHeight, account& Curr
 		DrawRectangle(347, 173, 818, 560, WHITE);
 		DrawRectangle(0, 0, screenWidth, 60, WHITE);
 		DrawText("  Call us : (028) 3835 4266         E - mail : info@fit.hcmus.edu.vn", 0, 20, 20, DARKBLUE);
-		DrawText("Back to the previous page", 1200, 20, 20, DARKBLUE);
 		DrawRectangleRec(username.textbox, LIGHTGRAY);
 		DrawRectangleRec(backtopreviouspage.button, WHITE);
+		DrawText("Back to the previous page", 1200, 20, 20, DARKBLUE);
 		DrawRectangleRec(password.textbox, LIGHTGRAY);
 		DrawText("* Username", 477, 200, 30, DARKBLUE);
 		DrawText("* Password", 477, 364, 30, DARKBLUE);
@@ -134,6 +218,7 @@ void LogInPageStaff(const int screenWidth, const int screenHeight, account& Curr
 			if (LoginFunction(username.text, password.text, stafforstudent)) {
 				CurrentUser.password = password.text;
 				CurrentUser.userName = username.text;
+				EndDrawing();
 				ProfilePageStaff(screenWidth, screenHeight, CurrentUser);
 			}
 			else isLoginFalseDisplay = true;
@@ -240,6 +325,7 @@ void SignUpPage(const int screenWidth, const int screenHeight, account& CurrentU
 			}
 			else if (StaffSignup(newinfo, confirmpass.text)) {
 				issignupFalseDisplay = false;
+				EndDrawing();
 				LogInPageStaff(screenWidth, screenHeight, CurrentUser);
 			}
 			else
@@ -259,6 +345,62 @@ void SignUpPage(const int screenWidth, const int screenHeight, account& CurrentU
 	}
 	CloseWindow();
 
+}
+void ProfilePageStudent(const int screenWidth, const int screenHeight, account& CurrentUser) {
+	////Initialize variable---------------------------------------------------------------------------------------------
+	Texture2D avatar;
+	avatar = LoadTexture("avatar.png");
+
+	Vector2 mousePoint = { 0.0f, 0.0f };
+	Rectangle background = { 0,0,screenWidth,screenHeight };
+
+	Button1 ChangePass;
+	ChangePass.texture = LoadTexture("changePassBtn.png");
+	ChangePass.frameHeight = (float)ChangePass.texture.height;
+	ChangePass.sourceRec = { 0, 0, (float)ChangePass.texture.width, ChangePass.frameHeight };
+	ChangePass.btnBounds = { 170, 800, (float)ChangePass.texture.width, ChangePass.frameHeight };
+
+	Button1 LogOut;
+	LogOut.texture = LoadTexture("logOutBtn.png");
+	LogOut.frameHeight = (float)LogOut.texture.height;
+	LogOut.sourceRec = { 0, 0, (float)LogOut.texture.width,LogOut.frameHeight };
+	LogOut.btnBounds = { 170, 730, (float)LogOut.texture.width,LogOut.frameHeight };
+
+	//Position of schoolyear---------------------------------------------------------------------------------------------
+	while (!WindowShouldClose()) {
+		ClearBackground(WHITE);
+
+		BeginDrawing();
+		DrawText("WELCOME!", 670, 15, 40, DARKBLUE);
+
+		DrawRectangleGradientEx(background, SKYBLUE, DARKBLUE, DARKBLUE, SKYBLUE);
+
+		DrawRectangle(70, 170, 360, 750, WHITE);
+		DrawRectangleLines(69, 169, 362, 752, BLACK);
+		DrawRectangleLines(68, 168, 364, 754, BLACK);
+
+		DrawRectangle(480, 170, 980, 750, WHITE);
+		DrawRectangleLines(479, 169, 982, 752, BLACK);
+		DrawRectangleLines(478, 168, 984, 754, BLACK);
+
+		DrawRectangle(480, 108, 250, 60, WHITE);
+		DrawRectangleLines(479, 107, 252, 62, BLACK);
+		DrawRectangleLines(478, 106, 254, 64, BLACK);
+		DrawText("School Years", 500, 123, 30, DARKBLUE);
+
+		DrawTexture(avatar, 150, 100, WHITE);
+		DrawText("Username: ", 90, 330, 20, DARKBLUE);
+		DrawText(CurrentUser.userName, 200, 330, 20, DARKGRAY);
+
+		mousePoint = GetMousePosition();
+		////change password button function-----------------------------------------------------------------------------------------------------------
+		ChangePass.workbutton(mousePoint, CurrentUser, ChangePasswordPageStudent);
+		LogOut.workbutton(mousePoint, CurrentUser, LogInPageStudent);
+
+		//// display schoolyear from createschoolyear page--------------------------------------------------------------------------------------------
+		EndDrawing();
+	}
+	CloseWindow();
 }
 void ProfilePageStaff(const int screenWidth, const int screenHeight, account& CurrentUser) {
 	////Initialize variable---------------------------------------------------------------------------------------------
@@ -332,7 +474,7 @@ void ProfilePageStaff(const int screenWidth, const int screenHeight, account& Cu
 
 		mousePoint = GetMousePosition();
 		////change password button function-----------------------------------------------------------------------------------------------------------
-		ChangePass.workbutton(mousePoint, CurrentUser, ChangePasswordPage);
+		ChangePass.workbutton(mousePoint, CurrentUser, ChangePasswordPageStaff);
 		LogOut.workbutton(mousePoint, CurrentUser, LogInPageStaff);
 		CreateSchoolYear.workbutton(mousePoint, CurrentUser, CreateSchoolYearPage);
 		ViewSchoolYear.workbutton(mousePoint, CurrentUser, ViewSchoolYearPage);
@@ -344,8 +486,95 @@ void ProfilePageStaff(const int screenWidth, const int screenHeight, account& Cu
 	}
 	CloseWindow();
 }
+void ChangePasswordPageStudent(const int screenWidth, const int screenHeight, account& CurrentUser) {
+	Rectangle background = { 0,0,screenWidth,screenHeight };
+	Vector2 mousePoint = { 0.0f, 0.0f };
 
-void ChangePasswordPage(const int screenWidth, const int screenHeight, account& CurrentUser) {
+	Textbox2 oldpass;
+	oldpass.textbox = { 477, 239, 558, 106 };
+
+	Textbox2 newpass;
+	newpass.textbox = { 477, 403, 558, 106 };
+
+	Textbox2 confirmnewpass;
+	confirmnewpass.textbox = { 477, 567, 558, 106 };
+
+	Button3 backtoprofilepage;
+	backtoprofilepage.button = { 1270, 20, 200, 30 };
+
+	bool isChangePassFalseDisplay = false;
+	Texture2D confirmBtn = LoadTexture("confirmBtn.png");
+	float frameHeightconfirmBtn = (float)confirmBtn.height;
+	Rectangle sourceRecconfirmBtn = { 0, 0, (float)confirmBtn.width,frameHeightconfirmBtn };
+	// Define button bounds on screen
+	Rectangle btnBoundsconfirmBtn = { 650, 710, (float)confirmBtn.width, frameHeightconfirmBtn };
+	int confirmBtnState = 0;               // Button state: 0-NORMAL, 1-MOUSE_HOVER, 2-PRESSED
+	bool confirmBtnAction = false;         // Button action should be activated
+
+	bool stafforstudent = false;
+	while (!WindowShouldClose()) {
+		ClearBackground(WHITE);
+		BeginDrawing();
+
+		DrawRectangleGradientEx(background, SKYBLUE, DARKBLUE, DARKBLUE, SKYBLUE);
+		DrawRectangle(0, 0, screenWidth, 60, WHITE);
+		DrawText("  Call us : (028) 3835 4266         E - mail : info@fit.hcmus.edu.vn", 0, 20, 20, DARKBLUE);
+		DrawRectangleRec(backtoprofilepage.button, WHITE);
+		DrawText("Back to Profile Page", 1280, 20, 20, DARKBLUE);
+
+		DrawRectangle(347, 173, 818, 630, WHITE);
+		DrawRectangleRec(oldpass.textbox, LIGHTGRAY);
+		DrawRectangleRec(newpass.textbox, LIGHTGRAY);
+		DrawRectangleRec(confirmnewpass.textbox, LIGHTGRAY);
+		DrawText("* Old Password", 477, 200, 30, DARKBLUE);
+		DrawText("* New Password", 477, 364, 30, DARKBLUE);
+		DrawText("* Confirm New Password", 477, 528, 30, DARKBLUE);
+
+		////Textbox function-----------------------------------------------------------------------------------------------------------------------------------------
+		oldpass.worktextbox(isChangePassFalseDisplay);
+		newpass.worktextbox(isChangePassFalseDisplay);
+		confirmnewpass.worktextbox(isChangePassFalseDisplay);
+
+
+		DrawText(oldpass.hiddentext, 500, 270, 40, DARKBLUE);
+		DrawText(newpass.hiddentext, 500, 435, 40, DARKBLUE);
+		DrawText(confirmnewpass.hiddentext, 500, 600, 40, DARKBLUE);
+
+		DrawText(TextFormat("%i/%i", oldpass.lettercount, MAX_INPUT_CHARS), 1050, 280, 20, DARKBLUE);
+		DrawText(TextFormat("%i/%i", newpass.lettercount, MAX_INPUT_CHARS), 1050, 450, 20, DARKBLUE);
+		DrawText(TextFormat("%i/%i", confirmnewpass.lettercount, MAX_INPUT_CHARS), 1050, 620, 20, DARKBLUE);
+		////-------------------------------------------------------------------------------------------------------------------------
+
+		mousePoint = GetMousePosition();
+		////Button function----------------------------------------------------------------------------------------------------------
+		///Confirm button
+		confirmBtnAction = false;
+		if (CheckCollisionPointRec(mousePoint, btnBoundsconfirmBtn)) {          // Check button state
+			if (IsMouseButtonPressed(MOUSE_BUTTON_LEFT)) confirmBtnAction = true;
+		}
+		else confirmBtnState = 0;
+		if (confirmBtnAction) {
+			if (usechangePassFunction(CurrentUser, oldpass.text, newpass.text, confirmnewpass.text, stafforstudent) && oldpass.text[0] != '\0' && newpass.text[0] != '\0' && confirmnewpass.text[0] != '\0') {
+				EndDrawing();
+				ProfilePageStudent(screenWidth, screenHeight, CurrentUser);
+			}
+			else {
+				isChangePassFalseDisplay = true;
+			}
+		}
+		if (isChangePassFalseDisplay) DrawText("Please try again!", 477, 685, 20, RED);
+
+		// Calculate button frame rectangle to draw depending on button state
+		sourceRecconfirmBtn.y = confirmBtnState * frameHeightconfirmBtn;
+		DrawTextureRec(confirmBtn, sourceRecconfirmBtn, { btnBoundsconfirmBtn.x, btnBoundsconfirmBtn.y }, WHITE); // Draw button frame
+
+		/// Back to profile page button
+		backtoprofilepage.workbutton(mousePoint, CurrentUser, ProfilePageStudent);
+		EndDrawing();
+	}
+	CloseWindow();
+}
+void ChangePasswordPageStaff(const int screenWidth, const int screenHeight, account& CurrentUser) {
 	Rectangle background = { 0,0,screenWidth,screenHeight};
 	Vector2 mousePoint = { 0.0f, 0.0f };
 
@@ -414,7 +643,8 @@ void ChangePasswordPage(const int screenWidth, const int screenHeight, account& 
 		else confirmBtnState = 0;
 		if (confirmBtnAction) {
 			if (usechangePassFunction(CurrentUser, oldpass.text, newpass.text, confirmnewpass.text, stafforstudent) && oldpass.text[0] != '\0' && newpass.text[0] != '\0' && confirmnewpass.text[0] != '\0') {
-				ProfilePageStaff(screenWidth, screenHeight, CurrentUser);
+				EndDrawing();
+				ProfilePageStudent(screenWidth, screenHeight, CurrentUser);
 			}
 			else {
 				isChangePassFalseDisplay = true;
@@ -484,6 +714,7 @@ void CreateSchoolYearPage(const int screenWidth,const int screenHeight, account&
 		if (confirmBtnAction) {
 			if (createASchoolYear(schoolyear.text)) {
 				confirmBtnFalseDisplay = false;
+				EndDrawing();
 				ProfilePageStaff(screenWidth, screenHeight, CurrentUser);
 			}
 			else confirmBtnFalseDisplay = true;
