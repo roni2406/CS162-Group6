@@ -741,9 +741,6 @@ void ViewSchoolYearPage(const int screenWidth, const int screenHeight, account& 
 	Texture2D avatar;
 	avatar = LoadTexture("avatar.png");
 
-	
-
-
 	Button3 backtoprofilepage;
 	backtoprofilepage.button = { 1270, 20, 200, 30 };
 
@@ -758,20 +755,20 @@ void ViewSchoolYearPage(const int screenWidth, const int screenHeight, account& 
 		BeginDrawing();
 		DrawRectangleGradientEx(background, SKYBLUE, DARKBLUE, DARKBLUE, SKYBLUE);
 		DrawRectangle(0, 0, screenWidth, 60, WHITE);
-		DrawText("SCHOOLYEARS", 620, 15, 40, DARKBLUE);
+		DrawText("SCHOOLYEARS", 600, 15, 40, DARKBLUE);
 		DrawRectangleRec(backtoprofilepage.button, WHITE);
 		DrawText("Back to Profile Page", 1280, 20, 20, DARKBLUE);
 		DrawRectangle(322, 136, 870, 806, WHITE);
 		DrawRectangleLines(321, 135, 872, 807, BLACK);
 		mousePoint = GetMousePosition();
-		Button3* schoolyear = new Button3[n];
+		Button4* schoolyear = new Button4[n];
 
 		int j = 0;
 		for (int i = 0; i < n; ++i) {
 			schoolyear[i].button = { x_schoolyear - 122, y_schoolyear - 12, 421, 59 };
 			DrawRectangleRec(schoolyear[i].button, LIGHTGRAY);
 			DrawText(Years[i], x_schoolyear, y_schoolyear, 32, DARKBLUE);
-			schoolyear[i].workbutton(mousePoint, CurrentUser, ProfilePageStaff);
+			schoolyear[i].workbutton(mousePoint, CurrentUser, Years[i], SchoolYearPage);
 			y_schoolyear += 100;
 		}
 		/// Back to profile page button
@@ -783,7 +780,46 @@ void ViewSchoolYearPage(const int screenWidth, const int screenHeight, account& 
 	CloseWindow();
 
 }
+void SchoolYearPage(const int screenWidth, const int screenHeight, account& CurrentUser, char* Year) {
+	Rectangle background = { 0,0,screenWidth,screenHeight };
+	Vector2 mousePoint = { 0.0f, 0.0f };
 
+	Button3 backtoviewschoolyearpage;
+	backtoviewschoolyearpage.button = { 1150, 20, 250, 30 };
+
+	Button5 createsemester;
+	createsemester.texture = LoadTexture("createsemester.png");
+	createsemester.frameHeight = (float)createsemester.texture.height;
+	createsemester.sourceRec = { 0, 0, (float)createsemester.texture.width, createsemester.frameHeight };
+	createsemester.btnBounds = { 350, 496, (float)createsemester.texture.width, createsemester.frameHeight };
+
+	Button5 viewsemester;
+	viewsemester.texture = LoadTexture("viewsemester.png");
+	viewsemester.frameHeight = (float)viewsemester.texture.height;
+	viewsemester.sourceRec = { 0, 0, (float)viewsemester.texture.width, viewsemester.frameHeight };
+	viewsemester.btnBounds = { 866, 496, (float)viewsemester.texture.width, viewsemester.frameHeight };
+
+	char* tmp = nullptr;
+	while (!WindowShouldClose()) {
+		ClearBackground(WHITE);
+		BeginDrawing();
+		DrawRectangleGradientEx(background, SKYBLUE, DARKBLUE, DARKBLUE, SKYBLUE);
+		DrawRectangle(0, 0, screenWidth, 60, WHITE);
+		DrawText(Year, 620, 15, 40, DARKBLUE);
+		DrawRectangleRec(backtoviewschoolyearpage.button, WHITE);
+		DrawText("Back to View School Year Page", 1150, 20, 20, DARKBLUE);
+		DrawRectangle(322, 136, 870, 806, WHITE);
+		DrawRectangleLines(321, 135, 872, 807, BLACK);
+
+		mousePoint = GetMousePosition();
+		backtoviewschoolyearpage.workbutton(mousePoint, CurrentUser, ViewSchoolYearPage);
+		createsemester.workbutton(mousePoint, CurrentUser, tmp, CreateSemesterPage);
+		viewsemester.workbutton(mousePoint, CurrentUser, tmp, CreateSemesterPage);
+		EndDrawing();
+	}
+
+	CloseWindow();
+}
 void createClassPage(const int screenWidth, const int screenHeight, account& CurrentUser) {
 	Vector2 mousePoint = { 0.0f, 0.0f };
 	Rectangle background = { 0,0,screenWidth,screenHeight};
@@ -901,7 +937,7 @@ void ViewClassesPage(const int screenWidth, const int screenHeight, account& Cur
 	CloseWindow();
 }
 
-void CreateSemesterPage(const int screenWidth, const int screenHeight, account& CurrentUser) {
+void CreateSemesterPage(const int screenWidth, const int screenHeight, account& CurrentUser, char* a) {
 	Vector2 mousePoint = { 0.0f, 0.0f };
 	Rectangle background = { 0,0,screenWidth,screenHeight };
 
@@ -1029,6 +1065,7 @@ void Button1::workbutton(Vector2 mousePoint, account& CurrentUser, void(* func)(
 	}
 	else state = 0;
 	if (action) {
+		EndDrawing();
 		func(screenWidth, screenHeight, CurrentUser);
 	}
 	// Calculate button frame rectangle to draw depending on button state
@@ -1048,7 +1085,32 @@ void Button3::workbutton(Vector2 mousePoint, account& CurrentUser, void(*func)(c
 	}
 }
 
-// Textbox
+void Button4::workbutton(Vector2 mousePoint, account& CurrentUser, char* a, void(*func)(const int screenWidth, const int screenHeight, account& CurrentUser, char* a)) {
+	if (CheckCollisionPointRec(mousePoint, button)) {          // Check button state
+		if (IsMouseButtonPressed(MOUSE_BUTTON_LEFT)) action = true;
+	}
+	else action = false;
+	if (action)
+	{
+		EndDrawing();
+		func(screenWidth, screenHeight, CurrentUser, a);
+	}
+}
+
+void Button5::workbutton(Vector2 mousePoint, account& CurrentUser, char* a, void(*func)(const int screenWidth, const int screenHeight, account& CurrentUser, char* a)) {
+	if (CheckCollisionPointRec(mousePoint, btnBounds)) {          // Check button state
+		if (IsMouseButtonPressed(MOUSE_BUTTON_LEFT)) action = true;
+	}
+	else state = 0;
+	if (action) {
+		EndDrawing();
+		func(screenWidth, screenHeight, CurrentUser, a);
+	}
+	// Calculate button frame rectangle to draw depending on button state
+	sourceRec.y = state * frameHeight;
+	DrawTextureRec(texture, sourceRec, { btnBounds.x, btnBounds.y }, WHITE); // Draw button frame
+}
+	// Textbox
 void Textbox1::worktextbox(bool& somethingfalsedisplay) {
 	if (CheckCollisionPointRec(GetMousePosition(), textbox)) mouseontextbox = true;
 	else mouseontextbox = false;
