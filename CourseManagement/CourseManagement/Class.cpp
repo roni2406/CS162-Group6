@@ -56,15 +56,24 @@ void viewClasses_PrepareData_SavedToClassArray(Class*& ClassList, ifstream& fin,
 	fin.close();
 }
 
-void viewClasses_OutputToConsole(Class* ClassList, int numOfClasses)
+//void viewClasses_OutputToConsole(Class* ClassList, int numOfClasses)
+//{
+//	cout << "Number of Classes: " << numOfClasses << '\n';
+//	for (int i = 0; i < numOfClasses; ++i)
+//	{
+//		cout << "Class " << i + 1 << ": " << ClassList[i].classID << '\n';
+//		cout << "Number of Students: " << ClassList[i].numOfStu << '\n';
+//		cout << '\n';
+//	}
+//	delete[] ClassList;
+//	ClassList = nullptr;
+//}
+
+Class* viewClasses()
 {
-	cout << "Number of Classes: " << numOfClasses << '\n';
-	for (int i = 0; i < numOfClasses; ++i)
-	{
-		cout << "Class " << i + 1 << ": " << ClassList[i].classID << '\n';
-		cout << "Number of Students: " << ClassList[i].numOfStu << '\n';
-		cout << '\n';
-	}
-	delete[] ClassList;
-	ClassList = nullptr;
+	ifstream fin;
+	Class* ClassList = nullptr;
+	int numOfClasses = 0;
+	viewClasses_PrepareData_SavedToClassArray(ClassList, fin, numOfClasses);
+	return ClassList;
 }
