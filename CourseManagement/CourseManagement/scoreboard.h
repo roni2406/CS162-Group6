@@ -9,8 +9,8 @@ struct scoreboard {
     double finalMark;
     double midtermMark;
     double otherMark;
-};
 
-scoreboard* getScoreBoard();
+    void inputScoreBoardWithCSV(ifstream& fin);
+};
 
 #endif

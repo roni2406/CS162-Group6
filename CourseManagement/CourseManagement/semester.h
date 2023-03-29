@@ -13,8 +13,8 @@ struct semester {
     Date endDate;
     int numOfCourse;
 
-    void inputASemester(schoolYear Year, )
+    void inputASemester(char* Year);
 };
 
-void inputASemester(char* Year, int No, Date startDate, Date )
+void inputASemester(char* Year, int No, Date startDate, Date endDate);
 #endif

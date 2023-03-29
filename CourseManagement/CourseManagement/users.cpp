@@ -22,7 +22,7 @@ void person::outputAPersonToFile(ofstream& fout) {
 	fout << "," << socialID;
 }
 
-void person::inputPersonsWithCSVFile(ifstream& fin) {
+void person::inputAPersonWithCSVFile(ifstream& fin) {
 	fin.get(firstName, 100, ',');
 	fin.ignore(100, ',');
 	fin.get(lastName, 100, ',');
@@ -72,8 +72,8 @@ void student::outputAStudentToFile(char* filename) {
 
 	addinfo(stuAcc, (char*)"student_account", fout);
 }
-void student::inputStudentsWithCSVFile(ifstream& fin) {
-	Student.inputPersonsWithCSVFile(fin);
+void student::inputAStudentWithCSVFile(ifstream& fin) {
+	Student.inputAPersonWithCSVFile(fin);
 	fin.ignore(100, ',');
 	fin.get(stuID, 100, '\0');
 }
@@ -127,7 +127,7 @@ void addStudentsWithCSV(char* fileNameIn, char* filenameOut) {
 	fin.open(fileNameIn);
 	while (!fin.eof()) {
 		student s;
-		s.inputStudentsWithCSVFile(fin);
+		s.inputAStudentWithCSVFile(fin);
 		s.outputAStudentToFile(filenameOut);
 	}
 	fin.close();
