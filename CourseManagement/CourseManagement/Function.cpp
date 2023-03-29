@@ -441,7 +441,7 @@ void ProfilePageStaff(const int screenWidth, const int screenHeight, account& Cu
 	CreateClass.btnBounds = { 552, 605, (float)CreateClass.texture.width, CreateClass.frameHeight };
 
 	Button1 ViewClass;
-	ViewClass.texture = LoadTexture("createClassBtn.png");
+	ViewClass.texture = LoadTexture("viewClassBtn.png");
 	ViewClass.frameHeight = (float)ViewClass.texture.height;
 	ViewClass.sourceRec = { 0, 0, (float)ViewClass.texture.width, ViewClass.frameHeight };
 	ViewClass.btnBounds = { 1081, 605, (float)ViewClass.texture.width, ViewClass.frameHeight };
@@ -912,7 +912,7 @@ void ViewClassesPage(const int screenWidth, const int screenHeight, account& Cur
 		BeginDrawing();
 		DrawRectangleGradientEx(background, SKYBLUE, DARKBLUE, DARKBLUE, SKYBLUE);
 		DrawRectangle(0, 0, screenWidth, 60, WHITE);
-		DrawText("ClASSES", 620, 15, 40, DARKBLUE);
+		DrawText("CLASSES", 655, 15, 40, DARKBLUE);
 		DrawRectangleRec(backtoprofilepage.button, WHITE);
 		DrawText("Back to Profile Page", 1280, 20, 20, DARKBLUE);
 		DrawRectangle(322, 136, 870, 806, WHITE);
@@ -941,8 +941,12 @@ void CreateSemesterPage(const int screenWidth, const int screenHeight, account& 
 	Vector2 mousePoint = { 0.0f, 0.0f };
 	Rectangle background = { 0,0,screenWidth,screenHeight };
 
-	Textbox1 semesterName;
-	semesterName.textbox = { 477, 239, 558, 106 };
+	Textbox1 startdate;
+	startdate.textbox = { 477, 239, 558, 106 };
+	Textbox1 enddate;
+	enddate.textbox = { 477, 412, 558, 106 };
+	Textbox1 numcourses;
+	numcourses.textbox = { 477, 585, 558, 106 };
 
 	Button3 backtoprofilepage;
 	backtoprofilepage.button = { 1270, 20, 200, 30 };
@@ -951,7 +955,7 @@ void CreateSemesterPage(const int screenWidth, const int screenHeight, account& 
 	float frameHeightconfirmBtn = (float)confirmBtn.height;
 	Rectangle sourceRecconfirmBtn = { 0, 0, (float)confirmBtn.width,frameHeightconfirmBtn };
 	// Define button bounds on screen
-	Rectangle btnBoundsconfirmBtn = { 650, 400, (float)confirmBtn.width, frameHeightconfirmBtn };
+	Rectangle btnBoundsconfirmBtn = { 650, 720, (float)confirmBtn.width, frameHeightconfirmBtn };
 	int confirmBtnState = 0;               // Button state: 0-NORMAL, 1-MOUSE_HOVER, 2-PRESSED
 	bool confirmBtnAction = false;         // Button action should be activated
 	bool confirmBtnFalseDisplay = false;
@@ -966,15 +970,27 @@ void CreateSemesterPage(const int screenWidth, const int screenHeight, account& 
 		DrawRectangleRec(backtoprofilepage.button, WHITE);
 		DrawText("Back to Profile Page", 1280, 20, 20, DARKBLUE);
 
-		DrawRectangle(347, 173, 818, 373, WHITE);
-		DrawRectangleRec(semesterName.textbox, LIGHTGRAY);
-		DrawText("* Semester Name", 477, 200, 30, DARKBLUE);
+		DrawRectangle(355, 173, 818, 645, WHITE);
+		DrawRectangleRec(startdate.textbox, LIGHTGRAY);
+		DrawText("* Start date (dd/mm/YYYY): ", 477, 200, 30, DARKBLUE);
+		DrawRectangleRec(enddate.textbox, LIGHTGRAY);
+		DrawText("* End date (dd/mm/YYYY): ", 477, 373, 30, DARKBLUE);
+		DrawRectangleRec(numcourses.textbox, LIGHTGRAY);
+		DrawText("* Number of courses: ", 477, 546, 30, DARKBLUE);
+
 
 		////Function_of_TextInputBoxes_----------------------------------------------------------------------------------------------------------------------
-		semesterName.worktextbox(confirmBtnFalseDisplay);
+		startdate.worktextbox(confirmBtnFalseDisplay);
+		enddate.worktextbox(confirmBtnFalseDisplay);
+		numcourses.worktextbox(confirmBtnFalseDisplay);
 
-		DrawText(semesterName.text, 500, 270, 40, DARKBLUE);
-		DrawText(TextFormat("%i/%i", semesterName.lettercount, MAX_INPUT_CHARS), 1050, 280, 20, DARKBLUE);
+
+		DrawText(startdate.text, 500, 270, 40, DARKBLUE);
+		DrawText(TextFormat("%i/%i", startdate.lettercount, MAX_INPUT_CHARS), 1050, 280, 20, DARKBLUE);
+		DrawText(enddate.text, 500, 443, 40, DARKBLUE);
+		DrawText(TextFormat("%i/%i", enddate.lettercount, MAX_INPUT_CHARS), 1050, 453, 20, DARKBLUE);
+		DrawText(numcourses.text, 500, 616, 40, DARKBLUE);
+		DrawText(TextFormat("%i/%i", numcourses.lettercount, MAX_INPUT_CHARS), 1050, 626, 20, DARKBLUE);
 
 		////Function of buttons------------------------------------------------------------------------------------------------------------------------------
 		mousePoint = GetMousePosition();
