@@ -25,11 +25,11 @@ void ChangePasswordPageStudent(const int screenWidth, const int screenHeight, ac
 void ChangePasswordPageStaff(const int screenWidth, const int screenHeight, account& CurrentUser);
 void CreateSchoolYearPage(const int screenWidth,const int screenHeight, account& CurrentUser); 
 void ViewSchoolYearPage(const int screenWidth, const int screenHeight, account& CurrentUser);
-void SchoolYearPage(const int screenWidth, const int screenHeight, account& CurrentUser, char* Year);
+void SchoolYearPage(const int screenWidth, const int screenHeight, account& CurrentUser, char* &Year);
 void createClassPage(const int screenWidth, const int screenHeight, account& CurrentUser);
 void ViewClassesPage(const int screenWidth, const int screenHeight, account& CurrentUser);
 
-void CreateSemesterPage(const int screenWidth, const int screenHeight, account& CurrentUser, char* a);
+void CreateSemesterPage(const int screenWidth, const int screenHeight, account& CurrentUser, char* &a);
 
 //// Objects
 
@@ -79,7 +79,7 @@ struct Button4 {
 	Rectangle button = { 0, 0, 0, 0 };
 	bool mouseonbutton = false;
 	bool action = false;
-	void workbutton(Vector2 mousePoint, account& CurrentUser, char* a, void(*func)(const int screenWidth, const int screenHeight, account& CurrentUser, char* a));
+	void workbutton(Vector2 mousePoint, account& CurrentUser, char* &a, void(*func)(const int screenWidth, const int screenHeight, account& CurrentUser, char* &a));
 };
 
 // used for "bo-goc" button that need to update information
@@ -92,7 +92,7 @@ struct Button5 {
 	Rectangle btnBounds;
 	int state = 0;					// Button state: 0-NORMAL, 1-MOUSE_HOVER, 2-PRESSED
 	bool action = false;			// Button action should be activated
-	void workbutton(Vector2 mousePoint, account& CurrentUser, char* a, void(*func)(const int screenWidth, const int screenHeight, account& CurrentUser, char* a));
+	void workbutton(Vector2 mousePoint, account& CurrentUser, char* &a, void(*func)(const int screenWidth, const int screenHeight, account& CurrentUser, char* &a));
 };
 /// textbox
 
