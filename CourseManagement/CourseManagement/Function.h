@@ -19,14 +19,17 @@ void StudentorStaffPage(const int screenWidth, const int screenHeight, account& 
 void LogInPageStudent(const int screenWidth, const int screenHeight, account& CurrentUser);
 void LogInPageStaff(const int screenWidth, const int screenHeight, account& CurrentUser);
 void SignUpPage(const int screenWidth, const int screenHeight, account& CurrentUser);
+void ProfilePageStudent(const int screenWidth, const int screenHeight, account& CurrentUser);
 void ProfilePageStaff(const int screenWidth, const int screenHeight, account& CurrentUser);
-void ChangePasswordPage(const int screenWidth, const int screenHeight, account& CurrentUser);
+void ChangePasswordPageStudent(const int screenWidth, const int screenHeight, account& CurrentUser);
+void ChangePasswordPageStaff(const int screenWidth, const int screenHeight, account& CurrentUser);
 void CreateSchoolYearPage(const int screenWidth,const int screenHeight, account& CurrentUser); 
 void ViewSchoolYearPage(const int screenWidth, const int screenHeight, account& CurrentUser);
+void SchoolYearPage(const int screenWidth, const int screenHeight, account& CurrentUser, char* Year);
 void createClassPage(const int screenWidth, const int screenHeight, account& CurrentUser);
 void ViewClassesPage(const int screenWidth, const int screenHeight, account& CurrentUser);
 
-void CreateSemesterPage(const int screenWidth, const int screenHeight, account& CurrentUser);
+void CreateSemesterPage(const int screenWidth, const int screenHeight, account& CurrentUser, char* a);
 
 //// Objects
 
@@ -69,6 +72,28 @@ struct Button3 {
 
 };
 
+//used for button that need to update information
+struct Button4 {
+	const int screenWidth = 1512;
+	const int screenHeight = 982;
+	Rectangle button = { 0, 0, 0, 0 };
+	bool mouseonbutton = false;
+	bool action = false;
+	void workbutton(Vector2 mousePoint, account& CurrentUser, char* a, void(*func)(const int screenWidth, const int screenHeight, account& CurrentUser, char* a));
+};
+
+// used for "bo-goc" button that need to update information
+struct Button5 {
+	const int screenWidth = 1512;
+	const int screenHeight = 982;
+	Texture2D texture;
+	float frameHeight;
+	Rectangle sourceRec;
+	Rectangle btnBounds;
+	int state = 0;					// Button state: 0-NORMAL, 1-MOUSE_HOVER, 2-PRESSED
+	bool action = false;			// Button action should be activated
+	void workbutton(Vector2 mousePoint, account& CurrentUser, char* a, void(*func)(const int screenWidth, const int screenHeight, account& CurrentUser, char* a));
+};
 /// textbox
 
 // used for normal-text textbox

@@ -16,7 +16,7 @@ struct person {
 
     void inputAPerson(char* first_name, char* last_name, bool Gender, char* DoB, char* social_ID);
     void outputAPersonToFile(ofstream& fout);
-    void inputPersonsWithCSVFile(ifstream& fin);
+    void inputAPersonWithCSVFile(ifstream& fin);
 };
 
 struct student {
@@ -28,8 +28,7 @@ struct student {
 
     void inputAStudent(ifstream& fin, char* student_id, person stu);
     void outputAStudentToFile(char* filename);
-    void inputStudentsWithCSVFile(ifstream& fin);
-    bool StudentLogin(char* userName, char* password);
+    void inputAStudentWithCSVFile(ifstream& fin);
 };
 
 struct staff {
@@ -41,16 +40,15 @@ struct staff {
 
     void inputAStaff(char* staff_id, person sta);
     void outputAStaffToFile(ofstream& fout);
-    bool StaffLogin(char* userName, char* password);
 };
 
 
-void addAStudent(char* first_name, char* last_name, bool Gender, char* DoB,
-    char* social_ID, int positionInList, char* student_id);
+void addAStudent(char* filename, char* first_name, char* last_name, bool Gender, char* DoB,
+    char* social_ID, char* student_id);
 
-void addAStaff(char* first_name, char* last_name, bool Gender, char* DoB,
+void addAStaff(char* filename, char* first_name, char* last_name, bool Gender, char* DoB,
     char* social_ID, char* staff_id);
 
-void addStudentsWithCSV(char* fileName, ofstream& fout);
+void addStudentsWithCSV(char* fileNameIn, char* filenameOut);
 // staff will input filename, fout is used for adding to class or course 
 #endif

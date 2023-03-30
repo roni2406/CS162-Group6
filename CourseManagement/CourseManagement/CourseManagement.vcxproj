@@ -139,6 +139,8 @@
     <ClCompile Include="Date.cpp" />
     <ClCompile Include="Function.cpp" />
     <ClCompile Include="schoolYear.cpp" />
+    <ClCompile Include="scoreboard.cpp" />
+    <ClCompile Include="semester.cpp" />
     <ClCompile Include="users.cpp" />
   </ItemGroup>
   <ItemGroup>

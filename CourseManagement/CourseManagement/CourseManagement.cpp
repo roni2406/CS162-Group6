@@ -10,7 +10,7 @@ using namespace std;
 int main()
 {   
     account CurrentUser;
-    InitWindow(screenWidth, screenHeight, "MainPage");
+    InitWindow(screenWidth, screenHeight, "Course Management System");
     StudentorStaffPage(screenWidth, screenHeight, CurrentUser);
     
     
