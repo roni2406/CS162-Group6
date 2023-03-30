@@ -4,6 +4,7 @@
 #include "account.h"
 #include "Function.h"
 #include "schoolYear.h"
+#include "semester.h"
 
 using namespace std;
 
@@ -1001,13 +1002,12 @@ void CreateSemesterPage(const int screenWidth, const int screenHeight, account& 
 		}
 		else confirmBtnState = 0;
 		if (confirmBtnAction) {
-			/*if () {
-				confirmBtnFalseDisplay = false;*/
-			//ProfilePageStaff(screenWidth, screenHeight, CurrentUser);
-			//}
-			//else confirmBtnFalseDisplay = true;
+			if (createASemester(a, startdate.text, enddate.text, numcourses.text)) {
+				SchoolYearPage(screenWidth, screenHeight, CurrentUser, a);
+			}
+			else confirmBtnFalseDisplay = true;
 		}
-		//if (confirmBtnFalseDisplay) DrawText("Class name must be in right form. Try again!", 500, 360, 20, RED);
+		if (confirmBtnFalseDisplay) DrawText("Information must be written in right form. Please try again!", 477, 700, 20, RED);
 		// Calculate button frame rectangle to draw depending on button state
 		sourceRecconfirmBtn.y = confirmBtnState * frameHeightconfirmBtn;
 		DrawTextureRec(confirmBtn, sourceRecconfirmBtn, { btnBoundsconfirmBtn.x, btnBoundsconfirmBtn.y }, WHITE); // Draw button frame
@@ -1028,10 +1028,6 @@ void ViewSemesterPage(const int screenWidth, const int screenHeight, account& Cu
 
 	Texture2D avatar;
 	avatar = LoadTexture("avatar.png");
-
-
-
-
 	Button3 backtoViewSchoolYearPage;
 	backtoViewSchoolYearPage.button = { 1270, 20, 200, 30 };
 

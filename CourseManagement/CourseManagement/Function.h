@@ -6,6 +6,7 @@
 #include <fstream>
 #include "account.h"
 #include "schoolYear.h"
+#include "semester.h"
 using namespace std;
 
 const int screenWidth = 1512;
