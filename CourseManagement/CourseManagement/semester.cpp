@@ -48,13 +48,14 @@ void semester::outputASemesterToCSVFile(char* school_year) {
 	}
 	fin.close();
 	ofstream fout;
-	fout.open(school_year, ios::app);
+	fout.open("../data/" + (string)(school_year)+"semester.csv", ios::app);
 	if(numCourse != 0) fout << endl;
 	fout << No << ",";
 	startDate.outputADateToFile(fout);
 	fout << ",";
 	endDate.outputADateToFile(fout);
 	fout << "," << numOfCourse;
+	fout.close();
 }
 
 //check data
