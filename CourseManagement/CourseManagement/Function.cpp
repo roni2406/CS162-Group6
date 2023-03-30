@@ -4,6 +4,7 @@
 #include "account.h"
 #include "Function.h"
 #include "schoolYear.h"
+#include "semester.h"
 
 using namespace std;
 
@@ -780,7 +781,7 @@ void ViewSchoolYearPage(const int screenWidth, const int screenHeight, account& 
 	CloseWindow();
 
 }
-void SchoolYearPage(const int screenWidth, const int screenHeight, account& CurrentUser, char* Year) {
+void SchoolYearPage(const int screenWidth, const int screenHeight, account& CurrentUser, char* &Year) {
 	Rectangle background = { 0,0,screenWidth,screenHeight };
 	Vector2 mousePoint = { 0.0f, 0.0f };
 
@@ -799,7 +800,6 @@ void SchoolYearPage(const int screenWidth, const int screenHeight, account& Curr
 	viewsemester.sourceRec = { 0, 0, (float)viewsemester.texture.width, viewsemester.frameHeight };
 	viewsemester.btnBounds = { 866, 496, (float)viewsemester.texture.width, viewsemester.frameHeight };
 
-	char* tmp = nullptr;
 	while (!WindowShouldClose()) {
 		ClearBackground(WHITE);
 		BeginDrawing();
@@ -813,8 +813,8 @@ void SchoolYearPage(const int screenWidth, const int screenHeight, account& Curr
 
 		mousePoint = GetMousePosition();
 		backtoviewschoolyearpage.workbutton(mousePoint, CurrentUser, ViewSchoolYearPage);
-		createsemester.workbutton(mousePoint, CurrentUser, tmp, CreateSemesterPage);
-		viewsemester.workbutton(mousePoint, CurrentUser, tmp, CreateSemesterPage);
+		createsemester.workbutton(mousePoint, CurrentUser, Year, CreateSemesterPage);
+		viewsemester.workbutton(mousePoint, CurrentUser, Year, CreateSemesterPage);
 		EndDrawing();
 	}
 
@@ -937,7 +937,7 @@ void ViewClassesPage(const int screenWidth, const int screenHeight, account& Cur
 	CloseWindow();
 }
 
-void CreateSemesterPage(const int screenWidth, const int screenHeight, account& CurrentUser, char* a) {
+void CreateSemesterPage(const int screenWidth, const int screenHeight, account& CurrentUser, char* &a) {
 	Vector2 mousePoint = { 0.0f, 0.0f };
 	Rectangle background = { 0,0,screenWidth,screenHeight };
 
@@ -948,9 +948,9 @@ void CreateSemesterPage(const int screenWidth, const int screenHeight, account& 
 	Textbox1 numcourses;
 	numcourses.textbox = { 477, 585, 558, 106 };
 
-	Button3 backtoprofilepage;
-	backtoprofilepage.button = { 1270, 20, 200, 30 };
-
+	Button4 backtoschoolyearpage;
+	backtoschoolyearpage.button = { 1170, 20, 200, 30 };
+	
 	Texture2D confirmBtn = LoadTexture("confirmBtn.png");
 	float frameHeightconfirmBtn = (float)confirmBtn.height;
 	Rectangle sourceRecconfirmBtn = { 0, 0, (float)confirmBtn.width,frameHeightconfirmBtn };
@@ -967,8 +967,8 @@ void CreateSemesterPage(const int screenWidth, const int screenHeight, account& 
 		DrawRectangleGradientEx(background, SKYBLUE, DARKBLUE, DARKBLUE, SKYBLUE);
 		DrawRectangle(0, 0, screenWidth, 60, WHITE);
 
-		DrawRectangleRec(backtoprofilepage.button, WHITE);
-		DrawText("Back to Profile Page", 1280, 20, 20, DARKBLUE);
+		DrawRectangleRec(backtoschoolyearpage.button, WHITE);
+		DrawText("Back to School Year Page", 1180, 20, 20, DARKBLUE);
 
 		DrawRectangle(355, 173, 818, 645, WHITE);
 		DrawRectangleRec(startdate.textbox, LIGHTGRAY);
@@ -1002,19 +1002,18 @@ void CreateSemesterPage(const int screenWidth, const int screenHeight, account& 
 		}
 		else confirmBtnState = 0;
 		if (confirmBtnAction) {
-			/*if () {
-				confirmBtnFalseDisplay = false;*/
-			//ProfilePageStaff(screenWidth, screenHeight, CurrentUser);
-			//}
-			//else confirmBtnFalseDisplay = true;
+			if (createASemester(a, startdate.text, enddate.text, numcourses.text)) {
+				SchoolYearPage(screenWidth, screenHeight, CurrentUser, a);
+			}
+			else confirmBtnFalseDisplay = true;
 		}
-		//if (confirmBtnFalseDisplay) DrawText("Class name must be in right form. Try again!", 500, 360, 20, RED);
+		if (confirmBtnFalseDisplay) DrawText("Information must be written in right form. Please try again!", 477, 700, 20, RED);
 		// Calculate button frame rectangle to draw depending on button state
 		sourceRecconfirmBtn.y = confirmBtnState * frameHeightconfirmBtn;
 		DrawTextureRec(confirmBtn, sourceRecconfirmBtn, { btnBoundsconfirmBtn.x, btnBoundsconfirmBtn.y }, WHITE); // Draw button frame
 
 		/// Back to profile page button
-		backtoprofilepage.workbutton(mousePoint, CurrentUser, ProfilePageStaff);
+		backtoschoolyearpage.workbutton(mousePoint, CurrentUser, a, SchoolYearPage);
 
 		EndDrawing();
 	}
@@ -1029,10 +1028,6 @@ void ViewSemesterPage(const int screenWidth, const int screenHeight, account& Cu
 
 	Texture2D avatar;
 	avatar = LoadTexture("avatar.png");
-
-
-
-
 	Button3 backtoViewSchoolYearPage;
 	backtoViewSchoolYearPage.button = { 1270, 20, 200, 30 };
 
@@ -1075,148 +1070,3 @@ void ViewSemesterPage(const int screenWidth, const int screenHeight, account& Cu
 /// function used for objects
 
 // Button
-void Button1::workbutton(Vector2 mousePoint, account& CurrentUser, void(* func)(const int screenWidth, const int screenHeight, account& CurrentUser)) {
-	if (CheckCollisionPointRec(mousePoint, btnBounds)) {          // Check button state
-		if (IsMouseButtonPressed(MOUSE_BUTTON_LEFT)) action = true;
-	}
-	else state = 0;
-	if (action) {
-		EndDrawing();
-		func(screenWidth, screenHeight, CurrentUser);
-	}
-	// Calculate button frame rectangle to draw depending on button state
-	sourceRec.y = state * frameHeight;
-	DrawTextureRec(texture, sourceRec, { btnBounds.x, btnBounds.y }, WHITE); // Draw button frame
-}
-
-void Button3::workbutton(Vector2 mousePoint, account& CurrentUser, void(*func)(const int screenWidth, const int screenHeight, account& CurrentUser)) {
-	if (CheckCollisionPointRec(mousePoint, button)) {          // Check button state
-		if (IsMouseButtonPressed(MOUSE_BUTTON_LEFT)) action = true;
-	}
-	else action = false;
-	if (action)
-	{
-		EndDrawing();
-		func(screenWidth, screenHeight, CurrentUser);
-	}
-}
-
-void Button4::workbutton(Vector2 mousePoint, account& CurrentUser, char* a, void(*func)(const int screenWidth, const int screenHeight, account& CurrentUser, char* a)) {
-	if (CheckCollisionPointRec(mousePoint, button)) {          // Check button state
-		if (IsMouseButtonPressed(MOUSE_BUTTON_LEFT)) action = true;
-	}
-	else action = false;
-	if (action)
-	{
-		EndDrawing();
-		func(screenWidth, screenHeight, CurrentUser, a);
-	}
-}
-
-void Button5::workbutton(Vector2 mousePoint, account& CurrentUser, char* a, void(*func)(const int screenWidth, const int screenHeight, account& CurrentUser, char* a)) {
-	if (CheckCollisionPointRec(mousePoint, btnBounds)) {          // Check button state
-		if (IsMouseButtonPressed(MOUSE_BUTTON_LEFT)) action = true;
-	}
-	else state = 0;
-	if (action) {
-		EndDrawing();
-		func(screenWidth, screenHeight, CurrentUser, a);
-	}
-	// Calculate button frame rectangle to draw depending on button state
-	sourceRec.y = state * frameHeight;
-	DrawTextureRec(texture, sourceRec, { btnBounds.x, btnBounds.y }, WHITE); // Draw button frame
-}
-	// Textbox
-void Textbox1::worktextbox(bool& somethingfalsedisplay) {
-	if (CheckCollisionPointRec(GetMousePosition(), textbox)) mouseontextbox = true;
-	else mouseontextbox = false;
-	if (mouseontextbox)
-	{
-		// Set the window's cursor to the I-Beam
-		SetMouseCursor(MOUSE_CURSOR_IBEAM);
-
-		// Get char pressed (unicode character) on the queue
-		int key = GetCharPressed();
-
-		// Check if more characters have been pressed on the same frame
-		while (key > 0)
-		{
-			// NOTE: Only allow keys in range [32..125]
-			if ((key >= 32) && (key <= 125) && (lettercount < MAX_INPUT_CHARS))
-			{
-				text[lettercount] = (char)key;
-				text[lettercount + 1] = '\0'; // Add null terminator at the end of the string.
-				lettercount++;
-			}
-
-			key = GetCharPressed();  // Check next character in the queue
-		}
-
-		if (IsKeyPressed(KEY_BACKSPACE))
-		{
-			lettercount--;
-			if (lettercount < 0) lettercount = 0;
-			text[lettercount] = '\0';
-		}
-	}
-	else SetMouseCursor(MOUSE_CURSOR_DEFAULT);
-	if (mouseontextbox) {
-		DrawRectangleLines((int)textbox.x, (int)textbox.y, (int)textbox.width, (int)textbox.height, BLUE);
-		DrawRectangleLines((int)textbox.x - 1, (int)textbox.y - 1, (int)textbox.width + 2, (int)textbox.height + 2, BLUE);
-		DrawRectangleLines((int)textbox.x - 2, (int)textbox.y - 2, (int)textbox.width + 4, (int)textbox.height + 4, BLUE);
-		somethingfalsedisplay = false;
-	}
-	else DrawRectangleLines((int)textbox.x, (int)textbox.y, (int)textbox.width, (int)textbox.height, DARKGRAY);
-
-}
-
-void Textbox2::worktextbox(bool& somethingfalsedisplay) {
-	if (CheckCollisionPointRec(GetMousePosition(), textbox)) mouseontextbox = true;
-	else mouseontextbox = false;
-	if (mouseontextbox)
-	{
-		// Set the window's cursor to the I-Beam
-		SetMouseCursor(MOUSE_CURSOR_IBEAM);
-
-		// Get char pressed (unicode character) on the queue
-		int key = GetCharPressed();
-
-		// Check if more characters have been pressed on the same frame
-		while (key > 0)
-		{
-			// NOTE: Only allow keys in range [32..125]
-			if ((key >= 32) && (key <= 125) && (lettercount < MAX_INPUT_CHARS))
-			{
-				text[lettercount] = (char)key;
-				text[lettercount + 1] = '\0'; // Add null terminator at the end of the string.
-				lettercount++;
-
-				hiddentext[lettercounthidden] = '*';
-				hiddentext[lettercounthidden + 1] = '\0';
-				lettercounthidden++;
-			}
-
-			key = GetCharPressed();  // Check next character in the queue
-		}
-
-		if (IsKeyPressed(KEY_BACKSPACE))
-		{
-			lettercount--;
-			if (lettercount < 0) lettercount = 0;
-			text[lettercount] = '\0';
-
-			lettercounthidden--;
-			if (lettercounthidden < 0) lettercounthidden = 0;
-			hiddentext[lettercounthidden] = '\0';
-		}
-	}
-	else SetMouseCursor(MOUSE_CURSOR_DEFAULT);
-
-	if (mouseontextbox) {
-		DrawRectangleLines((int)textbox.x, (int)textbox.y, (int)textbox.width, (int)textbox.height, BLUE);
-		DrawRectangleLines((int)textbox.x - 1, (int)textbox.y - 1, (int)textbox.width + 2, (int)textbox.height + 2, BLUE);
-		DrawRectangleLines((int)textbox.x - 2, (int)textbox.y - 2, (int)textbox.width + 4, (int)textbox.height + 4, BLUE);
-		somethingfalsedisplay = false;
-	}
-	else DrawRectangleLines((int)textbox.x, (int)textbox.y, (int)textbox.width, (int)textbox.height, DARKGRAY);
-}

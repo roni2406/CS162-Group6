@@ -42,6 +42,9 @@
     <ClCompile Include="semester.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="button_and_textbox.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Function.h">
