@@ -29,14 +29,14 @@ void semester::inputASemesterWithCSVFile(ifstream& fin) {
 void semester::outputASemesterToCSVFile(char* school_year) {
 	ifstream fin;
 	fin.open("../data/" + (string)(school_year) + "semester.csv");
-	int numCourse = 0;
+	int numSemester = 0;
 	fin.get();
 	while (!fin.eof()) {
-		++numCourse;
+		++numSemester;
 		fin.ignore(500, '\n');
 	}
-	No = numCourse + 1;
-	switch (numCourse) {
+	No = numSemester + 1;
+	switch (numSemester) {
 	case 0:
 		if (_mkdir(("../data/" + (string)(school_year) + "fall").c_str()));
 		break;
@@ -49,7 +49,7 @@ void semester::outputASemesterToCSVFile(char* school_year) {
 	fin.close();
 	ofstream fout;
 	fout.open("../data/" + (string)(school_year)+"semester.csv", ios::app);
-	if(numCourse != 0) fout << endl;
+	if(numSemester != 0) fout << endl;
 	fout << No << ",";
 	startDate.outputADateToFile(fout);
 	fout << ",";
@@ -69,13 +69,13 @@ bool createASemester(char* school_year, char* start_date, char* end_date, char* 
 int countSemester(char* school_year) {
 	ifstream fin;
 	fin.open("../data/" + (string)(school_year)+"semester.csv");
-	int numCourse = 0;
+	int numSemester = 0;
 	fin.get();
 	while (!fin.eof()) {
-		++numCourse;
+		++numSemester;
 		fin.ignore(500, '\n');
 	}
-	return numCourse;
+	return numSemester;
 }
 
 semester* getSemester(char* school_year) {
