@@ -16,7 +16,7 @@ struct person {
 
     void inputAPerson(char* first_name, char* last_name, bool Gender, char* DoB, char* social_ID);
     void outputAPersonToFile(ofstream& fout);
-    void inputAPersonWithCSVFile(ifstream& fin);
+    void inputPersonsWithCSVFile(ifstream& fin);
 };
 
 struct student {
@@ -28,7 +28,7 @@ struct student {
 
     void inputAStudent(ifstream& fin, char* student_id, person stu);
     void outputAStudentToFile(char* filename);
-    void inputAStudentWithCSVFile(ifstream& fin);
+    void inputStudentsWithCSVFile(ifstream& fin);
 };
 
 struct staff {
