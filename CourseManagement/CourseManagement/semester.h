@@ -19,4 +19,6 @@ struct semester {
 };
 
 bool createASemester(char* school_year, char* start_date, char* end_date, int number_of_course);
+int countSemester(char* school_year);
+semester* getSemester(char* school_year);
 #endif
