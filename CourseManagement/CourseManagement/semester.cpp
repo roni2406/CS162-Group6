@@ -6,11 +6,11 @@
 #include "semester.h"
 using namespace std;
 
-void semester::inputASemester(char* Year, char* start_date, char* end_date, int number_of_course) {
+void semester::inputASemester(char* Year, char* start_date, char* end_date, char* number_of_course) {
 	sYear.inputASchoolYear(Year);
 	startDate.inputADateWithChar(start_date);
 	endDate.inputADateWithChar(end_date);
-	numOfCourse = number_of_course;
+	numOfCourse = atoi(number_of_course);
 }
 
 void semester::inputASemesterWithCSVFile(ifstream& fin) {
@@ -58,7 +58,7 @@ void semester::outputASemesterToCSVFile(char* school_year) {
 }
 
 //check data
-bool createASemester(char* school_year, char* start_date, char* end_date, int number_of_course) {
+bool createASemester(char* school_year, char* start_date, char* end_date, char* number_of_course) {
 	semester s;
 	s.inputASemester(school_year, start_date, end_date, number_of_course);
 	s.outputASemesterToCSVFile(school_year);
