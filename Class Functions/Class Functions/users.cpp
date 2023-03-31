@@ -22,16 +22,13 @@ void person::outputAPersonToFile(ofstream& fout) {
 	fout << "," << socialID;
 }
 
-void person::inputPersonsWithCSVFile(ifstream& fin) {
-	firstName = new char[100];
+void person::inputAPersonWithCSVFile(ifstream& fin) {
 	fin.get(firstName, 100, ',');
 	fin.ignore(100, ',');
-
-	lastName = new char[100];
 	fin.get(lastName, 100, ',');
 
+	char* tmp = new char[10];
 	fin.ignore(100, ',');
-	char* tmp = new char[100];
 	fin.get(tmp, 100, ',');
 	if (strcmp(tmp, (char*)"male") == 0) gender = 1;
 	else gender = 0;
@@ -44,41 +41,40 @@ void person::inputPersonsWithCSVFile(ifstream& fin) {
 	delete[] dateofBirth;
 
 	fin.ignore(100, ',');
-	socialID = new char[100];
 	fin.get(socialID, 100, ',');
 }
 
 //student
 void student::inputAStudent(ifstream& fin, char* student_id, person stu) {
-	stuID = student_id;
-	Student = stu; // can use?
+	stuID = _strdup(student_id);
+	Student = stu;
+	stuAcc.userName = _strdup(stuID);
+	stuAcc.password = (char*)"123";
 }
 void student::outputAStudentToFile(char* filename) {
 	ifstream fin;
 	fin.open(filename);
 	int cnt = 0;
-	fin.get();
 	while (!fin.eof()) {
+		char* tmp = new char[200];
 		cnt++;
-		fin.ignore(200, '\n');
+		cin.get(tmp, 200, '\n');
+		delete[] tmp;
 	}
-	No = cnt + 1;
+	No = cnt;
 	fin.close();
 	ofstream fout;
 	fout.open(filename, ios::app);
-	if (No != 1) fout << endl;
-	fout << No << ",";
-	fout << "," << stuID;
+	fout << endl << No << ",";
 	Student.outputAPersonToFile(fout);
+	fout << "," << stuID;
 	fout.close();
-}
 
-void student::inputStudentsWithCSVFile(ifstream& fin) {
-	fin >> No;
+	addinfo(stuAcc, (char*)"student_account", fout);
+}
+void student::inputAStudentWithCSVFile(ifstream& fin) {
+	Student.inputAPersonWithCSVFile(fin);
 	fin.ignore(100, ',');
-	Student.inputPersonsWithCSVFile(fin);
-	fin.ignore(100, ',');
-	stuID = new char[100];
 	fin.get(stuID, 100, '\0');
 }
 
@@ -131,7 +127,7 @@ void addStudentsWithCSV(char* fileNameIn, char* filenameOut) {
 	fin.open(fileNameIn);
 	while (!fin.eof()) {
 		student s;
-		s.inputStudentsWithCSVFile(fin);
+		s.inputAStudentWithCSVFile(fin);
 		s.outputAStudentToFile(filenameOut);
 	}
 	fin.close();

@@ -13,15 +13,6 @@ void read_input_user_createAClass(Class& className)
 	cin >> className.numOfStu;
 }
 
-void AddAClassToList(Class& className, ofstream& fout)
-{
-	fout.open("List of Classes.txt", ios::app);
-	fout << '\n';
-	fout << className.classID << " ";
-	fout << className.numOfStu;
-	fout.close();
-}
-
 void CreateASingleClassList(Class className, ofstream& fout)
 {
 	strcat_s(className.classID, strlen(className.classID) + 5, ".txt");
@@ -33,9 +24,20 @@ void CreateASingleClassList(Class className, ofstream& fout)
 	fout.close();
 }
 
+void AddAClassToList(Class& className, ofstream& fout)
+{
+	fout.open("../data/Classes/List of Classes.txt", ios::app);
+	fout << '\n';
+	fout << className.classID << " ";
+	fout << className.numOfStu;
+	fout.close();
+}
+
+// Warning: Please DO NOT let the ListOfClasses.txt EMPTY or the program may crash due to the 1st empty line!!!
+// Note: YOU'VE BEEN WARNED!
 void viewClasses_PrepareData_SavedToClassArray(Class*& ClassList, ifstream& fin, int& numOfClasses) // 15
 {
-	fin.open("List of Classes.txt");
+	fin.open("../data/Classes/List of Classes.txt");
 	ClassList = new Class[1000];
 	numOfClasses = 0;
 	char* str = nullptr;
@@ -54,18 +56,18 @@ void viewClasses_PrepareData_SavedToClassArray(Class*& ClassList, ifstream& fin,
 	fin.close();
 }
 
-void viewClasses_OutputToConsole(Class* ClassList, int numOfClasses)
-{
-	cout << "Number of Classes: " << numOfClasses << '\n';
-	for (int i = 0; i < numOfClasses; ++i)
-	{
-		cout << "Class " << i + 1 << ": " << ClassList[i].classID << '\n';
-		cout << "Number of Students: " << ClassList[i].numOfStu << '\n';
-		cout << '\n';
-	}
-	delete[] ClassList;
-	ClassList = nullptr;
-}
+//void viewClasses_OutputToConsole(Class* ClassList, int numOfClasses)
+//{
+//	cout << "Number of Classes: " << numOfClasses << '\n';
+//	for (int i = 0; i < numOfClasses; ++i)
+//	{
+//		cout << "Class " << i + 1 << ": " << ClassList[i].classID << '\n';
+//		cout << "Number of Students: " << ClassList[i].numOfStu << '\n';
+//		cout << '\n';
+//	}
+//	delete[] ClassList;
+//	ClassList = nullptr;
+//}
 
 Class* viewClasses()
 {

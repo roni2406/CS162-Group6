@@ -134,10 +134,14 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="account.cpp" />
+    <ClCompile Include="button_and_textbox.cpp" />
+    <ClCompile Include="Class.cpp" />
     <ClCompile Include="CourseManagement.cpp" />
     <ClCompile Include="Date.cpp" />
     <ClCompile Include="Function.cpp" />
     <ClCompile Include="schoolYear.cpp" />
+    <ClCompile Include="scoreboard.cpp" />
+    <ClCompile Include="semester.cpp" />
     <ClCompile Include="users.cpp" />
   </ItemGroup>
   <ItemGroup>
