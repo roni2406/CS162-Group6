@@ -14,7 +14,7 @@ bool schoolYear::checkdata() {
     int n;
     getSchoolYear(Years, n);
 
-    if (sYear[4] != '-' || sYear.length() != 9 || sYear <= Years[n - 1]) {
+    if (sYear.length() != 9 || sYear[4] != '-' || sYear <= Years[n - 1]) {
         delete[] Years;
         return false;
     }
