@@ -1,7 +1,5 @@
 #include <iostream>
-#include <fstream>
 #include "Class.h"
-#include "users.h"
 using namespace std;
 ifstream fin;
 ofstream fout;

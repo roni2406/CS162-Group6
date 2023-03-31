@@ -127,27 +127,11 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="account.cpp" />
     <ClCompile Include="Class Functions.cpp" />
     <ClCompile Include="Class.cpp" />
-    <ClCompile Include="CourseManagement.cpp" />
-    <ClCompile Include="Date.cpp" />
-    <ClCompile Include="Function.cpp" />
-    <ClCompile Include="schoolYear.cpp" />
-    <ClCompile Include="scoreboard.cpp" />
-    <ClCompile Include="semester.cpp" />
-    <ClCompile Include="users.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="account.h" />
     <ClInclude Include="Class.h" />
-    <ClInclude Include="course.h" />
-    <ClInclude Include="Date.h" />
-    <ClInclude Include="Function.h" />
-    <ClInclude Include="schoolYear.h" />
-    <ClInclude Include="scoreboard.h" />
-    <ClInclude Include="semester.h" />
-    <ClInclude Include="users.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
