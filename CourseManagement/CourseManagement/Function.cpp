@@ -1066,6 +1066,4 @@ void ViewSemesterPage(const int screenWidth, const int screenHeight, account& Cu
 	CloseWindow();
 
 }
-/// function used for objects
 
-// Button
