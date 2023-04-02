@@ -824,6 +824,9 @@ void createClassPage(const int screenWidth, const int screenHeight, account& Cur
 	Textbox1 classname;
 	classname.textbox = { 477, 239, 558, 106 };
 
+	Textbox1 numStudents;
+	numStudents.textbox = { 477, 430, 558, 106 };
+
 	Button2 backtoprofilepage;
 	backtoprofilepage.button = { 1270, 20, 200, 30 };
 
@@ -831,7 +834,7 @@ void createClassPage(const int screenWidth, const int screenHeight, account& Cur
 	float frameHeightconfirmBtn = (float)confirmBtn.height;
 	Rectangle sourceRecconfirmBtn = { 0, 0, (float)confirmBtn.width,frameHeightconfirmBtn };
 	// Define button bounds on screen
-	Rectangle btnBoundsconfirmBtn = { 650, 400, (float)confirmBtn.width, frameHeightconfirmBtn };
+	Rectangle btnBoundsconfirmBtn = { 650, 600, (float)confirmBtn.width, frameHeightconfirmBtn };
 	int confirmBtnState = 0;               // Button state: 0-NORMAL, 1-MOUSE_HOVER, 2-PRESSED
 	bool confirmBtnAction = false;         // Button action should be activated
 	bool confirmBtnFalseDisplay = false;
@@ -846,15 +849,21 @@ void createClassPage(const int screenWidth, const int screenHeight, account& Cur
 		DrawRectangleRec(backtoprofilepage.button, WHITE);
 		DrawText("Back to Profile Page", 1280, 20, 20, DARKBLUE);
 
-		DrawRectangle(347, 173, 818, 373, WHITE);
+		DrawRectangle(347, 173, 818, 550, WHITE);
 		DrawRectangleRec(classname.textbox, LIGHTGRAY);
 		DrawText("* Class Name", 477, 200, 30, DARKBLUE);
 
+		DrawRectangleRec(numStudents.textbox, LIGHTGRAY);
+		DrawText("* Number of Students", 477, 390, 30, DARKBLUE);
+
 		////Function_of_TextInputBoxes_----------------------------------------------------------------------------------------------------------------------
 		classname.worktextbox(confirmBtnFalseDisplay);
+		numStudents.worktextbox(confirmBtnFalseDisplay);
 
+		DrawText(numStudents.text, 500, 470, 40, DARKBLUE);
 		DrawText(classname.text, 500, 270, 40, DARKBLUE);
 		DrawText(TextFormat("%i/%i", classname.lettercount, MAX_INPUT_CHARS), 1050, 280, 20, DARKBLUE);
+		DrawText(TextFormat("%i/%i", numStudents.lettercount, MAX_INPUT_CHARS), 1050, 470, 20, DARKBLUE);
 
 		////Function of buttons------------------------------------------------------------------------------------------------------------------------------
 		mousePoint = GetMousePosition();
@@ -872,7 +881,7 @@ void createClassPage(const int screenWidth, const int screenHeight, account& Cur
 			//}
 			//else confirmBtnFalseDisplay = true;
 		}
-		//if (confirmBtnFalseDisplay) DrawText("Class name must be in right form. Try again!", 500, 360, 20, RED);
+		if (confirmBtnFalseDisplay) DrawText("This class was created before!", 500, 360, 20, RED);
 		// Calculate button frame rectangle to draw depending on button state
 		sourceRecconfirmBtn.y = confirmBtnState * frameHeightconfirmBtn;
 		DrawTextureRec(confirmBtn, sourceRecconfirmBtn, { btnBoundsconfirmBtn.x, btnBoundsconfirmBtn.y }, WHITE); // Draw button frame
