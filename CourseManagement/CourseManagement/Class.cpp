@@ -17,9 +17,11 @@ void CreateASingleClassList(Class className, ofstream& fout)
 {
 	strcat_s(className.classID, strlen(className.classID) + 5, ".txt");
 	fout.open(className.classID);
+	/*
 	for (int i = 0; i < strlen(className.classID) - 4; ++i)
 		fout << className.classID[i];
 	fout << " ";
+	*/
 	fout << className.numOfStu;
 	fout.close();
 }
@@ -31,6 +33,20 @@ void AddAClassToList(Class& className, ofstream& fout)
 	fout << className.classID << " ";
 	fout << className.numOfStu;
 	fout.close();
+}
+
+bool CheckClassExisted(Class ClassName)
+{
+	ifstream fin;
+	Class* ClassList = nullptr;
+	int numOfClasses = 0;
+	fin.open("../data/Classes/List of Classes.txt");
+	viewClasses_PrepareData_SavedToClassArray(ClassList, fin, numOfClasses);
+	fin.close();
+	for (int i = 0; i < numOfClasses; ++i)
+		if (strcmp(ClassName.classID, ClassList[i].classID) == 0)
+			return true;
+	return false;
 }
 
 // Warning: Please DO NOT let the ListOfClasses.txt EMPTY or the program may crash due to the 1st empty line!!!

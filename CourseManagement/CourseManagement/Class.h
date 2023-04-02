@@ -15,11 +15,12 @@ struct Class {
 void read_input_user_createAClass(Class& className);
 void AddAClassToList(Class& className, ofstream& fout);
 void CreateASingleClassList(Class className, ofstream& fout);
-Class* viewClasses();
-int countClasses();
+bool CheckClassExisted(Class ClassName);
 
 
 // 15
 void viewClasses_PrepareData_SavedToClassArray(Class*& ClassList, ifstream& fin, int& numOfClasses); 
 void viewClasses_OutputToConsole(Class* ClassList, int numOfClasses);
+Class* viewClasses();
+int countClasses();
 #endif

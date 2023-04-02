@@ -138,3 +138,8 @@ void addStudentsWithCSV(char* fileNameIn, char* filenameOut) {
 	}
 	fin.close();
 }
+
+void addStudentsToClassWithCSV(char* fileNameIn, char* filenameOut)
+{
+
+}
