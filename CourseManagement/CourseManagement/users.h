@@ -1,6 +1,7 @@
 #include <iostream>
 #include "account.h"
 #include "Date.h"
+#include "Class.h"
 #include "scoreboard.h"
 using namespace std;
 
@@ -51,7 +52,7 @@ void addAStudent(char* filename, char* first_name, char* last_name, bool Gender,
 void addAStaff(char* filename, char* first_name, char* last_name, bool Gender, char* DoB,
     char* social_ID, char* staff_id);
 
-void addStudentsWithCSV(char* fileNameIn, char* filenameOut);
-// staff will input filename, fout is used for adding to class or course
-void addStudentsToClassWithCSV(char* fileNameIn, char* filenameOut);
+void addStudentsWithCSV(char* fileNameIn, char* fileNameOut, Class& ClassName);
+    // staff will input filename, fout is used for adding to class or course
+Class addStudentsToClassWithCSV(char* fileNameIn, char* fileNameOut);
 #endif

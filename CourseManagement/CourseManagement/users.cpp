@@ -3,6 +3,7 @@
 #include "Date.h"
 #include "scoreboard.h"
 #include "users.h"
+#include "Class.h"
 using namespace std;
 
 //person
@@ -128,18 +129,28 @@ void addAStudentToClass(char* filename, char* first_name, char* last_name, bool 
 //	fout.close();
 //}
 
-void addStudentsWithCSV(char* fileNameIn, char* filenameOut) {
+void addStudentsWithCSV(char* fileNameIn, char* fileNameOut, Class& ClassName) {
 	ifstream fin;
 	fin.open(fileNameIn);
+	int i = 0;
+	ClassName.stuInClass = new student[ClassName.numOfStu];
 	while (!fin.eof()) {
 		student s;
 		s.inputStudentsWithCSVFile(fin);
-		s.outputAStudentToFile(filenameOut);
+		s.outputAStudentToFile(fileNameOut);
+		ClassName.stuInClass[i++] = s;
 	}
 	fin.close();
 }
 
-void addStudentsToClassWithCSV(char* fileNameIn, char* filenameOut)
+Class addStudentsToClassWithCSV(char* fileNameIn, char* fileNameOut)
 {
-
+	Class Object;
+	addStudentsWithCSV(fileNameIn, fileNameOut,Object);
+	return Object;
 }
+
+//void addStudentsToClassWithCSV(char* fileNameIn, char* fileNameOut)
+//{
+//	
+//}
