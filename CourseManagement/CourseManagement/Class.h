@@ -15,7 +15,8 @@ struct Class {
 void read_input_user_createAClass(Class& className);
 void AddAClassToList(Class& className, ofstream& fout);
 void CreateASingleClassList(Class className, ofstream& fout);
-bool CheckClassExisted(char* classID);
+char* getStringClassFromClassName(Class ClassName);
+bool CheckClassExisted(char* ClassID);
 
 
 // 15
