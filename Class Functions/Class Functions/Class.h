@@ -42,7 +42,7 @@ struct Class {
 void read_input_user_createAClass(Class& className);
 void AddAClassToList(Class& className, ofstream& fout);
 void CreateASingleClassList(Class className, ofstream& fout);
-bool CheckClassExisted(Class ClassName);
+bool CheckClassExisted(char* classID);
 
 // 15
 void viewClasses_PrepareData_SavedToClassArray(Class*& ClassList, ifstream& fin, int& numOfClasses); // 15

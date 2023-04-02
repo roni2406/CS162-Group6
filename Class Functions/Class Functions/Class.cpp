@@ -35,7 +35,7 @@ void CreateASingleClassList(Class className, ofstream& fout)
 	fout.close();
 }
 
-bool CheckClassExisted(Class ClassName)
+bool CheckClassExisted(char* classID)
 {
 	ifstream fin;
 	Class* ClassList = nullptr;
@@ -44,7 +44,7 @@ bool CheckClassExisted(Class ClassName)
 	viewClasses_PrepareData_SavedToClassArray(ClassList, fin, numOfClasses);
 	fin.close();
 	for (int i = 0; i < numOfClasses; ++i)
-		if (strcmp(ClassName.classID, ClassList[i].classID) == 0)
+		if (strcmp(classID, ClassList[i].classID) == 0)
 			return true;
 	return false;
 }
