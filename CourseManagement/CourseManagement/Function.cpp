@@ -467,7 +467,7 @@ void ProfilePageStaff(const int screenWidth, const int screenHeight, account& Cu
 		DrawRectangle(480, 108, 250, 60, WHITE);
 		DrawRectangleLines(479, 107, 252, 62, BLACK);
 		DrawRectangleLines(478, 106, 254, 64, BLACK);
-		DrawText("School Years", 500, 123, 30, DARKBLUE);
+		DrawText("    STAFF   ", 500, 123, 30, DARKBLUE);
 
 		DrawTexture(avatar, 150, 100, WHITE);
 		DrawText("Username: ", 90, 330, 20, DARKBLUE);
@@ -1019,7 +1019,7 @@ void CreateSemesterPage(const int screenWidth, const int screenHeight, account& 
 	CloseWindow();
 }
 void ViewSemestersPage(const int screenWidth, const int screenHeight, account& CurrentUser, char* &Year) {
-	//int n = countSemester(Year); // countSemester
+	int n = countSemester(Year); // countSemester
 	//semester* semester = getSemester(Year); // getSemesterArr
 	Vector2 mousePoint = { 0.0f, 0.0f };
 
@@ -1034,26 +1034,25 @@ void ViewSemestersPage(const int screenWidth, const int screenHeight, account& C
 
 	while (!WindowShouldClose()) {
 		//y_semester += ((GetMouseWheelMove() * scrollspeed) - (IsKeyDown(KEY_DOWN) - IsKeyDown(KEY_UP)));
-		//if (y_semester > 202) y_semester = 202;
+		if (y_semester > 202) y_semester = 202;
 		ClearBackground(WHITE);
 		BeginDrawing();
 		DrawRectangleGradientEx(background, SKYBLUE, DARKBLUE, DARKBLUE, SKYBLUE);
 		DrawRectangle(0, 0, screenWidth, 60, WHITE);
 		DrawText("SEMESTERS", 620, 15, 40, DARKBLUE);
 		DrawRectangleRec(backtoSchoolYearPage.button, WHITE);
-		DrawText("Back to School Year Page", 1150, 20, 20, DARKBLUE);
+		DrawText("Back to School Year Page", 1200, 20, 20, DARKBLUE);
 		DrawRectangle(322, 136, 870, 806, WHITE);
 		DrawRectangleLines(321, 135, 872, 807, BLACK);
 		mousePoint = GetMousePosition();
-		/*Button3* semester = new Button3[n];
+		Button3* semester = new Button3[n];
 
-		int j = 0;
 		for (int i = 0; i < n; ++i) {
 			semester[i].button = {float( x_semester - 122), float(y_semester - 12), 421, 59 };
 			DrawRectangleRec(semester[i].button, LIGHTGRAY);
 			semester[i].workbutton(mousePoint, CurrentUser, ProfilePageStaff);
 			y_semester += 100;
-		}*/
+		}
 		/// Back to profile page button
 		backtoSchoolYearPage.workbutton(mousePoint, CurrentUser, Year, SchoolYearPage);
 		//delete[] semester;

@@ -4,6 +4,7 @@
 #include "Date.h"
 #include "schoolYear.h"
 #include "semester.h"
+#include <string>
 using namespace std;
 
 void semester::inputASemester(char* Year, char* start_date, char* end_date, char* number_of_course) {
@@ -68,7 +69,7 @@ bool createASemester(char* school_year, char* start_date, char* end_date, char* 
 
 int countSemester(char* school_year) {
 	ifstream fin;
-	fin.open("../data/" + (string)(school_year)+"semester.csv");
+	fin.open("../data/" + (string)(school_year)+ "/Semester.csv");
 	int numSemester = 0;
 	fin.get();
 	while (!fin.eof()) {
@@ -82,7 +83,7 @@ semester* getSemester(char* school_year) {
 	int numOfSemester = countSemester(school_year);
 	semester* semesterArr = new semester[5];
 	ifstream fin;
-	fin.open("../data/" + (string)(school_year)+"semester.csv");
+	fin.open("../data/" + (string)(school_year)+"/Semester.csv");
 	for (int i = 0; i < numOfSemester; i++) {
 		semesterArr[i].inputASemesterWithCSVFile(fin);
 	}

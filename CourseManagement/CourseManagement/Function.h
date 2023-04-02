@@ -36,6 +36,7 @@ void ChangePasswordPageStaff(const int screenWidth, const int screenHeight, acco
 void CreateSchoolYearPage(const int screenWidth,const int screenHeight, account& CurrentUser); 
 void ViewSchoolYearsPage(const int screenWidth, const int screenHeight, account& CurrentUser);
 void SchoolYearPage(const int screenWidth, const int screenHeight, account& CurrentUser, char* &Year);
+void viewClassinSchoolYearPage(); // thay bao z 
 
 void createClassPage(const int screenWidth, const int screenHeight, account& CurrentUser);
 void ViewClassesPage(const int screenWidth, const int screenHeight, account& CurrentUser);
