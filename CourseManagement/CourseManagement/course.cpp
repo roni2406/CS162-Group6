@@ -1,4 +1,6 @@
 #include "Course.h"
+#include "Function.h"
+#include "users.h"
 
 void course::Load_stu(char* filename) {
 	ifstream f;
@@ -24,23 +26,23 @@ void course::Load_stu(char* filename) {
 }
 
 void Load_Course(ListCourse& list) {
-	ifstream courses;
-	courses.open("Courses.txt");
+	ifstream fin;
+	fin.open("Courses.txt");
 	int no = 1;
-	while (!courses.eof()) {
-		courses.getline(list.course[no].courseName, 1000);
-		courses.getline(list.course[no].courseID, 1000);
-		courses.getline(list.course[no].teacherName, 1000);
-		courses.getline(list.course[no].numOfCre, 1000);
-		courses.getline(list.course[no].dayofweek, 1000);
-		courses.getline(list.course[no].sessionHour, 1000);
-		courses.getline(list.course[no].studentfile, 1000);
+	while (!fin.eof()) {
+		fin.getline(list.course[no].courseName, 1000);
+		fin.getline(list.course[no].courseID, 1000);
+		fin.getline(list.course[no].teacherName, 1000);
+		fin.getline(list.course[no].numOfCre, 1000);
+		fin.getline(list.course[no].dayofweek, 1000);
+		fin.getline(list.course[no].sessionHour, 1000);
+		fin.getline(list.course[no].studentfile, 1000);
 		list.course[no].Load_stu(list.course[no].studentfile);
 		list.len = no;
 		no++;
 	}
 	list.len--;
-	courses.close();
+	fin.close();
 }
 
 void Course_to_File(ListCourse& list) {
@@ -87,12 +89,12 @@ void delete_stu(ListCourse& list, int k, int no) {
 void update_course(ListCourse& list, int k) {
 	bool i = 0;
 
-	Textbox coursename;
-	Textbox teachername;
-	Textbox ID;
-	Textbox nofc;
-	Textbox courseday;
-	Textbox sshours;
+	Textbox1 coursename;
+	Textbox1 teachername;
+	Textbox1 ID;
+	Textbox1 nofc;
+	Textbox1 courseday;
+	Textbox1 sshours;
 	coursename.textbox = { 270,177,922,77 };
 	ID.textbox = { 270,304,922,77 };
 	teachername.textbox = { 270, 431,922,77 };
@@ -167,12 +169,12 @@ void Input_course(ListCourse& list) {
 
 	bool i = 0;
 
-	Textbox coursename;
-	Textbox teachername;
-	Textbox ID;
-	Textbox nofc;
-	Textbox courseday;
-	Textbox sshours;
+	Textbox1 coursename;
+	Textbox1 teachername;
+	Textbox1 ID;
+	Textbox1 nofc;
+	Textbox1 courseday;
+	Textbox1 sshours;
 	coursename.textbox = { 270,177,922,77 };
 	ID.textbox = { 270,304,922,77 };
 	teachername.textbox = { 270, 431,922,77 };
@@ -268,7 +270,7 @@ void Stus_to_Course(ListCourse& list) {
 		}
 		EndDrawing();
 	}
-	free(file);
+	delete[] file;
 }
 void viewcourse(ListCourse& list) {
 
@@ -420,14 +422,14 @@ void view_Stu(ListCourse& list, int k) {
 }
 
 
-int main(void) {
-	ListCourse list;
-	InitWindow(1512, 982, "d");
-	Input_course(list);
-	viewcourse(list);
-
-	CloseWindow();
-}
+//int main(void) {
+//	ListCourse list;
+//	InitWindow(1512, 982, "d");
+//	Input_course(list);
+//	viewcourse(list);
+//
+//	CloseWindow();
+//}
 
 
 

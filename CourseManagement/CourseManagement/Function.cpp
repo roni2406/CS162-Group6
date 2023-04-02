@@ -18,10 +18,10 @@ void StudentorStaffPage(const int screenWidth, const int screenHeight, account& 
 	Texture2D Staff = LoadTexture("Staff.png");
 
 
-	Button3 student;
+	Button2 student;
 	student.button = { 23, 295, 645, 518 };
 
-	Button3 staff;
+	Button2 staff;
 	staff.button = { 839, 295, 645, 518 };
 
 	SetTargetFPS(40);
@@ -58,7 +58,7 @@ void LogInPageStudent(const int screenWidth, const int screenHeight, account& Cu
 	Textbox2 password;
 	password.textbox = { 477, 453,558,106 };
 
-	Button3 backtopreviouspage;
+	Button2 backtopreviouspage;
 	backtopreviouspage.button = { 1200, 20, 300, 30 };
 	////initialize login button---------------------------------------------------------------------------------------------------
 	Texture2D loginButton = LoadTexture("loginButton.png");
@@ -149,7 +149,7 @@ void LogInPageStaff(const int screenWidth, const int screenHeight, account& Curr
 	Textbox2 password;
 	password.textbox = { 477, 403,558,106 };
 	
-	Button3 backtopreviouspage;
+	Button2 backtopreviouspage;
 	backtopreviouspage.button = { 1200, 20, 300, 30 };
 	////initialize login button---------------------------------------------------------------------------------------------------
 	Texture2D loginButton = LoadTexture("loginButton.png");
@@ -251,7 +251,7 @@ void SignUpPage(const int screenWidth, const int screenHeight, account& CurrentU
 	Textbox2 confirmpass;
 	confirmpass.textbox = { 471, 546, 558, 112 };
 
-	Button3 backtologinsite;
+	Button2 backtologinsite;
 	backtologinsite.button = { 1300, 20, 200, 30 };
 
 
@@ -500,7 +500,7 @@ void ChangePasswordPageStudent(const int screenWidth, const int screenHeight, ac
 	Textbox2 confirmnewpass;
 	confirmnewpass.textbox = { 477, 567, 558, 106 };
 
-	Button3 backtoprofilepage;
+	Button2 backtoprofilepage;
 	backtoprofilepage.button = { 1270, 20, 200, 30 };
 
 	bool isChangePassFalseDisplay = false;
@@ -588,7 +588,7 @@ void ChangePasswordPageStaff(const int screenWidth, const int screenHeight, acco
 	Textbox2 confirmnewpass;
 	confirmnewpass.textbox = { 477, 567, 558, 106 };
 
-	Button3 backtoprofilepage;
+	Button2 backtoprofilepage;
 	backtoprofilepage.button = { 1270, 20, 200, 30 };
 
 	bool isChangePassFalseDisplay = false;
@@ -671,7 +671,7 @@ void CreateSchoolYearPage(const int screenWidth,const int screenHeight, account&
 	Textbox1 schoolyear;
 	schoolyear.textbox = { 477, 239, 558, 106 };
 	
-	Button3 backtoprofilepage;
+	Button2 backtoprofilepage;
 	backtoprofilepage.button = { 1270, 20, 200, 30 };
 
 	Texture2D confirmBtn = LoadTexture("confirmBtn.png");
@@ -739,7 +739,7 @@ void ViewSchoolYearsPage(const int screenWidth, const int screenHeight, account&
 
 	Rectangle background = { 0,0,float(screenWidth),float(screenHeight)};
 
-	Button3 backtoprofilepage;
+	Button2 backtoprofilepage;
 	backtoprofilepage.button = { 1270, 20, 200, 30 };
 
 	int scrollspeed = 25;
@@ -782,16 +782,16 @@ void SchoolYearPage(const int screenWidth, const int screenHeight, account& Curr
 	Rectangle background = { 0,0,float(screenWidth),float(screenHeight) };
 	Vector2 mousePoint = { 0.0f, 0.0f };
 
-	Button3 backtoviewschoolyearpage;
+	Button2 backtoviewschoolyearpage;
 	backtoviewschoolyearpage.button = { 1150, 20, 250, 30 };
 
-	Button5 createsemester;
+	Button3 createsemester;
 	createsemester.texture = LoadTexture("createsemester.png");
 	createsemester.frameHeight = (float)createsemester.texture.height;
 	createsemester.sourceRec = { 0, 0, (float)createsemester.texture.width, createsemester.frameHeight };
 	createsemester.btnBounds = { 350, 496, (float)createsemester.texture.width, createsemester.frameHeight };
 
-	Button5 viewsemester;
+	Button3 viewsemester;
 	viewsemester.texture = LoadTexture("viewsemester.png");
 	viewsemester.frameHeight = (float)viewsemester.texture.height;
 	viewsemester.sourceRec = { 0, 0, (float)viewsemester.texture.width, viewsemester.frameHeight };
@@ -824,7 +824,7 @@ void createClassPage(const int screenWidth, const int screenHeight, account& Cur
 	Textbox1 classname;
 	classname.textbox = { 477, 239, 558, 106 };
 
-	Button3 backtoprofilepage;
+	Button2 backtoprofilepage;
 	backtoprofilepage.button = { 1270, 20, 200, 30 };
 
 	Texture2D confirmBtn = LoadTexture("confirmBtn.png");
@@ -895,7 +895,7 @@ void ViewClassesPage(const int screenWidth, const int screenHeight, account& Cur
 	avatar = LoadTexture("avatar.png");
 
 
-	Button3 backtoprofilepage;
+	Button2 backtoprofilepage;
 	backtoprofilepage.button = { 1270, 20, 200, 30 };
 
 	int scrollspeed = 25;
@@ -915,7 +915,7 @@ void ViewClassesPage(const int screenWidth, const int screenHeight, account& Cur
 		DrawRectangle(322, 136, 870, 806, WHITE);
 		DrawRectangleLines(321, 135, 872, 807, BLACK);
 		mousePoint = GetMousePosition();
-		Button3* classname = new Button3[n];
+		Button2* classname = new Button2[n];
 
 		int j = 0;
 		for (int i = 0; i < n; ++i) {
@@ -1020,7 +1020,7 @@ void CreateSemesterPage(const int screenWidth, const int screenHeight, account& 
 }
 void ViewSemestersPage(const int screenWidth, const int screenHeight, account& CurrentUser, char* &Year) {
 	int n = countSemester(Year); // countSemester
-	//semester* semester = getSemester(Year); // getSemesterArr
+	//semester* Semester = getSemester(Year); // getSemesterArr
 	Vector2 mousePoint = { 0.0f, 0.0f };
 
 	Rectangle background = { 0,0,float(screenWidth),float(screenHeight) };
@@ -1031,7 +1031,7 @@ void ViewSemestersPage(const int screenWidth, const int screenHeight, account& C
 	int scrollspeed = 25;
 	int y_semester = 257;
 	int x_semester = 668;
-
+	//char* j = new char;
 	while (!WindowShouldClose()) {
 		//y_semester += ((GetMouseWheelMove() * scrollspeed) - (IsKeyDown(KEY_DOWN) - IsKeyDown(KEY_UP)));
 		if (y_semester > 202) y_semester = 202;
@@ -1045,23 +1045,31 @@ void ViewSemestersPage(const int screenWidth, const int screenHeight, account& C
 		DrawRectangle(322, 136, 870, 806, WHITE);
 		DrawRectangleLines(321, 135, 872, 807, BLACK);
 		mousePoint = GetMousePosition();
-		Button3* semester = new Button3[n];
+		Button2* semester = new Button2[n];
 
 		for (int i = 0; i < n; ++i) {
+			//*j = char(i + 49);
 			semester[i].button = {float( x_semester - 122), float(y_semester - 12), 421, 59 };
 			DrawRectangleRec(semester[i].button, LIGHTGRAY);
-			semester[i].workbutton(mousePoint, CurrentUser, ProfilePageStaff);
+			//DrawText(j, x_semester, y_semester, 32, DARKBLUE);
+			//semester[i].workbutton(mousePoint, CurrentUser, SemesterPage);
 			y_semester += 100;
 		}
 		/// Back to profile page button
 		backtoSchoolYearPage.workbutton(mousePoint, CurrentUser, Year, SchoolYearPage);
-		//delete[] semester;
+		delete[] semester;
+		//delete j;
 		EndDrawing();
 	}
 
 	CloseWindow();
 
 }
+
+void SemesterPage(const int screenWidth, const int screenHeight, account& CurrentUser, char*& Year, char*& Semester) {
+
+}
+
 
 
 

@@ -7,32 +7,32 @@ using namespace std;
 #ifndef COURSE_H
 #define COURSE_H
 
-struct Date {
+struct Date1 {
     int day;
     int month;
     int year;
 };
 
-struct scoreboard {
+struct scoreboard1 {
     double totalMark;
     double finalMark;
     double midtermMark;
     double otherMark;
 };
 
-struct person {
+struct person1 {
     char firstName[10];
     char lastName[20];
     bool gender; // 0(false) : male; 1(true) : female
-    Date dob;
+    Date1 dob;
     char socialID[20];
 };
 
-struct student {
+struct student1 {
     int No;
     char stuID[9];
-    person person;
-    scoreboard mark;
+    person1 person;
+    scoreboard1 mark;
 };
 
 struct course {
@@ -47,7 +47,7 @@ struct course {
     char sessionHour[30]; // S1 (07:30), S2 (09:30), S3(13:30) and S4 (15:30)).
     // A course will be taught in only one session in a week
     char studentfile[30];
-    student stuOfCourse[50];
+    student1 stuOfCourse[50];
     void Load_stu(char* filename);
 
 };
