@@ -11,14 +11,14 @@ ofstream fout;
 
 int main()
 {   
-    /*account CurrentUser;
+    account CurrentUser;
     InitWindow(screenWidth, screenHeight, "Course Management System");
-    StudentorStaffPage(screenWidth, screenHeight, CurrentUser);*/
+    StudentorStaffPage(screenWidth, screenHeight, CurrentUser);
     
-    Class ObjectClass;
+    /*Class ObjectClass;
     read_input_user_createAClass(ObjectClass);
     AddAClassToList(ObjectClass, fout);
-    CreateASingleClassList(ObjectClass, fout);
+    CreateASingleClassList(ObjectClass, fout);*/
     return 0;
 }
 

@@ -1031,7 +1031,7 @@ void ViewSemestersPage(const int screenWidth, const int screenHeight, account& C
 	int scrollspeed = 25;
 	int y_semester = 257;
 	int x_semester = 668;
-	//char* j = new char;
+
 	while (!WindowShouldClose()) {
 		//y_semester += ((GetMouseWheelMove() * scrollspeed) - (IsKeyDown(KEY_DOWN) - IsKeyDown(KEY_UP)));
 		if (y_semester > 202) y_semester = 202;
@@ -1045,20 +1045,21 @@ void ViewSemestersPage(const int screenWidth, const int screenHeight, account& C
 		DrawRectangle(322, 136, 870, 806, WHITE);
 		DrawRectangleLines(321, 135, 872, 807, BLACK);
 		mousePoint = GetMousePosition();
-		Button2* semester = new Button2[n];
+		Button6* semester = new Button6[n];
 
 		for (int i = 0; i < n; ++i) {
-			//*j = char(i + 49);
+			char* j = new char;
+			*j = char(i + 49);
 			semester[i].button = {float( x_semester - 122), float(y_semester - 12), 421, 59 };
 			DrawRectangleRec(semester[i].button, LIGHTGRAY);
 			//DrawText(j, x_semester, y_semester, 32, DARKBLUE);
-			//semester[i].workbutton(mousePoint, CurrentUser, SemesterPage);
+			semester[i].workbutton(mousePoint, CurrentUser, Year, j, SemesterPage);
 			y_semester += 100;
+			delete j;
 		}
 		/// Back to profile page button
 		backtoSchoolYearPage.workbutton(mousePoint, CurrentUser, Year, SchoolYearPage);
 		delete[] semester;
-		//delete j;
 		EndDrawing();
 	}
 
@@ -1074,13 +1075,13 @@ void SemesterPage(const int screenWidth, const int screenHeight, account& Curren
 	backtoviewsemesterpage.button = { 1150, 20, 250, 30 };
 
 	Button5 createcourse;
-	createcourse.texture = LoadTexture("createsemester.png");
+	createcourse.texture = LoadTexture("createcourse.png");
 	createcourse.frameHeight = (float)createcourse.texture.height;
 	createcourse.sourceRec = { 0, 0, (float)createcourse.texture.width, createcourse.frameHeight };
 	createcourse.btnBounds = { 350, 496, (float)createcourse.texture.width, createcourse.frameHeight };
 
 	Button5 viewcourse;
-	viewcourse.texture = LoadTexture("viewsemester.png");
+	viewcourse.texture = LoadTexture("viewcourse.png");
 	viewcourse.frameHeight = (float)viewcourse.texture.height;
 	viewcourse.sourceRec = { 0, 0, (float)viewcourse.texture.width, viewcourse.frameHeight };
 	viewcourse.btnBounds = { 866, 496, (float)viewcourse.texture.width, viewcourse.frameHeight };
@@ -1090,7 +1091,7 @@ void SemesterPage(const int screenWidth, const int screenHeight, account& Curren
 		BeginDrawing();
 		DrawRectangleGradientEx(background, SKYBLUE, DARKBLUE, DARKBLUE, SKYBLUE);
 		DrawRectangle(0, 0, screenWidth, 60, WHITE);
-		DrawText(Year, 620, 15, 40, DARKBLUE);
+		DrawText(Semester, 620, 15, 40, DARKBLUE);
 		DrawRectangleRec(backtoviewsemesterpage.button, WHITE);
 		DrawText("Back to View School Year Page", 1150, 20, 20, DARKBLUE);
 		DrawRectangle(322, 136, 870, 806, WHITE);
@@ -1102,7 +1103,6 @@ void SemesterPage(const int screenWidth, const int screenHeight, account& Curren
 		viewcourse.workbutton(mousePoint, CurrentUser, Year, Semester, ViewCoursesPage);
 		EndDrawing();
 	}
-
 	CloseWindow();
 }
 

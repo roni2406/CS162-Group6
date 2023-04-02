@@ -48,8 +48,8 @@ void ViewSemestersPage(const int screenWidth, const int screenHeight, account& C
 void SemesterPage(const int screenWidth, const int screenHeight, account& CurrentUser, char*& Year, char*& Semester); // need to include struct semester to display and save data
 
 void CreateCoursePage(const int screenWidth, const int screenHeight, account& CurrentUser, char*& Year, char*& semester); // need to include struct semester to display and save data
-void ViewCoursesPage(const int screenWidth, const int screenHeight, account& CurrentUser, char*& Year); // need to include struct semester to display and save data
-void CoursePage(const int screenWidth, const int screenHeight, account& CurrentUser, char*& Year); // need to include struct semester, course to display and save data
+void ViewCoursesPage(const int screenWidth, const int screenHeight, account& CurrentUser, char*& Year, char*& semester); // need to include struct semester to display and save data
+void CoursePage(const int screenWidth, const int screenHeight, account& CurrentUser, char*& Year, char* &semester, char* &course); // need to include struct semester, course to display and save data
 // in course page have following functions: delete, view student in the course, add student, delete student
 void DeleteCoursePage(); //?
 void StudentCoursePage(); // ?
@@ -86,7 +86,7 @@ struct Button2 {
 
 };
 
-// used for "bo-goc" button that need to update information
+// used for "bo-goc" button that need to update information Year
 struct Button3 {
 	const int screenWidth = 1512;
 	const int screenHeight = 982;
@@ -99,7 +99,7 @@ struct Button3 {
 	void workbutton(Vector2 mousePoint, account& CurrentUser, char*& a, void(*func)(const int screenWidth, const int screenHeight, account& CurrentUser, char*& a));
 };
 
-//used for button that need to update information
+//used for button that need to update information Year
 struct Button4 {
 	const int screenWidth = 1512;
 	const int screenHeight = 982;
@@ -107,6 +107,28 @@ struct Button4 {
 	bool mouseonbutton = false;
 	bool action = false;
 	void workbutton(Vector2 mousePoint, account& CurrentUser, char* &a, void(*func)(const int screenWidth, const int screenHeight, account& CurrentUser, char* &a));
+};
+
+// used for "bo-goc" button that need to update information Year, Semester
+struct Button5 {
+	const int screenWidth = 1512;
+	const int screenHeight = 982;
+	Texture2D texture;
+	float frameHeight;
+	Rectangle sourceRec;
+	Rectangle btnBounds;
+	int state = 0;					// Button state: 0-NORMAL, 1-MOUSE_HOVER, 2-PRESSED
+	bool action = false;			// Button action should be activated
+	void workbutton(Vector2 mousePoint, account& CurrentUser, char*& a, char*& b, void(*func)(const int screenWidth, const int screenHeight, account& CurrentUser, char*& a, char*& b));
+};
+//used for button that need to update information Year, Semester
+struct Button6 {
+	const int screenWidth = 1512;
+	const int screenHeight = 982;
+	Rectangle button = { 0, 0, 0, 0 };
+	bool mouseonbutton = false;
+	bool action = false;
+	void workbutton(Vector2 mousePoint, account& CurrentUser, char*& a, char*& b, void(*func)(const int screenWidth, const int screenHeight, account& CurrentUser, char*& a, char*& b));
 };
 
 /// textbox
