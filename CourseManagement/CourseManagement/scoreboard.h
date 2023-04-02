@@ -11,6 +11,8 @@ struct scoreboard {
     double otherMark;
 
     void inputScoreBoardWithCSV(ifstream& fin);
+    void inputScoreBoard(double midterm_mark, double final_mark, double other_mark, double total_mark);
+    void outputScoreBoardToFile(ofstream& fout);
 };
 
 #endif

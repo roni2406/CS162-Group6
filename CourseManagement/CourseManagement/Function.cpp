@@ -467,7 +467,7 @@ void ProfilePageStaff(const int screenWidth, const int screenHeight, account& Cu
 		DrawRectangle(480, 108, 250, 60, WHITE);
 		DrawRectangleLines(479, 107, 252, 62, BLACK);
 		DrawRectangleLines(478, 106, 254, 64, BLACK);
-		DrawText("School Years", 500, 123, 30, DARKBLUE);
+		DrawText("    STAFF   ", 500, 123, 30, DARKBLUE);
 
 		DrawTexture(avatar, 150, 100, WHITE);
 		DrawText("Username: ", 90, 330, 20, DARKBLUE);
@@ -478,7 +478,7 @@ void ProfilePageStaff(const int screenWidth, const int screenHeight, account& Cu
 		ChangePass.workbutton(mousePoint, CurrentUser, ChangePasswordPageStaff);
 		LogOut.workbutton(mousePoint, CurrentUser, LogInPageStaff);
 		CreateSchoolYear.workbutton(mousePoint, CurrentUser, CreateSchoolYearPage);
-		ViewSchoolYear.workbutton(mousePoint, CurrentUser, ViewSchoolYearPage);
+		ViewSchoolYear.workbutton(mousePoint, CurrentUser, ViewSchoolYearsPage);
 		CreateClass.workbutton(mousePoint, CurrentUser, createClassPage);
 		ViewClass.workbutton(mousePoint, CurrentUser, ViewClassesPage);
 
@@ -732,7 +732,7 @@ void CreateSchoolYearPage(const int screenWidth,const int screenHeight, account&
 	}
 	CloseWindow();
 }
-void ViewSchoolYearPage(const int screenWidth, const int screenHeight, account& CurrentUser) {
+void ViewSchoolYearsPage(const int screenWidth, const int screenHeight, account& CurrentUser) {
 	int n = countSchoolYear();
 	char** Years = getSchoolYearArr();
 	Vector2 mousePoint = { 0.0f, 0.0f };
@@ -747,7 +747,7 @@ void ViewSchoolYearPage(const int screenWidth, const int screenHeight, account& 
 	int x_schoolyear = 668;
 
 	while (!WindowShouldClose()) {
-		y_schoolyear += ((GetMouseWheelMove() * scrollspeed) - (IsKeyDown(KEY_DOWN) - IsKeyDown(KEY_UP)));
+		//y_schoolyear += ((GetMouseWheelMove() * scrollspeed) - (IsKeyDown(KEY_DOWN) - IsKeyDown(KEY_UP)));
 		if (y_schoolyear > 202) y_schoolyear = 202;
 		ClearBackground(WHITE);
 		BeginDrawing();
@@ -809,9 +809,9 @@ void SchoolYearPage(const int screenWidth, const int screenHeight, account& Curr
 		DrawRectangleLines(321, 135, 872, 807, BLACK);
 
 		mousePoint = GetMousePosition();
-		backtoviewschoolyearpage.workbutton(mousePoint, CurrentUser, ViewSchoolYearPage);
+		backtoviewschoolyearpage.workbutton(mousePoint, CurrentUser, ViewSchoolYearsPage);
 		createsemester.workbutton(mousePoint, CurrentUser, Year, CreateSemesterPage);
-		viewsemester.workbutton(mousePoint, CurrentUser, Year, CreateSemesterPage);
+		viewsemester.workbutton(mousePoint, CurrentUser, Year, ViewSemestersPage);
 		EndDrawing();
 	}
 
@@ -903,7 +903,7 @@ void ViewClassesPage(const int screenWidth, const int screenHeight, account& Cur
 	int x_classname = 668;
 
 	while (!WindowShouldClose()) {
-		y_classname += ((GetMouseWheelMove() * scrollspeed) - (IsKeyDown(KEY_DOWN) - IsKeyDown(KEY_UP)));
+		//y_classname += ((GetMouseWheelMove() * scrollspeed) - (IsKeyDown(KEY_DOWN) - IsKeyDown(KEY_UP)));
 		if (y_classname > 202) y_classname = 202;
 		ClearBackground(WHITE);
 		BeginDrawing();
@@ -934,7 +934,7 @@ void ViewClassesPage(const int screenWidth, const int screenHeight, account& Cur
 	CloseWindow();
 }
 
-void CreateSemesterPage(const int screenWidth, const int screenHeight, account& CurrentUser, char* &a) {
+void CreateSemesterPage(const int screenWidth, const int screenHeight, account& CurrentUser, char* &Year) {
 	Vector2 mousePoint = { 0.0f, 0.0f };
 	Rectangle background = { 0,0,float(screenWidth),float(screenHeight)};
 
@@ -999,10 +999,10 @@ void CreateSemesterPage(const int screenWidth, const int screenHeight, account& 
 		}
 		else confirmBtnState = 0;
 		if (confirmBtnAction) {
-			if (createASemester(a, startdate.text, enddate.text, numcourses.text)) {
+			if (createASemester(Year, startdate.text, enddate.text, numcourses.text)) {
 				confirmBtnFalseDisplay = false;
 				EndDrawing();
-				SchoolYearPage(screenWidth, screenHeight, CurrentUser, a);
+				SchoolYearPage(screenWidth, screenHeight, CurrentUser, Year);
 			}
 			else confirmBtnFalseDisplay = true;
 		}
@@ -1012,60 +1012,56 @@ void CreateSemesterPage(const int screenWidth, const int screenHeight, account& 
 		DrawTextureRec(confirmBtn, sourceRecconfirmBtn, { btnBoundsconfirmBtn.x, btnBoundsconfirmBtn.y }, WHITE); // Draw button frame
 
 		/// Back to profile page button
-		backtoschoolyearpage.workbutton(mousePoint, CurrentUser, a, SchoolYearPage);
+		backtoschoolyearpage.workbutton(mousePoint, CurrentUser, Year, SchoolYearPage);
 
 		EndDrawing();
 	}
 	CloseWindow();
 }
-void ViewSemesterPage(const int screenWidth, const int screenHeight, account& CurrentUser) {
-	int n = countSchoolYear(); // countSemester
-	char** Semesters = getSchoolYearArr(); // getSemesterArr
+void ViewSemestersPage(const int screenWidth, const int screenHeight, account& CurrentUser, char* &Year) {
+	int n = countSemester(Year); // countSemester
+	//semester* semester = getSemester(Year); // getSemesterArr
 	Vector2 mousePoint = { 0.0f, 0.0f };
 
 	Rectangle background = { 0,0,float(screenWidth),float(screenHeight) };
 
-	Texture2D avatar;
-	avatar = LoadTexture("avatar.png");
-	Button3 backtoViewSchoolYearPage;
-	backtoViewSchoolYearPage.button = { 1270, 20, 200, 30 };
+	Button4 backtoSchoolYearPage;
+	backtoSchoolYearPage.button = { 1270, 20, 200, 30 };
 
 	int scrollspeed = 25;
 	int y_semester = 257;
 	int x_semester = 668;
 
 	while (!WindowShouldClose()) {
-		y_semester += ((GetMouseWheelMove() * scrollspeed) - (IsKeyDown(KEY_DOWN) - IsKeyDown(KEY_UP)));
+		//y_semester += ((GetMouseWheelMove() * scrollspeed) - (IsKeyDown(KEY_DOWN) - IsKeyDown(KEY_UP)));
 		if (y_semester > 202) y_semester = 202;
 		ClearBackground(WHITE);
 		BeginDrawing();
 		DrawRectangleGradientEx(background, SKYBLUE, DARKBLUE, DARKBLUE, SKYBLUE);
 		DrawRectangle(0, 0, screenWidth, 60, WHITE);
 		DrawText("SEMESTERS", 620, 15, 40, DARKBLUE);
-		DrawRectangleRec(backtoViewSchoolYearPage.button, WHITE);
-		DrawText("Back to Profile Page", 1280, 20, 20, DARKBLUE);
+		DrawRectangleRec(backtoSchoolYearPage.button, WHITE);
+		DrawText("Back to School Year Page", 1200, 20, 20, DARKBLUE);
 		DrawRectangle(322, 136, 870, 806, WHITE);
 		DrawRectangleLines(321, 135, 872, 807, BLACK);
 		mousePoint = GetMousePosition();
 		Button3* semester = new Button3[n];
 
-		int j = 0;
 		for (int i = 0; i < n; ++i) {
 			semester[i].button = {float( x_semester - 122), float(y_semester - 12), 421, 59 };
 			DrawRectangleRec(semester[i].button, LIGHTGRAY);
-			DrawText(Semesters[i], x_semester, y_semester, 32, DARKBLUE);
 			semester[i].workbutton(mousePoint, CurrentUser, ProfilePageStaff);
 			y_semester += 100;
 		}
 		/// Back to profile page button
-		backtoViewSchoolYearPage.workbutton(mousePoint, CurrentUser, ViewSchoolYearPage);
-		delete[] semester;
+		backtoSchoolYearPage.workbutton(mousePoint, CurrentUser, Year, SchoolYearPage);
+		//delete[] semester;
 		EndDrawing();
 	}
 
 	CloseWindow();
 
 }
-/// function used for objects
 
-// Button
+
+
