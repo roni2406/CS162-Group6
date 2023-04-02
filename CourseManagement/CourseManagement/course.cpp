@@ -45,10 +45,11 @@ void Load_Course(ListCourse& list) {
 	fin.close();
 }
 
-void Course_to_File(ListCourse& list) {
+void Course_to_file(ListCourse& list) {
+	int no = 1;
 	ofstream courses;
-	courses.open("Courses.txt");
-	for (int no = 1; no <= list.len; no++) {
+	courses.open("courses.txt");
+	for (no; no <=list.len ; no++) {
 		courses << list.course[no].courseName << '\n'
 			<< list.course[no].courseID << '\n'
 			<< list.course[no].teacherName << '\n'
@@ -164,74 +165,30 @@ void update_course(ListCourse& list, int k) {
 	viewcourse(list);
 
 }
-void Input_course(ListCourse& list) {
-	Load_Course(list);
-
-	bool i = 0;
-
-	Textbox1 coursename;
-	Textbox1 teachername;
-	Textbox1 ID;
-	Textbox1 nofc;
-	Textbox1 courseday;
-	Textbox1 sshours;
-	coursename.textbox = { 270,177,922,77 };
-	ID.textbox = { 270,304,922,77 };
-	teachername.textbox = { 270, 431,922,77 };
-	nofc.textbox = { 270, 558,922,77 };
-	courseday.textbox = { 270, 685,330,77 };
-	sshours.textbox = { 887,685,330,77 };
-
-	while (!WindowShouldClose()) {
-		BeginDrawing();
-		ClearBackground(WHITE);
-
-		DrawText("Course Name :", 265, 158, 20, BLUE);
-		coursename.worktextbox(i);
-		DrawText(coursename.text, 290, 190, 48, BLUE);
-
-		DrawText("ID :", 265, 285, 20, BLUE);
-		ID.worktextbox(i);
-		DrawText(ID.text, 290, 318, 48, BLUE);
-
-		DrawText("Teacher Name :", 265, 412, 20, BLUE);
-		teachername.worktextbox(i);
-		DrawText(teachername.text, 290, 442, 48, BLUE);
-
-		DrawText("Num of cre :", 265, 539, 20, BLUE);
-		nofc.worktextbox(i);
-		DrawText(nofc.text, 290, 570, 48, BLUE);
-
-		DrawText("Course days :", 265, 666, 20, BLUE);
-		courseday.worktextbox(i);
-		DrawText(courseday.text, 290, 693, 48, BLUE);
-
-		DrawText("Session Hours :", 882, 666, 20, BLUE);
-		sshours.worktextbox(i);
-		DrawText(sshours.text, 882 + 25, 693, 48, BLUE);
-
-		if (!CheckCollisionPointRec(GetMousePosition(), { 626, 820, 260, 102 })) {
-			DrawRectangle(626, 820, 260, 102, BLUE);
-			DrawText("  NEXT", 648, 850, 48, WHITE);
-		}
-		else {
-			DrawRectangle(626, 820, 260, 102, DARKBLUE);
-			DrawText("  NEXT", 648, 850, 48, GRAY);
-			if (IsMouseButtonPressed(MOUSE_BUTTON_LEFT())) {
-				strncpy_s(list.course[++list.len].courseName, coursename.text, '\n');
-				strncpy_s(list.course[list.len].courseID, ID.text, '\n');
-				strncpy_s(list.course[list.len].teacherName, teachername.text, '\n');
-				strncpy_s(list.course[list.len].numOfCre, nofc.text, '\n');
-				strncpy_s(list.course[list.len].dayofweek, courseday.text, '\n');
-				strncpy_s(list.course[list.len].sessionHour, sshours.text, '\n');
-				break;
-			}
-		}
-
-		EndDrawing();
-	}
-	Stus_to_Course(list);
-}
+//void Input_course(ListCourse& list, char* coursename, char* ID, char* tex) {
+//	Load_Course(list);
+//	if (!CheckCollisionPointRec(GetMousePosition(), { 626, 820, 260, 102 })) {
+//			DrawRectangle(626, 820, 260, 102, BLUE);
+//			DrawText("  NEXT", 648, 850, 48, WHITE);
+//		}
+//		else {
+//			DrawRectangle(626, 820, 260, 102, DARKBLUE);
+//			DrawText("  NEXT", 648, 850, 48, GRAY);
+//			if (IsMouseButtonPressed(MOUSE_BUTTON_LEFT())) {
+//				TextCopy(list.course[++list.len].courseName, coursename.text);
+//				TextCopy(list.course[list.len].courseID, ID.text);
+//				TextCopy(list.course[list.len].teacherName, teachername.text);
+//				TextCopy(list.course[list.len].numOfCre, nofc.text);
+//				TextCopy(list.course[list.len].dayofweek, courseday.text);
+//				TextCopy(list.course[list.len].sessionHour, sshours.text);
+//				break;
+//			}
+//		}
+//
+//		EndDrawing();
+//	}
+//	Stus_to_Course(list);
+//}
 void Stus_to_Course(ListCourse& list) {
 
 	char* file = new char[1000]; bool filedropped = 0;
