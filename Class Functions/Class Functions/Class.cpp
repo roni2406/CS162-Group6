@@ -48,7 +48,7 @@ bool CheckClassExisted(char* ClassID)
 	ifstream fin;
 	Class* ClassList = nullptr;
 	int numOfClasses = 0;
-	fin.open("../data/Classes/List of Classes.txt");
+	fin.open("List of Classes.txt");
 	viewClasses_PrepareData_SavedToClassArray(ClassList, fin, numOfClasses);
 	fin.close();
 	for (int i = 0; i < numOfClasses; ++i)
