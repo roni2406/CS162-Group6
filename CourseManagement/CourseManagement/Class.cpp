@@ -28,7 +28,7 @@ void CreateASingleClassList(Class className, ofstream& fout)
 
 void AddAClassToList(Class& className, ofstream& fout)
 {
-	fout.open("../data/Classes/List of Classes.txt", ios::app);
+	fout.open("../data/Classes/Listofclasses.txt", ios::app);
 	fout << '\n';
 	fout << className.classID << " ";
 	fout << className.numOfStu;
@@ -48,13 +48,13 @@ bool CheckClassExisted(char* ClassID)
 	ifstream fin;
 	Class* ClassList = nullptr;
 	int numOfClasses = 0;
-	fin.open("../data/Classes/List of Classes.txt");
+
 	viewClasses_PrepareData_SavedToClassArray(ClassList, fin, numOfClasses);
-	fin.close();
+
 	for (int i = 0; i < numOfClasses; ++i)
 		if (strcmp(ClassID, ClassList[i].classID) == 0)
 			return true;
-	return false;
+	return true;
 }
 
 
@@ -62,7 +62,7 @@ bool CheckClassExisted(char* ClassID)
 // Note: YOU'VE BEEN WARNED!
 void viewClasses_PrepareData_SavedToClassArray(Class*& ClassList, ifstream& fin, int& numOfClasses) // 15
 {
-	fin.open("../data/Classes/List of Classes.txt");
+	fin.open("../data/Classes/Listofclasses.txt");
 	ClassList = new Class[1000];
 	numOfClasses = 0;
 	char* str = nullptr;

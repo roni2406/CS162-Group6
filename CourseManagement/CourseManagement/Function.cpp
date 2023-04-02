@@ -5,6 +5,7 @@
 #include "Function.h"
 #include "schoolYear.h"
 #include "semester.h"
+#include <string.h>
 #include "Class.h"
 
 using namespace std;
@@ -875,10 +876,13 @@ void createClassPage(const int screenWidth, const int screenHeight, account& Cur
 		}
 		else confirmBtnState = 0;
 		if (confirmBtnAction) {
-			//if (!CheckClassExisted(classname.text)) {
-			//	confirmBtnFalseDisplay = false;
-			//		// dosth
-			//}
+			if (!CheckClassExisted(classname.text)) {
+				confirmBtnFalseDisplay = false;
+				
+				CreateASingleClassList()
+
+			}
+			else confirmBtnFalseDisplay = true;
 		}
 		if (confirmBtnFalseDisplay) DrawText("This class was created before!", 500, 360, 20, RED);
 		// Calculate button frame rectangle to draw depending on button state
