@@ -129,28 +129,13 @@ void addAStudentToClass(char* filename, char* first_name, char* last_name, bool 
 //	fout.close();
 //}
 
-void addStudentsWithCSV(char* fileNameIn, char* fileNameOut, Class& ClassName) {
+void addStudentsWithCSV(char* fileNameIn, char* fileNameOut) {
 	ifstream fin;
 	fin.open(fileNameIn);
-	int i = 0;
-	ClassName.stuInClass = new student[ClassName.numOfStu];
 	while (!fin.eof()) {
 		student s;
 		s.inputStudentsWithCSVFile(fin);
 		s.outputAStudentToFile(fileNameOut);
-		ClassName.stuInClass[i++] = s;
 	}
 	fin.close();
 }
-
-Class addStudentsToClassWithCSV(char* fileNameIn, char* fileNameOut)
-{
-	Class Object;
-	addStudentsWithCSV(fileNameIn, fileNameOut,Object);
-	return Object;
-}
-
-//void addStudentsToClassWithCSV(char* fileNameIn, char* fileNameOut)
-//{
-//	
-//}

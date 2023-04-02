@@ -13,6 +13,11 @@ void read_input_user_createAClass(Class& className)
 	cin >> className.numOfStu;
 }
 
+void InputAClass(char* className)
+{
+	// code something here
+}
+
 void CreateASingleClassList(Class className, ofstream& fout)
 {
 	strcat_s(className.classID, strlen(className.classID) + 5, ".txt");
@@ -25,6 +30,17 @@ void CreateASingleClassList(Class className, ofstream& fout)
 	fout << className.numOfStu;
 	fout.close();
 }
+
+//char* CreateASingleClassList_API()
+//{
+//	ofstream fout;
+//	Class Object;
+//	CreateASingleClassList(Object, fout);
+//	char* Object_ClassID = new char[9];
+//	for (int i = 0; i < strlen(Object.classID) - 4; ++i)
+//		Object_ClassID[i] = Object.classID[i];
+//	return Object_ClassID;
+//}
 
 void AddAClassToList(Class& className, ofstream& fout)
 {
