@@ -824,9 +824,6 @@ void createClassPage(const int screenWidth, const int screenHeight, account& Cur
 	Textbox1 classname;
 	classname.textbox = { 477, 239, 558, 106 };
 
-	Textbox1 numStudents;
-	numStudents.textbox = { 477, 430, 558, 106 };
-
 	Button2 backtoprofilepage;
 	backtoprofilepage.button = { 1270, 20, 200, 30 };
 
@@ -834,7 +831,7 @@ void createClassPage(const int screenWidth, const int screenHeight, account& Cur
 	float frameHeightconfirmBtn = (float)confirmBtn.height;
 	Rectangle sourceRecconfirmBtn = { 0, 0, (float)confirmBtn.width,frameHeightconfirmBtn };
 	// Define button bounds on screen
-	Rectangle btnBoundsconfirmBtn = { 650, 600, (float)confirmBtn.width, frameHeightconfirmBtn };
+	Rectangle btnBoundsconfirmBtn = { 650, 400, (float)confirmBtn.width, frameHeightconfirmBtn };
 	int confirmBtnState = 0;               // Button state: 0-NORMAL, 1-MOUSE_HOVER, 2-PRESSED
 	bool confirmBtnAction = false;         // Button action should be activated
 	bool confirmBtnFalseDisplay = false;
@@ -849,21 +846,15 @@ void createClassPage(const int screenWidth, const int screenHeight, account& Cur
 		DrawRectangleRec(backtoprofilepage.button, WHITE);
 		DrawText("Back to Profile Page", 1280, 20, 20, DARKBLUE);
 
-		DrawRectangle(347, 173, 818, 550, WHITE);
+		DrawRectangle(347, 173, 818, 373, WHITE);
 		DrawRectangleRec(classname.textbox, LIGHTGRAY);
 		DrawText("* Class Name", 477, 200, 30, DARKBLUE);
 
-		DrawRectangleRec(numStudents.textbox, LIGHTGRAY);
-		DrawText("* Number of Students", 477, 390, 30, DARKBLUE);
-
 		////Function_of_TextInputBoxes_----------------------------------------------------------------------------------------------------------------------
 		classname.worktextbox(confirmBtnFalseDisplay);
-		numStudents.worktextbox(confirmBtnFalseDisplay);
 
-		DrawText(numStudents.text, 500, 470, 40, DARKBLUE);
 		DrawText(classname.text, 500, 270, 40, DARKBLUE);
 		DrawText(TextFormat("%i/%i", classname.lettercount, MAX_INPUT_CHARS), 1050, 280, 20, DARKBLUE);
-		DrawText(TextFormat("%i/%i", numStudents.lettercount, MAX_INPUT_CHARS), 1050, 470, 20, DARKBLUE);
 
 		////Function of buttons------------------------------------------------------------------------------------------------------------------------------
 		mousePoint = GetMousePosition();
@@ -881,7 +872,7 @@ void createClassPage(const int screenWidth, const int screenHeight, account& Cur
 			//}
 			//else confirmBtnFalseDisplay = true;
 		}
-		if (confirmBtnFalseDisplay) DrawText("This class was created before!", 500, 360, 20, RED);
+		//if (confirmBtnFalseDisplay) DrawText("Class name must be in right form. Try again!", 500, 360, 20, RED);
 		// Calculate button frame rectangle to draw depending on button state
 		sourceRecconfirmBtn.y = confirmBtnState * frameHeightconfirmBtn;
 		DrawTextureRec(confirmBtn, sourceRecconfirmBtn, { btnBoundsconfirmBtn.x, btnBoundsconfirmBtn.y }, WHITE); // Draw button frame
@@ -1076,9 +1067,133 @@ void ViewSemestersPage(const int screenWidth, const int screenHeight, account& C
 }
 
 void SemesterPage(const int screenWidth, const int screenHeight, account& CurrentUser, char*& Year, char*& Semester) {
+	Rectangle background = { 0,0,float(screenWidth),float(screenHeight) };
+	Vector2 mousePoint = { 0.0f, 0.0f };
 
+	Button4 backtoviewsemesterpage;
+	backtoviewsemesterpage.button = { 1150, 20, 250, 30 };
+
+	Button5 createcourse;
+	createcourse.texture = LoadTexture("createsemester.png");
+	createcourse.frameHeight = (float)createcourse.texture.height;
+	createcourse.sourceRec = { 0, 0, (float)createcourse.texture.width, createcourse.frameHeight };
+	createcourse.btnBounds = { 350, 496, (float)createcourse.texture.width, createcourse.frameHeight };
+
+	Button5 viewcourse;
+	viewcourse.texture = LoadTexture("viewsemester.png");
+	viewcourse.frameHeight = (float)viewcourse.texture.height;
+	viewcourse.sourceRec = { 0, 0, (float)viewcourse.texture.width, viewcourse.frameHeight };
+	viewcourse.btnBounds = { 866, 496, (float)viewcourse.texture.width, viewcourse.frameHeight };
+
+	while (!WindowShouldClose()) {
+		ClearBackground(WHITE);
+		BeginDrawing();
+		DrawRectangleGradientEx(background, SKYBLUE, DARKBLUE, DARKBLUE, SKYBLUE);
+		DrawRectangle(0, 0, screenWidth, 60, WHITE);
+		DrawText(Year, 620, 15, 40, DARKBLUE);
+		DrawRectangleRec(backtoviewsemesterpage.button, WHITE);
+		DrawText("Back to View School Year Page", 1150, 20, 20, DARKBLUE);
+		DrawRectangle(322, 136, 870, 806, WHITE);
+		DrawRectangleLines(321, 135, 872, 807, BLACK);
+
+		mousePoint = GetMousePosition();
+		backtoviewsemesterpage.workbutton(mousePoint, CurrentUser, Year, ViewSemestersPage);
+		createcourse.workbutton(mousePoint, CurrentUser, Year, Semester, CreateCoursePage);
+		viewcourse.workbutton(mousePoint, CurrentUser, Year, Semester, ViewCoursesPage);
+		EndDrawing();
+	}
+
+	CloseWindow();
 }
 
+void CreateCoursePage(const int screenWidth, const int screenHeight, account& CurrentUser, char*& Year, char*& semester) {
+	Vector2 mousePoint = { 0.0f, 0.0f };
+	Rectangle background = { 0,0,float(screenWidth),float(screenHeight) };
+
+	Textbox1 startdate;
+	startdate.textbox = { 477, 239, 558, 106 };
+	Textbox1 enddate;
+	enddate.textbox = { 477, 412, 558, 106 };
+	Textbox1 numcourses;
+	numcourses.textbox = { 477, 585, 558, 106 };
+
+	Button4 backtoschoolyearpage;
+	backtoschoolyearpage.button = { 1170, 20, 200, 30 };
+
+	Texture2D confirmBtn = LoadTexture("confirmBtn.png");
+	float frameHeightconfirmBtn = (float)confirmBtn.height;
+	Rectangle sourceRecconfirmBtn = { 0, 0, (float)confirmBtn.width,frameHeightconfirmBtn };
+	// Define button bounds on screen
+	Rectangle btnBoundsconfirmBtn = { 650, 720, (float)confirmBtn.width, frameHeightconfirmBtn };
+	int confirmBtnState = 0;               // Button state: 0-NORMAL, 1-MOUSE_HOVER, 2-PRESSED
+	bool confirmBtnAction = false;         // Button action should be activated
+	bool confirmBtnFalseDisplay = false;
+	while (!WindowShouldClose()) {
+		ClearBackground(WHITE);
+		BeginDrawing();
+
+		DrawText("  Call us : (028) 3835 4266         E - mail : info@fit.hcmus.edu.vn", 0, 20, 20, DARKBLUE);
+		DrawRectangleGradientEx(background, SKYBLUE, DARKBLUE, DARKBLUE, SKYBLUE);
+		DrawRectangle(0, 0, screenWidth, 60, WHITE);
+
+		DrawRectangleRec(backtoschoolyearpage.button, WHITE);
+		DrawText("Back to School Year Page", 1180, 20, 20, DARKBLUE);
+
+		DrawRectangle(355, 173, 818, 645, WHITE);
+		DrawRectangleRec(startdate.textbox, LIGHTGRAY);
+		DrawText("* Start date (dd/mm/YYYY): ", 477, 200, 30, DARKBLUE);
+		DrawRectangleRec(enddate.textbox, LIGHTGRAY);
+		DrawText("* End date (dd/mm/YYYY): ", 477, 373, 30, DARKBLUE);
+		DrawRectangleRec(numcourses.textbox, LIGHTGRAY);
+		DrawText("* Number of courses: ", 477, 546, 30, DARKBLUE);
+
+
+		////Function_of_TextInputBoxes_----------------------------------------------------------------------------------------------------------------------
+		startdate.worktextbox(confirmBtnFalseDisplay);
+		enddate.worktextbox(confirmBtnFalseDisplay);
+		numcourses.worktextbox(confirmBtnFalseDisplay);
+
+
+		DrawText(startdate.text, 500, 270, 40, DARKBLUE);
+		DrawText(TextFormat("%i/%i", startdate.lettercount, MAX_INPUT_CHARS), 1050, 280, 20, DARKBLUE);
+		DrawText(enddate.text, 500, 443, 40, DARKBLUE);
+		DrawText(TextFormat("%i/%i", enddate.lettercount, MAX_INPUT_CHARS), 1050, 453, 20, DARKBLUE);
+		DrawText(numcourses.text, 500, 616, 40, DARKBLUE);
+		DrawText(TextFormat("%i/%i", numcourses.lettercount, MAX_INPUT_CHARS), 1050, 626, 20, DARKBLUE);
+
+		////Function of buttons------------------------------------------------------------------------------------------------------------------------------
+		mousePoint = GetMousePosition();
+
+		///Confirm button
+		confirmBtnAction = false;
+		if (CheckCollisionPointRec(mousePoint, btnBoundsconfirmBtn)) {          // Check button state
+			if (IsMouseButtonPressed(MOUSE_BUTTON_LEFT)) confirmBtnAction = true;
+		}
+		else confirmBtnState = 0;
+		if (confirmBtnAction) {
+			if (createASemester(Year, startdate.text, enddate.text, numcourses.text)) {
+				confirmBtnFalseDisplay = false;
+				EndDrawing();
+				SchoolYearPage(screenWidth, screenHeight, CurrentUser, Year);
+			}
+			else confirmBtnFalseDisplay = true;
+		}
+		if (confirmBtnFalseDisplay) DrawText("Information must be written in right form. Please try again!", 477, 700, 20, RED);
+		// Calculate button frame rectangle to draw depending on button state
+		sourceRecconfirmBtn.y = confirmBtnState * frameHeightconfirmBtn;
+		DrawTextureRec(confirmBtn, sourceRecconfirmBtn, { btnBoundsconfirmBtn.x, btnBoundsconfirmBtn.y }, WHITE); // Draw button frame
+
+		/// Back to profile page button
+		backtoschoolyearpage.workbutton(mousePoint, CurrentUser, Year, SchoolYearPage);
+
+		EndDrawing();
+	}
+	CloseWindow();
+}
+
+void ViewCoursesPage(const int screenWidth, const int screenHeight, account& CurrentUser, char*& Year, char*& semester) {
+
+}
 
 
 
