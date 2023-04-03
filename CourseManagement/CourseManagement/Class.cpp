@@ -3,6 +3,41 @@
 #include <fstream>
 #include "Class.h"
 using namespace std;
+
+void Class::InputAClass(char* classID, int& numOfStu)
+{
+	cin >> classID;
+	cin >> numOfStu;
+}
+
+char* Class::getClassID(char* classID)
+{
+	return classID;
+}
+
+char* Class::getCharNumOfStu(int numOfStu)
+{
+	char* tmp = new char[3];
+	int k = 0;
+	if (numOfStu == 0)
+	{
+		tmp[0] = 48; tmp[1] = '\0';
+		return tmp;
+	}
+	if (numOfStu > 0 && numOfStu < 10)
+	{
+		tmp[0] = 48 + numOfStu; tmp[1] = '\0';
+		return tmp;
+	}
+	tmp[1] = 48 + numOfStu % 10;
+	numOfStu /= 10;
+	tmp[0] = 48 + numOfStu; tmp[2] = '\0';
+	return tmp;
+}
+
+
+
+
 void read_input_user_createAClass(Class& className)
 {
 	className.classID = new char[9];
@@ -11,6 +46,11 @@ void read_input_user_createAClass(Class& className)
 	cin.ignore(100, '\n');
 	cout << "How many students are there? ";
 	cin >> className.numOfStu;
+}
+
+void InputAClass(char* classID)
+{
+	
 }
 
 void CreateASingleClassList(Class className, ofstream& fout)
@@ -25,6 +65,17 @@ void CreateASingleClassList(Class className, ofstream& fout)
 	fout << className.numOfStu;
 	fout.close();
 }
+
+//char* CreateASingleClassList_API()
+//{
+//	ofstream fout;
+//	Class Object;
+//	CreateASingleClassList(Object, fout);
+//	char* Object_ClassID = new char[9];
+//	for (int i = 0; i < strlen(Object.classID) - 4; ++i)
+//		Object_ClassID[i] = Object.classID[i];
+//	return Object_ClassID;
+//}
 
 void AddAClassToList(Class& className, ofstream& fout)
 {
@@ -111,3 +162,4 @@ int countClasses()
 	viewClasses_PrepareData_SavedToClassArray(ClassList, fin, numOfClasses);
 	return numOfClasses;
 }
+

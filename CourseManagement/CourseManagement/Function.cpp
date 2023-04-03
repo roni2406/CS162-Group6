@@ -878,8 +878,6 @@ void createClassPage(const int screenWidth, const int screenHeight, account& Cur
 		if (confirmBtnAction) {
 			if (!CheckClassExisted(classname.text)) {
 				confirmBtnFalseDisplay = false;
-				
-				CreateASingleClassList()
 
 			}
 			else confirmBtnFalseDisplay = true;
