@@ -1117,6 +1117,7 @@ void SemesterPage(const int screenWidth, const int screenHeight, account& Curren
 }
 
 void CreateCoursePage(const int screenWidth, const int screenHeight, account& CurrentUser, char*& Year, char*& semester) {
+	//ListCourse list;
 	Vector2 mousePoint = { 0.0f, 0.0f };
 	Rectangle background = { 0,0,float(screenWidth),float(screenHeight) };
 
@@ -1126,6 +1127,12 @@ void CreateCoursePage(const int screenWidth, const int screenHeight, account& Cu
 	id.textbox = { 175, 293, 1064, 47 };
 	Textbox1 teachername;
 	teachername.textbox = { 175, 414, 1064, 47 };
+	Textbox1 nofc;
+	nofc.textbox = { 175, 535, 1064, 47 };
+	Textbox1 courseday;
+	courseday.textbox = { 175, 656, 1064, 47 };
+	Textbox1 sshours;
+	sshours.textbox = { 175, 777, 1064, 47 };
 
 	Button4 backtoschoolyearpage;
 	backtoschoolyearpage.button = { 1170, 20, 200, 30 };
@@ -1134,7 +1141,7 @@ void CreateCoursePage(const int screenWidth, const int screenHeight, account& Cu
 	float frameHeightconfirmBtn = (float)confirmBtn.height;
 	Rectangle sourceRecconfirmBtn = { 0, 0, (float)confirmBtn.width,frameHeightconfirmBtn };
 	// Define button bounds on screen
-	Rectangle btnBoundsconfirmBtn = { 650, 720, (float)confirmBtn.width, frameHeightconfirmBtn };
+	Rectangle btnBoundsconfirmBtn = { 650, 865, (float)confirmBtn.width, frameHeightconfirmBtn };
 	int confirmBtnState = 0;               // Button state: 0-NORMAL, 1-MOUSE_HOVER, 2-PRESSED
 	bool confirmBtnAction = false;         // Button action should be activated
 	bool confirmBtnFalseDisplay = false;
@@ -1156,12 +1163,22 @@ void CreateCoursePage(const int screenWidth, const int screenHeight, account& Cu
 		DrawText("* Course ID: ", 175, 254, 30, DARKBLUE);
 		DrawRectangleRec(teachername.textbox, LIGHTGRAY);
 		DrawText("* Teacher name: ", 175, 375, 30, DARKBLUE);
+		DrawRectangleRec(nofc.textbox, LIGHTGRAY);
+		DrawText("* Number of credits: ", 175, 496, 30, DARKBLUE);
+		DrawRectangleRec(courseday.textbox, LIGHTGRAY);
+		DrawText("* Course day: ", 175, 617, 30, DARKBLUE);
+		DrawRectangleRec(sshours.textbox, LIGHTGRAY);
+		DrawText("* Course name: ", 175, 738, 30, DARKBLUE);
 
-
+	
 		////Function_of_TextInputBoxes_----------------------------------------------------------------------------------------------------------------------
 		coursename.worktextbox(confirmBtnFalseDisplay);
 		id.worktextbox(confirmBtnFalseDisplay);
 		teachername.worktextbox(confirmBtnFalseDisplay);
+		nofc.worktextbox(confirmBtnFalseDisplay);
+		courseday.worktextbox(confirmBtnFalseDisplay);
+		sshours.worktextbox(confirmBtnFalseDisplay);
+
 
 
 		DrawText(coursename.text, 198, 182, 25, DARKBLUE);
@@ -1170,6 +1187,15 @@ void CreateCoursePage(const int screenWidth, const int screenHeight, account& Cu
 		DrawText(TextFormat("%i/%i", id.lettercount, MAX_INPUT_CHARS), 1270, 313, 20, DARKBLUE);
 		DrawText(teachername.text, 198, 424, 25, DARKBLUE);
 		DrawText(TextFormat("%i/%i", teachername.lettercount, MAX_INPUT_CHARS), 1270, 434, 20, DARKBLUE);
+		DrawText(nofc.text, 198, 545, 25, DARKBLUE);
+		DrawText(TextFormat("%i/%i", coursename.lettercount, MAX_INPUT_CHARS), 1270, 555, 20, DARKBLUE);
+		DrawText(courseday.text, 198, 666, 25, DARKBLUE);
+		DrawText(TextFormat("%i/%i", courseday.lettercount, MAX_INPUT_CHARS), 1270, 676, 20, DARKBLUE);
+		DrawText(sshours.text, 198, 787, 25, DARKBLUE);
+		DrawText(TextFormat("%i/%i", sshours.lettercount, MAX_INPUT_CHARS), 1270, 797, 20, DARKBLUE);
+
+
+
 
 		////Function of buttons------------------------------------------------------------------------------------------------------------------------------
 		mousePoint = GetMousePosition();
@@ -1181,12 +1207,12 @@ void CreateCoursePage(const int screenWidth, const int screenHeight, account& Cu
 		}
 		else confirmBtnState = 0;
 		if (confirmBtnAction) {
-			/*if (createASemester(Year, startdate.text, enddate.text, numcourses.text)) {
-				confirmBtnFalseDisplay = false;
-				EndDrawing();
-				SchoolYearPage(screenWidth, screenHeight, CurrentUser, Year);
-			}
-			else confirmBtnFalseDisplay = true;*/
+			/*TextCopy(list.course[++list.len].courseName, coursename.text);
+			TextCopy(list.course[list.len].courseID, id.text);
+			TextCopy(list.course[list.len].teacherName, teachername.text);
+			TextCopy(list.course[list.len].numOfCre, nofc.text);
+			TextCopy(list.course[list.len].dayofweek, courseday.text);
+			TextCopy(list.course[list.len].sessionHour, sshours.text);*/
 		}
 		if (confirmBtnFalseDisplay) DrawText("Information must be written in right form. Please try again!", 477, 700, 20, RED);
 		// Calculate button frame rectangle to draw depending on button state

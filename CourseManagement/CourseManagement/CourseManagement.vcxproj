@@ -136,7 +136,6 @@
     <ClCompile Include="account.cpp" />
     <ClCompile Include="button_and_textbox.cpp" />
     <ClCompile Include="Class.cpp" />
-    <ClCompile Include="course.cpp" />
     <ClCompile Include="CourseManagement.cpp" />
     <ClCompile Include="Date.cpp" />
     <ClCompile Include="Function.cpp" />
