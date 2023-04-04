@@ -59,10 +59,17 @@ void semester::outputASemesterToCSVFile(char* school_year) {
 	fout.close();
 }
 
-//check data
+bool semester::checkdata() {
+	if (sYear.checkdata()) return false;
+	if (No != 1 && No != 2 && No != 3) return false;
+	if (!startDate.checkdata() || !endDate.checkdata()) return false;
+	if (numOfCourse < 0) return false;
+}
+
 bool createASemester(char* school_year, char* start_date, char* end_date, char* number_of_course) {
 	semester s;
 	s.inputASemester(school_year, start_date, end_date, number_of_course);
+	//if (!s.checkdata()) return false;
 	s.outputASemesterToCSVFile(school_year);
 	return true;
 }

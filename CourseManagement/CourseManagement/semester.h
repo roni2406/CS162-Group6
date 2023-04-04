@@ -16,6 +16,7 @@ struct semester {
     void inputASemester(char* Year, char* start_date, char* end_date, char* number_of_course);
     void inputASemesterWithCSVFile(ifstream& fin);
     void outputASemesterToCSVFile(char* filename);
+    bool checkdata();
 };
 
 // front end use:

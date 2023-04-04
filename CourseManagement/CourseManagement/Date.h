@@ -12,6 +12,7 @@ struct Date {
     void inputADate(int day, int month, int year);
     void inputADateWithChar(char* date);
     void outputADateToFile(ofstream& fout);
+    bool checkdata();
 };
 
 #endif
