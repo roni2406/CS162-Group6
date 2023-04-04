@@ -24,6 +24,6 @@ void viewClasses_PrepareData_SavedToClassArray(Class*& ClassList, ifstream& fin,
 Class* viewClasses(); // front end
 int countClasses(); // front end
 
-// 3,4,5
-//Class addStudentsToClassWithCSV(char* fileNameIn, char* fileNameOut);
+// 16
+student* AddStudentsIntoClass(char* fileNameIn, char* fileNameOut); // front end
 #endif

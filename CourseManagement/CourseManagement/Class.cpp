@@ -93,3 +93,22 @@ int countClasses()
 	return numOfClasses;
 }
 
+// 16
+student* AddStudentsIntoClass(char* fileNameIn, char* fileNameOut)
+{
+	student* Class = new student[150];
+	addStudentsWithCSV(fileNameIn, fileNameOut);
+	int numOfStu = 0;
+	ifstream fin;
+	fin.open(fileNameOut);
+	while (!fin.eof())
+	{
+		student s;
+		s.inputStudentsWithCSVFile(fin);
+		Class[numOfStu++] = s;
+	}
+	fin.close();
+	return Class;
+}
+
+
