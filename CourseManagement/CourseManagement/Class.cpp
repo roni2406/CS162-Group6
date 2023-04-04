@@ -4,78 +4,29 @@
 #include "Class.h"
 using namespace std;
 
-void Class::InputAClass(char* classID, int& numOfStu)
+// 2
+void InputAClass(char* classID, char* numOfStu, Class &className)
 {
-	cin >> classID;
-	cin >> numOfStu;
+	className.classID = classID;
+	className.numOfStu = atoi(numOfStu);
 }
 
-char* Class::getClassID(char* classID)
+void CreateAClass(char* classID, char* numOfStu)
 {
-	return classID;
-}
-
-char* Class::getCharNumOfStu(int numOfStu)
-{
-	char* tmp = new char[3];
-	int k = 0;
-	if (numOfStu == 0)
-	{
-		tmp[0] = 48; tmp[1] = '\0';
-		return tmp;
-	}
-	if (numOfStu > 0 && numOfStu < 10)
-	{
-		tmp[0] = 48 + numOfStu; tmp[1] = '\0';
-		return tmp;
-	}
-	tmp[1] = 48 + numOfStu % 10;
-	numOfStu /= 10;
-	tmp[0] = 48 + numOfStu; tmp[2] = '\0';
-	return tmp;
-}
-
-
-
-
-void read_input_user_createAClass(Class& className)
-{
-	className.classID = new char[9];
-	cout << "You have created a new class. Please enter the name of the class: ";
-	cin.get(className.classID, 9, '\n');
-	cin.ignore(100, '\n');
-	cout << "How many students are there? ";
-	cin >> className.numOfStu;
-}
-
-void InputAClass(char* classID)
-{
-	
+	Class Object;
+	InputAClass(classID, numOfStu, Object);
+	ofstream fout;
+	CreateASingleClassList(Object, fout);
+	AddAClassToList(Object, fout);
 }
 
 void CreateASingleClassList(Class className, ofstream& fout)
 {
 	strcat_s(className.classID, strlen(className.classID) + 5, ".txt");
 	fout.open(className.classID);
-	/*
-	for (int i = 0; i < strlen(className.classID) - 4; ++i)
-		fout << className.classID[i];
-	fout << " ";
-	*/
 	fout << className.numOfStu;
 	fout.close();
 }
-
-//char* CreateASingleClassList_API()
-//{
-//	ofstream fout;
-//	Class Object;
-//	CreateASingleClassList(Object, fout);
-//	char* Object_ClassID = new char[9];
-//	for (int i = 0; i < strlen(Object.classID) - 4; ++i)
-//		Object_ClassID[i] = Object.classID[i];
-//	return Object_ClassID;
-//}
 
 void AddAClassToList(Class& className, ofstream& fout)
 {
@@ -84,13 +35,6 @@ void AddAClassToList(Class& className, ofstream& fout)
 	fout << className.classID << " ";
 	fout << className.numOfStu;
 	fout.close();
-}
-
-char* getStringClassFromClassName(Class ClassName)
-{
-	char* ClassID = new char[9];
-	ClassID = ClassName.classID;
-	return ClassID;
 }
 
 
@@ -109,8 +53,7 @@ bool CheckClassExisted(char* ClassID)
 }
 
 
-// Warning: Please DO NOT let the ListOfClasses.txt EMPTY or the program may crash due to the 1st empty line!!!
-// Note: YOU'VE BEEN WARNED!
+// 15
 void viewClasses_PrepareData_SavedToClassArray(Class*& ClassList, ifstream& fin, int& numOfClasses) // 15
 {
 	fin.open("../data/Classes/Listofclasses.txt");
@@ -131,19 +74,6 @@ void viewClasses_PrepareData_SavedToClassArray(Class*& ClassList, ifstream& fin,
 	}
 	fin.close();
 }
-
-//void viewClasses_OutputToConsole(Class* ClassList, int numOfClasses)
-//{
-//	cout << "Number of Classes: " << numOfClasses << '\n';
-//	for (int i = 0; i < numOfClasses; ++i)
-//	{
-//		cout << "Class " << i + 1 << ": " << ClassList[i].classID << '\n';
-//		cout << "Number of Students: " << ClassList[i].numOfStu << '\n';
-//		cout << '\n';
-//	}
-//	delete[] ClassList;
-//	ClassList = nullptr;
-//}
 
 Class* viewClasses()
 {

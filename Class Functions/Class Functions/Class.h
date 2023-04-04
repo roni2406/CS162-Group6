@@ -35,7 +35,12 @@ struct Class {
     char* classID;
     int numOfStu;
     student* stuInClass;
+    
+    void InputAClass(char* classID, int& numOfStu);
+    char* getClassID(char* classID);
+    char* getCharNumOfStu(int numOfStu);
 };
+
 
 // Function 
 // 2

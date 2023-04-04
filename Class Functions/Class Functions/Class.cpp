@@ -3,6 +3,42 @@
 #include <fstream>
 #include "Class.h"
 using namespace std;
+
+void Class::InputAClass(char* classID, int& numOfStu)
+{
+	cin >> classID;
+	cin >> numOfStu;
+}
+
+char* Class::getClassID(char* classID)
+{
+	return classID;
+}
+
+char* Class::getCharNumOfStu(int numOfStu)
+{
+	char* tmp = new char[3];
+	int k = 0;
+	if (numOfStu == 0)
+	{
+		tmp[0] = 48; tmp[1] = '\0';
+		return tmp;
+	}
+	if (numOfStu > 0 && numOfStu < 10)
+	{
+		tmp[0] = 48 + numOfStu; tmp[1] = '\0';
+		return tmp;
+	}
+	tmp[1] = 48 + numOfStu % 10;
+	numOfStu /= 10;
+	tmp[0] = 48 + numOfStu; tmp[2] = '\0';
+	return tmp;
+}
+
+
+
+
+
 void read_input_user_createAClass(Class& className)
 {
 	className.classID = new char[9];
