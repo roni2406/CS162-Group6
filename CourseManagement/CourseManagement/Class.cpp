@@ -94,7 +94,7 @@ int countClasses()
 }
 
 // 16
-student* AddStudentsIntoClass(char* fileNameIn, char* fileNameOut)
+student* viewStudentsInClass(char* fileNameIn, char* fileNameOut)
 {
 	student* Class = new student[150];
 	addStudentsWithCSV(fileNameIn, fileNameOut);

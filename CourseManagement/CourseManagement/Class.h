@@ -25,5 +25,5 @@ Class* viewClasses(); // front end
 int countClasses(); // front end
 
 // 16
-student* AddStudentsIntoClass(char* fileNameIn, char* fileNameOut); // front end
+student* viewStudentsInClass(char* fileNameIn, char* fileNameOut); // front end
 #endif
