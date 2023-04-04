@@ -389,7 +389,7 @@ void ProfilePageStudent(const int screenWidth, const int screenHeight, account& 
 		DrawRectangle(480, 108, 250, 60, WHITE);
 		DrawRectangleLines(479, 107, 252, 62, BLACK);
 		DrawRectangleLines(478, 106, 254, 64, BLACK);
-		DrawText("School Years", 500, 123, 30, DARKBLUE);
+		DrawText("  STUDENT", 500, 123, 30, DARKBLUE);
 
 		DrawTexture(avatar, 150, 100, WHITE);
 		DrawText("Username: ", 90, 330, 20, DARKBLUE);
@@ -647,7 +647,7 @@ void ChangePasswordPageStaff(const int screenWidth, const int screenHeight, acco
 		if (confirmBtnAction) {
 			if (usechangePassFunction(CurrentUser, oldpass.text, newpass.text, confirmnewpass.text, stafforstudent) && oldpass.text[0] != '\0' && newpass.text[0] != '\0' && confirmnewpass.text[0] != '\0') {
 				EndDrawing();
-				ProfilePageStudent(screenWidth, screenHeight, CurrentUser);
+				ProfilePageStaff(screenWidth, screenHeight, CurrentUser);
 			}
 			else {
 				isChangePassFalseDisplay = true;
