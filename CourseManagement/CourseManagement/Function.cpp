@@ -878,7 +878,8 @@ void createClassPage(const int screenWidth, const int screenHeight, account& Cur
 		if (confirmBtnAction) {
 			if (!CheckClassExisted(classname.text)) {
 				confirmBtnFalseDisplay = false;
-
+				CreateAClass(classname.text, numStudents.text);
+				ProfilePageStaff(screenWidth, screenHeight, CurrentUser);
 			}
 			else confirmBtnFalseDisplay = true;
 		}

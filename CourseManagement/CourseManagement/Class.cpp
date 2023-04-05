@@ -7,7 +7,7 @@ using namespace std;
 // 2
 void InputAClass(char* classID, char* numOfStu, Class &className)
 {
-	className.classID = classID;
+	className.classID = _strdup(classID);
 	className.numOfStu = atoi(numOfStu);
 }
 
@@ -22,10 +22,7 @@ void CreateAClass(char* classID, char* numOfStu)
 
 void CreateASingleClassList(Class className, ofstream& fout)
 {
-	char* classID = new char[9];
-	classID = _strdup(className.classID);
-	strcat_s(classID, strlen(classID) + 5, ".txt");
-	fout.open(classID);
+	fout.open("../data/Classes/" + string(className.classID) + ".txt");
 	fout << className.numOfStu;
 	fout.close();
 }
