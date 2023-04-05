@@ -49,7 +49,7 @@ bool CheckClassExisted(char* ClassID)
 	for (int i = 0; i < numOfClasses; ++i)
 		if (strcmp(ClassID, ClassList[i].classID) == 0)
 			return true;
-	return true;
+	return false;
 }
 
 

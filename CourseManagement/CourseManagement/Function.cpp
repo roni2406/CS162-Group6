@@ -882,7 +882,7 @@ void createClassPage(const int screenWidth, const int screenHeight, account& Cur
 			}
 			else confirmBtnFalseDisplay = true;
 		}
-		if (confirmBtnFalseDisplay) DrawText("This class was created before!", 500, 360, 20, RED);
+		if (confirmBtnFalseDisplay) DrawText("This class was created before!", 480, 560, 20, RED);
 		// Calculate button frame rectangle to draw depending on button state
 		sourceRecconfirmBtn.y = confirmBtnState * frameHeightconfirmBtn;
 		DrawTextureRec(confirmBtn, sourceRecconfirmBtn, { btnBoundsconfirmBtn.x, btnBoundsconfirmBtn.y }, WHITE); // Draw button frame
