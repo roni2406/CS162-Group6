@@ -22,8 +22,10 @@ void CreateAClass(char* classID, char* numOfStu)
 
 void CreateASingleClassList(Class className, ofstream& fout)
 {
-	strcat_s(className.classID, strlen(className.classID) + 5, ".txt");
-	fout.open(className.classID);
+	char* classID = new char[9];
+	classID = _strdup(className.classID);
+	strcat_s(classID, strlen(classID) + 5, ".txt");
+	fout.open(classID);
 	fout << className.numOfStu;
 	fout.close();
 }
