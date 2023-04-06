@@ -23,7 +23,7 @@ int countCourse(char*year,char*semester) {
 	}
 	return num;
 }
-course* LoadCourseFromFile(char* year, char* semester,int num) {
+void LoadCourseFromFile(char* year, char* semester,int num) {
 	course* courses;
 	ifstream fin;
 	fin.open("../data/" + (string)(year)+"/" + (string)(semester)+"/ListOfCourse.txt");
@@ -72,7 +72,7 @@ void deleteStudent(course* course, int k, int no) {
 	--course[k].numOfStu;
 }
 char* GetFileDrop() {
-	char* filepath;
+	char* filepath = new char;
 	if (IsFileDropped())
 	{
 		FilePathList droppedFiles = LoadDroppedFiles();

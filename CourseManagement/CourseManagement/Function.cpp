@@ -931,7 +931,7 @@ void ViewClassesPage(const int screenWidth, const int screenHeight, account& Cur
 		for (int i = 0; i < n; ++i) {
 			Class[i].button = { float(x_classes - 122), float(y_classes - 12), 421, 59 };
 			DrawRectangleRec(Class[i].button, LIGHTGRAY);
-			DrawText(Classes[i].classID, x_classes, y_classes, 32, DARKBLUE);
+			DrawText(Classes[i].classID, x_classes + 22, y_classes, 32, DARKBLUE);
 			Class[i].workbutton(mousePoint, CurrentUser, Classes[i].classID, SchoolYearPage);
 			y_classes += 100;
 		}
