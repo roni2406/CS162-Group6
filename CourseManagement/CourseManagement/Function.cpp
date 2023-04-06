@@ -31,6 +31,7 @@ void StudentorStaffPage(const int screenWidth, const int screenHeight, account& 
 		ClearBackground(WHITE);
 		BeginDrawing();
 		DrawRectangleGradientEx(background, SKYBLUE, DARKBLUE, DARKBLUE, SKYBLUE);
+		DrawRectangleGradientH(0, 0, 1512, 982, { 166,227,233,255 }, { 203, 241, 245,255 });
 		DrawRectangle(0, 0, screenWidth, 60, WHITE);
 		DrawText("COURSE MANAGEMENT SYSTEM", 430, 10, 40, DARKBLUE);
 		DrawRectangle(552, 148, 408, 59, WHITE);
@@ -919,7 +920,7 @@ void ViewClassesPage(const int screenWidth, const int screenHeight, account& Cur
 		BeginDrawing();
 		DrawRectangleGradientEx(background, SKYBLUE, DARKBLUE, DARKBLUE, SKYBLUE);
 		DrawRectangle(0, 0, screenWidth, 60, WHITE);
-		DrawText("CLASSES", 600, 15, 40, DARKBLUE);
+		DrawText("CLASSES", 670, 15, 40, DARKBLUE);
 		DrawRectangleRec(backtoprofilepage.button, WHITE);
 		DrawText("Back to Profile Page", 1280, 20, 20, DARKBLUE);
 		DrawRectangle(322, 136, 870, 806, WHITE);
@@ -931,7 +932,7 @@ void ViewClassesPage(const int screenWidth, const int screenHeight, account& Cur
 		for (int i = 0; i < n; ++i) {
 			Class[i].button = { float(x_classes - 122), float(y_classes - 12), 421, 59 };
 			DrawRectangleRec(Class[i].button, LIGHTGRAY);
-			DrawText(Classes[i].classID, x_classes + 22, y_classes, 32, DARKBLUE);
+			DrawText(Classes[i].classID, x_classes + 30, y_classes, 32, DARKBLUE);
 			Class[i].workbutton(mousePoint, CurrentUser, Classes[i].classID, SchoolYearPage);
 			y_classes += 100;
 		}
@@ -1008,7 +1009,7 @@ void CreateSemesterPage(const int screenWidth, const int screenHeight, account& 
 		}
 		else confirmBtnState = 0;
 		if (confirmBtnAction) {
-			if (createASemester(Year, startdate.text, enddate.text, numcourses.text)) {
+			if (createASemester(Year, startdate.text, enddate.text)) {
 				confirmBtnFalseDisplay = false;
 				EndDrawing();
 				SchoolYearPage(screenWidth, screenHeight, CurrentUser, Year);
