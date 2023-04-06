@@ -5,7 +5,7 @@
 void AddCourseToFile(char* coursename, char* id, char* teacher, char* numOfCre, char* dow, char* sshour, char*& Year, char*& semester) {
 	ofstream f;
 	f.open("../data/" + (string)(Year)+"/" + (string)(semester)+"/ListOfCourse.txt", ios::app);
-	f	<< coursename << ","
+	f	<<'\n'<< coursename << ","
 		<< id << ","
 		<< teacher << ","
 		<< numOfCre << ","
@@ -34,7 +34,7 @@ course* LoadCourseFromFile(char* year, char* semester,int num) {
 		fin.getline(courses[i].teacherName, 1000, ',');
 		fin.getline(courses[i].numOfCre, 1000, ',');
 		fin.getline(courses[i].dayofweek, 1000, ',');
-		fin.getline(courses[i].sessionHour, 1000, ',');
+		fin.getline(courses[i].sessionHour, 1000);
 	}
 }
 void course::Load_stu(char* year, char* semester) {
@@ -71,4 +71,13 @@ void deleteStudent(course* course, int k, int no) {
 	}
 	--course[k].numOfStu;
 }
-
+char* GetFileDrop() {
+	char* filepath;
+	if (IsFileDropped())
+	{
+		FilePathList droppedFiles = LoadDroppedFiles();
+		TextCopy(filepath, droppedFiles.paths[0]);
+		UnloadDroppedFiles(droppedFiles);
+	}
+	return filepath;
+}
