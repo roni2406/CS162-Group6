@@ -20,23 +20,38 @@ void course::Load_stu(char* filename) {
 		f >> stuOfCourse[i].person.dob.year;
 		f.ignore(1, '\n');
 		f.getline(stuOfCourse[i].person.socialID, 100);
-		
-		numOfStu = i-1;
-	}
-	
-}
 
+		numOfStu = i;
+	}
+
+}
+/*void course::check_stu(char* filename) {
+	for (int i = 1; i < numOfStu; i++) {
+		for (int k = i + 1; k <=numOfStu; k++)
+			if (stuOfCourse[i].stuID == stuOfCourse[k].stuID)
+			{
+				while (k < numOfStu) {
+					stuOfCourse[k] = stuOfCourse[k + 1];
+					k;
+				}
+				--numOfStu;
+			}
+	}
+	//vut may th bi xóa vao file moi 
+
+}
+*/
 void Load_Course(ListCourse& list) {
 	ifstream courses;
 	courses.open("Courses.txt");
 	int no = 1;
 	while(!courses.eof()){
-		courses.getline(list.course[no].courseName , 1000);
+		courses.getline(list.course[no].courseName,1000);
 		courses.getline(list.course[no].courseID, 1000);
 		courses.getline(list.course[no].teacherName, 1000);
 		courses.getline(list.course[no].numOfCre, 1000);	
 		courses.getline(list.course[no].dayofweek, 1000);
-		courses.getline(list.course[no].sessionHour, 1000,'\n');
+		courses.getline(list.course[no].sessionHour,1000);
 		courses.getline(list.course[no].studentfile, 1000);
 		list.course[no].Load_stu(list.course[no].studentfile);
 		list.len = no;
@@ -55,22 +70,27 @@ void Course_to_File(ListCourse& list) {
 			<< list.course[no].teacherName << '\n'
 			<< list.course[no].numOfCre << '\n'
 			<< list.course[no].dayofweek << '\n'
-			<< list.course[no].sessionHour<<'\n'
-			<< list.course[no].studentfile<<'\n';
+			<< list.course[no].sessionHour << '\n'
+			<< list.course[no].studentfile << '\n';
+		
 	}
+
 	courses.close();
 }
 void Stu_to_file(ListCourse &list,int k) {
 	ofstream stufile;
 	stufile.open(list.course[k].studentfile);
 	for (int no = 1; no <= list.course[k].numOfStu; no++) {
-		stufile << list.course[no].stuOfCourse[no].No << '\n'
-				<< list.course[no].stuOfCourse[no].stuID << '\n'
-				<< list.course[no].stuOfCourse[no].person.firstName << '\n'
-				<< list.course[no].stuOfCourse[no].person.lastName << '\n'
-				<< list.course[no].stuOfCourse[no].person.gender << '\n'
-				<< list.course[no].stuOfCourse[no].person.dob.day<< list.course[no].stuOfCourse[no].person.dob.month<< list.course[no].stuOfCourse[no].person.dob.year<< '\n'
-				<< list.course[no].stuOfCourse[no].person.socialID << '\n';
+		stufile << list.course[k].stuOfCourse[no].No << '\n'
+			<< list.course[k].stuOfCourse[no].stuID << '\n'
+			<< list.course[k].stuOfCourse[no].person.lastName << '\n'
+			<< list.course[k].stuOfCourse[no].person.firstName << '\n'
+			<< list.course[k].stuOfCourse[no].person.gender << '\n'
+			<< list.course[k].stuOfCourse[no].person.dob.day << '\n'
+			<< list.course[k].stuOfCourse[no].person.dob.month << '\n'
+			<< list.course[k].stuOfCourse[no].person.dob.year << '\n';
+			if (no != list.len)stufile << list.course[k].stuOfCourse[no].person.socialID << '\n';
+			else stufile<< list.course[k].stuOfCourse[no].person.socialID;
 	}
 }
 void delete_course(ListCourse& list,int i ) {
@@ -162,6 +182,7 @@ void update_course(ListCourse &list,int k) {
 
 		EndDrawing();
 	}
+	viewcourse(list);
 
 }
 void Input_course(ListCourse& list){
@@ -218,7 +239,7 @@ void Input_course(ListCourse& list){
 			DrawRectangle(626, 820, 260, 102, DARKBLUE);
 			DrawText("  NEXT", 648, 850, 48, GRAY);
 			if (IsMouseButtonPressed(MOUSE_BUTTON_LEFT())) {
-				strncpy_s(list.course[++list.len].courseName, coursename.text, '\n');
+				TextCopy(list.course[++list.len].courseName, coursename.text);
 				strncpy_s(list.course[list.len].courseID, ID.text, '\n');
 				strncpy_s(list.course[list.len].teacherName, teachername.text, '\n');
 				strncpy_s(list.course[list.len].numOfCre, nofc.text, '\n');
@@ -231,20 +252,28 @@ void Input_course(ListCourse& list){
 		EndDrawing();
 	}
 	Stus_to_Course(list);
+	Course_to_File(list);
 }
 void Stus_to_Course(ListCourse& list) {
 
-		Textbox filename;
-		filename.textbox = { 470,250,600,70 };
+	char* file = new char[1000]; bool filedropped=0;
 		while (!WindowShouldClose()) {
+			if (IsFileDropped())
+			{
+				FilePathList droppedFiles = LoadDroppedFiles();
+				TextCopy(file, droppedFiles.paths[0]);
+				filedropped = 1;
+				UnloadDroppedFiles(droppedFiles);
+			}
+			
 			BeginDrawing();
 			ClearBackground(WHITE);
 
 			DrawText("INSERT STUDENTS TO COURSE", 350, 60, 50, BLUE);
 			DrawText("Enter Csv file contain list of students", 250, 150, 50, BLUE);
-			bool l = 0;
-			filename.worktextbox(l);
-			DrawText(filename.text, 485, 255, 48, BLUE);
+			if(filedropped)
+			DrawText(file, 200, 255, 48, BLUE);
+			else DrawText("Drop Here ", 626, 255, 48,GRAY);
 
 			if (!CheckCollisionPointRec(GetMousePosition(), { 626, 620, 260, 102 })) {
 				DrawRectangle(626, 620, 260, 102, BLUE);
@@ -254,19 +283,20 @@ void Stus_to_Course(ListCourse& list) {
 				DrawRectangle(626, 620, 260, 102, DARKBLUE);
 				DrawText("  NEXT", 648, 650, 48, GRAY);
 				if (IsMouseButtonPressed(MOUSE_BUTTON_LEFT())) {
-					strncpy_s(list.course[list.len].studentfile,filename.text, '\n');
-					Course_to_File(list);
-					list.course[list.len].Load_stu(filename.text);
-		
+					if (filedropped) {
+						TextCopy(list.course[list.len].studentfile, file);
+						Course_to_File(list);
+						list.course[list.len].Load_stu(file);
+					}
 					break;
 				}
 			}
 			EndDrawing();
 		}
-	
+		delete[]file;
 }
 void viewcourse(ListCourse& list) {
-	
+	Load_Course(list);
 	float Pos = 0;
 	float scrollSpeed = 35;
 	/*Texture2D button_up, button_down;
@@ -275,13 +305,14 @@ void viewcourse(ListCourse& list) {
 	float Yrec = button_up.height + Pos / 1500 * 920;
 	float recheight = (920 - 2 * button_up.height) * 920 / (1500 + 920);
 	float tmp = 0;*/
-	bool check = 0;
-	bool rc = 0, update = 0, viewStu = 0;; float x = 0; float y = 0;	int del;
+
+	bool rc = 0, Is_update = 0, viewStu = 0; float x = 0,y = 0,y_gap=0;int del;
 	while (!WindowShouldClose()) {
+	
 		Pos += (GetMouseWheelMove() * scrollSpeed - 20*float(IsKeyDown(KEY_DOWN) - IsKeyDown(KEY_UP)));
 	//	Yrec = button_up.height - float(Pos * (920 - 2 * button_up.height) / (1500 + 920));
 		if (Pos > 0)Pos = 0;
-		if (Pos < -(float(list.len)* 982 / 12))Pos = -(float(list.len) * 982 / 12);//num of course/6*wight
+		if (Pos < -(float(list.len)* 982 / 6))Pos = -(float(list.len) * 982 /6);//num of course/6*wight
 		BeginDrawing();
 		ClearBackground(SKYBLUE);
 /*2 cai nut//////////////////
@@ -332,11 +363,11 @@ void viewcourse(ListCourse& list) {
 					del = k;
 					rc = 1;
 					x = float(GetMouseX());
-					y = float(GetMouseY());
+					y_gap = float(GetMouseY()-Pos);
 				}
 			}
 			else DrawRectangleLines(10,Pos+i+10,300, 140,WHITE);
-			
+			y = Pos + y_gap;
 			DrawText(TextFormat("%s%s", "Course: ", list.course[k].courseName), 17, Pos + (i += 20), 20, MAROON);
 			DrawText(TextFormat("%s%s", "ID: ", list.course[k].courseID), 17, Pos + (i += 20), 20, MAROON);
 			DrawText(TextFormat("%s%s", "Teacher: ", list.course[k].teacherName), 17, Pos + (i += 20), 20, MAROON);
@@ -344,27 +375,27 @@ void viewcourse(ListCourse& list) {
 			DrawText(TextFormat("%s%s", "Course Day: ", list.course[k].dayofweek), 17, Pos + (i += 20), 20, MAROON);
 			DrawText(TextFormat("%s%s", "Session Hours: ", list.course[k].sessionHour), 17, Pos + (i += 20), 20, MAROON);
 			if (rc) {
-				DrawRectangle(x, y,160, 75, LIGHTGRAY);
+				DrawRectangle(x,y,160, 75, LIGHTGRAY);
 				DrawText("Delete", x + 7, y + 3, 20, MAROON);
 				DrawLine(x, y + 25, x +160, y + 25, BLACK);
 				DrawText("Update", x + 7, y + 3 + 25, 20, MAROON);
 				DrawLine(x, y + 50, x +160, y +50, BLACK);
 				DrawText("View Students ", x + 7, y + 3 + 50, 20, MAROON);
 
-				if (CheckCollisionPointRec(GetMousePosition(), { x,y,80,25 }) && IsMouseButtonPressed(MOUSE_BUTTON_LEFT))delete_course(list, del);
-				if (CheckCollisionPointRec(GetMousePosition(), { x,y + 25,80,25 }) && IsMouseButtonPressed(MOUSE_BUTTON_LEFT))update = 1;
-				if (CheckCollisionPointRec(GetMousePosition(), { x,y + 50,80,25 }) && IsMouseButtonPressed(MOUSE_BUTTON_LEFT))viewStu = 1;
+				if (CheckCollisionPointRec(GetMousePosition(), { x,y,160,25 }) && IsMouseButtonPressed(MOUSE_BUTTON_LEFT))delete_course(list, del);
+				if (CheckCollisionPointRec(GetMousePosition(), { x,y + 25,160,25 }) && IsMouseButtonPressed(MOUSE_BUTTON_LEFT))Is_update = 1;
+				if (CheckCollisionPointRec(GetMousePosition(), { x,y + 50,160,25 }) && IsMouseButtonPressed(MOUSE_BUTTON_LEFT))viewStu = 1;
 				if (IsMouseButtonPressed(MOUSE_BUTTON_LEFT))rc = 0;
 			}
 			i += 50;
 		}
-		if (update||viewStu)break;
+		if (Is_update||viewStu)break;
 		EndDrawing();
 	}
 	if (viewStu)view_Stu(list, del);
-	if (update)update_course(list, del);
+	if (Is_update)update_course(list, del);
+
 	Course_to_File(list);
-	viewcourse(list);
 }
 void view_Stu(ListCourse& list,int k) {
 
@@ -398,13 +429,12 @@ void view_Stu(ListCourse& list,int k) {
 			DrawText(TextFormat("%s%i/%i/%i", "Day of birth: ", list.course[k].stuOfCourse[no].person.dob.day, list.course[k].stuOfCourse[no].person.dob.month, list.course[k].stuOfCourse[no].person.dob.year), 17, Pos + (i += 20), 20, MAROON);
 			DrawText(TextFormat("%s%s", "Social ID: ", list.course[k].stuOfCourse[no].person.socialID), 17, Pos + (i += 20), 20, MAROON);
 			if (rc) {
-				DrawRectangle(x, y, 80, 50, LIGHTGRAY);
+				DrawRectangle(x, y, 80, 25, LIGHTGRAY);
 				DrawText("Delete", x + 7, y + 3, 20, MAROON);
-				DrawLine(x, y + 25, x + 80, y + 25, BLACK);
-				DrawText("Update", x + 7, y + 3 + 25, 20, MAROON);
-
+				
+			
 				if (CheckCollisionPointRec(GetMousePosition(), { x,y,80,25 }) && IsMouseButtonPressed(MOUSE_BUTTON_LEFT)) delete_stu(list, k, del);
-				if (CheckCollisionPointRec(GetMousePosition(), { x,y + 25,80,25 }) && IsMouseButtonPressed(MOUSE_BUTTON_LEFT))
+				
 				if (IsMouseButtonPressed(MOUSE_BUTTON_LEFT))rc = 0;
 			}
 			i += 50;
@@ -414,19 +444,17 @@ void view_Stu(ListCourse& list,int k) {
 	Stu_to_file(list, k);
 
 }
-int main()
-{
-	ListCourse list;
-	Load_Course(list);
-	InitWindow(1512, 982, "cs2");
-	SetTargetFPS(60);
-	Input_course(list);
 
+
+int main(void){
+	ListCourse list;
+	InitWindow(1512, 982, "d");
+	Input_course(list);
 	viewcourse(list);
 
 	CloseWindow();
 }
-
+	
 
 
 
