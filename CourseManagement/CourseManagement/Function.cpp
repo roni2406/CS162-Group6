@@ -897,53 +897,50 @@ void createClassPage(const int screenWidth, const int screenHeight, account& Cur
 	CloseWindow();
 }
 void ViewClassesPage(const int screenWidth, const int screenHeight, account& CurrentUser) {
-	int n = countSchoolYear(); //countClasses
-	char** Classes = getSchoolYearArr(); //getClassesArr
+	int n = countClasses(); //countClasses
+	Class* Classes = new Class[n];
+	Classes = viewClasses();
+
 	Vector2 mousePoint = { 0.0f, 0.0f };
 
-	Rectangle background = { 0,0,float(screenWidth),float(screenHeight)};
-
-	Texture2D avatar;
-	avatar = LoadTexture("avatar.png");
-
+	Rectangle background = { 0,0,float(screenWidth),float(screenHeight) };
 
 	Button2 backtoprofilepage;
 	backtoprofilepage.button = { 1270, 20, 200, 30 };
 
 	int scrollspeed = 25;
-	int y_classname = 257;
-	int x_classname = 668;
+	int y_classes = 257;
+	int x_classes = 668;
 
 	while (!WindowShouldClose()) {
-		//y_classname += ((GetMouseWheelMove() * scrollspeed) - (IsKeyDown(KEY_DOWN) - IsKeyDown(KEY_UP)));
-		if (y_classname > 202) y_classname = 202;
+		//y_schoolyear += ((GetMouseWheelMove() * scrollspeed) - (IsKeyDown(KEY_DOWN) - IsKeyDown(KEY_UP)));
+		if (y_classes > 202) y_classes = 202;
 		ClearBackground(WHITE);
 		BeginDrawing();
 		DrawRectangleGradientEx(background, SKYBLUE, DARKBLUE, DARKBLUE, SKYBLUE);
 		DrawRectangle(0, 0, screenWidth, 60, WHITE);
-		DrawText("CLASSES", 655, 15, 40, DARKBLUE);
+		DrawText("CLASSES", 600, 15, 40, DARKBLUE);
 		DrawRectangleRec(backtoprofilepage.button, WHITE);
 		DrawText("Back to Profile Page", 1280, 20, 20, DARKBLUE);
 		DrawRectangle(322, 136, 870, 806, WHITE);
 		DrawRectangleLines(321, 135, 872, 807, BLACK);
 		mousePoint = GetMousePosition();
-		Button2* classname = new Button2[n];
+		Button4* Class = new Button4[n];
 
 		int j = 0;
 		for (int i = 0; i < n; ++i) {
-			classname[i].button = { float(x_classname - 122), float(y_classname - 12), 421, 59 };
-			DrawRectangleRec(classname[i].button, LIGHTGRAY);
-			DrawText(Classes[i], x_classname, y_classname, 32, DARKBLUE);
-			classname[i].workbutton(mousePoint, CurrentUser, ProfilePageStaff);
-			y_classname += 100;
+			Class[i].button = { float(x_classes - 122), float(y_classes - 12), 421, 59 };
+			DrawRectangleRec(Class[i].button, LIGHTGRAY);
+			DrawText(Classes[i].classID, x_classes, y_classes, 32, DARKBLUE);
+			Class[i].workbutton(mousePoint, CurrentUser, Classes[i].classID, SchoolYearPage);
+			y_classes += 100;
 		}
 		/// Back to profile page button
 		backtoprofilepage.workbutton(mousePoint, CurrentUser, ProfilePageStaff);
-		delete[] classname;
 		EndDrawing();
 	}
-
 	CloseWindow();
+
 }
 
 void CreateSemesterPage(const int screenWidth, const int screenHeight, account& CurrentUser, char* &Year) {
