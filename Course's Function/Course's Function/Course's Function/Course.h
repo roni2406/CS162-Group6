@@ -18,7 +18,7 @@ struct scoreboard {
 };
 
 struct person {
-    char firstName[10];
+    char firstName[20];
     char lastName[20];
     bool gender; // 0(false) : male; 1(true) : female
     Date dob;
@@ -30,11 +30,12 @@ struct student {
     char stuID[9];
     person person;
     scoreboard mark;
+    
 };
 
 struct course {
     char courseID[30];
-    char courseName[30];
+    char courseName[50];
     char className[30];
     char teacherName[30];
     char numOfCre[30];
@@ -46,15 +47,17 @@ struct course {
     char studentfile[30];
     student stuOfCourse[50];
     void Load_stu(char* filename);
-
+    void check_stu(char* filename);
+ 
 };
 
 struct ListCourse {
+
     course course[50];
     int len = 0;
 };
 struct Textbox {
-    char text[20 + 1] = "\0";
+    char text[51] = "\0";
     int lettercount = 0;
     Rectangle textbox;
     bool mouseontextbox = false;
@@ -77,7 +80,7 @@ void Textbox::worktextbox(bool& somethingfalsedisplay) {
             while (key > 0)
             {
                 // NOTE: Only allow keys in range [32..125]
-                if ((key >= 32) && (key <= 125) && (lettercount < 20))
+                if ((key >= 32) && (key <= 125) && (lettercount < 50))
                 {
                     text[lettercount] = (char)key;
                     text[lettercount + 1] = '\0'; // Add null terminator at the end of the string.
@@ -104,8 +107,17 @@ void Textbox::worktextbox(bool& somethingfalsedisplay) {
     }
     else DrawRectangleLines((int)textbox.x, (int)textbox.y, (int)textbox.width, (int)textbox.height, LIGHTGRAY);
 
+
 }
+
+void delete_stu(ListCourse& list, int k, int no);
+void delete_course(ListCourse& list, int i);
+void Stu_to_file(ListCourse& list, int k);
+void Course_to_File(ListCourse& list);
+void Load_Course(ListCourse& list);
 void Stus_to_Course(ListCourse& list);
 void viewcourse(ListCourse &list);
 void view_Stu(ListCourse& list, int k);
+void Input_course(ListCourse& list);
+void Stus_to_Course(ListCourse& list);
 #endif
