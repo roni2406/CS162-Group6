@@ -11,16 +11,15 @@ struct semester {
     int No;
     Date startDate;
     Date endDate;
-    int numOfCourse;
 
-    void inputASemester(char* Year, char* start_date, char* end_date, char* number_of_course);
+    void inputASemester(char* Year, char* start_date, char* end_date);
     void inputASemesterWithCSVFile(ifstream& fin);
     void outputASemesterToCSVFile(char* filename);
     bool checkdata();
 };
 
 // front end use:
-bool createASemester(char* school_year, char* start_date, char* end_date, char* number_of_course);
+bool createASemester(char* school_year, char* start_date, char* end_date);
 int countSemester(char* school_year);
 semester* getSemester(char* school_year);
 #endif
