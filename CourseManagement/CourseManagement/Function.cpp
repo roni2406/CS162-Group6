@@ -31,7 +31,6 @@ void StudentorStaffPage(const int screenWidth, const int screenHeight, account& 
 		ClearBackground(WHITE);
 		BeginDrawing();
 		DrawRectangleGradientEx(background, SKYBLUE, DARKBLUE, DARKBLUE, SKYBLUE);
-		DrawRectangleGradientH(0, 0, 1512, 982, { 166,227,233,255 }, { 203, 241, 245,255 });
 		DrawRectangle(0, 0, screenWidth, 60, WHITE);
 		DrawText("COURSE MANAGEMENT SYSTEM", 430, 10, 40, DARKBLUE);
 		DrawRectangle(552, 148, 408, 59, WHITE);
