@@ -27,4 +27,5 @@ int countClasses(); // front end
 
 // 16
 student* viewStudentsInClass(char* fileNameIn, char* fileNameOut); // front end
+bool CheckData_InputStudents(char* No, char* student_id, char* Gender, char* DoB, char* social_ID);
 #endif
