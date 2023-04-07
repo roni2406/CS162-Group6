@@ -850,7 +850,6 @@ void createClassPage(const int screenWidth, const int screenHeight, account& Cur
 		DrawRectangleRec(backtoprofilepage.button, WHITE);
 		DrawText("Back to Profile Page", 1280, 20, 20, DARKBLUE);
 
-		DrawRectangle(347, 173, 818, 373, WHITE);
 		DrawRectangle(347, 173, 818, 550, WHITE);
 		DrawRectangleRec(classname.textbox, LIGHTGRAY);
 		DrawText("* Class Name", 477, 200, 30, DARKBLUE);
@@ -943,6 +942,63 @@ void ViewClassesPage(const int screenWidth, const int screenHeight, account& Cur
 
 }
 
+void addStudentPage(const int screenWidth, const int screenHeight, account& CurrentUser) {
+	Vector2 mousePoint = { 0.0f, 0.0f };
+	Rectangle background = { 0,0,float(screenWidth),float(screenHeight) };
+
+	Textbox1 Gender;
+	Gender.textbox = { 284, 627, 283, 84 };
+	Textbox1 birth;
+	birth.textbox = { 604, 627, 623, 84 };
+	Textbox1 Lastname;
+	Lastname.textbox = { 284,213,283,84 };
+	Textbox1 Firstname;
+	Firstname.textbox = { 610,213,617,84 };
+	Textbox1 studentID;
+	studentID.textbox = { 284,351,943,84 };
+	Textbox1 socialID;
+	socialID.textbox = { 284,489,943,84 };
+
+	Button2 backtoClasspage;
+	backtoClasspage.button = { 1270, 20, 200, 30 };
+
+	Texture2D confirmBtn = LoadTexture("confirmBtn.png");
+	float frameHeightconfirmBtn = (float)confirmBtn.height;
+	Rectangle sourceRecconfirmBtn = { 0, 0, (float)confirmBtn.width,frameHeightconfirmBtn };
+	// Define button bounds on screen
+	Rectangle btnBoundsconfirmBtn = { 650, 600, (float)confirmBtn.width, frameHeightconfirmBtn };
+	int confirmBtnState = 0;               // Button state: 0-NORMAL, 1-MOUSE_HOVER, 2-PRESSED
+	bool confirmBtnAction = false;         // Button action should be activated
+	bool confirmBtnFalseDisplay = false;
+	while (!WindowShouldClose()) {
+		ClearBackground(WHITE);
+		BeginDrawing();
+
+		DrawText("  Call us : (028) 3835 4266         E - mail : info@fit.hcmus.edu.vn", 0, 20, 20, DARKBLUE);
+		DrawRectangleGradientEx(background, SKYBLUE, DARKBLUE, DARKBLUE, SKYBLUE);
+		DrawRectangle(0, 0, screenWidth, 60, WHITE);
+
+		DrawRectangleRec(backtoClasspage.button, WHITE);
+		DrawText("Back to your class", 1280, 20, 20, DARKBLUE);
+
+		DrawRectangle(142, 148, 1227, 720, WHITE);
+		DrawRectangleRec(Lastname.textbox, LIGHTGRAY);
+		DrawText("* Last name", 284, 174, 30, DARKBLUE);
+		DrawRectangleRec(Firstname.textbox, LIGHTGRAY);
+		DrawText("* First name", 610, 174, 30, DARKBLUE);
+		DrawRectangleRec(studentID.textbox, LIGHTGRAY);
+		DrawText("* Student ID", 284, 312, 30, DARKBLUE);
+		DrawRectangleRec(socialID.textbox, LIGHTGRAY);
+		DrawText("* Social ID", 284, 450, 30, DARKBLUE);
+		DrawRectangleRec(birth.textbox, LIGHTGRAY);
+		DrawText("* Date of birth", 604, 588, 30, DARKBLUE);
+		DrawRectangleRec(Gender.textbox, LIGHTGRAY);
+		DrawText("* Gender", 284, 588, 30, DARKBLUE);
+
+		EndDrawing();
+	}
+	CloseWindow();
+}
 void CreateSemesterPage(const int screenWidth, const int screenHeight, account& CurrentUser, char* &Year) {
 	Vector2 mousePoint = { 0.0f, 0.0f };
 	Rectangle background = { 0,0,float(screenWidth),float(screenHeight)};
@@ -975,7 +1031,6 @@ void CreateSemesterPage(const int screenWidth, const int screenHeight, account& 
 
 		DrawRectangleRec(backtoschoolyearpage.button, WHITE);
 		DrawText("Back to School Year Page", 1180, 20, 20, DARKBLUE);
-
 		DrawRectangle(355, 173, 818, 645, WHITE);
 		DrawRectangleRec(startdate.textbox, LIGHTGRAY);
 		DrawText("* Start date (dd/mm/YYYY): ", 477, 200, 30, DARKBLUE);
