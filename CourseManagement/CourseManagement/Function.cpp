@@ -967,7 +967,7 @@ void addStudentPage(const int screenWidth, const int screenHeight, account& Curr
 	float frameHeightconfirmBtn = (float)confirmBtn.height;
 	Rectangle sourceRecconfirmBtn = { 0, 0, (float)confirmBtn.width,frameHeightconfirmBtn };
 	// Define button bounds on screen
-	Rectangle btnBoundsconfirmBtn = { 650, 600, (float)confirmBtn.width, frameHeightconfirmBtn };
+	Rectangle btnBoundsconfirmBtn = { 650, 750, (float)confirmBtn.width, frameHeightconfirmBtn };
 	int confirmBtnState = 0;               // Button state: 0-NORMAL, 1-MOUSE_HOVER, 2-PRESSED
 	bool confirmBtnAction = false;         // Button action should be activated
 	bool confirmBtnFalseDisplay = false;
@@ -981,6 +981,7 @@ void addStudentPage(const int screenWidth, const int screenHeight, account& Curr
 
 		DrawRectangleRec(backtoClasspage.button, WHITE);
 		DrawText("Back to your class", 1280, 20, 20, DARKBLUE);
+		DrawText("Add a student", 620, 12, 40, DARKBLUE);
 
 		DrawRectangle(142, 148, 1227, 720, WHITE);
 		DrawRectangleRec(Lastname.textbox, LIGHTGRAY);
@@ -996,6 +997,46 @@ void addStudentPage(const int screenWidth, const int screenHeight, account& Curr
 		DrawRectangleRec(Gender.textbox, LIGHTGRAY);
 		DrawText("* Gender", 284, 588, 30, DARKBLUE);
 
+		////Function_of_TextInputBoxes_----------------------------------------------------------------------------------------------------------------------
+		Lastname.worktextbox(confirmBtnFalseDisplay);
+		Firstname.worktextbox(confirmBtnFalseDisplay);
+		studentID.worktextbox(confirmBtnFalseDisplay);
+		socialID.worktextbox(confirmBtnFalseDisplay);
+		birth.worktextbox(confirmBtnFalseDisplay);
+		Gender.worktextbox(confirmBtnFalseDisplay);
+
+		DrawText(Lastname.text, 314, 233, 40, DARKBLUE);
+		DrawText(Firstname.text, 640, 233, 40, DARKBLUE);
+		DrawText(studentID.text, 314, 371, 40, DARKBLUE);
+		DrawText(socialID.text, 314, 509, 40, DARKBLUE);
+		DrawText(birth.text, 634, 647, 40, DARKBLUE);
+		DrawText(Gender.text, 314, 647, 40, DARKBLUE);
+
+		////Function of buttons------------------------------------------------------------------------------------------------------------------------------
+		mousePoint = GetMousePosition();
+
+		///Confirm button
+		//confirmBtnAction = false;
+		//if (CheckCollisionPointRec(mousePoint, btnBoundsconfirmBtn)) {          // Check button state
+		//	if (IsMouseButtonPressed(MOUSE_BUTTON_LEFT)) confirmBtnAction = true;
+		//}
+		//else confirmBtnState = 0;
+		//if (confirmBtnAction) {
+		//	if (!CheckClassExisted(classname.text)) {
+		//		confirmBtnFalseDisplay = false;
+		//		CreateAClass(classname.text, numStudents.text);
+		//		EndDrawing();
+		//		ProfilePageStaff(screenWidth, screenHeight, CurrentUser);
+		//	}
+		//	else confirmBtnFalseDisplay = true;
+		//}
+		//if (confirmBtnFalseDisplay) DrawText("This class was created before!", 480, 560, 20, RED);
+		// Calculate button frame rectangle to draw depending on button state
+		sourceRecconfirmBtn.y = confirmBtnState * frameHeightconfirmBtn;
+		DrawTextureRec(confirmBtn, sourceRecconfirmBtn, { btnBoundsconfirmBtn.x, btnBoundsconfirmBtn.y }, WHITE); // Draw button frame
+
+		/// Back to profile page button
+		backtoClasspage.workbutton(mousePoint, CurrentUser, ProfilePageStaff);
 		EndDrawing();
 	}
 	CloseWindow();

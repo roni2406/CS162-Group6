@@ -82,8 +82,6 @@ void Textbox1::worktextbox(bool& somethingfalsedisplay) {
 	else mouseontextbox = false;
 	if (mouseontextbox)
 	{
-		// Set the window's cursor to the I-Beam
-		SetMouseCursor(MOUSE_CURSOR_IBEAM);
 
 		// Get char pressed (unicode character) on the queue
 		int key = GetCharPressed();
@@ -109,7 +107,6 @@ void Textbox1::worktextbox(bool& somethingfalsedisplay) {
 			text[lettercount] = '\0';
 		}
 	}
-	else SetMouseCursor(MOUSE_CURSOR_DEFAULT);
 	if (mouseontextbox) {
 		DrawRectangleLines((int)textbox.x, (int)textbox.y, (int)textbox.width, (int)textbox.height, BLUE);
 		DrawRectangleLines((int)textbox.x - 1, (int)textbox.y - 1, (int)textbox.width + 2, (int)textbox.height + 2, BLUE);
@@ -125,8 +122,6 @@ void Textbox2::worktextbox(bool& somethingfalsedisplay) {
 	else mouseontextbox = false;
 	if (mouseontextbox)
 	{
-		// Set the window's cursor to the I-Beam
-		SetMouseCursor(MOUSE_CURSOR_IBEAM);
 
 		// Get char pressed (unicode character) on the queue
 		int key = GetCharPressed();
@@ -160,7 +155,6 @@ void Textbox2::worktextbox(bool& somethingfalsedisplay) {
 			hiddentext[lettercounthidden] = '\0';
 		}
 	}
-	else SetMouseCursor(MOUSE_CURSOR_DEFAULT);
 
 	if (mouseontextbox) {
 		DrawRectangleLines((int)textbox.x, (int)textbox.y, (int)textbox.width, (int)textbox.height, BLUE);
