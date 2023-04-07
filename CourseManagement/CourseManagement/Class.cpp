@@ -2,15 +2,14 @@
 #include <string.h>
 #include <fstream>
 #include "Class.h"
+#include "Date.h"
 using namespace std;
-
 // 2
 void InputAClass(char* classID, char* numOfStu, Class &className)
 {
 	className.classID = _strdup(classID);
 	className.numOfStu = atoi(numOfStu);
 }
-
 void CreateAClass(char* classID, char* numOfStu)
 {
 	Class Object;
@@ -19,14 +18,12 @@ void CreateAClass(char* classID, char* numOfStu)
 	CreateASingleClassList(Object, fout);
 	AddAClassToList(Object, fout);
 }
-
 void CreateASingleClassList(Class className, ofstream& fout)
 {
 	fout.open("../data/Classes/" + string(className.classID) + ".txt");
 	fout << className.numOfStu;
 	fout.close();
 }
-
 void AddAClassToList(Class& className, ofstream& fout)
 {
 	fout.open("../data/Classes/Listofclasses.txt", ios::app);
@@ -35,8 +32,6 @@ void AddAClassToList(Class& className, ofstream& fout)
 	fout << className.numOfStu;
 	fout.close();
 }
-
-
 bool CheckClassExisted(char* ClassID)
 {
 	ifstream fin;
@@ -50,8 +45,6 @@ bool CheckClassExisted(char* ClassID)
 			return true;
 	return false;
 }
-
-
 // 15
 void viewClasses_PrepareData_SavedToClassArray(Class*& ClassList, ifstream& fin, int& numOfClasses) // 15
 {
@@ -73,7 +66,6 @@ void viewClasses_PrepareData_SavedToClassArray(Class*& ClassList, ifstream& fin,
 	}
 	fin.close();
 }
-
 Class* viewClasses()
 {
 	ifstream fin;
@@ -82,7 +74,6 @@ Class* viewClasses()
 	viewClasses_PrepareData_SavedToClassArray(ClassList, fin, numOfClasses);
 	return ClassList;
 }
-
 int countClasses()
 {
 	ifstream fin;
@@ -91,7 +82,6 @@ int countClasses()
 	viewClasses_PrepareData_SavedToClassArray(ClassList, fin, numOfClasses);
 	return numOfClasses;
 }
-
 // 16
 student* viewStudentsInClass(char* fileNameIn, char* fileNameOut)
 {
@@ -109,5 +99,13 @@ student* viewStudentsInClass(char* fileNameIn, char* fileNameOut)
 	fin.close();
 	return Class;
 }
-
-
+bool CheckData_InputStudents(char* No, char* student_id, char* Gender, char* DoB, char* social_ID)
+{
+	int NoStu = atoi(No);
+	if (NoStu <= 0) return false;
+	int n = strlen(student_id);
+	if (n != 8) return false;
+	int GenderStu = atoi(Gender);
+	if (GenderStu != 0 && GenderStu != 1) return false;
+	Date tmp = inputADateWithChar(DoB);
+}
