@@ -26,6 +26,10 @@ void semester::inputASemesterWithCSVFile(ifstream& fin) {
 }
 
 void semester::outputASemesterToCSVFile(char* school_year) {
+	ofstream fout;
+	fout.open("../data/" + (string)(school_year)+"/Semester.csv", ios::app);
+	fout.close();
+
 	ifstream fin;
 	fin.open("../data/" + (string)(school_year) + "/Semester.csv");
 	int numSemester = 0;
@@ -46,7 +50,7 @@ void semester::outputASemesterToCSVFile(char* school_year) {
 		if (_mkdir(("../data/" + (string)(school_year) + "/autumn").c_str()));
 	}
 	fin.close();
-	ofstream fout;
+
 	fout.open("../data/" + (string)(school_year)+"/Semester.csv", ios::app);
 	if(numSemester != 0) fout << endl;
 	fout << No << ",";
@@ -57,16 +61,15 @@ void semester::outputASemesterToCSVFile(char* school_year) {
 }
 
 bool semester::checkdata() {
-	if (sYear.checkdata()) return false;
-	if (No != 1 && No != 2 && No != 3) return false;
 	if (!startDate.checkdata() || !endDate.checkdata()) return false;
 	return true;
 }
 
 bool createASemester(char* school_year, char* start_date, char* end_date) {
+	if (!checkDateInput(start_date) || !checkDateInput(end_date)) return false;
 	semester s;
 	s.inputASemester(school_year, start_date, end_date);
-	//if (!s.checkdata()) return false;
+	if (!s.checkdata()) return false;
 	s.outputASemesterToCSVFile(school_year);
 	return true;
 }

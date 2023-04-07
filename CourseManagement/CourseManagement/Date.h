@@ -15,4 +15,5 @@ struct Date {
     bool checkdata();
 };
 
+bool checkDateInput(char* date);
 #endif

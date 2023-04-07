@@ -49,15 +49,26 @@ bool Date::checkdata() {
 		if (d > 31) return false;
 		break;
 	case 2:
-		if ((y % 400 == 0) || ((y % 100 == 0) && (y % 4 != 0)))
-			if (d > 29) 
+		if ((y % 400 == 0) || ((y % 100 != 0) && (y % 4 == 0))) {
+			if (d > 29)
 				return false;
-		else if (d > 28) 
-				return false;
+		}
+		else if (d > 28) {
+			return false;
+		}
 		break;
 	case 4: case 6: case 9: case 11:
 		if (d > 30) return false;
 		break;
 	}
+	return true;
+}
+
+bool checkDateInput(char* date) {
+	int cnt = 0;
+	for (int i = 0; date[i] != '\0'; i++) {
+		if (date[i] == '/') ++cnt;
+	}
+	if (cnt != 2) return false;
 	return true;
 }
