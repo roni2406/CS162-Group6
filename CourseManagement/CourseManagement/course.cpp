@@ -1,4 +1,4 @@
-#include "Course.h"
+#include "course.h"
 #include "Function.h"
 #include "users.h"
 

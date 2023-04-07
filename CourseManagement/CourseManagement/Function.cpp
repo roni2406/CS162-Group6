@@ -817,7 +817,7 @@ void SchoolYearPage(const int screenWidth, const int screenHeight, account& Curr
 		viewsemester.workbutton(mousePoint, CurrentUser, Year, ViewSemestersPage);
 		EndDrawing();
 	}
-
+	delete[] Year;
 	CloseWindow();
 }
 void createClassPage(const int screenWidth, const int screenHeight, account& CurrentUser) {
@@ -937,6 +937,7 @@ void ViewClassesPage(const int screenWidth, const int screenHeight, account& Cur
 		}
 		/// Back to profile page button
 		backtoprofilepage.workbutton(mousePoint, CurrentUser, ProfilePageStaff);
+		delete[] Class;
 		EndDrawing();
 	}
 	CloseWindow();
@@ -1046,11 +1047,9 @@ void CreateSemesterPage(const int screenWidth, const int screenHeight, account& 
 	Rectangle background = { 0,0,float(screenWidth),float(screenHeight)};
 
 	Textbox1 startdate;
-	startdate.textbox = { 477, 239, 558, 106 };
+	startdate.textbox = { 477, 289, 558, 106 };
 	Textbox1 enddate;
-	enddate.textbox = { 477, 412, 558, 106 };
-	Textbox1 numcourses;
-	numcourses.textbox = { 477, 585, 558, 106 };
+	enddate.textbox = { 477, 462, 558, 106 };
 
 	Button4 backtoschoolyearpage;
 	backtoschoolyearpage.button = { 1170, 20, 200, 30 };
@@ -1059,7 +1058,7 @@ void CreateSemesterPage(const int screenWidth, const int screenHeight, account& 
 	float frameHeightconfirmBtn = (float)confirmBtn.height;
 	Rectangle sourceRecconfirmBtn = { 0, 0, (float)confirmBtn.width,frameHeightconfirmBtn };
 	// Define button bounds on screen
-	Rectangle btnBoundsconfirmBtn = { 650, 720, (float)confirmBtn.width, frameHeightconfirmBtn };
+	Rectangle btnBoundsconfirmBtn = { 650, 640, (float)confirmBtn.width, frameHeightconfirmBtn };
 	int confirmBtnState = 0;               // Button state: 0-NORMAL, 1-MOUSE_HOVER, 2-PRESSED
 	bool confirmBtnAction = false;         // Button action should be activated
 	bool confirmBtnFalseDisplay = false;
@@ -1073,27 +1072,21 @@ void CreateSemesterPage(const int screenWidth, const int screenHeight, account& 
 
 		DrawRectangleRec(backtoschoolyearpage.button, WHITE);
 		DrawText("Back to School Year Page", 1180, 20, 20, DARKBLUE);
-		DrawRectangle(355, 173, 818, 645, WHITE);
+		DrawRectangle(355, 173, 818, 600, WHITE);
 		DrawRectangleRec(startdate.textbox, LIGHTGRAY);
-		DrawText("* Start date (dd/mm/YYYY): ", 477, 200, 30, DARKBLUE);
+		DrawText("* Start date (dd/mm/YYYY): ", 477, 250, 30, DARKBLUE);
 		DrawRectangleRec(enddate.textbox, LIGHTGRAY);
-		DrawText("* End date (dd/mm/YYYY): ", 477, 373, 30, DARKBLUE);
-		DrawRectangleRec(numcourses.textbox, LIGHTGRAY);
-		DrawText("* Number of courses: ", 477, 546, 30, DARKBLUE);
+		DrawText("* End date (dd/mm/YYYY): ", 477, 423, 30, DARKBLUE);
 
 
 		////Function_of_TextInputBoxes_----------------------------------------------------------------------------------------------------------------------
 		startdate.worktextbox(confirmBtnFalseDisplay);
 		enddate.worktextbox(confirmBtnFalseDisplay);
-		numcourses.worktextbox(confirmBtnFalseDisplay);
 
-
-		DrawText(startdate.text, 500, 270, 40, DARKBLUE);
-		DrawText(TextFormat("%i/%i", startdate.lettercount, MAX_INPUT_CHARS), 1050, 280, 20, DARKBLUE);
-		DrawText(enddate.text, 500, 443, 40, DARKBLUE);
-		DrawText(TextFormat("%i/%i", enddate.lettercount, MAX_INPUT_CHARS), 1050, 453, 20, DARKBLUE);
-		DrawText(numcourses.text, 500, 616, 40, DARKBLUE);
-		DrawText(TextFormat("%i/%i", numcourses.lettercount, MAX_INPUT_CHARS), 1050, 626, 20, DARKBLUE);
+		DrawText(startdate.text, 500, 320, 40, DARKBLUE);
+		DrawText(TextFormat("%i/%i", startdate.lettercount, MAX_INPUT_CHARS), 1050, 330, 20, DARKBLUE);
+		DrawText(enddate.text, 500, 493, 40, DARKBLUE);
+		DrawText(TextFormat("%i/%i", enddate.lettercount, MAX_INPUT_CHARS), 1050, 503, 20, DARKBLUE);
 
 		////Function of buttons------------------------------------------------------------------------------------------------------------------------------
 		mousePoint = GetMousePosition();
@@ -1119,14 +1112,14 @@ void CreateSemesterPage(const int screenWidth, const int screenHeight, account& 
 
 		/// Back to profile page button
 		backtoschoolyearpage.workbutton(mousePoint, CurrentUser, Year, SchoolYearPage);
-
 		EndDrawing();
 	}
+	delete[] Year;
 	CloseWindow();
 }
 void ViewSemestersPage(const int screenWidth, const int screenHeight, account& CurrentUser, char* &Year) {
 	int n = countSemester(Year); // countSemester
-	//semester* Semester = getSemester(Year); // getSemesterArr
+	semester* Semester = getSemester(Year); // getSemesterArr
 	Vector2 mousePoint = { 0.0f, 0.0f };
 
 	Rectangle background = { 0,0,float(screenWidth),float(screenHeight) };
@@ -1150,25 +1143,47 @@ void ViewSemestersPage(const int screenWidth, const int screenHeight, account& C
 		DrawText("Back to School Year Page", 1200, 20, 20, DARKBLUE);
 		DrawRectangle(322, 136, 870, 806, WHITE);
 		DrawRectangleLines(321, 135, 872, 807, BLACK);
+
+
 		mousePoint = GetMousePosition();
-		Button6* semester = new Button6[n];
+		Button6 semester[5];
+		const char* tmp1 = "fall";
+		const char* tmp2 = "summer";
+		const char* tmp3 = "autumn";
+		char* semestername = new char[10];
+
 
 		for (int i = 0; i < n; ++i) {
-			char* j = new char;
-			*j = char(i + 49);
+			if (i == 0) {
+				for (int j = 0; j < strlen(tmp1); ++j) {
+					semestername[j] = tmp1[j];
+				}
+				semestername[strlen(tmp1)] = '\0';
+			}
+			if (i == 1) {
+				for (int j = 0; j < strlen(tmp2); ++j) {
+					semestername[j] = tmp2[j];
+				}
+				semestername[strlen(tmp2)] = '\0';
+			}
+			if (i == 2) {
+				for (int j = 0; j < strlen(tmp3); ++j) {
+					semestername[j] = tmp3[j];
+				}
+				semestername[strlen(tmp3)] = '\0';
+			}
 			semester[i].button = {float( x_semester - 122), float(y_semester - 12), 421, 59 };
 			DrawRectangleRec(semester[i].button, LIGHTGRAY);
-			//DrawText(j, x_semester, y_semester, 32, DARKBLUE);
-			semester[i].workbutton(mousePoint, CurrentUser, Year, j, SemesterPage);
+			DrawText(semestername, x_semester, y_semester, 32, DARKBLUE);
+			semester[i].workbutton(mousePoint, CurrentUser, Year, semestername, SemesterPage);
 			y_semester += 100;
-			delete j;
 		}
+		delete[] semestername;
 		/// Back to profile page button
 		backtoSchoolYearPage.workbutton(mousePoint, CurrentUser, Year, SchoolYearPage);
-		delete[] semester;
 		EndDrawing();
 	}
-
+	delete[] Year;
 	CloseWindow();
 
 }
@@ -1209,6 +1224,8 @@ void SemesterPage(const int screenWidth, const int screenHeight, account& Curren
 		viewcourse.workbutton(mousePoint, CurrentUser, Year, Semester, ViewCoursesPage);
 		EndDrawing();
 	}
+	delete[] Year;
+	delete[] Semester;
 	CloseWindow();
 }
 
@@ -1317,6 +1334,8 @@ void CreateCoursePage(const int screenWidth, const int screenHeight, account& Cu
 
 		EndDrawing();
 	}
+	delete[] Year;
+	delete[] semester;
 	CloseWindow();
 }
 

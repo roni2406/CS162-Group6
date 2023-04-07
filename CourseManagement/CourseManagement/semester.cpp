@@ -41,13 +41,13 @@ void semester::outputASemesterToCSVFile(char* school_year) {
 	No = numSemester + 1;
 	switch (numSemester) {
 	case 0:
-		if (_mkdir(("../data/" + (string)(school_year) + "/fall").c_str()));
+		if (_mkdir(("../data/" + (string)(school_year) + "/fall").c_str()))
 		break;
 	case 1:
-		if (_mkdir(("../data/" + (string)(school_year) + "/summer").c_str()));
+		if (_mkdir(("../data/" + (string)(school_year) + "/summer").c_str()))
 		break;
 	case 2:
-		if (_mkdir(("../data/" + (string)(school_year) + "/autumn").c_str()));
+		if (_mkdir(("../data/" + (string)(school_year)+"/autumn").c_str()));
 	}
 	fin.close();
 
