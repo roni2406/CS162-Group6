@@ -5,6 +5,7 @@
 #include "Function.h"
 #include "schoolYear.h"
 #include "semester.h"
+#include "course.h"
 #include <string.h>
 #include "Class.h"
 
@@ -1222,7 +1223,7 @@ void CreateCoursePage(const int screenWidth, const int screenHeight, account& Cu
 		DrawRectangleRec(courseday.textbox, LIGHTGRAY);
 		DrawText("* Course day: ", 175, 617, 30, DARKBLUE);
 		DrawRectangleRec(sshours.textbox, LIGHTGRAY);
-		DrawText("* Course name: ", 175, 738, 30, DARKBLUE);
+		DrawText("* Session hours: ", 175, 738, 30, DARKBLUE);
 
 	
 		////Function_of_TextInputBoxes_----------------------------------------------------------------------------------------------------------------------
@@ -1261,12 +1262,9 @@ void CreateCoursePage(const int screenWidth, const int screenHeight, account& Cu
 		}
 		else confirmBtnState = 0;
 		if (confirmBtnAction) {
-			/*TextCopy(list.course[++list.len].courseName, coursename.text);
-			TextCopy(list.course[list.len].courseID, id.text);
-			TextCopy(list.course[list.len].teacherName, teachername.text);
-			TextCopy(list.course[list.len].numOfCre, nofc.text);
-			TextCopy(list.course[list.len].dayofweek, courseday.text);
-			TextCopy(list.course[list.len].sessionHour, sshours.text);*/
+			AddCourseToFile(coursename.text, id.text, teachername.text, nofc.text, courseday.text, sshours.text, Year, semester);
+			EndDrawing();
+			SemesterPage(screenWidth, screenHeight, CurrentUser, Year, semester);
 		}
 		if (confirmBtnFalseDisplay) DrawText("Information must be written in right form. Please try again!", 477, 700, 20, RED);
 		// Calculate button frame rectangle to draw depending on button state

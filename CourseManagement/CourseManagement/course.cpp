@@ -2,14 +2,14 @@
 #include "Function.h"
 #include "users.h"
 
-void AddCourseToFile(char* coursename, char* id, char* teacher, char* numOfCre, char* dow, char* sshour, char*& Year, char*& semester) {
+void AddCourseToFile(char* coursename, char* id, char* teacher, char* nofc, char* courseday, char* sshour, char*& Year, char*& semester) {
 	ofstream f;
-	f.open("../data/" + (string)(Year)+"/" + (string)(semester)+"/ListOfCourse.txt", ios::app);
+	f.open("../data/" + (string)(Year) +  "/" + "fall" + "/ListOfCourse.txt", ios::app);
 	f	<<'\n'<< coursename << ","
 		<< id << ","
 		<< teacher << ","
-		<< numOfCre << ","
-		<< dow << ","
+		<< nofc << ","
+		<< courseday << ","
 		<< sshour ;
 }
 int countCourse(char*year,char*semester) {

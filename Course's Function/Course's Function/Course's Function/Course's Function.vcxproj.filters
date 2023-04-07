@@ -18,6 +18,12 @@
     <ClCompile Include="Course%27s Function.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="backend.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="frontend.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Course.h">

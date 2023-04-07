@@ -130,7 +130,9 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="backend.cpp" />
     <ClCompile Include="Course%27s Function.cpp" />
+    <ClCompile Include="frontend.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Course.h" />

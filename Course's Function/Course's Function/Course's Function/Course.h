@@ -1,6 +1,8 @@
+#pragma once
 #include <iostream>
-#include"raylib.h"
+#include "raylib.h"
 using namespace std;
+
 #ifndef COURSE_H
 #define COURSE_H
 
@@ -64,52 +66,6 @@ struct Textbox {
     bool check = 0;
     void worktextbox(bool& somethingfalsedisplay);
 };
-void Textbox::worktextbox(bool& somethingfalsedisplay) {
-    if (CheckCollisionPointRec(GetMousePosition(), textbox)) mouseontextbox = true;
-    else mouseontextbox = false;
-    if (mouseontextbox)
-    {
-        // Set the window's cursor to the I-Beam
-        //SetMouseCursor(MOUSE_CURSOR_IBEAM);
-    }
-        // Get char pressed (unicode character) on the queue
-        if (mouseontextbox&&IsMouseButtonPressed(MOUSE_BUTTON_LEFT)) check = 1;
-        if (check == 1) {
-            int key = GetCharPressed();
-            // Check if more characters have been pressed on the same frame
-            while (key > 0)
-            {
-                // NOTE: Only allow keys in range [32..125]
-                if ((key >= 32) && (key <= 125) && (lettercount < 50))
-                {
-                    text[lettercount] = (char)key;
-                    text[lettercount + 1] = '\0'; // Add null terminator at the end of the string.
-                    lettercount++;
-                }
-
-                key = GetCharPressed();  // Check next character in the queue
-            }
-
-            if (IsKeyPressed(KEY_BACKSPACE))
-            {
-                lettercount--;
-                if (lettercount < 0) lettercount = 0;
-                text[lettercount] = '\0';
-            }
-        }
-    
-    if (!mouseontextbox && IsMouseButtonPressed(MOUSE_BUTTON_LEFT))check = 0;
-    if (check) {
-        DrawRectangleLines((int)textbox.x, (int)textbox.y, (int)textbox.width, (int)textbox.height, BLUE);
-        DrawRectangleLines((int)textbox.x - 1, (int)textbox.y - 1, (int)textbox.width + 2, (int)textbox.height + 2, BLUE);
-        DrawRectangleLines((int)textbox.x - 2, (int)textbox.y - 2, (int)textbox.width + 4, (int)textbox.height + 4, BLUE);
-        somethingfalsedisplay = false;
-    }
-    else DrawRectangleLines((int)textbox.x, (int)textbox.y, (int)textbox.width, (int)textbox.height, LIGHTGRAY);
-
-
-}
-
 void delete_stu(ListCourse& list, int k, int no);
 void delete_course(ListCourse& list, int i);
 void Stu_to_file(ListCourse& list, int k);
