@@ -1351,8 +1351,10 @@ void ViewCoursesPage(const int screenWidth, const int screenHeight, account& Cur
 
 
 	while (!WindowShouldClose()) {
+
 		ClearBackground(WHITE);
 		BeginDrawing();
+
 		DrawRectangleGradientEx(background, SKYBLUE, DARKBLUE, DARKBLUE, SKYBLUE);
 		DrawRectangle(0, 0, screenWidth, 60, WHITE);
 		DrawText(Year, 30, 15, 40, DARKBLUE);
@@ -1360,6 +1362,36 @@ void ViewCoursesPage(const int screenWidth, const int screenHeight, account& Cur
 		DrawRectangleRec(backtosemesterpage.button, WHITE);
 		DrawText("Back to Semester Page", 1200, 20, 20, DARKBLUE);
 
+		DrawRectangle(0, 231, screenWidth, 751, WHITE);
+		DrawRectangleLines(0, 231, screenWidth, 751, BLACK);
+
+		DrawRectangle(0, 189, 121, 42, LIGHTGRAY);
+		DrawRectangleLines(0, 189, 121, 42, BLACK);
+		DrawText("ID", 45, 203, 20, DARKBLUE);
+
+		DrawRectangle(121, 189, 519, 42, LIGHTGRAY);
+		DrawRectangleLines(121, 189, 519, 42, BLACK);
+		DrawText("Course name", 325, 203, 20, DARKBLUE);
+
+		DrawRectangle(640, 189, 142, 42, LIGHTGRAY);
+		DrawRectangleLines(640, 189, 142, 42, BLACK);
+		DrawText("Class name", 650, 203, 20, DARKBLUE);
+
+		DrawRectangle(782, 189, 375, 42, LIGHTGRAY);
+		DrawRectangleLines(782, 189, 375, 42, BLACK);
+		DrawText("Teacher name", 886, 203, 20, DARKBLUE);
+
+		DrawRectangle(1157, 189, 107, 42, LIGHTGRAY);
+		DrawRectangleLines(1157, 189, 107, 42, BLACK);
+		DrawText("Credits", 1177, 203, 20, DARKBLUE);
+
+		DrawRectangle(1264, 189, 143, 42, LIGHTGRAY);
+		DrawRectangleLines(1264, 189, 143, 42, BLACK);
+		DrawText("Course day", 1282, 203, 20, DARKBLUE);
+
+		DrawRectangle(1407, 189, 105, 42, LIGHTGRAY);
+		DrawRectangleLines(1407, 189, 105, 42, BLACK);
+		DrawText("Session", 1423, 203, 20, DARKBLUE);
 
 		mousePoint = GetMousePosition();
 		backtosemesterpage.workbutton(mousePoint, CurrentUser, Year, Semester, SemesterPage);
