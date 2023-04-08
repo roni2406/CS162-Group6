@@ -2,17 +2,18 @@
 #include "Function.h"
 #include "users.h"
 
-void AddCourseToFile(char* coursename, char* id, char* teacher, char* nofc, char* courseday, char* sshour, char*& Year, char*& semester) {
+void AddCourseToFile(char* coursename, char* id, char* classname, char* teacher, char* nofc, char* courseday, char* sshour, char*& Year, char*& semester) {
 	ofstream f;
-	f.open("../data/" + (string)(Year) +  "/" + "fall" + "/ListOfCourse.txt", ios::app);
-	f	<<'\n'<< coursename << ","
+	f.open("../data/" + (string)(Year) +  "/" + (string)(semester) + "/ListOfCourse.txt", ios::app);
+	f << coursename << ","
 		<< id << ","
+		<< classname << ","
 		<< teacher << ","
 		<< nofc << ","
 		<< courseday << ","
-		<< sshour ;
+		<< sshour << '\n';
 }
-int countCourse(char*year,char*semester) {
+int countCourse(char*year, char*semester) {
 	ifstream fin;
 	fin.open("../data/" + (string)(year)+"/"+(string)(semester)+"/ListOfCourse.txt");
 	int num = 0;
@@ -29,8 +30,9 @@ void LoadCourseFromFile(char* year, char* semester,int num) {
 	fin.open("../data/" + (string)(year)+"/" + (string)(semester)+"/ListOfCourse.txt");
 	courses = new course[num];
 	for (int i = 0; i <= num; i++) {
-		fin.getline(courses[i].courseName, 1000, ',');
+		//fin.getline(courses[i].courseName, 1000, ',');
 		fin.getline(courses[i].courseID, 1000, ',');
+		fin.getline(courses[i].className, 1000, ',');
 		fin.getline(courses[i].teacherName, 1000, ',');
 		fin.getline(courses[i].numOfCre, 1000, ',');
 		fin.getline(courses[i].dayofweek, 1000, ',');

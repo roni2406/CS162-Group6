@@ -48,9 +48,10 @@ void CreateSemesterPage(const int screenWidth, const int screenHeight, account& 
 void ViewSemestersPage(const int screenWidth, const int screenHeight, account& CurrentUser, char*& Year);
 void SemesterPage(const int screenWidth, const int screenHeight, account& CurrentUser, char*& Year, char*& Semester); // need to include struct semester to display and save data
 
-void CreateCoursePage(const int screenWidth, const int screenHeight, account& CurrentUser, char*& Year, char*& semester); // need to include struct semester to display and save data
-void ViewCoursesPage(const int screenWidth, const int screenHeight, account& CurrentUser, char*& Year, char*& semester); // need to include struct semester to display and save data
-void CoursePage(const int screenWidth, const int screenHeight, account& CurrentUser, char*& Year, char* &semester, char* &course); // need to include struct semester, course to display and save data
+void CreateCoursePage(const int screenWidth, const int screenHeight, account& CurrentUser, char*& Year, char*& Semester); // need to include struct semester to display and save data
+void ViewCoursesPage(const int screenWidth, const int screenHeight, account& CurrentUser, char*& Year, char*& Semester); // need to include struct semester to display and save data
+void CoursePage(const int screenWidth, const int screenHeight, account& CurrentUser, char*& Year, char* &Semester, char* &Course); // need to include struct semester, course to display and save data
+
 // in course page have following functions: delete, view student in the course, add student, delete student
 void DeleteCoursePage(); //?
 void StudentCoursePage(); // ?

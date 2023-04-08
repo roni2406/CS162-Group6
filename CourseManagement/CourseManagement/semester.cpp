@@ -41,13 +41,13 @@ void semester::outputASemesterToCSVFile(char* school_year) {
 	No = numSemester + 1;
 	switch (numSemester) {
 	case 0:
-		if (_mkdir(("../data/" + (string)(school_year) + "/fall").c_str()))
+		if (_mkdir(("../data/" + (string)(school_year) + "/Fall").c_str()))
 		break;
 	case 1:
-		if (_mkdir(("../data/" + (string)(school_year) + "/summer").c_str()))
+		if (_mkdir(("../data/" + (string)(school_year) + "/Summer").c_str()))
 		break;
 	case 2:
-		if (_mkdir(("../data/" + (string)(school_year)+"/autumn").c_str()));
+		if (_mkdir(("../data/" + (string)(school_year)+"/Autumn").c_str()));
 	}
 	fin.close();
 
@@ -87,7 +87,7 @@ int countSemester(char* school_year) {
 }
 
 void getsemestername(char** semestername, int n) {
-	const char* tmp1 = " Fall";
+	const char* tmp1 = "Fall";
 	const char* tmp2 = "Summer";
 	const char* tmp3 = "Autumn";
 	for (int i = 0; i < 3; ++i) {

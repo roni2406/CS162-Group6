@@ -57,7 +57,8 @@ struct ListCourse {
     int len = 0;
 };
 
-void AddCourseToFile(char* coursename, char* id, char* teacher, char* nofc, char* courseday, char* sshour, char*& Year, char*& semester);
+void AddCourseToFile(char* coursename, char* id, char* classname, char* teacher, char* nofc, char* courseday, char* sshour, char*& Year, char*& semester);
+int countCourse(char* year, char* semester);
 void delete_stu(ListCourse& list, int k, int no);
 void delete_course(ListCourse& list, int i);
 void Stu_to_file(ListCourse& list, int k);
