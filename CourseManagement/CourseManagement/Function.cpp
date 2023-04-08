@@ -772,12 +772,15 @@ void ViewSchoolYearsPage(const int screenWidth, const int screenHeight, account&
 			schoolyear[i].workbutton(mousePoint, CurrentUser, Years[i], SchoolYearPage);
 			y_schoolyear += 100;
 		}
+		delete[] schoolyear;
 		/// Back to profile page button
 		backtoprofilepage.workbutton(mousePoint, CurrentUser, ProfilePageStaff);
-		delete[] schoolyear;
 		EndDrawing();
 	}
-	
+	for (int i = 0; i < n; ++i) {
+		delete[] Years[i];
+	}
+	delete[] Years;
 	CloseWindow();
 
 }
@@ -940,6 +943,7 @@ void ViewClassesPage(const int screenWidth, const int screenHeight, account& Cur
 		delete[] Class;
 		EndDrawing();
 	}
+	delete Classes;
 	CloseWindow();
 
 }
@@ -1119,7 +1123,7 @@ void CreateSemesterPage(const int screenWidth, const int screenHeight, account& 
 }
 void ViewSemestersPage(const int screenWidth, const int screenHeight, account& CurrentUser, char* &Year) {
 	int n = countSemester(Year); // countSemester
-	semester* Semester = getSemester(Year); // getSemesterArr
+	//semester* Semester = getSemester(Year); // getSemesterArr
 	Vector2 mousePoint = { 0.0f, 0.0f };
 
 	Rectangle background = { 0,0,float(screenWidth),float(screenHeight) };
@@ -1146,37 +1150,18 @@ void ViewSemestersPage(const int screenWidth, const int screenHeight, account& C
 
 
 		mousePoint = GetMousePosition();
-		Button6 semester[5];
-		const char* tmp1 = "fall";
-		const char* tmp2 = "summer";
-		const char* tmp3 = "autumn";
-		char* semestername = new char[10];
-
-
+		Button6 semester[3];
+		char** semestername = new char* [3];
+		getsemestername(semestername, n);
 		for (int i = 0; i < n; ++i) {
-			if (i == 0) {
-				for (int j = 0; j < strlen(tmp1); ++j) {
-					semestername[j] = tmp1[j];
-				}
-				semestername[strlen(tmp1)] = '\0';
-			}
-			if (i == 1) {
-				for (int j = 0; j < strlen(tmp2); ++j) {
-					semestername[j] = tmp2[j];
-				}
-				semestername[strlen(tmp2)] = '\0';
-			}
-			if (i == 2) {
-				for (int j = 0; j < strlen(tmp3); ++j) {
-					semestername[j] = tmp3[j];
-				}
-				semestername[strlen(tmp3)] = '\0';
-			}
 			semester[i].button = {float( x_semester - 122), float(y_semester - 12), 421, 59 };
 			DrawRectangleRec(semester[i].button, LIGHTGRAY);
-			DrawText(semestername, x_semester, y_semester, 32, DARKBLUE);
-			semester[i].workbutton(mousePoint, CurrentUser, Year, semestername, SemesterPage);
+			DrawText(semestername[i], x_semester + 30, y_semester, 32, DARKBLUE);
+			semester[i].workbutton(mousePoint, CurrentUser, Year, semestername[i], SemesterPage);
 			y_semester += 100;
+		}
+		for (int i = 0; i < 3; ++i) {
+			delete[] semestername[i];
 		}
 		delete[] semestername;
 		/// Back to profile page button
@@ -1212,7 +1197,7 @@ void SemesterPage(const int screenWidth, const int screenHeight, account& Curren
 		BeginDrawing();
 		DrawRectangleGradientEx(background, SKYBLUE, DARKBLUE, DARKBLUE, SKYBLUE);
 		DrawRectangle(0, 0, screenWidth, 60, WHITE);
-		DrawText(Semester, 620, 15, 40, DARKBLUE);
+		DrawText(Semester, 670, 15, 40, DARKBLUE);
 		DrawRectangleRec(backtoviewsemesterpage.button, WHITE);
 		DrawText("Back to View School Year Page", 1150, 20, 20, DARKBLUE);
 		DrawRectangle(322, 136, 870, 806, WHITE);

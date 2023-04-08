@@ -21,5 +21,6 @@ struct semester {
 // front end use:
 bool createASemester(char* school_year, char* start_date, char* end_date);
 int countSemester(char* school_year);
+void getsemestername(char** semestername, int n);
 semester* getSemester(char* school_year);
 #endif

@@ -86,6 +86,34 @@ int countSemester(char* school_year) {
 	return numSemester;
 }
 
+void getsemestername(char** semestername, int n) {
+	const char* tmp1 = " Fall";
+	const char* tmp2 = "Summer";
+	const char* tmp3 = "Autumn";
+	for (int i = 0; i < 3; ++i) {
+		semestername[i] = new char[10];
+	}
+	for (int i = 0; i < n; ++i) {
+		if (i == 0) {
+			for (int j = 0; j < strlen(tmp1); ++j) {
+				semestername[i][j] = tmp1[j];
+			}
+			semestername[i][strlen(tmp1)] = '\0';
+		}
+		if (i == 1) {
+			for (int j = 0; j < strlen(tmp2); ++j) {
+				semestername[i][j] = tmp2[j];
+			}
+			semestername[i][strlen(tmp2)] = '\0';
+		}
+		if (i == 2) {
+			for (int j = 0; j < strlen(tmp3); ++j) {
+				semestername[i][j] = tmp3[j];
+			}
+			semestername[i][strlen(tmp3)] = '\0';
+		}
+	}
+}
 semester* getSemester(char* school_year) {
 	int numOfSemester = countSemester(school_year);
 	semester* semesterArr = new semester[5];
