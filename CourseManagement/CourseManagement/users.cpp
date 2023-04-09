@@ -140,3 +140,10 @@ void addStudentsWithCSV(char* fileNameIn, char* fileNameOut) {
 	fin.close();
 }
 
+bool checkdata_FileName(char* fileNameIn)
+{
+	int n = strlen(fileNameIn);
+	if (fileNameIn[n - 4] == '.' && fileNameIn[n - 3] == 'c'
+		&& fileNameIn[n - 2] == 's' && fileNameIn[n - 1] == 'v') return true;
+	else return false;
+}

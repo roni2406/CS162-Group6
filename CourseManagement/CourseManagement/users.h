@@ -54,4 +54,5 @@ void addAStaff(char* filename, char* first_name, char* last_name, bool Gender, c
 void addStudentsWithCSV(char* fileNameIn, char* fileNameOut);
     // staff will input filename, fout is used for adding to class or course
 
+bool checkdata_FileName(char* fileNameIn);
 #endif
