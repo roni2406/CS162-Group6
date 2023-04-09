@@ -42,6 +42,7 @@ void createClassPage(const int screenWidth, const int screenHeight, account& Cur
 void ViewClassesPage(const int screenWidth, const int screenHeight, account& CurrentUser);
 void ClassPage();
 void addStudentPage(const int screenWidth, const int screenHeight, account& CurrentUser);
+void addStudentCSV(const int screenWidth, const int screenHeight,char* classname, account& CurrentUser);
 
 
 void CreateSemesterPage(const int screenWidth, const int screenHeight, account& CurrentUser, char* &Year);
