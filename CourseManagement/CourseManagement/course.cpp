@@ -24,13 +24,12 @@ int countCourse(char*year, char*semester) {
 	}
 	return num;
 }
-void LoadCourseFromFile(char* year, char* semester,int num) {
-	course* courses;
+void LoadCourseFromFile(char* year, char* semester,int num, course* &courses) {
 	ifstream fin;
 	fin.open("../data/" + (string)(year)+"/" + (string)(semester)+"/ListOfCourse.txt");
 	courses = new course[num];
-	for (int i = 0; i <= num; i++) {
-		//fin.getline(courses[i].courseName, 1000, ',');
+	for (int i = 0; i < num; i++) {
+		fin.getline(courses[i].courseName, 1000, ',');
 		fin.getline(courses[i].courseID, 1000, ',');
 		fin.getline(courses[i].className, 1000, ',');
 		fin.getline(courses[i].teacherName, 1000, ',');
@@ -38,6 +37,7 @@ void LoadCourseFromFile(char* year, char* semester,int num) {
 		fin.getline(courses[i].dayofweek, 1000, ',');
 		fin.getline(courses[i].sessionHour, 1000);
 	}
+	fin.close();
 }
 void course::Load_stu(char* year, char* semester) {
 	ifstream f;

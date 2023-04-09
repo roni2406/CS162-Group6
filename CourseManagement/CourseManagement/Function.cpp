@@ -1412,15 +1412,20 @@ void CreateCoursePage(const int screenWidth, const int screenHeight, account& Cu
 }
 
 void ViewCoursesPage(const int screenWidth, const int screenHeight, account& CurrentUser, char*& Year, char*& Semester) {
+	course* courses;
+	int n = countCourse(Year, Semester);
+	LoadCourseFromFile(Year, Semester, n, courses);
 	Rectangle background = { 0,0,float(screenWidth),float(screenHeight) };
 	Vector2 mousePoint = { 0.0f, 0.0f };
 
 	Button6 backtosemesterpage;
 	backtosemesterpage.button = { 1190, 20, 250, 30 };
 
-
+	int x_course = 11;
+	int y_course = 255;
 	while (!WindowShouldClose()) {
-
+		if (x_course > 11) x_course = 11;
+		if (y_course > 255) y_course = 255;
 		ClearBackground(WHITE);
 		BeginDrawing();
 
@@ -1462,10 +1467,21 @@ void ViewCoursesPage(const int screenWidth, const int screenHeight, account& Cur
 		DrawRectangleLines(1407, 189, 105, 42, BLACK);
 		DrawText("Session", 1423, 203, 20, DARKBLUE);
 
+		for (int i = 0; i < n; ++i) {
+			DrawText(courses[i].courseID, x_course, y_course, 20, BLACK);
+			DrawText(courses[i].courseName, x_course + 137, y_course, 20, BLACK);
+			DrawText(courses[i].className, x_course + 652, y_course, 20, BLACK);
+			DrawText(courses[i].teacherName, x_course + 793, y_course, 20, BLACK);
+			DrawText(courses[i].numOfCre, x_course + 1189, y_course, 20, BLACK);
+			DrawText(courses[i].dayofweek, x_course + 1279, y_course, 20, BLACK);
+			DrawText(courses[i].sessionHour, x_course + 1429, y_course, 20, BLACK);
+			y_course += 61;
+		}
 		mousePoint = GetMousePosition();
 		backtosemesterpage.workbutton(mousePoint, CurrentUser, Year, Semester, SemesterPage);
 		EndDrawing();
 	}
+	delete[] courses;
 	delete[] Year;
 	delete[] Semester;
 	CloseWindow();

@@ -25,19 +25,6 @@ void Button2::workbutton(Vector2 mousePoint, account& CurrentUser, void(*func)(c
 		func(screenWidth, screenHeight, CurrentUser);
 	}
 }
-
-void Button4::workbutton(Vector2 mousePoint, account& CurrentUser, char*& a, void(*func)(const int screenWidth, const int screenHeight, account& CurrentUser, char*& a)) {
-	if (CheckCollisionPointRec(mousePoint, button)) {          // Check button state
-		if (IsMouseButtonPressed(MOUSE_BUTTON_LEFT)) action = true;
-	}
-	else action = false;
-	if (action)
-	{
-		EndDrawing();
-		func(screenWidth, screenHeight, CurrentUser, a);
-	}
-}
-
 void Button3::workbutton(Vector2 mousePoint, account& CurrentUser, char*& a, void(*func)(const int screenWidth, const int screenHeight, account& CurrentUser, char*& a)) {
 	if (CheckCollisionPointRec(mousePoint, btnBounds)) {          // Check button state
 		if (IsMouseButtonPressed(MOUSE_BUTTON_LEFT)) action = true;
@@ -50,6 +37,17 @@ void Button3::workbutton(Vector2 mousePoint, account& CurrentUser, char*& a, voi
 	// Calculate button frame rectangle to draw depending on button state
 	sourceRec.y = state * frameHeight;
 	DrawTextureRec(texture, sourceRec, { btnBounds.x, btnBounds.y }, WHITE); // Draw button frame
+}
+void Button4::workbutton(Vector2 mousePoint, account& CurrentUser, char*& a, void(*func)(const int screenWidth, const int screenHeight, account& CurrentUser, char*& a)) {
+	if (CheckCollisionPointRec(mousePoint, button)) {          // Check button state
+		if (IsMouseButtonPressed(MOUSE_BUTTON_LEFT)) action = true;
+	}
+	else action = false;
+	if (action)
+	{
+		EndDrawing();
+		func(screenWidth, screenHeight, CurrentUser, a);
+	}
 }
 
 void Button5::workbutton(Vector2 mousePoint, account& CurrentUser, char*& a, char*& b, void(*func)(const int screenWidth, const int screenHeight, account& CurrentUser, char*& a, char*& b)) {
