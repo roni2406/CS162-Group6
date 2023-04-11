@@ -49,7 +49,8 @@ struct course {
     char studentfile[30];
     student stuOfCourse[50];
     void Load_stu( char* year, char* semester);
-
+    void Return_stu(char* year, char* semester);
+    void countStu(char* year, char* semester);
 };
 
 struct ListCourse {
