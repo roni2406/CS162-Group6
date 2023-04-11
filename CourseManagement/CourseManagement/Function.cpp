@@ -1142,7 +1142,7 @@ void CreateSemesterPage(const int screenWidth, const int screenHeight, account& 
 		DrawText("  Call us : (028) 3835 4266         E - mail : info@fit.hcmus.edu.vn", 0, 20, 20, DARKBLUE);
 		DrawRectangleGradientEx(background, SKYBLUE, DARKBLUE, DARKBLUE, SKYBLUE);
 		DrawRectangle(0, 0, screenWidth, 60, WHITE);
-
+		DrawText(Year, 30, 15, 40, DARKBLUE);
 		DrawRectangleRec(backtoschoolyearpage.button, WHITE);
 		DrawText("Back to School Year Page", 1180, 20, 20, DARKBLUE);
 		DrawRectangle(355, 173, 818, 600, WHITE);
@@ -1211,6 +1211,7 @@ void ViewSemestersPage(const int screenWidth, const int screenHeight, account& C
 		BeginDrawing();
 		DrawRectangleGradientEx(background, SKYBLUE, DARKBLUE, DARKBLUE, SKYBLUE);
 		DrawRectangle(0, 0, screenWidth, 60, WHITE);
+		DrawText(Year, 30, 15, 40, DARKBLUE);
 		DrawText("SEMESTERS", 620, 15, 40, DARKBLUE);
 		DrawRectangleRec(backtoSchoolYearPage.button, WHITE);
 		DrawText("Back to School Year Page", 1200, 20, 20, DARKBLUE);
@@ -1387,7 +1388,10 @@ void CreateCoursePage(const int screenWidth, const int screenHeight, account& Cu
 		}
 		else confirmBtnState = 0;
 		if (confirmBtnAction) {
-			if (id.text[0] == '\0' || coursename.text[0] == '\0' || classname.text[0] == '\0' || teachername.text[0] == '\0' || nofc.text[0] == '\0' || courseday.text[0] == '\0' || sshours.text[0] == '\0') {
+			if (!CheckValidCourse(coursename.text, id.text, classname.text, Year, Semester) ||
+				id.text[0] == '\0' || coursename.text[0] == '\0' || classname.text[0] == '\0' || 
+				teachername.text[0] == '\0' || nofc.text[0] == '\0' || courseday.text[0] == '\0' || 
+				sshours.text[0] == '\0') {
 				confirmBtnFalseDisplay = true;
 			}
 			else {

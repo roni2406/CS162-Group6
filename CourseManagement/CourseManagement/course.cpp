@@ -15,6 +15,9 @@ void AddCourseToFile(char* coursename, char* id, char* classname, char* teacher,
 		<< sshour << '\n';
 }
 int countCourse(char*year, char*semester) {
+	ofstream fout;
+	fout.open("../data/" + (string)(year)+"/" + (string)(semester)+"/ListOfCourse.txt", ios::app);
+	fout.close();
 	ifstream fin;
 	fin.open("../data/" + (string)(year)+"/"+(string)(semester)+"/ListOfCourse.txt");
 	int num = 0;
@@ -25,6 +28,9 @@ int countCourse(char*year, char*semester) {
 	return num-1;
 }
 void LoadCourseFromFile(char* year, char* semester,int num, course* &courses) {
+	ofstream fout;
+	fout.open("../data/" + (string)(year)+"/" + (string)(semester)+"/ListOfCourse.txt", ios::app);
+	fout.close();
 	ifstream fin;
 	fin.open("../data/" + (string)(year)+"/" + (string)(semester)+"/ListOfCourse.txt");
 	courses = new course[num];
@@ -40,11 +46,11 @@ void LoadCourseFromFile(char* year, char* semester,int num, course* &courses) {
 	fin.close();
 }
 void ReturnCoursesToFile(char* year, char* semester, int num, course*& courses) {
-	ofstream fin;
-	fin.open("../data/" + (string)(year)+"/" + (string)(semester)+"/ListOfCourse.txt");
+	ofstream fout;
+	fout.open("../data/" + (string)(year)+"/" + (string)(semester)+"/ListOfCourse.txt");
 	courses = new course[num];
 	for (int i = 0; i < num; i++) {
-		fin << courses[i].courseName	<< ','
+		fout << courses[i].courseName	<< ','
 			<< courses[i].courseID		<< ','
 			<< courses[i].className		<< ','
 			<< courses[i].teacherName	<< ','
@@ -52,7 +58,7 @@ void ReturnCoursesToFile(char* year, char* semester, int num, course*& courses) 
 			<< courses[i].dayofweek	    << ','
 			<< courses[i].sessionHour	<< '\n';
 	}
-	fin.close();
+	fout.close();
 }
 void course:: countStu(char* year, char* semester) {
 	ifstream fin;
@@ -131,8 +137,10 @@ bool CheckValidCourse(char* coursename, char* ID, char* classname, char* Year, c
 	course* courses;
 	LoadCourseFromFile(Year, semester, num, courses);
 	for (int i = 0; i < num; i++) {
-		if ((courses[i].className == classname && courses[i].courseName == coursename)
-			||(courses[i].courseName == coursename &&courses[i].courseID!=ID))
+		if ( 
+			   (strcmp(courses[i].className, classname) == 0 && strcmp(courses[i].courseName, coursename) == 0)
+			|| (strcmp(courses[i].courseName, coursename) == 0 && strcmp(courses[i].courseID, ID) != 0 )
+			|| (strcmp(courses[i].courseName, coursename) != 0 && strcmp(courses[i].courseID, ID) == 0 ))
 			return 0;
 	}
 	return 1;

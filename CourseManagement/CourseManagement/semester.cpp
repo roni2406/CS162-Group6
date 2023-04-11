@@ -75,6 +75,10 @@ bool createASemester(char* school_year, char* start_date, char* end_date) {
 }
 
 int countSemester(char* school_year) {
+	ofstream fout;
+	fout.open("../data/" + (string)(school_year)+"/Semester.csv", ios::app);
+	fout.close();
+
 	ifstream fin;
 	fin.open("../data/" + (string)(school_year)+ "/Semester.csv");
 	int numSemester = 0;
@@ -83,6 +87,7 @@ int countSemester(char* school_year) {
 		++numSemester;
 		fin.ignore(500, '\n');
 	}
+	fin.close();
 	return numSemester;
 }
 

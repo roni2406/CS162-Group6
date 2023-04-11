@@ -7,34 +7,6 @@ using namespace std;
 #ifndef COURSE_H
 #define COURSE_H
 
-struct Date1 {
-    int day;
-    int month;
-    int year;
-};
-
-struct scoreboard1 {
-    double totalMark;
-    double finalMark;
-    double midtermMark;
-    double otherMark;
-};
-
-struct person1 {
-    char firstName[10];
-    char lastName[20];
-    bool gender; // 0(false) : male; 1(true) : female
-    Date1 dob;
-    char socialID[20];
-};
-
-struct student1 {
-    int No;
-    char stuID[9];
-    person1 person;
-    scoreboard1 mark;
-};
-
 struct course {
     char courseID[30];
     char courseName[30];
@@ -60,15 +32,6 @@ struct ListCourse {
 
 void AddCourseToFile(char* coursename, char* id, char* classname, char* teacher, char* nofc, char* courseday, char* sshour, char*& Year, char*& semester);
 int countCourse(char* year, char* semester);
+bool CheckValidCourse(char* coursename, char* ID, char* classname, char* Year, char* semester);
 void LoadCourseFromFile(char* year, char* semester, int num, course* &courses);
-void delete_stu(ListCourse& list, int k, int no);
-void delete_course(ListCourse& list, int i);
-void Stu_to_file(ListCourse& list, int k);
-void Course_to_File(ListCourse& list);
-void Load_Course(ListCourse& list);
-void Stus_to_Course(ListCourse& list);
-void viewcourse(ListCourse& list);
-void view_Stu(ListCourse& list, int k);
-void Input_course(ListCourse& list);
-void Stus_to_Course(ListCourse& list);
 #endif
