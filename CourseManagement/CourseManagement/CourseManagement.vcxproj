@@ -151,8 +151,6 @@
     <ClInclude Include="course.h" />
     <ClInclude Include="Date.h" />
     <ClInclude Include="Function.h" />
-    <ClInclude Include="resource.h" />
-    <ClInclude Include="resource1.h" />
     <ClInclude Include="schoolYear.h" />
     <ClInclude Include="scoreboard.h" />
     <ClInclude Include="semester.h" />

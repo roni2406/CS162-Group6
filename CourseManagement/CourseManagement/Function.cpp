@@ -1471,7 +1471,9 @@ void ViewCoursesPage(const int screenWidth, const int screenHeight, account& Cur
 		DrawRectangleLines(1407, 189, 105, 42, BLACK);
 		DrawText("Session", 1423, 203, 20, DARKBLUE);
 
+		Button7* coursebutton = new Button7[n];
 		for (int i = 0; i < n; ++i) {
+			coursebutton[i].button = {0, float(y_course-23), 1512, 53 };
 			DrawText(courses[i].courseID, x_course, y_course, 20, BLACK);
 			DrawText(courses[i].courseName, x_course + 137, y_course, 20, BLACK);
 			DrawText(courses[i].className, x_course + 652, y_course, 20, BLACK);
@@ -1479,13 +1481,44 @@ void ViewCoursesPage(const int screenWidth, const int screenHeight, account& Cur
 			DrawText(courses[i].numOfCre, x_course + 1189, y_course, 20, BLACK);
 			DrawText(courses[i].dayofweek, x_course + 1279, y_course, 20, BLACK);
 			DrawText(courses[i].sessionHour, x_course + 1429, y_course, 20, BLACK);
+			coursebutton[i].workbutton(mousePoint, CurrentUser, Year, Semester, courses[i], CoursePage);
 			y_course += 61;
 		}
+		delete[] coursebutton;
 		mousePoint = GetMousePosition();
 		backtosemesterpage.workbutton(mousePoint, CurrentUser, Year, Semester, SemesterPage);
 		EndDrawing();
 	}
 	delete[] courses;
+	delete[] Year;
+	delete[] Semester;
+	CloseWindow();
+}
+
+void CoursePage(const int screenWidth, const int screenHeight, account& CurrentUser, char*& Year, char*& Semester, course& Course) {
+	Rectangle background = { 0,0,float(screenWidth),float(screenHeight) };
+	Vector2 mousePoint = { 0.0f, 0.0f };
+
+	Button6 backtoviewcoursespage;
+	backtoviewcoursespage.button = { 1150, 20, 250, 30 };
+
+
+	while (!WindowShouldClose()) {
+		ClearBackground(WHITE);
+		BeginDrawing();
+		DrawRectangleGradientEx(background, SKYBLUE, DARKBLUE, DARKBLUE, SKYBLUE);
+		DrawRectangle(0, 0, screenWidth, 60, WHITE);
+		DrawText(Course.courseID, 30, 15, 40, DARKBLUE);
+		DrawText(Semester, 670, 15, 40, DARKBLUE);
+		DrawRectangleRec(backtoviewcoursespage.button, WHITE);
+		DrawText("Back to View Courses Page", 1180, 20, 20, DARKBLUE);
+		DrawRectangle(322, 136, 870, 806, WHITE);
+		DrawRectangleLines(321, 135, 872, 807, BLACK);
+
+		mousePoint = GetMousePosition();
+		backtoviewcoursespage.workbutton(mousePoint, CurrentUser, Year, Semester, ViewCoursesPage);
+		EndDrawing();
+	}
 	delete[] Year;
 	delete[] Semester;
 	CloseWindow();

@@ -7,6 +7,7 @@
 #include "account.h"
 #include "schoolYear.h"
 #include "semester.h"
+#include "course.h"
 using namespace std;
 
 const int screenWidth = 1512;
@@ -51,7 +52,7 @@ void SemesterPage(const int screenWidth, const int screenHeight, account& Curren
 
 void CreateCoursePage(const int screenWidth, const int screenHeight, account& CurrentUser, char*& Year, char*& Semester); // need to include struct semester to display and save data
 void ViewCoursesPage(const int screenWidth, const int screenHeight, account& CurrentUser, char*& Year, char*& Semester); // need to include struct semester to display and save data
-void CoursePage(const int screenWidth, const int screenHeight, account& CurrentUser, char*& Year, char* &Semester, char* &Course); // need to include struct semester, course to display and save data
+void CoursePage(const int screenWidth, const int screenHeight, account& CurrentUser, char*& Year, char* &Semester, course& Course); // need to include struct semester, course to display and save data
 
 // in course page have following functions: delete, view student in the course, add student, delete student
 void DeleteCoursePage(); //?
@@ -133,7 +134,16 @@ struct Button6 {
 	bool action = false;
 	void workbutton(Vector2 mousePoint, account& CurrentUser, char*& a, char*& b, void(*func)(const int screenWidth, const int screenHeight, account& CurrentUser, char*& a, char*& b));
 };
+// used for just-text button which move to Course
+struct Button7 {
+	const int screenWidth = 1512;
+	const int screenHeight = 982;
+	Rectangle button = { 0, 0, 0, 0 };
+	bool mouseonbutton = false;
+	bool action = false;
+	void workbutton(Vector2 mousePoint, account& CurrentUser, char*&a, char*& b, course& c, void(*func)(const int screenWidth, const int screenHeight, account& CurrentUser, char*& a, char*& b, course& c));
 
+};
 /// textbox
 
 // used for normal-text textbox
