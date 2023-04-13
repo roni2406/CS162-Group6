@@ -307,6 +307,7 @@ void SignUpPage(const int screenWidth, const int screenHeight, account& CurrentU
 		DrawText(TextFormat("%i/%i", username.lettercount, MAX_INPUT_CHARS), 1050, 280, 20, DARKBLUE);
 		DrawText(TextFormat("%i/%i", password.lettercount, MAX_INPUT_CHARS), 1050, 450, 20, DARKBLUE);
 		DrawText(TextFormat("%i/%i", confirmpass.lettercount, MAX_INPUT_CHARS), 1050, 620, 20, DARKBLUE);
+		DrawRectangle(1028, 373, 200, 112, WHITE);
 		////-------------------------------------------------------------------------------------------------------------------------------------------------
 
 		////Function of signup button------------------------------------------------------------------------------------------------------------------------
@@ -742,6 +743,7 @@ void ViewSchoolYearsPage(const int screenWidth, const int screenHeight, account&
 
 	Rectangle background = { 0,0,float(screenWidth),float(screenHeight)};
 
+
 	Button2 backtoprofilepage;
 	backtoprofilepage.button = { 1270, 20, 200, 30 };
 
@@ -1116,6 +1118,7 @@ void addStudentCSV(const int screenWidth, const int screenHeight,char* classname
 }
 
 void CreateSemesterPage(const int screenWidth, const int screenHeight, account& CurrentUser, char* &Year) {
+	int n = countSemester(Year);
 	Vector2 mousePoint = { 0.0f, 0.0f };
 	Rectangle background = { 0,0,float(screenWidth),float(screenHeight)};
 
@@ -1171,14 +1174,17 @@ void CreateSemesterPage(const int screenWidth, const int screenHeight, account& 
 		}
 		else confirmBtnState = 0;
 		if (confirmBtnAction) {
-			if (createASemester(Year, startdate.text, enddate.text)) {
-				confirmBtnFalseDisplay = false;
-				EndDrawing();
-				SchoolYearPage(screenWidth, screenHeight, CurrentUser, Year);
+			if (n < 3) {
+				if (createASemester(Year, startdate.text, enddate.text)) {
+					confirmBtnFalseDisplay = false;
+					EndDrawing();
+					SchoolYearPage(screenWidth, screenHeight, CurrentUser, Year);
+				}
+				else confirmBtnFalseDisplay = false;
 			}
 			else confirmBtnFalseDisplay = true;
 		}
-		if (confirmBtnFalseDisplay) DrawText("Information must be written in right form. Please try again!", 477, 700, 20, RED);
+		if (confirmBtnFalseDisplay) DrawText("Max semesters created or information must be written in right form. Please try again!", 477, 700, 20, RED);
 		// Calculate button frame rectangle to draw depending on button state
 		sourceRecconfirmBtn.y = confirmBtnState * frameHeightconfirmBtn;
 		DrawTextureRec(confirmBtn, sourceRecconfirmBtn, { btnBoundsconfirmBtn.x, btnBoundsconfirmBtn.y }, WHITE); // Draw button frame
