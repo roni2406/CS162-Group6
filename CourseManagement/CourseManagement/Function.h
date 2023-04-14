@@ -41,7 +41,7 @@ void viewClassinSchoolYearPage(); // thay bao z
 
 void createClassPage(const int screenWidth, const int screenHeight, account& CurrentUser);
 void ViewClassesPage(const int screenWidth, const int screenHeight, account& CurrentUser);
-void ClassPage();
+void ClassPage(const int screenWidth, const int screenHeight, account& CurrentUser);
 void addStudentPage(const int screenWidth, const int screenHeight, account& CurrentUser);
 void addStudentCSV(const int screenWidth, const int screenHeight,char* classname, account& CurrentUser);
 
