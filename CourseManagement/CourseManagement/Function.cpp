@@ -956,8 +956,9 @@ void ViewClassesPage(const int screenWidth, const int screenHeight, account& Cur
 	CloseWindow();
 
 }
-
-
+void ClassPage(const int screenWidth, const int screenHeight, account& CurrentUser) {
+	
+}
 void addStudentPage(const int screenWidth, const int screenHeight, account& CurrentUser) {
 	Vector2 mousePoint = { 0.0f, 0.0f };
 	Rectangle background = { 0,0,float(screenWidth),float(screenHeight) };
