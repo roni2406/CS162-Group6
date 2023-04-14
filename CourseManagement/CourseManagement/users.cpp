@@ -52,8 +52,6 @@ void student::inputAStudent(ifstream& fin, char* student_id,
 	char* first_name, char* last_name, bool Gender, char* DoB, char* social_ID) {
 	stuID = _strdup(student_id);
 	Student.inputAPerson(first_name, last_name, Gender, DoB, social_ID);
-	stuAcc.userName = _strdup(stuID);
-	stuAcc.password = (char*)"123";
 }
 
 void student::inputStudentsWithCSVFile(ifstream& fin) {
@@ -83,8 +81,6 @@ void student::outputAStudentToFile(char* filename) {
 	fout << "," << stuID << ",";
 	Student.outputAPersonToFile(fout);
 	fout.close();
-
-	addinfo(stuAcc, (char*)"student_account.txt", fout);
 }
 
 //staff
@@ -108,6 +104,11 @@ void addAStudentToClass(char* filename, char* first_name, char* last_name, bool 
 	student s;
 	s.inputAStudent(fin, student_id, first_name, last_name, Gender, DoB, social_ID);
 	fin.close();
+
+	account studentAcc;
+	studentAcc.userName = _strdup(student_id);
+	studentAcc.password = _strdup(DoB);
+	addinfo(studentAcc, (char*)"../data/student_account.txt");
 
 	ofstream fout;
 	fout.open(filename, ios::app);

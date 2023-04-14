@@ -145,3 +145,14 @@ bool CheckValidCourse(char* coursename, char* ID, char* classname, char* Year, c
 	}
 	return 1;
 }
+
+void exportStudentsInCourseToFile(char* addressOfOutputFile, char* schoolYear, char* semester, char* courseName) {
+	ifstream fin;
+	fin.open("../data/" + string(schoolYear) + "/" + string(semester)
+		+ "/" + string(courseName) + ".txt");
+	while (!fin.eof()) {
+		student s;
+		s.inputStudentsWithCSVFile(fin);
+		s.outputAStudentToFile(addressOfOutputFile);
+	}
+}
