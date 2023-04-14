@@ -110,6 +110,7 @@ struct Button4 {
 	Rectangle button = { 0, 0, 0, 0 };
 	bool mouseonbutton = false;
 	bool action = false;
+	bool state = true;
 	void workbutton(Vector2 mousePoint, account& CurrentUser, char* &a, void(*func)(const int screenWidth, const int screenHeight, account& CurrentUser, char* &a));
 };
 

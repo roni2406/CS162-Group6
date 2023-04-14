@@ -43,7 +43,7 @@ void Button4::workbutton(Vector2 mousePoint, account& CurrentUser, char*& a, voi
 		if (IsMouseButtonPressed(MOUSE_BUTTON_LEFT)) action = true;
 	}
 	else action = false;
-	if (action)
+	if (action && state)
 	{
 		EndDrawing();
 		func(screenWidth, screenHeight, CurrentUser, a);

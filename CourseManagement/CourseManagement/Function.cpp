@@ -742,38 +742,45 @@ void ViewSchoolYearsPage(const int screenWidth, const int screenHeight, account&
 	Vector2 mousePoint = { 0.0f, 0.0f };
 
 	Rectangle background = { 0,0,float(screenWidth),float(screenHeight)};
-
-
+	Texture2D background2 = LoadTexture("schoolyeartmp.png");
+	Texture2D background3 = LoadTexture("background3.png");
 	Button2 backtoprofilepage;
 	backtoprofilepage.button = { 1270, 20, 200, 30 };
 
-	int scrollspeed = 25;
-	int y_schoolyear = 257;
-	int x_schoolyear = 668;
+	float y_schoolyear = 202;
+	float x_schoolyear = 668;
 
+	float scrollspeed = 35;
 	while (!WindowShouldClose()) {
-		//y_schoolyear += ((GetMouseWheelMove() * scrollspeed) - (IsKeyDown(KEY_DOWN) - IsKeyDown(KEY_UP)));
+		y_schoolyear += (GetMouseWheelMove() * scrollspeed);
 		if (y_schoolyear > 202) y_schoolyear = 202;
+		if (y_schoolyear < -(float(n) * 982 / 8)) y_schoolyear = -(float(n) * 982 / 8);
 		ClearBackground(WHITE);
 		BeginDrawing();
 		DrawRectangleGradientEx(background, SKYBLUE, DARKBLUE, DARKBLUE, SKYBLUE);
-		DrawRectangle(0, 0, screenWidth, 60, WHITE);
-		DrawText("SCHOOLYEARS", 600, 15, 40, DARKBLUE);
-		DrawRectangleRec(backtoprofilepage.button, WHITE);
-		DrawText("Back to Profile Page", 1280, 20, 20, DARKBLUE);
 		DrawRectangle(322, 136, 870, 806, WHITE);
 		DrawRectangleLines(321, 135, 872, 807, BLACK);
 		mousePoint = GetMousePosition();
 		Button4* schoolyear = new Button4[n];
-
 		int j = 0;
 		for (int i = 0; i < n; ++i) {
-			schoolyear[i].button = { float(x_schoolyear - 122), float( y_schoolyear - 12), 421, 59 };
+			schoolyear[i].button = { float(x_schoolyear - 122), float( y_schoolyear + j - 12), 421, 59 };
 			DrawRectangleRec(schoolyear[i].button, LIGHTGRAY);
-			DrawText(Years[i], x_schoolyear, y_schoolyear, 32, DARKBLUE);
+			DrawText(Years[i], x_schoolyear, y_schoolyear + j, 32, DARKBLUE);
+			if (y_schoolyear + j - 12 < 136) {
+				schoolyear[i].state = false;
+			}
+			else schoolyear[i].state = true;
 			schoolyear[i].workbutton(mousePoint, CurrentUser, Years[i], SchoolYearPage);
-			y_schoolyear += 100;
+			j += 100;
 		}
+		DrawRectangle(0, 0, screenWidth, 60, WHITE);
+		DrawText("SCHOOLYEARS", 600, 15, 40, DARKBLUE);
+		DrawRectangleRec(backtoprofilepage.button, WHITE);
+		DrawText("Back to Profile Page", 1280, 20, 20, DARKBLUE);
+		DrawTexture(background3, 0, 62, WHITE);
+		//DrawRectangleGradientH(0, 60, 1512, 76, SKYBLUE, DARKBLUE);
+		DrawTexture(background2, 0, 940, WHITE);
 		delete[] schoolyear;
 		/// Back to profile page button
 		backtoprofilepage.workbutton(mousePoint, CurrentUser, ProfilePageStaff);
