@@ -19,14 +19,14 @@ bool login(account* login_data, int n, account inputLoginData);
 bool LoginFunction(char* userName, char* password, bool staffOrStu);
 
 
-void addinfo(account person, char* filename, ofstream& fout);
+void addinfo(account person, char* filename);
 bool signUp(account* login_data, int n, account newAcc, char* confirmPass);
 // front_end use:
 bool StaffSignup(account newAcc, char* confirmPass);
 
 
 bool changePass(account& Acc, char* oldPass, char* newPass, char* checkNewPass);
-void updateAccToFile(account* login_data, int n);
+void updateAccToFile(account* login_data, int n, char* filename);
 // front_end use:
 bool usechangePassFunction(account& Acc, char* oldPass, char* newPass, char* checkNewPass, bool staffOrStu);
 

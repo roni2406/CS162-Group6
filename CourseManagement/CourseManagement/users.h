@@ -30,14 +30,11 @@ struct student {
         char* first_name, char* last_name, bool Gender, char* DoB, char* social_ID);
     void inputStudentsWithCSVFile(ifstream& fin);
     void outputAStudentToFile(char* filename);
-    void outputAStudentToClass(char* filename);
 };
 
 struct staff {
     account staffAcc;
     person Staff;
-    //char* headTeacher; // if staff is head teacher -> save the class he/she teaches, otherwise none
-    //char* department; // Ex: khoa CNTT, khoa giao vu, khoa luat...
     char* staffID;
 
     void inputAStaff(char* staff_id, person sta);
@@ -48,8 +45,7 @@ struct staff {
 void addAStudentToClass(char* filename, char* first_name, char* last_name, bool Gender, char* DoB,
     char* social_ID, char* student_id);
 
-void addAStaff(char* filename, char* first_name, char* last_name, bool Gender, char* DoB,
-    char* social_ID, char* staff_id);
+//void addAStaff(char* filename, char* first_name, char* last_name, bool Gender, char* DoB, char* social_ID, char* staff_id);
 
 void addStudentsWithCSV(char* fileNameIn, char* fileNameOut);
     // staff will input filename, fout is used for adding to class or course

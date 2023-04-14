@@ -81,8 +81,9 @@ bool LoginFunction(char* userName, char* password, bool staffOrStu) {
 	}
 }
 
-void addinfo(account person, char* filename, ofstream& fout)
+void addinfo(account person, char* filename)
 {
+	ofstream fout;
 	fout.open(filename, ios::app);
 	fout << endl;
 	fout << person.userName << endl;
@@ -107,8 +108,7 @@ bool StaffSignup(account newAcc, char* confirmPass) {
 	inputAccounts(login_data, n, fin);
 	fin.close();
 	if (signUp(login_data, n, newAcc, confirmPass)) {
-		ofstream fout;
-		addinfo(newAcc, (char*)"../data/staff_account.txt", fout);
+		addinfo(newAcc, (char*)"../data/staff_account.txt");
 		delete[] login_data;
 		return true;
 	}
