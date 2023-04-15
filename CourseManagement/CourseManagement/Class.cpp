@@ -95,9 +95,8 @@ student* viewStudentsInClass(char* className)
 	fin.open("../data/Classes/" + string(className) + ".txt");
 	while (!fin.eof())
 	{
-		student s;
-		s.inputStudentsWithCSVFile(fin);
-		Class[numOfStu++] = s;
+		Class[numOfStu++].inputStudentsWithCSVFile(fin);
+		fin.ignore(100, '\n');
 	}
 	fin.close();
 	return Class;
@@ -110,11 +109,11 @@ int countStudentInClass(char* className) {
 	fin.open("../data/Classes/" + string(className) + ".txt");
 	while (!fin.eof())
 	{
-		student s;
-		s.inputStudentsWithCSVFile(fin);
-		Class[numOfStu++] = s;
+		Class[numOfStu++].inputStudentsWithCSVFile(fin);
+		fin.ignore(100, '\n');
 	}
 	fin.close();
+	delete[] Class;
 	return numOfStu;
 }
 

@@ -17,15 +17,15 @@ void person::inputAPerson(char* first_name, char* last_name, bool Gender, char* 
 void person::inputPersonsWithCSVFile(ifstream& fin) {
 	lastName = new char[100];
 	fin.get(lastName, 100, ',');
-	fin.ignore(100, ',');
 
 	firstName = new char[100];
+	fin.ignore(100, ',');
 	fin.get(firstName, 100, ',');
 
-	fin.ignore(100, ',');
 	char* tmp = new char[100];
+	fin.ignore(100, ',');
 	fin.get(tmp, 100, ',');
-	if (strcmp(tmp, (char*)"male") == 0) gender = 1;
+	if (strcmp(tmp, (char*)"Male") == 0) gender = 1;
 	else gender = 0;
 	delete[] tmp;
 
@@ -35,9 +35,9 @@ void person::inputPersonsWithCSVFile(ifstream& fin) {
 	dob.inputADateWithChar(dateofBirth);
 	delete[] dateofBirth;
 
-	fin.ignore(100, ',');
 	socialID = new char[100];
-	fin.get(socialID, 100, ',');
+	fin.ignore(100, ',');
+	fin.get(socialID, 100, '\n');
 }
 void person::outputAPersonToFile(ofstream& fout) {
 	fout << firstName << "," << lastName << ",";
@@ -58,7 +58,8 @@ void student::inputStudentsWithCSVFile(ifstream& fin) {
 	fin >> No;
 	stuID = new char[100];
 	fin.ignore(100, ',');
-	fin.get(stuID, 100, '\0');
+	fin.get(stuID, 100, ',');
+
 	fin.ignore(100, ',');
 	Student.inputPersonsWithCSVFile(fin);
 }
