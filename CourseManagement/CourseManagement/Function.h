@@ -141,6 +141,7 @@ struct Button7 {
 	const int screenHeight = 982;
 	Rectangle button = { 0, 0, 0, 0 };
 	bool mouseonbutton = false;
+	bool state = true;
 	bool action = false;
 	void workbutton(Vector2 mousePoint, account& CurrentUser, char*&a, char*& b, course& c, void(*func)(const int screenWidth, const int screenHeight, account& CurrentUser, char*& a, char*& b, course& c));
 
