@@ -87,13 +87,12 @@ int countClasses()
 }
 
 // 16
-student* viewStudentsInClass(char* fileNameIn, char* fileNameOut)
+student* viewStudentsInClass(char* fileAddress)
 {
 	student* Class = new student[150];
-	addStudentsWithCSV(fileNameIn, fileNameOut);
 	int numOfStu = 0;
 	ifstream fin;
-	fin.open(fileNameOut);
+	fin.open(fileAddress);
 	while (!fin.eof())
 	{
 		student s;
@@ -102,6 +101,21 @@ student* viewStudentsInClass(char* fileNameIn, char* fileNameOut)
 	}
 	fin.close();
 	return Class;
+}
+
+int countStudentInClass(char* fileAddress) {
+	student* Class = new student[150];
+	int numOfStu = 0;
+	ifstream fin;
+	fin.open(fileAddress);
+	while (!fin.eof())
+	{
+		student s;
+		s.inputStudentsWithCSVFile(fin);
+		Class[numOfStu++] = s;
+	}
+	fin.close();
+	return numOfStu;
 }
 
 bool CheckData_InputStudents(char* No, char* student_id, char* Gender, char* DoB, char* social_ID)
