@@ -980,28 +980,28 @@ void ClassPage(const int screenWidth, const int screenHeight, account& CurrentUs
 
 		mousePoint = GetMousePosition();
 		for (int i = 0; i < n; ++i) {
-			DrawLine(x_student + 111, y_student + j - 24, x_student + 111, y_student + j + 38, BLACK);
-			DrawLine(x_student + 630, y_student + j - 24, x_student + 630, y_student + j + 38, BLACK);
-			DrawLine(x_student + 772, y_student + j - 24, x_student + 772, y_student + j + 38, BLACK);
-			DrawLine(x_student + 1147, y_student + j - 24, x_student + 1147, y_student + j + 38, BLACK);
-			DrawLine(x_student + 1254, y_student + j - 24, x_student + 1254, y_student + j + 38, BLACK);
-			DrawLine(x_student + 1397, y_student + j - 24, x_student + 1397, y_student + j + 38, BLACK);
-			DrawLine(x_student + 1501, y_student + j - 24, x_student + 1501, y_student + j + 38, BLACK);
+			DrawLine(x_student + 47, y_student + j - 1, x_student + 47, y_student + j + 61, BLACK);
+			DrawLine(x_student + 216, y_student + j - 1, x_student + 216, y_student + j + 61, BLACK);
+			DrawLine(x_student + 395, y_student + j - 1, x_student + 395, y_student + j + 61, BLACK);
+			DrawLine(x_student + 851, y_student + j - 1, x_student + 851, y_student + j + 61, BLACK);
+			DrawLine(x_student + 1039, y_student + j - 1, x_student + 1039, y_student + j + 61, BLACK);
+			DrawLine(x_student + 1281, y_student + j - 1, x_student + 1281, y_student + j + 61, BLACK);
+			DrawLine(x_student + 1501, y_student + j - 1, x_student + 1501, y_student + j + 61, BLACK);
 
-			DrawRectangleLines(0, y_student + j - 24, 1512, 62, BLACK);
-			DrawRectangleLines(0, y_student + j - 24, 1512, 62, BLACK);
+			DrawRectangleLines(0, y_student + j - 1, 1512, 62, BLACK);
+			DrawRectangleLines(0, y_student + j - 1, 1512, 62, BLACK);
 			char* stuNo = new char[10];
 			int_to_char(listStudents[i].No,stuNo);
-			DrawText(stuNo, x_student, y_student + j, 20, BLACK);
-			DrawText(listStudents[i].stuID, x_student + 137, y_student + j, 20, BLACK);
-			DrawText(listStudents[i].Student.firstName, x_student + 652, y_student + j, 20, BLACK);
-			DrawText(listStudents[i].Student.lastName, x_student + 793, y_student + j, 20, BLACK);
+			DrawText(stuNo, x_student + 13 , y_student + j + 30, 20, BLACK);
+			DrawText(listStudents[i].stuID, x_student + 72, y_student + j + 30, 20, BLACK);
+			DrawText(listStudents[i].Student.lastName, x_student + 260, y_student + j + 30, 20, BLACK);
+			DrawText(listStudents[i].Student.firstName, x_student + 528 , y_student + j + 30, 20, BLACK);
 
-			if(listStudents[i].Student.gender) DrawText("meo", x_student + 1192, y_student + j, 20, BLACK);
-			else DrawText("phi meo", x_student + 1192, y_student + j, 20, BLACK);
+			if(listStudents[i].Student.gender) DrawText("Male", x_student + 912, y_student + j + 30, 20, BLACK);
+			else DrawText("Female", x_student + 912, y_student + j + 30, 20, BLACK);
 
-			DrawText(dateToChar(listStudents[i].Student.dob), x_student + 1279, y_student + j, 20, BLACK);
-			DrawText(listStudents[i].Student.socialID, x_student + 1429, y_student + j, 20, BLACK);
+			DrawText(dateToChar(listStudents[i].Student.dob), x_student + 1097, y_student + j + 30, 20, BLACK);
+			DrawText(listStudents[i].Student.socialID, x_student + 1300, y_student + j + 30, 20, BLACK);
 			j += 61;
 		}
 		DrawRectangle(0, 0, screenWidth, 60, WHITE);
