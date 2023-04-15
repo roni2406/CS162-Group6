@@ -87,12 +87,12 @@ int countClasses()
 }
 
 // 16
-student* viewStudentsInClass(char* fileAddress)
+student* viewStudentsInClass(char* className)
 {
 	student* Class = new student[150];
 	int numOfStu = 0;
 	ifstream fin;
-	fin.open(fileAddress);
+	fin.open("../data/Classes" + string(className) + ".txt");
 	while (!fin.eof())
 	{
 		student s;
@@ -103,11 +103,11 @@ student* viewStudentsInClass(char* fileAddress)
 	return Class;
 }
 
-int countStudentInClass(char* fileAddress) {
+int countStudentInClass(char* className) {
 	student* Class = new student[150];
 	int numOfStu = 0;
 	ifstream fin;
-	fin.open(fileAddress);
+	fin.open("../data/Classes" + string(className) + ".txt");
 	while (!fin.eof())
 	{
 		student s;
