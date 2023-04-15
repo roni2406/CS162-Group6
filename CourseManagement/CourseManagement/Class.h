@@ -7,14 +7,13 @@ using namespace std;
 
 struct Class {
     char* classID;
-    int numOfStu;
     student* stuInClass;
 };
 
 // Function 
 // 2
-void InputAClass(char* classID, char* numOfStu, Class& className); 
-void CreateAClass(char* classID, char* numOfStu);       // front end
+void InputAClass(char* classID, Class& className); 
+void CreateAClass(char* classID);       // front end
 bool CheckClassExisted(char* ClassID); // front end
 void AddAClassToList(Class& className, ofstream& fout);
 void CreateASingleClassList(Class className, ofstream& fout);

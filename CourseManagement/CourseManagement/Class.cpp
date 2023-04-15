@@ -6,16 +6,15 @@
 using namespace std;
 
 // 2
-void InputAClass(char* classID, char* numOfStu, Class &className)
+void InputAClass(char* classID, Class &className)
 {
 	className.classID = _strdup(classID);
-	className.numOfStu = atoi(numOfStu);
 }
 
-void CreateAClass(char* classID, char* numOfStu)
+void CreateAClass(char* classID)
 {
 	Class Object;
-	InputAClass(classID, numOfStu, Object);
+	InputAClass(classID, Object);
 	ofstream fout;
 	CreateASingleClassList(Object, fout);
 	AddAClassToList(Object, fout);
@@ -24,7 +23,6 @@ void CreateAClass(char* classID, char* numOfStu)
 void CreateASingleClassList(Class className, ofstream& fout)
 {
 	fout.open("../data/Classes/" + string(className.classID) + ".txt");
-	fout << className.numOfStu;
 	fout.close();
 }
 
@@ -33,7 +31,6 @@ void AddAClassToList(Class& className, ofstream& fout)
 	fout.open("../data/Classes/Listofclasses.txt", ios::app);
 	fout << '\n';
 	fout << className.classID << " ";
-	fout << className.numOfStu;
 	fout.close();
 }
 
@@ -64,8 +61,6 @@ void viewClasses_PrepareData_SavedToClassArray(Class*& ClassList, ifstream& fin,
 		str = new char[11];
 		fin >> str;
 		ClassList[numOfClasses].classID = _strdup(str);
-		fin >> tmp;
-		ClassList[numOfClasses].numOfStu = tmp;
 		++numOfClasses;
 		delete[]str;
 		str = nullptr;
