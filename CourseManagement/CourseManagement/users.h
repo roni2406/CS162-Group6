@@ -49,6 +49,8 @@ void addAStudentToClass(char* filename, char* first_name, char* last_name, bool 
 
 void addStudentsWithCSV(char* fileNameIn, char* fileNameOut);
     // staff will input filename, fout is used for adding to class or course
+int countStudentinAClass(char* classname);
+
 
 bool checkdata_FileName(char* fileNameIn);
 #endif

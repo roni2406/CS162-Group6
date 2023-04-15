@@ -839,8 +839,7 @@ void createClassPage(const int screenWidth, const int screenHeight, account& Cur
 
 	Textbox1 classname;
 	classname.textbox = { 477, 239, 558, 106 };
-	Textbox1 numStudents;
-	numStudents.textbox = { 477, 430, 558, 106 };
+	
 
 	Button2 backtoprofilepage;
 	backtoprofilepage.button = { 1270, 20, 200, 30 };
@@ -849,7 +848,7 @@ void createClassPage(const int screenWidth, const int screenHeight, account& Cur
 	float frameHeightconfirmBtn = (float)confirmBtn.height;
 	Rectangle sourceRecconfirmBtn = { 0, 0, (float)confirmBtn.width,frameHeightconfirmBtn };
 	// Define button bounds on screen
-	Rectangle btnBoundsconfirmBtn = { 650, 600, (float)confirmBtn.width, frameHeightconfirmBtn };
+	Rectangle btnBoundsconfirmBtn = { 650, 400, (float)confirmBtn.width, frameHeightconfirmBtn };
 	int confirmBtnState = 0;               // Button state: 0-NORMAL, 1-MOUSE_HOVER, 2-PRESSED
 	bool confirmBtnAction = false;         // Button action should be activated
 	bool confirmBtnFalseDisplay = false;
@@ -864,20 +863,15 @@ void createClassPage(const int screenWidth, const int screenHeight, account& Cur
 		DrawRectangleRec(backtoprofilepage.button, WHITE);
 		DrawText("Back to Profile Page", 1280, 20, 20, DARKBLUE);
 
-		DrawRectangle(347, 173, 818, 550, WHITE);
+		DrawRectangle(347, 173, 818, 350, WHITE);
 		DrawRectangleRec(classname.textbox, LIGHTGRAY);
 		DrawText("* Class Name", 477, 200, 30, DARKBLUE);
-		DrawRectangleRec(numStudents.textbox, LIGHTGRAY);
-		DrawText("* Number of Students", 477, 390, 30, DARKBLUE);
 
 		////Function_of_TextInputBoxes_----------------------------------------------------------------------------------------------------------------------
 		classname.worktextbox(confirmBtnFalseDisplay);
-		numStudents.worktextbox(confirmBtnFalseDisplay);
 
-		DrawText(numStudents.text, 500, 470, 40, DARKBLUE);
 		DrawText(classname.text, 500, 270, 40, DARKBLUE);
 		DrawText(TextFormat("%i/%i", classname.lettercount, MAX_INPUT_CHARS), 1050, 280, 20, DARKBLUE);
-		DrawText(TextFormat("%i/%i", numStudents.lettercount, MAX_INPUT_CHARS), 1050, 470, 20, DARKBLUE);
 
 		////Function of buttons------------------------------------------------------------------------------------------------------------------------------
 		mousePoint = GetMousePosition();
@@ -891,7 +885,7 @@ void createClassPage(const int screenWidth, const int screenHeight, account& Cur
 		if (confirmBtnAction) {
 			if (!CheckClassExisted(classname.text)) {
 				confirmBtnFalseDisplay = false;
-				CreateAClass(classname.text, numStudents.text);
+				CreateAClass(classname.text);
 				EndDrawing();
 				ProfilePageStaff(screenWidth, screenHeight, CurrentUser);
 			}
@@ -945,7 +939,7 @@ void ViewClassesPage(const int screenWidth, const int screenHeight, account& Cur
 			Class[i].button = { float(x_classes - 122), float(y_classes - 12), 421, 59 };
 			DrawRectangleRec(Class[i].button, LIGHTGRAY);
 			DrawText(Classes[i].classID, x_classes + 30, y_classes, 32, DARKBLUE);
-			Class[i].workbutton(mousePoint, CurrentUser, Classes[i].classID, SchoolYearPage);
+			Class[i].workbutton(mousePoint, CurrentUser, Classes[i].classID, ClassPage);
 			y_classes += 100;
 		}
 		/// Back to profile page button
@@ -957,8 +951,99 @@ void ViewClassesPage(const int screenWidth, const int screenHeight, account& Cur
 	CloseWindow();
 
 }
-void ClassPage(const int screenWidth, const int screenHeight, account& CurrentUser) {
-	
+void ClassPage(const int screenWidth, const int screenHeight, account& CurrentUser,char*& Classname) {
+	/*course* courses;
+	int n = countCourse(Year, Semester);
+	LoadCourseFromFile(Year, Semester, n, courses);
+	Rectangle background = { 0,0,float(screenWidth),float(screenHeight) };
+	Texture2D background2 = LoadTexture("course_background.png");
+	Vector2 mousePoint = { 0.0f, 0.0f };
+
+	Button6 backtosemesterpage;
+	backtosemesterpage.button = { 1190, 20, 250, 30 };
+
+	int scrollspeed = 35;
+	int x_course = 11;
+	int y_course = 255;
+	while (!WindowShouldClose()) {
+		y_course += (int(GetMouseWheelMove()) * scrollspeed);
+		if (x_course > 11) x_course = 11;
+		if (y_course > 255) y_course = 255;
+		ClearBackground(WHITE);
+		BeginDrawing();
+
+		DrawRectangleGradientEx(background, SKYBLUE, DARKBLUE, DARKBLUE, SKYBLUE);
+		DrawRectangle(0, 231, screenWidth, 751, WHITE);
+		DrawRectangleLines(0, 231, screenWidth, 751, BLACK);
+		int j = 0;
+		Button7* coursebutton = new Button7[n];
+		mousePoint = GetMousePosition();
+		for (int i = 0; i < n; ++i) {
+			DrawLine(x_course + 111, y_course + j - 24, x_course + 111, y_course + j + 38, BLACK);
+			DrawLine(x_course + 630, y_course + j - 24, x_course + 630, y_course + j + 38, BLACK);
+			DrawLine(x_course + 772, y_course + j - 24, x_course + 772, y_course + j + 38, BLACK);
+			DrawLine(x_course + 1147, y_course + j - 24, x_course + 1147, y_course + j + 38, BLACK);
+			DrawLine(x_course + 1254, y_course + j - 24, x_course + 1254, y_course + j + 38, BLACK);
+			DrawLine(x_course + 1397, y_course + j - 24, x_course + 1397, y_course + j + 38, BLACK);
+			DrawLine(x_course + 1501, y_course + j - 24, x_course + 1501, y_course + j + 38, BLACK);
+
+			DrawRectangleLines(0, y_course + j - 24, 1512, 62, BLACK);
+			DrawRectangleLines(0, y_course + j - 24, 1512, 62, BLACK);
+			coursebutton[i].button = { 0, float(y_course + j), 1512, 20 };
+			DrawText(courses[i].courseID, x_course, y_course + j, 20, BLACK);
+			DrawText(courses[i].courseName, x_course + 137, y_course + j, 20, BLACK);
+			DrawText(courses[i].className, x_course + 652, y_course + j, 20, BLACK);
+			DrawText(courses[i].teacherName, x_course + 793, y_course + j, 20, BLACK);
+			DrawText(courses[i].numOfCre, x_course + 1192, y_course + j, 20, BLACK);
+			DrawText(courses[i].dayofweek, x_course + 1279, y_course + j, 20, BLACK);
+			DrawText(courses[i].sessionHour, x_course + 1429, y_course + j, 20, BLACK);
+			if (y_course + j < 231) coursebutton[i].state = false;
+			coursebutton[i].workbutton(mousePoint, CurrentUser, Year, Semester, courses[i], CoursePage);
+			j += 61;
+		}
+		DrawRectangle(0, 0, screenWidth, 60, WHITE);
+		DrawText(Year, 30, 15, 40, DARKBLUE);
+		DrawText(Semester, 670, 15, 40, DARKBLUE);
+		DrawRectangleRec(backtosemesterpage.button, WHITE);
+		DrawText("Back to Semester Page", 1200, 20, 20, DARKBLUE);
+		DrawTexture(background2, 0, 60, WHITE);
+
+		DrawRectangle(0, 189, 121, 42, LIGHTGRAY);
+		DrawRectangleLines(0, 189, 121, 42, BLACK);
+		DrawText("ID", 45, 203, 20, DARKBLUE);
+
+		DrawRectangle(121, 189, 519, 42, LIGHTGRAY);
+		DrawRectangleLines(121, 189, 519, 42, BLACK);
+		DrawText("Course name", 325, 203, 20, DARKBLUE);
+
+		DrawRectangle(640, 189, 142, 42, LIGHTGRAY);
+		DrawRectangleLines(640, 189, 142, 42, BLACK);
+		DrawText("Class name", 650, 203, 20, DARKBLUE);
+
+		DrawRectangle(782, 189, 375, 42, LIGHTGRAY);
+		DrawRectangleLines(782, 189, 375, 42, BLACK);
+		DrawText("Teacher name", 886, 203, 20, DARKBLUE);
+
+		DrawRectangle(1157, 189, 107, 42, LIGHTGRAY);
+		DrawRectangleLines(1157, 189, 107, 42, BLACK);
+		DrawText("Credits", 1177, 203, 20, DARKBLUE);
+
+		DrawRectangle(1264, 189, 143, 42, LIGHTGRAY);
+		DrawRectangleLines(1264, 189, 143, 42, BLACK);
+		DrawText("Course day", 1282, 203, 20, DARKBLUE);
+
+		DrawRectangle(1407, 189, 105, 42, LIGHTGRAY);
+		DrawRectangleLines(1407, 189, 105, 42, BLACK);
+		DrawText("Session", 1423, 203, 20, DARKBLUE);
+
+		delete[] coursebutton;
+		backtosemesterpage.workbutton(mousePoint, CurrentUser, Year, Semester, SemesterPage);
+		EndDrawing();
+	}
+	delete[] courses;
+	delete[] Year;
+	delete[] Semester;
+	CloseWindow();*/
 }
 void addStudentPage(const int screenWidth, const int screenHeight, account& CurrentUser) {
 	Vector2 mousePoint = { 0.0f, 0.0f };
