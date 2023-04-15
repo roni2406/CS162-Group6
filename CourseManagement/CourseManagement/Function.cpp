@@ -750,9 +750,9 @@ void ViewSchoolYearsPage(const int screenWidth, const int screenHeight, account&
 	int y_schoolyear = 167;
 	int x_schoolyear = 668;
 
-	float scrollspeed = 35;
+	int scrollspeed = 35;
 	while (!WindowShouldClose()) {
-		y_schoolyear += (GetMouseWheelMove() * scrollspeed);
+		y_schoolyear += (int(GetMouseWheelMove()) * scrollspeed);
 		if (y_schoolyear > 167) y_schoolyear = 167;
 		//if (y_schoolyear) y_schoolyear = 881;
 		ClearBackground(WHITE);
@@ -762,7 +762,7 @@ void ViewSchoolYearsPage(const int screenWidth, const int screenHeight, account&
 		DrawRectangleLines(321, 135, 872, 807, BLACK);
 		mousePoint = GetMousePosition();
 		Button4* schoolyear = new Button4[n];
-		float j = 0;
+		int j = 0;
 		for (int i = 0; i < n; ++i) {
 			schoolyear[i].button = { float(x_schoolyear - 122), float( y_schoolyear + j - 12), 421, 59 };
 			DrawRectangleRec(schoolyear[i].button, LIGHTGRAY);
@@ -1441,11 +1441,11 @@ void ViewCoursesPage(const int screenWidth, const int screenHeight, account& Cur
 	Button6 backtosemesterpage;
 	backtosemesterpage.button = { 1190, 20, 250, 30 };
 
-	float scrollspeed = 35;
+	int scrollspeed = 35;
 	int x_course = 11;
 	int y_course = 255;
 	while (!WindowShouldClose()) {
-		y_course += (GetMouseWheelMove() * int(scrollspeed));
+		y_course += (int(GetMouseWheelMove()) * scrollspeed);
 		if (x_course > 11) x_course = 11;
 		if (y_course > 255) y_course = 255;
 		ClearBackground(WHITE);
@@ -1473,7 +1473,7 @@ void ViewCoursesPage(const int screenWidth, const int screenHeight, account& Cur
 			DrawText(courses[i].courseName, x_course + 137, y_course + j, 20, BLACK);
 			DrawText(courses[i].className, x_course + 652, y_course + j, 20, BLACK);
 			DrawText(courses[i].teacherName, x_course + 793, y_course + j, 20, BLACK);
-			DrawText(courses[i].numOfCre, x_course + 1189, y_course + j, 20, BLACK);
+			DrawText(courses[i].numOfCre, x_course + 1192, y_course + j, 20, BLACK);
 			DrawText(courses[i].dayofweek, x_course + 1279, y_course + j, 20, BLACK);
 			DrawText(courses[i].sessionHour, x_course + 1429, y_course + j, 20, BLACK);
 			if (y_course + j < 231) coursebutton[i].state = false;
@@ -1537,13 +1537,43 @@ void CoursePage(const int screenWidth, const int screenHeight, account& CurrentU
 		ClearBackground(WHITE);
 		BeginDrawing();
 		DrawRectangleGradientEx(background, SKYBLUE, DARKBLUE, DARKBLUE, SKYBLUE);
+
 		DrawRectangle(0, 0, screenWidth, 60, WHITE);
-		DrawText(Course.courseID, 30, 15, 40, DARKBLUE);
+		DrawText(Course.courseID, 30, 10, 20, DARKBLUE);
+		DrawText(Course.className, 30, 40, 20, DARKBLUE);
 		DrawText(Semester, 670, 15, 40, DARKBLUE);
 		DrawRectangleRec(backtoviewcoursespage.button, WHITE);
 		DrawText("Back to View Courses Page", 1180, 20, 20, DARKBLUE);
-		DrawRectangle(322, 136, 870, 806, WHITE);
-		DrawRectangleLines(321, 135, 872, 807, BLACK);
+		DrawRectangle(0, 231, screenWidth, 751, WHITE);
+		DrawRectangleLines(0, 231, screenWidth, 751, BLACK);
+
+		DrawRectangle(0, 189, 121, 42, LIGHTGRAY);
+		DrawRectangleLines(0, 189, 121, 42, BLACK);
+		DrawText("ID", 45, 203, 20, DARKBLUE);
+
+		DrawRectangle(121, 189, 519, 42, LIGHTGRAY);
+		DrawRectangleLines(121, 189, 519, 42, BLACK);
+		DrawText("Course name", 325, 203, 20, DARKBLUE);
+
+		DrawRectangle(640, 189, 142, 42, LIGHTGRAY);
+		DrawRectangleLines(640, 189, 142, 42, BLACK);
+		DrawText("Class name", 650, 203, 20, DARKBLUE);
+
+		DrawRectangle(782, 189, 375, 42, LIGHTGRAY);
+		DrawRectangleLines(782, 189, 375, 42, BLACK);
+		DrawText("Teacher name", 886, 203, 20, DARKBLUE);
+
+		DrawRectangle(1157, 189, 107, 42, LIGHTGRAY);
+		DrawRectangleLines(1157, 189, 107, 42, BLACK);
+		DrawText("Credits", 1177, 203, 20, DARKBLUE);
+
+		DrawRectangle(1264, 189, 143, 42, LIGHTGRAY);
+		DrawRectangleLines(1264, 189, 143, 42, BLACK);
+		DrawText("Course day", 1282, 203, 20, DARKBLUE);
+
+		DrawRectangle(1407, 189, 105, 42, LIGHTGRAY);
+		DrawRectangleLines(1407, 189, 105, 42, BLACK);
+		DrawText("Session", 1423, 203, 20, DARKBLUE);
 
 		mousePoint = GetMousePosition();
 		backtoviewcoursespage.workbutton(mousePoint, CurrentUser, Year, Semester, ViewCoursesPage);
