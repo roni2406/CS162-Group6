@@ -749,11 +749,13 @@ void ViewSchoolYearsPage(const int screenWidth, const int screenHeight, account&
 
 	int y_schoolyear = 167;
 	int x_schoolyear = 668;
-
 	int scrollspeed = 35;
 	while (!WindowShouldClose()) {
 		y_schoolyear += (int(GetMouseWheelMove()) * scrollspeed);
 		if (y_schoolyear > 167) y_schoolyear = 167;
+		if (y_schoolyear + 12*n < 167) {
+			y_schoolyear = 167 - 12*n;
+		}
 		//if (y_schoolyear) y_schoolyear = 881;
 		ClearBackground(WHITE);
 		BeginDrawing();
