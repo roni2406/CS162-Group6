@@ -17,10 +17,10 @@ void person::inputAPerson(char* first_name, char* last_name, bool Gender, char* 
 void person::inputPersonsWithCSVFile(ifstream& fin) {
 	lastName = new char[100];
 	fin.get(lastName, 100, ',');
+	fin.ignore(100, ',');
 
 	firstName = new char[100];
 	fin.get(firstName, 100, ',');
-	fin.ignore(100, ',');
 
 	fin.ignore(100, ',');
 	char* tmp = new char[100];

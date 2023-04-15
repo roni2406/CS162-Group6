@@ -8,7 +8,7 @@
 #include "course.h"
 #include <string.h>
 #include "Class.h"
-
+#include "Date.h"
 using namespace std;
 
 
@@ -954,23 +954,22 @@ void ViewClassesPage(const int screenWidth, const int screenHeight, account& Cur
 
 }
 void ClassPage(const int screenWidth, const int screenHeight, account& CurrentUser,char*& Classname) {
-	/*course* courses;
-	int n = countCourse(Year, Semester);
-	LoadCourseFromFile(Year, Semester, n, courses);
+	int n = countStudentInClass(Classname);
+	student* listStudents = viewStudentsInClass(Classname);
 	Rectangle background = { 0,0,float(screenWidth),float(screenHeight) };
 	Texture2D background2 = LoadTexture("course_background.png");
 	Vector2 mousePoint = { 0.0f, 0.0f };
 
-	Button6 backtosemesterpage;
-	backtosemesterpage.button = { 1190, 20, 250, 30 };
+	Button2 backtoViewClasspage;
+	backtoViewClasspage.button = { 1190, 20, 250, 30 };
 
 	int scrollspeed = 35;
-	int x_course = 11;
-	int y_course = 255;
+	int x_student = 11;
+	int y_student = 255;
 	while (!WindowShouldClose()) {
-		y_course += (int(GetMouseWheelMove()) * scrollspeed);
-		if (x_course > 11) x_course = 11;
-		if (y_course > 255) y_course = 255;
+		y_student += (int(GetMouseWheelMove()) * scrollspeed);
+		if (x_student > 11) x_student = 11;
+		if (y_student > 255) y_student = 255;
 		ClearBackground(WHITE);
 		BeginDrawing();
 
@@ -978,74 +977,69 @@ void ClassPage(const int screenWidth, const int screenHeight, account& CurrentUs
 		DrawRectangle(0, 231, screenWidth, 751, WHITE);
 		DrawRectangleLines(0, 231, screenWidth, 751, BLACK);
 		int j = 0;
-		Button7* coursebutton = new Button7[n];
+
 		mousePoint = GetMousePosition();
 		for (int i = 0; i < n; ++i) {
-			DrawLine(x_course + 111, y_course + j - 24, x_course + 111, y_course + j + 38, BLACK);
-			DrawLine(x_course + 630, y_course + j - 24, x_course + 630, y_course + j + 38, BLACK);
-			DrawLine(x_course + 772, y_course + j - 24, x_course + 772, y_course + j + 38, BLACK);
-			DrawLine(x_course + 1147, y_course + j - 24, x_course + 1147, y_course + j + 38, BLACK);
-			DrawLine(x_course + 1254, y_course + j - 24, x_course + 1254, y_course + j + 38, BLACK);
-			DrawLine(x_course + 1397, y_course + j - 24, x_course + 1397, y_course + j + 38, BLACK);
-			DrawLine(x_course + 1501, y_course + j - 24, x_course + 1501, y_course + j + 38, BLACK);
+			DrawLine(x_student + 111, y_student + j - 24, x_student + 111, y_student + j + 38, BLACK);
+			DrawLine(x_student + 630, y_student + j - 24, x_student + 630, y_student + j + 38, BLACK);
+			DrawLine(x_student + 772, y_student + j - 24, x_student + 772, y_student + j + 38, BLACK);
+			DrawLine(x_student + 1147, y_student + j - 24, x_student + 1147, y_student + j + 38, BLACK);
+			DrawLine(x_student + 1254, y_student + j - 24, x_student + 1254, y_student + j + 38, BLACK);
+			DrawLine(x_student + 1397, y_student + j - 24, x_student + 1397, y_student + j + 38, BLACK);
+			DrawLine(x_student + 1501, y_student + j - 24, x_student + 1501, y_student + j + 38, BLACK);
 
-			DrawRectangleLines(0, y_course + j - 24, 1512, 62, BLACK);
-			DrawRectangleLines(0, y_course + j - 24, 1512, 62, BLACK);
-			coursebutton[i].button = { 0, float(y_course + j), 1512, 20 };
-			DrawText(courses[i].courseID, x_course, y_course + j, 20, BLACK);
-			DrawText(courses[i].courseName, x_course + 137, y_course + j, 20, BLACK);
-			DrawText(courses[i].className, x_course + 652, y_course + j, 20, BLACK);
-			DrawText(courses[i].teacherName, x_course + 793, y_course + j, 20, BLACK);
-			DrawText(courses[i].numOfCre, x_course + 1192, y_course + j, 20, BLACK);
-			DrawText(courses[i].dayofweek, x_course + 1279, y_course + j, 20, BLACK);
-			DrawText(courses[i].sessionHour, x_course + 1429, y_course + j, 20, BLACK);
-			if (y_course + j < 231) coursebutton[i].state = false;
-			coursebutton[i].workbutton(mousePoint, CurrentUser, Year, Semester, courses[i], CoursePage);
+			DrawRectangleLines(0, y_student + j - 24, 1512, 62, BLACK);
+			DrawRectangleLines(0, y_student + j - 24, 1512, 62, BLACK);
+			char* stuNo = new char[10];
+			int_to_char(listStudents[i].No,stuNo);
+			DrawText(stuNo, x_student, y_student + j, 20, BLACK);
+			DrawText(listStudents[i].stuID, x_student + 137, y_student + j, 20, BLACK);
+			DrawText(listStudents[i].Student.firstName, x_student + 652, y_student + j, 20, BLACK);
+			DrawText(listStudents[i].Student.lastName, x_student + 793, y_student + j, 20, BLACK);
+
+			if(listStudents[i].Student.gender) DrawText("meo", x_student + 1192, y_student + j, 20, BLACK);
+			else DrawText("phi meo", x_student + 1192, y_student + j, 20, BLACK);
+
+			DrawText(dateToChar(listStudents[i].Student.dob), x_student + 1279, y_student + j, 20, BLACK);
+			DrawText(listStudents[i].Student.socialID, x_student + 1429, y_student + j, 20, BLACK);
 			j += 61;
 		}
 		DrawRectangle(0, 0, screenWidth, 60, WHITE);
-		DrawText(Year, 30, 15, 40, DARKBLUE);
-		DrawText(Semester, 670, 15, 40, DARKBLUE);
-		DrawRectangleRec(backtosemesterpage.button, WHITE);
-		DrawText("Back to Semester Page", 1200, 20, 20, DARKBLUE);
+
+		DrawText(Classname, 670, 15, 40, DARKBLUE);
+		DrawRectangleRec(backtoViewClasspage.button, WHITE);
+		DrawText("Back to Classes Page", 1200, 20, 20, DARKBLUE);
 		DrawTexture(background2, 0, 60, WHITE);
 
 		DrawRectangle(0, 189, 121, 42, LIGHTGRAY);
 		DrawRectangleLines(0, 189, 121, 42, BLACK);
-		DrawText("ID", 45, 203, 20, DARKBLUE);
+		DrawText("No", 45, 203, 20, DARKBLUE);
 
 		DrawRectangle(121, 189, 519, 42, LIGHTGRAY);
 		DrawRectangleLines(121, 189, 519, 42, BLACK);
-		DrawText("Course name", 325, 203, 20, DARKBLUE);
+		DrawText("Last name", 325, 203, 20, DARKBLUE);
 
 		DrawRectangle(640, 189, 142, 42, LIGHTGRAY);
 		DrawRectangleLines(640, 189, 142, 42, BLACK);
-		DrawText("Class name", 650, 203, 20, DARKBLUE);
+		DrawText("First name", 650, 203, 20, DARKBLUE);
 
 		DrawRectangle(782, 189, 375, 42, LIGHTGRAY);
 		DrawRectangleLines(782, 189, 375, 42, BLACK);
-		DrawText("Teacher name", 886, 203, 20, DARKBLUE);
+		DrawText("Gender", 886, 203, 20, DARKBLUE);
 
 		DrawRectangle(1157, 189, 107, 42, LIGHTGRAY);
 		DrawRectangleLines(1157, 189, 107, 42, BLACK);
-		DrawText("Credits", 1177, 203, 20, DARKBLUE);
+		DrawText("DOB", 1177, 203, 20, DARKBLUE);
 
 		DrawRectangle(1264, 189, 143, 42, LIGHTGRAY);
 		DrawRectangleLines(1264, 189, 143, 42, BLACK);
-		DrawText("Course day", 1282, 203, 20, DARKBLUE);
+		DrawText("Social ID", 1282, 203, 20, DARKBLUE);
 
-		DrawRectangle(1407, 189, 105, 42, LIGHTGRAY);
-		DrawRectangleLines(1407, 189, 105, 42, BLACK);
-		DrawText("Session", 1423, 203, 20, DARKBLUE);
-
-		delete[] coursebutton;
-		backtosemesterpage.workbutton(mousePoint, CurrentUser, Year, Semester, SemesterPage);
+		backtoViewClasspage.workbutton(mousePoint, CurrentUser, ViewClassesPage);
 		EndDrawing();
 	}
-	delete[] courses;
-	delete[] Year;
-	delete[] Semester;
-	CloseWindow();*/
+	//delete[] listStudents;
+	CloseWindow();
 }
 void addStudentPage(const int screenWidth, const int screenHeight, account& CurrentUser) {
 	Vector2 mousePoint = { 0.0f, 0.0f };

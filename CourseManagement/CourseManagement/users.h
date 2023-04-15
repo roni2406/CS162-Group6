@@ -10,7 +10,7 @@ using namespace std;
 struct person {
     char* firstName;
     char* lastName;
-    bool gender; // 0(false) : female; 1(true) : male
+    bool gender; // 0(false) : female; 1(true) : male 
     Date dob;
     char* socialID;
 

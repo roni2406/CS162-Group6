@@ -92,7 +92,7 @@ student* viewStudentsInClass(char* className)
 	student* Class = new student[150];
 	int numOfStu = 0;
 	ifstream fin;
-	fin.open("../data/Classes" + string(className) + ".txt");
+	fin.open("../data/Classes/" + string(className) + ".txt");
 	while (!fin.eof())
 	{
 		student s;
@@ -107,7 +107,7 @@ int countStudentInClass(char* className) {
 	student* Class = new student[150];
 	int numOfStu = 0;
 	ifstream fin;
-	fin.open("../data/Classes" + string(className) + ".txt");
+	fin.open("../data/Classes/" + string(className) + ".txt");
 	while (!fin.eof())
 	{
 		student s;
