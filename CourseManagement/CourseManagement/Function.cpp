@@ -1011,29 +1011,33 @@ void ClassPage(const int screenWidth, const int screenHeight, account& CurrentUs
 		DrawText("Back to Classes Page", 1200, 20, 20, DARKBLUE);
 		DrawTexture(background2, 0, 60, WHITE);
 
-		DrawRectangle(0, 189, 121, 42, LIGHTGRAY);
-		DrawRectangleLines(0, 189, 121, 42, BLACK);
-		DrawText("No", 45, 203, 20, DARKBLUE);
+		DrawRectangle(0, 189, 58, 65, LIGHTGRAY);
+		DrawRectangleLines(0, 189, 58, 65, BLACK);
+		DrawText("No", 8, 205, 24, DARKBLUE);
 
-		DrawRectangle(121, 189, 519, 42, LIGHTGRAY);
-		DrawRectangleLines(121, 189, 519, 42, BLACK);
-		DrawText("Last name", 325, 203, 20, DARKBLUE);
+		DrawRectangle(58, 189, 173, 65, LIGHTGRAY);
+		DrawRectangleLines(58, 189, 173, 65, BLACK);
+		DrawText("Student ID", 84, 205, 24, DARKBLUE);
 
-		DrawRectangle(640, 189, 142, 42, LIGHTGRAY);
-		DrawRectangleLines(640, 189, 142, 42, BLACK);
-		DrawText("First name", 650, 203, 20, DARKBLUE);
+		DrawRectangle(227, 189, 179, 65, LIGHTGRAY);
+		DrawRectangleLines(227, 189, 179, 65, BLACK);
+		DrawText("Last name", 256,205, 24, DARKBLUE);
 
-		DrawRectangle(782, 189, 375, 42, LIGHTGRAY);
-		DrawRectangleLines(782, 189, 375, 42, BLACK);
-		DrawText("Gender", 886, 203, 20, DARKBLUE);
+		DrawRectangle(406, 189, 456, 65, LIGHTGRAY);
+		DrawRectangleLines(406, 189, 456, 65, BLACK);
+		DrawText("First name", 569, 205, 24, DARKBLUE);
 
-		DrawRectangle(1157, 189, 107, 42, LIGHTGRAY);
-		DrawRectangleLines(1157, 189, 107, 42, BLACK);
-		DrawText("DOB", 1177, 203, 20, DARKBLUE);
+		DrawRectangle(862, 189, 188, 65, LIGHTGRAY);
+		DrawRectangleLines(862, 189, 188, 65, BLACK);
+		DrawText("Gender", 910, 205, 24, DARKBLUE);
 
-		DrawRectangle(1264, 189, 143, 42, LIGHTGRAY);
-		DrawRectangleLines(1264, 189, 143, 42, BLACK);
-		DrawText("Social ID", 1282, 203, 20, DARKBLUE);
+		DrawRectangle(1050, 189, 242, 65, LIGHTGRAY);
+		DrawRectangleLines(1050, 189, 242, 65, BLACK);
+		DrawText("Date of Birth", 1095, 205, 24, DARKBLUE);
+
+		DrawRectangle(1292, 189, 220, 65, LIGHTGRAY);
+		DrawRectangleLines(1292, 189, 220, 65, BLACK);
+		DrawText("Social ID", 1345, 205, 24, DARKBLUE);
 
 		backtoViewClasspage.workbutton(mousePoint, CurrentUser, ViewClassesPage);
 		EndDrawing();
