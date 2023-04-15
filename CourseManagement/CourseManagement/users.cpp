@@ -15,12 +15,12 @@ void person::inputAPerson(char* first_name, char* last_name, bool Gender, char* 
 	socialID = _strdup(social_ID);
 }
 void person::inputPersonsWithCSVFile(ifstream& fin) {
+	lastName = new char[100];
+	fin.get(lastName, 100, ',');
+
 	firstName = new char[100];
 	fin.get(firstName, 100, ',');
 	fin.ignore(100, ',');
-
-	lastName = new char[100];
-	fin.get(lastName, 100, ',');
 
 	fin.ignore(100, ',');
 	char* tmp = new char[100];
@@ -56,11 +56,11 @@ void student::inputAStudent(ifstream& fin, char* student_id,
 
 void student::inputStudentsWithCSVFile(ifstream& fin) {
 	fin >> No;
+	stuID = new char[100];
+	fin.ignore(100, ',');
+	fin.get(stuID, 100, '\0');
 	fin.ignore(100, ',');
 	Student.inputPersonsWithCSVFile(fin);
-	fin.ignore(100, ',');
-	stuID = new char[100];
-	fin.get(stuID, 100, '\0');
 }
 
 void student::outputAStudentToFile(char* filename) {
