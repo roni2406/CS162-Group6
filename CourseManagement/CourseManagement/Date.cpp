@@ -72,3 +72,39 @@ bool checkDateInput(char* date) {
 	if (cnt != 2) return false;
 	return true;
 }
+
+void int_to_char(int num, char* result) {
+	int temp = num;
+	int len = 0;
+
+	while (temp > 0) {
+		len++;
+		temp /= 10;
+	}
+
+	for (int i = len - 1; i >= 0; i--) {
+		result[i] = num % 10 + '0';
+		num /= 10;
+	}
+
+	result[len] = '\0';
+}
+
+char* dateToChar(Date date) {
+	char* day = new char[10];
+	char* month = new char[10];
+	char* year = new char[10];
+
+	int_to_char(date.d, day);
+	int_to_char(date.m, month);
+	int_to_char(date.y, year);
+
+	string res = string(day) + "/" + string(month) + "/" + string(year);
+	char* ans = &res[0];
+
+	delete[] day;
+	delete[] month;
+	delete[] year;
+
+	return ans;
+}

@@ -15,5 +15,7 @@ struct Date {
     bool checkdata();
 };
 
+void int_to_char(int num, char* result);
 bool checkDateInput(char* date);
+char* dateToChar(Date date);
 #endif
