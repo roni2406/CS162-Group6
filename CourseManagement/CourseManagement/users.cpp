@@ -79,7 +79,7 @@ void student::outputAStudentToFile(char* filename) {
 	fout.open(filename, ios::app);
 	if (No != 1) fout << endl;
 	fout << No << ",";
-	fout << "," << stuID << ",";
+	fout << stuID << ",";
 	Student.outputAPersonToFile(fout);
 	fout.close();
 }
@@ -134,11 +134,18 @@ void addAStudentToClass(char* filename, char* first_name, char* last_name, bool 
 void addStudentsWithCSV(char* fileNameIn, char* fileNameOut) {
 	ifstream fin;
 	fin.open(fileNameIn);
+	string fileNameOutAddress = "../data/Classes/" + string(fileNameOut) + ".txt";
+	char* fileNameOutAddressChar = new char[100];
+	for (int i = 0; i < fileNameOutAddress.size(); i++) {
+		fileNameOutAddressChar[i] = fileNameOutAddress[i];
+	}
+	fileNameOutAddressChar[fileNameOutAddress.size()] = '\0';
 	while (!fin.eof()) {
 		student s;
 		s.inputStudentsWithCSVFile(fin);
-		s.outputAStudentToFile(fileNameOut);
+		s.outputAStudentToFile(fileNameOutAddressChar);
 	}
+	delete[] fileNameOutAddressChar;
 	fin.close();
 }
 

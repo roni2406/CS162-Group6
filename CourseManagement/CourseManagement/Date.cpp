@@ -100,7 +100,11 @@ char* dateToChar(Date date) {
 	int_to_char(date.y, year);
 
 	string res = string(day) + "/" + string(month) + "/" + string(year);
-	char* ans = &res[0];
+	char* ans = new char[20];
+	for (int i = 0; i < res.size(); ++i) {
+		ans[i] = res[i];
+	}
+	ans[res.size()] = '\0';
 
 	delete[] day;
 	delete[] month;

@@ -963,6 +963,9 @@ void ClassPage(const int screenWidth, const int screenHeight, account& CurrentUs
 	Button2 backtoViewClasspage;
 	backtoViewClasspage.button = { 1190, 20, 250, 30 };
 
+	Button4 AddStuCSV;
+	AddStuCSV.button = { 23,94,293,55 };
+
 	int scrollspeed = 35;
 	int x_student = 11;
 	int y_student = 255;
@@ -1011,6 +1014,9 @@ void ClassPage(const int screenWidth, const int screenHeight, account& CurrentUs
 		DrawText("Back to Classes Page", 1200, 20, 20, DARKBLUE);
 		DrawTexture(background2, 0, 60, WHITE);
 
+		DrawRectangleRec(AddStuCSV.button, WHITE);
+		DrawText("Add Student with CSV", 42, 108, 24, DARKBLUE);
+
 		DrawRectangle(0, 189, 58, 65, LIGHTGRAY);
 		DrawRectangleLines(0, 189, 58, 65, BLACK);
 		DrawText("No", 8, 205, 24, DARKBLUE);
@@ -1040,6 +1046,7 @@ void ClassPage(const int screenWidth, const int screenHeight, account& CurrentUs
 		DrawText("Social ID", 1345, 205, 24, DARKBLUE);
 
 		backtoViewClasspage.workbutton(mousePoint, CurrentUser, ViewClassesPage);
+		AddStuCSV.workbutton(mousePoint, CurrentUser, Classname, addStudentCSV);
 		EndDrawing();
 	}
 	//delete[] listStudents;
@@ -1144,14 +1151,14 @@ void addStudentPage(const int screenWidth, const int screenHeight, account& Curr
 	CloseWindow();
 }
 
-void addStudentCSV(const int screenWidth, const int screenHeight,char* classname, account& CurrentUser) {
+void addStudentCSV(const int screenWidth, const int screenHeight, account& CurrentUser, char*& classname) {
 	Vector2 mousePoint = { 0.0f, 0.0f };
 	Rectangle background = { 0,0,float(screenWidth),float(screenHeight) };
 
 	Textbox1 filename;
 	filename.textbox = { 420,280,650,84 };
 
-	Button2 backtoClasspage;
+	Button4 backtoClasspage;
 	backtoClasspage.button = { 1270, 20, 200, 30 };
 
 	Texture2D confirmBtn = LoadTexture("confirmBtn.png");
@@ -1204,11 +1211,11 @@ void addStudentCSV(const int screenWidth, const int screenHeight,char* classname
 		DrawTextureRec(confirmBtn, sourceRecconfirmBtn, { btnBoundsconfirmBtn.x, btnBoundsconfirmBtn.y }, WHITE); // Draw button frame
 
 		/// Back to profile page button
-		backtoClasspage.workbutton(mousePoint, CurrentUser, ProfilePageStaff);
+		backtoClasspage.workbutton(mousePoint, CurrentUser,classname, ClassPage);
 
 		EndDrawing();
 	}
-
+	CloseWindow();
 }
 
 void CreateSemesterPage(const int screenWidth, const int screenHeight, account& CurrentUser, char* &Year) {
