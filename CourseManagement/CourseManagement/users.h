@@ -42,7 +42,7 @@ struct staff {
 };
 
 
-void addAStudentToClass(char* filename, char* first_name, char* last_name, bool Gender, char* DoB,
+bool addAStudentToClass(char* className, char* first_name, char* last_name, bool Gender, char* DoB,
     char* social_ID, char* student_id);
 
 //void addAStaff(char* filename, char* first_name, char* last_name, bool Gender, char* DoB, char* social_ID, char* staff_id);

@@ -97,11 +97,12 @@ void staff::outputAStaffToFile(ofstream& fout) {
 
 //other
 //filename is a file which data will be add to
-void addAStudentToClass(char* filename, char* first_name, char* last_name, bool Gender, char* DoB,
+bool addAStudentToClass(char* className, char* first_name, char* last_name, bool Gender, char* DoB,
 	char* social_ID, char* student_id) {
 
+	string fileName = "../data/Classes/" + string(className) + ".txt";
 	ifstream fin;
-	fin.open(filename);
+	fin.open(fileName);
 	student s;
 	s.inputAStudent(fin, student_id, first_name, last_name, Gender, DoB, social_ID);
 	fin.close();
@@ -112,9 +113,10 @@ void addAStudentToClass(char* filename, char* first_name, char* last_name, bool 
 	addinfo(studentAcc, (char*)"../data/student_account.txt");
 
 	ofstream fout;
-	fout.open(filename, ios::app);
-	s.outputAStudentToFile(filename);
+	fout.open(fileName, ios::app);
+	s.outputAStudentToFile((char*)fileName.c_str());
 	fout.close();
+	return true;
 }
 
 //void addAStaff(char* filename, char* first_name, char* last_name, bool Gender, char* DoB,
@@ -143,6 +145,10 @@ void addStudentsWithCSV(char* fileNameIn, char* fileNameOut) {
 	while (!fin.eof()) {
 		student s;
 		s.inputStudentsWithCSVFile(fin);
+		account stuAcc;
+		stuAcc.userName = _strdup(s.stuID);
+		stuAcc.password = _strdup(dateToChar(s.Student.dob));
+		addinfo(stuAcc, (char*)"../data/student_account.txt");
 		s.outputAStudentToFile(fileNameOutAddressChar);
 	}
 	delete[] fileNameOutAddressChar;
