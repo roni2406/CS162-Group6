@@ -966,6 +966,9 @@ void ClassPage(const int screenWidth, const int screenHeight, account& CurrentUs
 	Button4 AddStuCSV;
 	AddStuCSV.button = { 23,94,293,55 };
 
+	Button4 AddAStu;
+	AddAStu.button = { 413,94,313,55 };
+
 	int scrollspeed = 35;
 	int x_student = 11;
 	int y_student = 255;
@@ -1016,6 +1019,8 @@ void ClassPage(const int screenWidth, const int screenHeight, account& CurrentUs
 
 		DrawRectangleRec(AddStuCSV.button, WHITE);
 		DrawText("Add Student with CSV", 42, 108, 24, DARKBLUE);
+		DrawRectangleRec(AddAStu.button, WHITE);
+		DrawText("Add a Student manually", 430, 108, 24, DARKBLUE);
 
 		DrawRectangle(0, 189, 58, 65, LIGHTGRAY);
 		DrawRectangleLines(0, 189, 58, 65, BLACK);
@@ -1047,12 +1052,14 @@ void ClassPage(const int screenWidth, const int screenHeight, account& CurrentUs
 
 		backtoViewClasspage.workbutton(mousePoint, CurrentUser, ViewClassesPage);
 		AddStuCSV.workbutton(mousePoint, CurrentUser, Classname, addStudentCSV);
+		AddAStu.workbutton(mousePoint, CurrentUser, Classname, addStudentPage);
+
 		EndDrawing();
 	}
 	//delete[] listStudents;
 	CloseWindow();
 }
-void addStudentPage(const int screenWidth, const int screenHeight, account& CurrentUser) {
+void addStudentPage(const int screenWidth, const int screenHeight, account& CurrentUser,char*& classname) {
 	Vector2 mousePoint = { 0.0f, 0.0f };
 	Rectangle background = { 0,0,float(screenWidth),float(screenHeight) };
 
@@ -1069,7 +1076,7 @@ void addStudentPage(const int screenWidth, const int screenHeight, account& Curr
 	Textbox1 socialID;
 	socialID.textbox = { 284,489,943,84 };
 
-	Button2 backtoClasspage;
+	Button4 backtoClasspage;
 	backtoClasspage.button = { 1270, 20, 200, 30 };
 
 	Texture2D confirmBtn = LoadTexture("confirmBtn.png");
@@ -1125,27 +1132,26 @@ void addStudentPage(const int screenWidth, const int screenHeight, account& Curr
 		mousePoint = GetMousePosition();
 
 		///Confirm button
-		//confirmBtnAction = false;
-		//if (CheckCollisionPointRec(mousePoint, btnBoundsconfirmBtn)) {          // Check button state
-		//	if (IsMouseButtonPressed(MOUSE_BUTTON_LEFT)) confirmBtnAction = true;
-		//}
-		//else confirmBtnState = 0;
-		//if (confirmBtnAction) {
-		//	if (!CheckClassExisted(classname.text)) {
-		//		confirmBtnFalseDisplay = false;
-		//		CreateAClass(classname.text, numStudents.text);
-		//		EndDrawing();
-		//		ProfilePageStaff(screenWidth, screenHeight, CurrentUser);
-		//	}
-		//	else confirmBtnFalseDisplay = true;
-		//}
-		//if (confirmBtnFalseDisplay) DrawText("This class was created before!", 480, 560, 20, RED);
+		confirmBtnAction = false;
+		if (CheckCollisionPointRec(mousePoint, btnBoundsconfirmBtn)) {          // Check button state
+			if (IsMouseButtonPressed(MOUSE_BUTTON_LEFT)) confirmBtnAction = true;
+		}
+		else confirmBtnState = 0;
+		if (confirmBtnAction) {
+			if (addAStudentToClass(classname,Firstname.text,Lastname.text,Gender.text,birth.text,socialID.text,studentID.text)) {
+				confirmBtnFalseDisplay = false;
+				ClassPage(screenWidth, screenHeight, CurrentUser, classname);
+			}
+			else confirmBtnFalseDisplay = true;
+			
+		}
+		if (confirmBtnFalseDisplay) DrawText("This class was created before!", 480, 560, 20, RED);
 		// Calculate button frame rectangle to draw depending on button state
 		sourceRecconfirmBtn.y = confirmBtnState * frameHeightconfirmBtn;
 		DrawTextureRec(confirmBtn, sourceRecconfirmBtn, { btnBoundsconfirmBtn.x, btnBoundsconfirmBtn.y }, WHITE); // Draw button frame
 
 		/// Back to profile page button
-		backtoClasspage.workbutton(mousePoint, CurrentUser, ProfilePageStaff);
+		backtoClasspage.workbutton(mousePoint, CurrentUser, classname,ClassPage);
 		EndDrawing();
 	}
 	CloseWindow();

@@ -40,7 +40,7 @@ void person::inputPersonsWithCSVFile(ifstream& fin) {
 	fin.get(socialID, 100, '\n');
 }
 void person::outputAPersonToFile(ofstream& fout) {
-	fout << firstName << "," << lastName << ",";
+	fout << lastName << "," << firstName << ",";
 	if (gender == 1) fout << "male,";
 	else fout << "female,";
 	dob.outputADateToFile(fout);
@@ -97,14 +97,18 @@ void staff::outputAStaffToFile(ofstream& fout) {
 
 //other
 //filename is a file which data will be add to
-bool addAStudentToClass(char* className, char* first_name, char* last_name, bool Gender, char* DoB,
+bool addAStudentToClass(char* className, char* first_name, char* last_name, char* Gender, char* DoB,
 	char* social_ID, char* student_id) {
-
+	bool gender;
+	if (strcmp(Gender, "Male") == 0) {
+		gender = 1;
+	}
+	else gender = 0;
 	string fileName = "../data/Classes/" + string(className) + ".txt";
 	ifstream fin;
 	fin.open(fileName);
 	student s;
-	s.inputAStudent(fin, student_id, first_name, last_name, Gender, DoB, social_ID);
+	s.inputAStudent(fin, student_id, first_name, last_name, gender, DoB, social_ID);
 	fin.close();
 
 	account studentAcc;
