@@ -1623,54 +1623,104 @@ void CoursePage(const int screenWidth, const int screenHeight, account& CurrentU
 
 	Button6 backtoviewcoursespage;
 	backtoviewcoursespage.button = { 1150, 20, 250, 30 };
+	/*Course.countStu(Year, Semester);
+	Course.Load_stu(Year, Semester);
+	int n = Course.numOfStu;
+	student* listStudents = Course.stuOfCourse;*/
+	Texture2D background2 = LoadTexture("course_background.png");
 
+	Button2 backtoViewClasspage;
+	backtoViewClasspage.button = { 1170, 20, 300, 30 };
+
+	Button4 AddStuCSV;
+	AddStuCSV.button = { 23,94,293,55 };
+
+	int scrollspeed = 35;
+	int x_student = 11;
+	int y_student = 255;
 
 	while (!WindowShouldClose()) {
+		y_student += (int(GetMouseWheelMove()) * scrollspeed);
+		if (x_student > 11) x_student = 11;
+		if (y_student > 255) y_student = 255;
 		ClearBackground(WHITE);
 		BeginDrawing();
 		DrawRectangleGradientEx(background, SKYBLUE, DARKBLUE, DARKBLUE, SKYBLUE);
 
+		DrawRectangle(0, 231, screenWidth, 751, WHITE);
+		DrawRectangleLines(0, 231, screenWidth, 751, BLACK);
+		/*int j = 0;
+		mousePoint = GetMousePosition();
+		for (int i = 0; i < n; ++i) {
+			DrawLine(x_student + 47, y_student + j - 1, x_student + 47, y_student + j + 61, BLACK);
+			DrawLine(x_student + 216, y_student + j - 1, x_student + 216, y_student + j + 61, BLACK);
+			DrawLine(x_student + 395, y_student + j - 1, x_student + 395, y_student + j + 61, BLACK);
+			DrawLine(x_student + 851, y_student + j - 1, x_student + 851, y_student + j + 61, BLACK);
+			DrawLine(x_student + 1039, y_student + j - 1, x_student + 1039, y_student + j + 61, BLACK);
+			DrawLine(x_student + 1281, y_student + j - 1, x_student + 1281, y_student + j + 61, BLACK);
+			DrawLine(x_student + 1501, y_student + j - 1, x_student + 1501, y_student + j + 61, BLACK);
+
+			DrawRectangleLines(0, y_student + j - 1, 1512, 62, BLACK);
+			DrawRectangleLines(0, y_student + j - 1, 1512, 62, BLACK);
+			char* stuNo = new char[10];
+			int_to_char(listStudents[i].No, stuNo);
+			DrawText(stuNo, x_student + 13, y_student + j + 30, 20, BLACK);
+			DrawText(listStudents[i].stuID, x_student + 72, y_student + j + 30, 20, BLACK);
+			DrawText(listStudents[i].Student.lastName, x_student + 260, y_student + j + 30, 20, BLACK);
+			DrawText(listStudents[i].Student.firstName, x_student + 528, y_student + j + 30, 20, BLACK);
+
+			if (listStudents[i].Student.gender) DrawText("Male", x_student + 912, y_student + j + 30, 20, BLACK);
+			else DrawText("Female", x_student + 912, y_student + j + 30, 20, BLACK);
+
+			DrawText(dateToChar(listStudents[i].Student.dob), x_student + 1097, y_student + j + 30, 20, BLACK);
+			DrawText(listStudents[i].Student.socialID, x_student + 1300, y_student + j + 30, 20, BLACK);
+			j += 61;
+		}*/
 		DrawRectangle(0, 0, screenWidth, 60, WHITE);
 		DrawText(Course.courseID, 30, 10, 20, DARKBLUE);
 		DrawText(Course.className, 30, 40, 20, DARKBLUE);
 		DrawText(Semester, 670, 15, 40, DARKBLUE);
 		DrawRectangleRec(backtoviewcoursespage.button, WHITE);
 		DrawText("Back to View Courses Page", 1180, 20, 20, DARKBLUE);
-		DrawRectangle(0, 231, screenWidth, 751, WHITE);
-		DrawRectangleLines(0, 231, screenWidth, 751, BLACK);
+		DrawTexture(background2, 0, 60, WHITE);
 
-		DrawRectangle(0, 189, 121, 42, LIGHTGRAY);
-		DrawRectangleLines(0, 189, 121, 42, BLACK);
-		DrawText("ID", 45, 203, 20, DARKBLUE);
+		DrawRectangleRec(AddStuCSV.button, WHITE);
+		DrawText("Add Student with CSV", 42, 108, 24, DARKBLUE);
 
-		DrawRectangle(121, 189, 519, 42, LIGHTGRAY);
-		DrawRectangleLines(121, 189, 519, 42, BLACK);
-		DrawText("Course name", 325, 203, 20, DARKBLUE);
+		DrawRectangle(0, 189, 58, 65, LIGHTGRAY);
+		DrawRectangleLines(0, 189, 58, 65, BLACK);
+		DrawText("No", 8, 205, 24, DARKBLUE);
 
-		DrawRectangle(640, 189, 142, 42, LIGHTGRAY);
-		DrawRectangleLines(640, 189, 142, 42, BLACK);
-		DrawText("Class name", 650, 203, 20, DARKBLUE);
+		DrawRectangle(58, 189, 173, 65, LIGHTGRAY);
+		DrawRectangleLines(58, 189, 173, 65, BLACK);
+		DrawText("Student ID", 84, 205, 24, DARKBLUE);
 
-		DrawRectangle(782, 189, 375, 42, LIGHTGRAY);
-		DrawRectangleLines(782, 189, 375, 42, BLACK);
-		DrawText("Teacher name", 886, 203, 20, DARKBLUE);
+		DrawRectangle(227, 189, 179, 65, LIGHTGRAY);
+		DrawRectangleLines(227, 189, 179, 65, BLACK);
+		DrawText("Last name", 256, 205, 24, DARKBLUE);
 
-		DrawRectangle(1157, 189, 107, 42, LIGHTGRAY);
-		DrawRectangleLines(1157, 189, 107, 42, BLACK);
-		DrawText("Credits", 1177, 203, 20, DARKBLUE);
+		DrawRectangle(406, 189, 456, 65, LIGHTGRAY);
+		DrawRectangleLines(406, 189, 456, 65, BLACK);
+		DrawText("First name", 569, 205, 24, DARKBLUE);
 
-		DrawRectangle(1264, 189, 143, 42, LIGHTGRAY);
-		DrawRectangleLines(1264, 189, 143, 42, BLACK);
-		DrawText("Course day", 1282, 203, 20, DARKBLUE);
+		DrawRectangle(862, 189, 188, 65, LIGHTGRAY);
+		DrawRectangleLines(862, 189, 188, 65, BLACK);
+		DrawText("Gender", 910, 205, 24, DARKBLUE);
 
-		DrawRectangle(1407, 189, 105, 42, LIGHTGRAY);
-		DrawRectangleLines(1407, 189, 105, 42, BLACK);
-		DrawText("Session", 1423, 203, 20, DARKBLUE);
+		DrawRectangle(1050, 189, 242, 65, LIGHTGRAY);
+		DrawRectangleLines(1050, 189, 242, 65, BLACK);
+		DrawText("Date of Birth", 1095, 205, 24, DARKBLUE);
+
+		DrawRectangle(1292, 189, 220, 65, LIGHTGRAY);
+		DrawRectangleLines(1292, 189, 220, 65, BLACK);
+		DrawText("Social ID", 1345, 205, 24, DARKBLUE);
+
 
 		mousePoint = GetMousePosition();
 		backtoviewcoursespage.workbutton(mousePoint, CurrentUser, Year, Semester, ViewCoursesPage);
 		EndDrawing();
 	}
+	//delete[] listStudents;
 	delete[] Year;
 	delete[] Semester;
 	CloseWindow();
