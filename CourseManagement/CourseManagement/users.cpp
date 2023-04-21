@@ -47,6 +47,12 @@ void person::outputAPersonToFile(ofstream& fout) {
 	fout << "," << socialID;
 }
 
+bool person::checkData() {
+	if (!dob.checkdata() || strlen(socialID) != 12)
+		return false;
+	return true;
+}
+
 //student
 void student::inputAStudent(ifstream& fin, char* student_id,
 	char* first_name, char* last_name, bool Gender, char* DoB, char* social_ID) {
@@ -84,6 +90,12 @@ void student::outputAStudentToFile(char* filename) {
 	fout.close();
 }
 
+bool student::checkData() {
+	if (!Student.checkData() || strlen(stuID) != 8)
+		return false;
+	return true;
+}
+
 //staff
 void staff::inputAStaff(char* staff_id, person sta) {
 	Staff = sta;
@@ -99,17 +111,24 @@ void staff::outputAStaffToFile(ofstream& fout) {
 //filename is a file which data will be add to
 bool addAStudentToClass(char* className, char* first_name, char* last_name, char* Gender, char* DoB,
 	char* social_ID, char* student_id) {
+
+	if (!checkDateInput(DoB) || (strcmp(Gender, "Male") != 0 && strcmp(Gender, "Female") != 0))
+		return false;
+
 	bool gender;
 	if (strcmp(Gender, "Male") == 0) {
 		gender = 1;
 	}
 	else gender = 0;
+
 	string fileName = "../data/Classes/" + string(className) + ".txt";
 	ifstream fin;
 	fin.open(fileName);
 	student s;
 	s.inputAStudent(fin, student_id, first_name, last_name, gender, DoB, social_ID);
 	fin.close();
+
+	if (!s.checkData()) return false;
 
 	account studentAcc;
 	studentAcc.userName = _strdup(student_id);
