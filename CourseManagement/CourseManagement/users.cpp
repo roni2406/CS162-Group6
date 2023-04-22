@@ -184,6 +184,44 @@ bool checkdata_FileName(char* fileNameIn)
 	else return false;
 }
 
+
+// Question 20
+
+void inputStudentsAndScoreBoardWithCSVFile(ifstream& fin, student& s)
+{
+	fin >> s.No;
+	s.stuID = new char[100];
+	fin.ignore(100, ',');
+	fin.get(s.stuID, 100, ',');
+	fin.ignore(100, ',');
+	
+	s.Student.lastName = new char[100];
+	fin.get(s.Student.lastName, 100, ',');
+
+	s.Student.firstName = new char[100];
+	fin.ignore(100, ',');
+	fin.get(s.Student.firstName, 100, ',');
+
+	char* tmp = new char[100];
+	fin.ignore(100, ',');
+	fin.get(tmp, 100, ',');
+	if (strcmp(tmp, (char*)"Male") == 0) s.Student.gender = 1;
+	else s.Student.gender = 0;
+	delete[] tmp;
+
+	char* dateofBirth = new char[20];
+	fin.ignore(100, ',');
+	fin.get(dateofBirth, 100, ',');
+	s.Student.dob.inputADateWithChar(dateofBirth);
+	delete[] dateofBirth;
+
+	s.Student.socialID = new char[100];
+	fin.ignore(100, ',');
+	fin.get(s.Student.socialID, 100, ',');
+
+	s.mark.inputScoreBoardWithCSV(fin);
+}
+
 void InputScoreBoardWithCSV(char* addressOfOutputFile, char* schoolYear, char* semester, char* courseName)
 {
 	ifstream fin;
