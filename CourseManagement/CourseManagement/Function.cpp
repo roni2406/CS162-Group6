@@ -753,8 +753,8 @@ void ViewSchoolYearsPage(const int screenWidth, const int screenHeight, account&
 	while (!WindowShouldClose()) {
 		y_schoolyear += (int(GetMouseWheelMove()) * scrollspeed);
 		if (y_schoolyear > 167) y_schoolyear = 167;
-		if (y_schoolyear + 12*n < 167) {
-			y_schoolyear = 167 - 12*n;
+		if (y_schoolyear + (n*3)*n < 167) {
+			y_schoolyear = 167 - (n*3)*n;
 		}
 		//if (y_schoolyear) y_schoolyear = 881;
 		ClearBackground(WHITE);
@@ -1577,6 +1577,10 @@ void ViewCoursesPage(const int screenWidth, const int screenHeight, account& Cur
 			if (y_course + j < 231) coursebutton[i].state = false;
 			coursebutton[i].workbutton(mousePoint, CurrentUser, Year, Semester, courses[i], CoursePage);
 			j += 61;
+
+			if (coursebutton[i].action1 == true) {
+				DrawRectangle(0, 261, 206, 116, BLACK);
+			}
 		}
 		DrawRectangle(0, 0, screenWidth, 60, WHITE);
 		DrawText(Year, 30, 15, 40, DARKBLUE);

@@ -77,8 +77,12 @@ void Button6::workbutton(Vector2 mousePoint, account& CurrentUser, char*& a, cha
 void Button7::workbutton(Vector2 mousePoint, account& CurrentUser, char*& a, char*& b, course& c, void(*func)(const int screenWidth, const int screenHeight, account& CurrentUser, char*& a, char*& b, course& c)) {
 	if (CheckCollisionPointRec(mousePoint, button)) {          // Check button state
 		if (IsMouseButtonPressed(MOUSE_BUTTON_LEFT)) action = true;
+		if (IsMouseButtonPressed(MOUSE_BUTTON_RIGHT)) action1 = true;
 	}
-	else action = false;
+	else {
+		action = false;
+		action1 = false;
+	}
 	if (action && state)
 	{
 		EndDrawing();
