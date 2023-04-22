@@ -185,3 +185,17 @@ bool checkdata_FileName(char* fileNameIn)
 		&& fileNameIn[n - 2] == 's' && fileNameIn[n - 1] == 'v') return true;
 	else return false;
 }
+
+void InputScoreBoard(char* addressOfOutputFile, char* schoolYear, char* semester, char* courseName)
+{
+	ifstream fin;
+	fin.open("../data/" + string(schoolYear) + "/" + string(semester)
+		+ "/" + string(courseName) + ".csv");
+	while (!fin.eof()) {
+		student s;
+		s.inputStudentsWithCSVFile(fin);
+		s.mark.inputScoreBoardWithCSV(fin);
+		s.outputAStudentToFile(addressOfOutputFile);
+	}
+
+}
