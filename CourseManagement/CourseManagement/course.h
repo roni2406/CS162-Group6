@@ -32,6 +32,8 @@ struct ListCourse {
 
 void AddCourseToFile(char* coursename, char* id, char* classname, char* teacher, char* nofc, char* courseday, char* sshour, char*& Year, char*& semester);
 int countCourse(char* year, char* semester);
+void ReturnCoursesToFile(char* year, char* semester, int num, course*& courses);
+void deleteCourse(course* courses, int no, int& num, char* year, char* semester);
 bool CheckValidCourse(char* coursename, char* ID, char* classname, char* Year, char* semester);
 void LoadCourseFromFile(char* year, char* semester, int num, course* &courses);
 void exportStudentsInCourseToFile(char* addressOfOutputFile, char* schoolYear, char* semester, char* courseName);
