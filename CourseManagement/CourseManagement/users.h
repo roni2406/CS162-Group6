@@ -27,8 +27,8 @@ struct student {
     char* stuID;
     scoreboard mark;
 
-    void inputAStudent(ifstream& fin, char* student_id,
-        char* first_name, char* last_name, bool Gender, char* DoB, char* social_ID);
+    void inputAStudent(char* student_id, char* first_name, char* last_name, 
+        bool Gender, char* DoB, char* social_ID);
     void inputStudentsWithCSVFile(ifstream& fin);
     void outputAStudentToFile(char* filename);
     bool checkData();

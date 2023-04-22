@@ -15,7 +15,7 @@ struct Class {
 void InputAClass(char* classID, Class& className); 
 void CreateAClass(char* classID);       // front end
 bool CheckClassExisted(char* ClassID); // front end
-void AddAClassToList(Class& className, ofstream& fout);
+void AddAClassToList(Class className, ofstream& fout);
 void CreateASingleClassList(Class className, ofstream& fout);
 
 

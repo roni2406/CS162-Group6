@@ -54,8 +54,8 @@ bool person::checkData() {
 }
 
 //student
-void student::inputAStudent(ifstream& fin, char* student_id,
-	char* first_name, char* last_name, bool Gender, char* DoB, char* social_ID) {
+void student::inputAStudent(char* student_id, char* first_name, char* last_name, 
+	bool Gender, char* DoB, char* social_ID) {
 	stuID = _strdup(student_id);
 	Student.inputAPerson(first_name, last_name, Gender, DoB, social_ID);
 }
@@ -121,12 +121,10 @@ bool addAStudentToClass(char* className, char* first_name, char* last_name, char
 	}
 	else gender = 0;
 
-	string fileName = "../data/Classes/" + string(className) + ".txt";
-	ifstream fin;
-	fin.open(fileName);
+	string fileName = "../data/Classes/" + string(className) + ".csv";
+
 	student s;
-	s.inputAStudent(fin, student_id, first_name, last_name, gender, DoB, social_ID);
-	fin.close();
+	s.inputAStudent(student_id, first_name, last_name, gender, DoB, social_ID);
 
 	if (!s.checkData()) return false;
 
@@ -159,7 +157,7 @@ bool addAStudentToClass(char* className, char* first_name, char* last_name, char
 void addStudentsWithCSV(char* fileNameIn, char* fileNameOut) {
 	ifstream fin;
 	fin.open(fileNameIn);
-	string fileNameOutAddress = "../data/Classes/" + string(fileNameOut) + ".txt";
+	string fileNameOutAddress = "../data/Classes/" + string(fileNameOut) + ".csv";
 	char* fileNameOutAddressChar = new char[100];
 	for (int i = 0; i < fileNameOutAddress.size(); i++) {
 		fileNameOutAddressChar[i] = fileNameOutAddress[i];

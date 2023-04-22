@@ -22,15 +22,21 @@ void CreateAClass(char* classID)
 
 void CreateASingleClassList(Class className, ofstream& fout)
 {
-	fout.open("../data/Classes/" + string(className.classID) + ".txt");
+	fout.open("../data/Classes/" + string(className.classID) + ".csv");
 	fout.close();
 }
 
-void AddAClassToList(Class& className, ofstream& fout)
+void AddAClassToList(Class className, ofstream& fout)
 {
+	ifstream fin;
+	fin.open("../data/Classes/Listofclasses.txt");
+	fin.get();
+
 	fout.open("../data/Classes/Listofclasses.txt", ios::app);
-	fout << '\n';
-	fout << className.classID << " ";
+	if(!fin.eof()) fout << '\n';
+	fout << className.classID;
+	
+	fin.close();
 	fout.close();
 }
 
@@ -80,22 +86,29 @@ Class* viewClasses()
 int countClasses()
 {
 	ifstream fin;
-	Class* ClassList = nullptr;
 	int numOfClasses = 0;
-	viewClasses_PrepareData_SavedToClassArray(ClassList, fin, numOfClasses);
+	fin.open("../data/Classes/Listofclasses.txt");
+	fin.get();
+	while (!fin.eof()) {
+		++numOfClasses;
+		fin.ignore(100, '\n');
+	}
+	fin.close();
 	return numOfClasses;
 }
 
 // 16
 student* viewStudentsInClass(char* className)
 {
-	student* Class = new student[150];
-	int numOfStu = 0;
+	int n = countStudentInClass(className);
+	student* Class = nullptr;
+	if (n != 0) {
+		Class = new student[n];
+	}
 	ifstream fin;
-	fin.open("../data/Classes/" + string(className) + ".txt");
-	while (!fin.eof())
-	{
-		Class[numOfStu++].inputStudentsWithCSVFile(fin);
+	fin.open("../data/Classes/" + string(className) + ".csv");
+	for (int i = 0; i < n; i++) {
+		Class[i].inputStudentsWithCSVFile(fin);
 		fin.ignore(100, '\n');
 	}
 	fin.close();
@@ -103,17 +116,15 @@ student* viewStudentsInClass(char* className)
 }
 
 int countStudentInClass(char* className) {
-	student* Class = new student[150];
 	int numOfStu = 0;
 	ifstream fin;
-	fin.open("../data/Classes/" + string(className) + ".txt");
-	while (!fin.eof())
-	{
-		Class[numOfStu++].inputStudentsWithCSVFile(fin);
+	fin.open("../data/Classes/" + string(className) + ".csv");
+	fin.get();
+	while (!fin.eof()){
+		++numOfStu;
 		fin.ignore(100, '\n');
 	}
 	fin.close();
-	delete[] Class;
 	return numOfStu;
 }
 
