@@ -1629,10 +1629,10 @@ void CoursePage(const int screenWidth, const int screenHeight, account& CurrentU
 
 	Button6 backtoviewcoursespage;
 	backtoviewcoursespage.button = { 1150, 20, 250, 30 };
-	/*Course.countStu(Year, Semester);
 	Course.Load_stu(Year, Semester);
+	Course.countStu(Year, Semester);
 	int n = Course.numOfStu;
-	student* listStudents = Course.stuOfCourse;*/
+	student* listStudents = Course.stuOfCourse;
 	Texture2D background2 = LoadTexture("course_background.png");
 
 	Button2 backtoViewClasspage;
@@ -1655,7 +1655,7 @@ void CoursePage(const int screenWidth, const int screenHeight, account& CurrentU
 
 		DrawRectangle(0, 231, screenWidth, 751, WHITE);
 		DrawRectangleLines(0, 231, screenWidth, 751, BLACK);
-		/*int j = 0;
+		int j = 0;
 		mousePoint = GetMousePosition();
 		for (int i = 0; i < n; ++i) {
 			DrawLine(x_student + 47, y_student + j - 1, x_student + 47, y_student + j + 61, BLACK);
@@ -1681,7 +1681,7 @@ void CoursePage(const int screenWidth, const int screenHeight, account& CurrentU
 			DrawText(dateToChar(listStudents[i].Student.dob), x_student + 1097, y_student + j + 30, 20, BLACK);
 			DrawText(listStudents[i].Student.socialID, x_student + 1300, y_student + j + 30, 20, BLACK);
 			j += 61;
-		}*/
+		}
 		DrawRectangle(0, 0, screenWidth, 60, WHITE);
 		DrawText(Course.courseID, 30, 10, 20, DARKBLUE);
 		DrawText(Course.className, 30, 40, 20, DARKBLUE);
