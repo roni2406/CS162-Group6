@@ -23,6 +23,5 @@ void scoreboard::inputScoreBoard(double midterm_mark, double final_mark, double 
 
 void scoreboard::outputScoreBoardToFile(ofstream& fout) 
 {
-
-	fout << midtermMark << "," << finalMark << "," << otherMark << "," << totalMark << '\n';
+	fout << midtermMark << "," << finalMark << "," << otherMark << "," << totalMark;
 }

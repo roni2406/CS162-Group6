@@ -185,7 +185,7 @@ bool checkdata_FileName(char* fileNameIn)
 }
 
 
-// Question 20
+// 20
 void inputStudentAndScoreWithCSV(ifstream& fin, student& s)
 {
 	fin >> s.No;
@@ -219,6 +219,32 @@ void inputStudentAndScoreWithCSV(ifstream& fin, student& s)
 	fin.get(s.Student.socialID, 100, ',');
 
 	s.mark.inputScoreBoardWithCSV(fin);
+}
+
+void outputStudentAndScoreToFile(char* filename, student& s)
+{
+	ifstream fin;
+	fin.open(filename);
+	int cnt = 0;
+	fin.get();
+	while (!fin.eof()) {
+		cnt++;
+		fin.ignore(200, '\n');
+	}
+	s.No = cnt + 1;
+	fin.close();
+	ofstream fout;
+	fout.open(filename, ios::app);
+	if (s.No != 1) fout << endl;
+	fout << s.No << ",";
+	fout << s.stuID << ",";
+	fout << s.Student.lastName << "," << s.Student.firstName << ",";
+	if (s.Student.gender == 1) fout << "male,";
+	else fout << "female,";
+	s.Student.dob.outputADateToFile(fout);
+	fout << "," << s.Student.socialID << ",";
+	s.mark.outputScoreBoardToFile(fout);
+	fout.close();
 }
 
 void InputScoreBoardWithCSV(char* addressOfOutputFile, char* schoolYear, char* semester, char* courseName)
