@@ -1633,18 +1633,28 @@ void CoursePage(const int screenWidth, const int screenHeight, account& CurrentU
 	Vector2 mousePoint = { 0.0f, 0.0f };
 
 	Button6 backtoviewcoursespage;
-	backtoviewcoursespage.button = { 1150, 20, 250, 30 };
+	backtoviewcoursespage.button = { 1160, 25, 250, 30 };
 	Course.Load_stu(Year, Semester);
 	Course.countStu(Year, Semester);
 	int n = Course.numOfStu;
 	student* listStudents = Course.stuOfCourse;
 	Texture2D background2 = LoadTexture("course_background.png");
 
-	Button2 backtoViewClasspage;
-	backtoViewClasspage.button = { 1170, 20, 300, 30 };
 
-	Button4 AddStuCSV;
-	AddStuCSV.button = { 23,94,293,55 };
+	Button4 addStuCSV;
+	addStuCSV.button = { 50, 92, 293, 55 };
+
+	Button4 addAStu;
+	addAStu.button = { 423, 92, 293, 55 };
+
+
+	Button4 Scoreboard;
+	Scoreboard.button = { 795, 92, 293, 55 };
+
+
+	Button4 exportListStu;
+	exportListStu.button = { 1169, 92, 293, 55 };
+
 
 	int scrollspeed = 35;
 	int x_student = 11;
@@ -1687,16 +1697,26 @@ void CoursePage(const int screenWidth, const int screenHeight, account& CurrentU
 			DrawText(listStudents[i].Student.socialID, x_student + 1300, y_student + j + 30, 20, BLACK);
 			j += 61;
 		}
-		DrawRectangle(0, 0, screenWidth, 60, WHITE);
+		DrawRectangle(0, 0, screenWidth, 70, WHITE);
 		DrawText(Course.courseID, 30, 10, 20, DARKBLUE);
 		DrawText(Course.className, 30, 40, 20, DARKBLUE);
-		DrawText(Semester, 670, 15, 40, DARKBLUE);
+		DrawText(Year, 720, 12, 20, DARKBLUE);
+		DrawText(Semester, 720, 35, 30, DARKBLUE);
 		DrawRectangleRec(backtoviewcoursespage.button, WHITE);
-		DrawText("Back to View Courses Page", 1180, 20, 20, DARKBLUE);
-		DrawTexture(background2, 0, 60, WHITE);
+		DrawText("Back to View Courses Page", 1180, 25, 20, DARKBLUE);
+		DrawTexture(background2, 0, 70, WHITE);
 
-		DrawRectangleRec(AddStuCSV.button, WHITE);
-		DrawText("Add Student with CSV", 42, 108, 24, DARKBLUE);
+		DrawRectangleRec(addStuCSV.button, WHITE);
+		DrawText("Add Student with CSV", 69, 108, 24, DARKBLUE);
+
+		DrawRectangleRec(addAStu.button, WHITE);
+		DrawText("Add a student manually", 431, 108, 24, DARKBLUE);
+
+		DrawRectangleRec(Scoreboard.button, WHITE);
+		DrawText("Scoreboard", 871, 108, 24, DARKBLUE);
+
+		DrawRectangleRec(exportListStu.button, WHITE);
+		DrawText("Export list of students", 1177, 108, 24, DARKBLUE);
 
 		DrawRectangle(0, 189, 58, 65, LIGHTGRAY);
 		DrawRectangleLines(0, 189, 58, 65, BLACK);
