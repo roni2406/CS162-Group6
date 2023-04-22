@@ -91,7 +91,6 @@ void Textbox1::worktextbox(bool& somethingfalsedisplay) {
 	else mouseontextbox = false;
 	if (mouseontextbox)
 	{
-
 		// Get char pressed (unicode character) on the queue
 		int key = GetCharPressed();
 
@@ -113,6 +112,13 @@ void Textbox1::worktextbox(bool& somethingfalsedisplay) {
 		{
 			lettercount--;
 			if (lettercount < 0) lettercount = 0;
+			text[lettercount] = '\0';
+		}
+		if (IsKeyDown(KEY_LEFT_CONTROL) && IsKeyDown(KEY_V)) {
+			const char* a = GetClipboardText();
+			for (int i = 0; i < strlen(a); ++i) {
+				text[lettercount++] = a[i];
+			}
 			text[lettercount] = '\0';
 		}
 	}

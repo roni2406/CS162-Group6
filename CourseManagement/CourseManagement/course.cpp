@@ -62,7 +62,7 @@ void ReturnCoursesToFile(char* year, char* semester, int num, course*& courses) 
 }
 void course:: countStu(char* year, char* semester) {
 	ifstream fin;
-	fin.open("../data/" + (string)(year)+"/" + (string)(semester)+"/" + (string)(courseName)+".txt");
+	fin.open("../data/" + (string)(year)+"/" + (string)(semester)+"/" + (string)(courseName)+"-" + string(className) + ".txt");
 	int num = 0;
 	while (!fin.eof()) {
 		++num;
@@ -71,29 +71,43 @@ void course:: countStu(char* year, char* semester) {
 	numOfStu= num -1;
 }
 void course::Load_stu(char* year, char* semester) {
+	ofstream fout;
+	fout.open("../data/" + (string)(year)+"/" + (string)(semester)+"/" + (string)(courseName)+ "-" + string(className) + ".txt", ios::app);
+	fout.close();
 	ifstream f;
-	f.open("../data/" + (string)(year)+"/" + (string)(semester)+"/"+(string)(courseName)+".txt");
+	f.open("../data/" + (string)(year)+"/" + (string)(semester)+"/"+(string)(courseName) + "-" + string(className) + ".txt");
 
 	if (!f)return;
 	int i = 0;
 	while (i<numOfStu) {
 		f >> stuOfCourse[i].No;
-		f.ignore(1, '\n');
-		f.getline(stuOfCourse[i].stuID, 1000,',');
-		f.getline(stuOfCourse[i].Student.lastName, 100,',');
-		f.getline(stuOfCourse[i].Student.firstName, 100,',');
+		f.ignore(100, ',');
+		stuOfCourse[i].stuID = new char[100];
+		f.get(stuOfCourse[i].stuID, 100,',');
+		f.ignore(100,',');
+		stuOfCourse[i].Student.lastName = new char[100];
+		f.get(stuOfCourse[i].Student.lastName, 100,',');
+		f.ignore(100,',');
+		stuOfCourse[i].Student.firstName = new char[100];
+		f.get(stuOfCourse[i].Student.firstName, 100,',');
+		f.ignore(100,',');
 		f >> stuOfCourse[i].Student.gender;
+		f.ignore(100,',');
 		f >> stuOfCourse[i].Student.dob.d;
+		f.ignore(100,'/');
 		f >> stuOfCourse[i].Student.dob.m;
+		f.ignore(100,'/');
 		f >> stuOfCourse[i].Student.dob.y;
-		f.ignore(1, '\n');
-		f.getline(stuOfCourse[i].Student.socialID, 100);
+		f.ignore(100,',');
+		stuOfCourse[i].Student.socialID = new char[100];
+		f.get(stuOfCourse[i].Student.socialID, 100);
+		f.ignore();
 		++i;
 	}
 } 
 void course::Return_stu(char* year, char* semester) {
 	ofstream f;
-	f.open("../data/" + (string)(year)+"/" + (string)(semester)+"/" + (string)(courseName)+".txt");
+	f.open("../data/" + (string)(year)+"/" + (string)(semester)+"/" + (string)(courseName)+"-" + string(className) + ".txt");
 	int i = 0;
 	if (!f)return;
 		for(int i =0;i<numOfStu;i++){
