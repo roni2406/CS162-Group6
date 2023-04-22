@@ -141,8 +141,9 @@ struct Button7 {
 	const int screenHeight = 982;
 	Rectangle button = { 0, 0, 0, 0 };
 	bool mouseonbutton = false;
-	bool state = true;
-	bool action = false;
+	bool state = true; // check if the button out of bounds
+	bool action = false; // move to another page
+	bool action1 = false; // open a small window to do something
 	void workbutton(Vector2 mousePoint, account& CurrentUser, char*&a, char*& b, course& c, void(*func)(const int screenWidth, const int screenHeight, account& CurrentUser, char*& a, char*& b, course& c));
 
 };
