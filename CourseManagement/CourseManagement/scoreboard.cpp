@@ -3,10 +3,15 @@
 using namespace std;
 
 void scoreboard::inputScoreBoardWithCSV(ifstream& fin) {
+	fin.ignore(1, ',');
 	fin >> midtermMark;
+	fin.ignore(1, ',');
 	fin >> finalMark;
+	fin.ignore(1, ',');
 	fin >> otherMark;
+	fin.ignore(1, ',');
 	fin >> totalMark;
+	fin.ignore(1, '\n');
 }
 
 void scoreboard::inputScoreBoard(double midterm_mark, double final_mark, double other_mark, double total_mark) {
@@ -17,5 +22,5 @@ void scoreboard::inputScoreBoard(double midterm_mark, double final_mark, double 
 }
 
 void scoreboard::outputScoreBoardToFile(ofstream& fout) {
-	fout << midtermMark << "," << finalMark << "," << otherMark << "," << totalMark;
+	fout << midtermMark << "," << finalMark << "," << otherMark << "," << totalMark << '\n';
 }

@@ -184,16 +184,16 @@ bool checkdata_FileName(char* fileNameIn)
 	else return false;
 }
 
-void InputScoreBoard(char* addressOfOutputFile, char* schoolYear, char* semester, char* courseName)
+void InputScoreBoardWithCSV(char* addressOfOutputFile, char* schoolYear, char* semester, char* courseName)
 {
 	ifstream fin;
+	ofstream fout;
 	fin.open("../data/" + string(schoolYear) + "/" + string(semester)
 		+ "/" + string(courseName) + ".csv");
 	while (!fin.eof()) {
 		student s;
 		s.inputStudentsWithCSVFile(fin);
 		s.mark.inputScoreBoardWithCSV(fin);
-		s.outputAStudentToFile(addressOfOutputFile);
 	}
-
+	fin.close();
 }
