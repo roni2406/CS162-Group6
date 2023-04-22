@@ -163,7 +163,7 @@ bool CheckValidCourse(char* coursename, char* ID, char* classname, char* Year, c
 void exportStudentsInCourseToFile(char* addressOfOutputFile, char* schoolYear, char* semester, char* courseName) {
 	ifstream fin;
 	fin.open("../data/" + string(schoolYear) + "/" + string(semester)
-		+ "/" + string(courseName) + ".txt");
+		+ "/" + string(courseName) + ".csv");
 	while (!fin.eof()) {
 		student s;
 		s.inputStudentsWithCSVFile(fin);
