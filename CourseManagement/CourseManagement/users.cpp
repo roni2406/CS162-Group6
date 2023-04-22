@@ -40,11 +40,17 @@ void person::inputPersonsWithCSVFile(ifstream& fin) {
 	fin.get(socialID, 100, '\n');
 }
 void person::outputAPersonToFile(ofstream& fout) {
-	fout << firstName << "," << lastName << ",";
+	fout << lastName << "," << firstName << ",";
 	if (gender == 1) fout << "male,";
 	else fout << "female,";
 	dob.outputADateToFile(fout);
 	fout << "," << socialID;
+}
+
+bool person::checkData() {
+	if (!dob.checkdata() || strlen(socialID) != 12)
+		return false;
+	return true;
 }
 
 //student
@@ -84,6 +90,12 @@ void student::outputAStudentToFile(char* filename) {
 	fout.close();
 }
 
+bool student::checkData() {
+	if (!Student.checkData() || strlen(stuID) != 8)
+		return false;
+	return true;
+}
+
 //staff
 void staff::inputAStaff(char* staff_id, person sta) {
 	Staff = sta;
@@ -97,14 +109,26 @@ void staff::outputAStaffToFile(ofstream& fout) {
 
 //other
 //filename is a file which data will be add to
-void addAStudentToClass(char* filename, char* first_name, char* last_name, bool Gender, char* DoB,
+bool addAStudentToClass(char* className, char* first_name, char* last_name, char* Gender, char* DoB,
 	char* social_ID, char* student_id) {
 
+	if (!checkDateInput(DoB) || (strcmp(Gender, "Male") != 0 && strcmp(Gender, "Female") != 0))
+		return false;
+
+	bool gender;
+	if (strcmp(Gender, "Male") == 0) {
+		gender = 1;
+	}
+	else gender = 0;
+
+	string fileName = "../data/Classes/" + string(className) + ".txt";
 	ifstream fin;
-	fin.open(filename);
+	fin.open(fileName);
 	student s;
-	s.inputAStudent(fin, student_id, first_name, last_name, Gender, DoB, social_ID);
+	s.inputAStudent(fin, student_id, first_name, last_name, gender, DoB, social_ID);
 	fin.close();
+
+	if (!s.checkData()) return false;
 
 	account studentAcc;
 	studentAcc.userName = _strdup(student_id);
@@ -112,9 +136,10 @@ void addAStudentToClass(char* filename, char* first_name, char* last_name, bool 
 	addinfo(studentAcc, (char*)"../data/student_account.txt");
 
 	ofstream fout;
-	fout.open(filename, ios::app);
-	s.outputAStudentToFile(filename);
+	fout.open(fileName, ios::app);
+	s.outputAStudentToFile((char*)fileName.c_str());
 	fout.close();
+	return true;
 }
 
 //void addAStaff(char* filename, char* first_name, char* last_name, bool Gender, char* DoB,
@@ -143,6 +168,10 @@ void addStudentsWithCSV(char* fileNameIn, char* fileNameOut) {
 	while (!fin.eof()) {
 		student s;
 		s.inputStudentsWithCSVFile(fin);
+		account stuAcc;
+		stuAcc.userName = _strdup(s.stuID);
+		stuAcc.password = _strdup(dateToChar(s.Student.dob));
+		addinfo(stuAcc, (char*)"../data/student_account.txt");
 		s.outputAStudentToFile(fileNameOutAddressChar);
 	}
 	delete[] fileNameOutAddressChar;
