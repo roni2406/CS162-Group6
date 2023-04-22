@@ -12,7 +12,6 @@ void scoreboard::inputScoreBoardWithCSV(ifstream& fin) {
 	fin.ignore(10, ',');
 	fin >> totalMark;
 	fin.ignore(10, '\n');
-	
 }
 
 void scoreboard::inputScoreBoard(double midterm_mark, double final_mark, double other_mark, double total_mark) {

@@ -186,8 +186,7 @@ bool checkdata_FileName(char* fileNameIn)
 
 
 // Question 20
-
-void inputStudentsAndScoreBoardWithCSVFile(ifstream& fin, student& s)
+void inputStudentAndScoreWithCSV(ifstream& fin, student& s)
 {
 	fin >> s.No;
 	s.stuID = new char[100];
@@ -225,13 +224,12 @@ void inputStudentsAndScoreBoardWithCSVFile(ifstream& fin, student& s)
 void InputScoreBoardWithCSV(char* addressOfOutputFile, char* schoolYear, char* semester, char* courseName)
 {
 	ifstream fin;
-	ofstream fout;
 	fin.open("../data/" + string(schoolYear) + "/" + string(semester)
 		+ "/" + string(courseName) + ".csv");
-	while (!fin.eof()) {
+	while (!fin.eof()) 
+	{
 		student s;
-		s.inputStudentsWithCSVFile(fin);
-		s.mark.inputScoreBoardWithCSV(fin);
+		inputStudentAndScoreWithCSV(fin, s);
 	}
 	fin.close();
 }
