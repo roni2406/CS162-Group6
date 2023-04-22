@@ -48,7 +48,6 @@ void LoadCourseFromFile(char* year, char* semester,int num, course* &courses) {
 void ReturnCoursesToFile(char* year, char* semester, int num, course*& courses) {
 	ofstream fout;
 	fout.open("../data/" + (string)(year)+"/" + (string)(semester)+"/ListOfCourse.txt");
-	courses = new course[num];
 	for (int i = 0; i < num; i++) {
 		fout << courses[i].courseName	<< ','
 			<< courses[i].courseID		<< ','
@@ -122,12 +121,15 @@ void course::Return_stu(char* year, char* semester) {
 		  <<stuOfCourse[i].Student.socialID << "\n";
 		}
 }
-void deleteCourse(course* courses, int no ,int& num) {
+void deleteCourse(course* courses, int no ,int& num, char* year, char* semester) {
 	while (no<num-1) {
 		courses[no] = courses[no + 1];
 		++no;
 	}
 	num--;
+	string tmp = "../data/" + (string)(year)+"/" + (string)(semester)+"/" + (string)(courses[no].courseName) + "-" + string(courses[no].className) + ".txt";
+	remove (tmp.c_str());
+	ReturnCoursesToFile(year, semester, num, courses);
 }
 void deleteStudent(course* course, int k, int no) {
 	while (no < course[k].numOfStu-1) {

@@ -76,13 +76,19 @@ void Button6::workbutton(Vector2 mousePoint, account& CurrentUser, char*& a, cha
 }
 void Button7::workbutton(Vector2 mousePoint, account& CurrentUser, char*& a, char*& b, course& c, void(*func)(const int screenWidth, const int screenHeight, account& CurrentUser, char*& a, char*& b, course& c)) {
 	if (CheckCollisionPointRec(mousePoint, button)) {          // Check button state
-		if (IsMouseButtonPressed(MOUSE_BUTTON_LEFT)) action = true;
-		if (IsMouseButtonPressed(MOUSE_BUTTON_RIGHT)) action1 = true;
+		if (IsMouseButtonPressed(MOUSE_BUTTON_LEFT)) {
+			action = true;
+			action1 = false;
+		}
+		if (IsMouseButtonPressed(MOUSE_BUTTON_RIGHT)) {
+			x = GetMouseX();
+			y = GetMouseY();
+			action1 = true;
+		}
 	}
 	else {
 		action = false;
-		action1 = false;
-	}
+	}	
 	if (action && state)
 	{
 		EndDrawing();
@@ -118,13 +124,13 @@ void Textbox1::worktextbox(bool& somethingfalsedisplay) {
 			if (lettercount < 0) lettercount = 0;
 			text[lettercount] = '\0';
 		}
-		if (IsKeyDown(KEY_LEFT_CONTROL) && IsKeyDown(KEY_V)) {
+		/*if (IsKeyDown(KEY_LEFT_CONTROL) && IsKeyDown(KEY_V)) {
 			const char* a = GetClipboardText();
 			for (int i = 0; i < strlen(a); ++i) {
 				text[lettercount++] = a[i];
 			}
 			text[lettercount] = '\0';
-		}
+		}*/
 	}
 	if (mouseontextbox) {
 		DrawRectangleLines((int)textbox.x, (int)textbox.y, (int)textbox.width, (int)textbox.height, BLUE);

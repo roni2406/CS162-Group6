@@ -8,6 +8,10 @@
 #include "schoolYear.h"
 #include "semester.h"
 #include "course.h"
+#include <string.h>
+#include "Class.h"
+#include "Date.h"
+#include <cstdio>
 using namespace std;
 
 const int screenWidth = 1512;
@@ -137,6 +141,8 @@ struct Button6 {
 };
 // used for just-text button which move to Course
 struct Button7 {
+	int x = 0;
+	int y = 0;
 	const int screenWidth = 1512;
 	const int screenHeight = 982;
 	Rectangle button = { 0, 0, 0, 0 };

@@ -1,14 +1,4 @@
-#include <iostream>
-#include <fstream>
-#include <raylib.h>
-#include "account.h"
 #include "Function.h"
-#include "schoolYear.h"
-#include "semester.h"
-#include "course.h"
-#include <string.h>
-#include "Class.h"
-#include "Date.h"
 using namespace std;
 
 
@@ -1538,10 +1528,12 @@ void ViewCoursesPage(const int screenWidth, const int screenHeight, account& Cur
 
 	Button6 backtosemesterpage;
 	backtosemesterpage.button = { 1190, 20, 250, 30 };
-
+	Button7* coursebutton = new Button7 [n];
 	int scrollspeed = 35;
 	int x_course = 11;
 	int y_course = 255;
+	int x = 0;
+	int y = 0;
 	while (!WindowShouldClose()) {
 		y_course += (int(GetMouseWheelMove()) * scrollspeed);
 		if (x_course > 11) x_course = 11;
@@ -1553,7 +1545,6 @@ void ViewCoursesPage(const int screenWidth, const int screenHeight, account& Cur
 		DrawRectangle(0, 231, screenWidth, 751, WHITE);
 		DrawRectangleLines(0, 231, screenWidth, 751, BLACK);
 		int j = 0;
-		Button7* coursebutton = new Button7[n];
 		mousePoint = GetMousePosition();
 		for (int i = 0; i < n; ++i) {
 			DrawLine(x_course + 111, y_course + j - 24, x_course + 111, y_course + j + 38, BLACK);
@@ -1579,7 +1570,16 @@ void ViewCoursesPage(const int screenWidth, const int screenHeight, account& Cur
 			j += 61;
 
 			if (coursebutton[i].action1 == true) {
-				DrawRectangle(0, 261, 206, 116, BLACK);
+				x = coursebutton[i].x;
+				y = coursebutton[i].y;
+				DrawRectangle(x, y, 160, 50, LIGHTGRAY);
+				DrawText("Delete", x + 7, y + 3, 20, MAROON);
+				DrawLine(x, y + 25, x + 160, y + 25, BLACK);
+				DrawText("Update", x + 7, y + 3 + 25, 20, MAROON);
+
+				if (CheckCollisionPointRec(GetMousePosition(), { float(x),float(y),160,25 }) && IsMouseButtonPressed(MOUSE_BUTTON_LEFT)) deleteCourse(courses, i, n, Year, Semester);
+				if (CheckCollisionPointRec(GetMousePosition(), { float(x),float(y) + 25,160,25 }) && IsMouseButtonPressed(MOUSE_BUTTON_LEFT)) deleteCourse(courses, i, n, Year, Semester);
+				if (IsMouseButtonPressed(MOUSE_BUTTON_LEFT)) coursebutton[i].action1 = false;
 			}
 		}
 		DrawRectangle(0, 0, screenWidth, 60, WHITE);
@@ -1617,10 +1617,11 @@ void ViewCoursesPage(const int screenWidth, const int screenHeight, account& Cur
 		DrawRectangleLines(1407, 189, 105, 42, BLACK);
 		DrawText("Session", 1423, 203, 20, DARKBLUE);
 	
-		delete[] coursebutton;
+		
 		backtosemesterpage.workbutton(mousePoint, CurrentUser, Year, Semester, SemesterPage);
 		EndDrawing();
 	}
+	delete[] coursebutton;
 	delete[] courses;
 	delete[] Year;
 	delete[] Semester;
