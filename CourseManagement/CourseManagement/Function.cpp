@@ -417,30 +417,22 @@ void ProfilePageStaff(const int screenWidth, const int screenHeight, account& Cu
 	LogOut.sourceRec = { 0, 0, (float)LogOut.texture.width,LogOut.frameHeight };
 	LogOut.btnBounds = { 170, 730, (float)LogOut.texture.width,LogOut.frameHeight };
 
-	Button1 CreateSchoolYear;
-	CreateSchoolYear.texture = LoadTexture("createSchoolYearBtn.png");
-	CreateSchoolYear.frameHeight = (float)CreateSchoolYear.texture.height;
-	CreateSchoolYear.sourceRec = { 0, 0, (float)CreateSchoolYear.texture.width, CreateSchoolYear.frameHeight };
-	CreateSchoolYear.btnBounds = { 552, 277, (float)CreateSchoolYear.texture.width, CreateSchoolYear.frameHeight };
-	
-	Button1 ViewSchoolYear;
-	ViewSchoolYear.texture = LoadTexture("viewschoolyearbtn.png");
-	ViewSchoolYear.frameHeight = (float)ViewSchoolYear.texture.height;
-	ViewSchoolYear.sourceRec = { 0, 0, (float)ViewSchoolYear.texture.width, ViewSchoolYear.frameHeight };
-	ViewSchoolYear.btnBounds = { 1081, 277, (float)ViewSchoolYear.texture.width, ViewSchoolYear.frameHeight };
 
-	Button1 CreateClass;
-	CreateClass.texture = LoadTexture("createClassBtn.png");
-	CreateClass.frameHeight = (float)CreateClass.texture.height;
-	CreateClass.sourceRec = { 0, 0, (float)CreateClass.texture.width, CreateClass.frameHeight };
-	CreateClass.btnBounds = { 552, 605, (float)CreateClass.texture.width, CreateClass.frameHeight };
+	Button1 Classes;
+	Classes.texture = LoadTexture("classesBtn.png");
+	Classes.frameHeight = (float)Classes.texture.height;
+	Classes.sourceRec = { 0, 0, (float)Classes.texture.width, Classes.frameHeight };
+	Classes.btnBounds = { 980, 690, (float)Classes.texture.width, Classes.frameHeight };
 
-	Button1 ViewClass;
-	ViewClass.texture = LoadTexture("viewClassBtn.png");
-	ViewClass.frameHeight = (float)ViewClass.texture.height;
-	ViewClass.sourceRec = { 0, 0, (float)ViewClass.texture.width, ViewClass.frameHeight };
-	ViewClass.btnBounds = { 1081, 605, (float)ViewClass.texture.width, ViewClass.frameHeight };
+	Button1 Schoolyears;
+	Schoolyears.texture = LoadTexture("schoolyearsBtn.png");
+	Schoolyears.frameHeight = (float)Schoolyears.texture.height;
+	Schoolyears.sourceRec = { 0, 0, (float)Schoolyears.texture.width, Schoolyears.frameHeight };
+	Schoolyears.btnBounds = { 980, 320, (float)Schoolyears.texture.width, Schoolyears.frameHeight };
 	
+	Texture2D Calendar = LoadTexture("calendar.png");
+	Texture2D classimage = LoadTexture("class.png");
+
 	//Position of schoolyear---------------------------------------------------------------------------------------------
 	while (!WindowShouldClose()) {
 		ClearBackground(WHITE);
@@ -467,14 +459,15 @@ void ProfilePageStaff(const int screenWidth, const int screenHeight, account& Cu
 		DrawText("Username: ", 90, 330, 20, DARKBLUE);
 		DrawText(CurrentUser.userName, 200, 330, 20, DARKGRAY);
 
+		DrawTexture(Calendar, 560, 220, WHITE);
+		DrawTexture(classimage, 560, 580, WHITE);
+
 		mousePoint = GetMousePosition();
 		////change password button function-----------------------------------------------------------------------------------------------------------
 		ChangePass.workbutton(mousePoint, CurrentUser, ChangePasswordPageStaff);
 		LogOut.workbutton(mousePoint, CurrentUser, LogInPageStaff);
-		CreateSchoolYear.workbutton(mousePoint, CurrentUser, CreateSchoolYearPage);
-		ViewSchoolYear.workbutton(mousePoint, CurrentUser, ViewSchoolYearsPage);
-		CreateClass.workbutton(mousePoint, CurrentUser, createClassPage);
-		ViewClass.workbutton(mousePoint, CurrentUser, ViewClassesPage);
+		Schoolyears.workbutton(mousePoint, CurrentUser, ViewSchoolYearsPage);
+		Classes.workbutton(mousePoint, CurrentUser, ViewClassesPage);
 
 		//// display schoolyear from createschoolyear page--------------------------------------------------------------------------------------------
 		EndDrawing();
@@ -685,7 +678,7 @@ void CreateSchoolYearPage(const int screenWidth,const int screenHeight, account&
 		DrawRectangle(0, 0, screenWidth, 60, WHITE);
 		
 		DrawRectangleRec(backtoprofilepage.button, WHITE);
-		DrawText("Back to Profile Page", 1280, 20, 20, DARKBLUE);
+		DrawText("Back to Previous Page", 1250, 20, 20, DARKBLUE);
 
 		DrawRectangle(347, 173, 818, 373, WHITE);
 		DrawRectangleRec(schoolyear.textbox, LIGHTGRAY);
@@ -710,7 +703,7 @@ void CreateSchoolYearPage(const int screenWidth,const int screenHeight, account&
 			if (createASchoolYear(schoolyear.text)) {
 				confirmBtnFalseDisplay = false;
 				EndDrawing();
-				ProfilePageStaff(screenWidth, screenHeight, CurrentUser);
+				ViewSchoolYearsPage(screenWidth, screenHeight, CurrentUser);
 			}
 			else confirmBtnFalseDisplay = true;
 		}
@@ -720,7 +713,7 @@ void CreateSchoolYearPage(const int screenWidth,const int screenHeight, account&
 		DrawTextureRec(confirmBtn, sourceRecconfirmBtn, { btnBoundsconfirmBtn.x, btnBoundsconfirmBtn.y }, WHITE); // Draw button frame
 
 		/// Back to profile page button
-		backtoprofilepage.workbutton(mousePoint, CurrentUser, ProfilePageStaff);
+		backtoprofilepage.workbutton(mousePoint, CurrentUser, ViewSchoolYearsPage);
 
 		EndDrawing();
 	}
@@ -736,6 +729,12 @@ void ViewSchoolYearsPage(const int screenWidth, const int screenHeight, account&
 	Texture2D background3 = LoadTexture("background3.png");
 	Button2 backtoprofilepage;
 	backtoprofilepage.button = { 1270, 20, 200, 30 };
+
+	Button1 CreateSchoolYear;
+	CreateSchoolYear.texture = LoadTexture("createSchoolYearBtn.png");
+	CreateSchoolYear.frameHeight = (float)CreateSchoolYear.texture.height;
+	CreateSchoolYear.sourceRec = { 0, 0, (float)CreateSchoolYear.texture.width, CreateSchoolYear.frameHeight };
+	CreateSchoolYear.btnBounds = { 1270, 170, (float)CreateSchoolYear.texture.width, CreateSchoolYear.frameHeight };
 
 	int y_schoolyear = 167;
 	int x_schoolyear = 668;
@@ -777,6 +776,7 @@ void ViewSchoolYearsPage(const int screenWidth, const int screenHeight, account&
 		delete[] schoolyear;
 		/// Back to profile page button
 		backtoprofilepage.workbutton(mousePoint, CurrentUser, ProfilePageStaff);
+		CreateSchoolYear.workbutton(mousePoint, CurrentUser, CreateSchoolYearPage);
 		EndDrawing();
 	}
 	for (int i = 0; i < n; ++i) {
@@ -853,7 +853,7 @@ void createClassPage(const int screenWidth, const int screenHeight, account& Cur
 		DrawRectangle(0, 0, screenWidth, 60, WHITE);
 
 		DrawRectangleRec(backtoprofilepage.button, WHITE);
-		DrawText("Back to Profile Page", 1280, 20, 20, DARKBLUE);
+		DrawText("Back to Previous Page", 1250, 20, 20, DARKBLUE);
 
 		DrawRectangle(347, 173, 818, 350, WHITE);
 		DrawRectangleRec(classname.textbox, LIGHTGRAY);
@@ -879,7 +879,7 @@ void createClassPage(const int screenWidth, const int screenHeight, account& Cur
 				confirmBtnFalseDisplay = false;
 				CreateAClass(classname.text);
 				EndDrawing();
-				ProfilePageStaff(screenWidth, screenHeight, CurrentUser);
+				ViewClassesPage(screenWidth, screenHeight, CurrentUser);
 			}
 			else confirmBtnFalseDisplay = true;
 		}
@@ -889,8 +889,7 @@ void createClassPage(const int screenWidth, const int screenHeight, account& Cur
 		DrawTextureRec(confirmBtn, sourceRecconfirmBtn, { btnBoundsconfirmBtn.x, btnBoundsconfirmBtn.y }, WHITE); // Draw button frame
 
 		/// Back to profile page button
-		backtoprofilepage.workbutton(mousePoint, CurrentUser, ProfilePageStaff);
-
+		backtoprofilepage.workbutton(mousePoint, CurrentUser, ViewClassesPage);
 		EndDrawing();
 	}
 	CloseWindow();
@@ -906,14 +905,26 @@ void ViewClassesPage(const int screenWidth, const int screenHeight, account& Cur
 
 	Button2 backtoprofilepage;
 	backtoprofilepage.button = { 1270, 20, 200, 30 };
+	Texture2D backgroundtmp = LoadTexture("background11.png");
 
-	int scrollspeed = 25;
-	int y_classes = 257;
+
+	Button1 CreateClass;
+	CreateClass.texture = LoadTexture("createClassBtn.png");
+	CreateClass.frameHeight = (float)CreateClass.texture.height;
+	CreateClass.sourceRec = { 0, 0, (float)CreateClass.texture.width, CreateClass.frameHeight };
+	CreateClass.btnBounds = { 1270, 170, (float)CreateClass.texture.width, CreateClass.frameHeight };
+
+	int scrollspeed = 35;
+	int y_classes = 167;
 	int x_classes = 668;
 
 	while (!WindowShouldClose()) {
-		//y_schoolyear += ((GetMouseWheelMove() * scrollspeed) - (IsKeyDown(KEY_DOWN) - IsKeyDown(KEY_UP)));
-		if (y_classes > 202) y_classes = 202;
+		y_classes += (int(GetMouseWheelMove()) * scrollspeed);
+		if (y_classes > 167) y_classes = 167;
+		if (y_classes + (n * 3) * n < 167) {
+			y_classes = 167 - (n * 3) * n;
+		}
+
 		ClearBackground(WHITE);
 		BeginDrawing();
 		DrawRectangleGradientEx(background, SKYBLUE, DARKBLUE, DARKBLUE, SKYBLUE);
@@ -928,14 +939,22 @@ void ViewClassesPage(const int screenWidth, const int screenHeight, account& Cur
 
 		int j = 0;
 		for (int i = 0; i < n; ++i) {
-			Class[i].button = { float(x_classes - 122), float(y_classes - 12), 421, 59 };
+			Class[i].button = { float(x_classes - 122), float(y_classes + j - 12), 421, 59 };
 			DrawRectangleRec(Class[i].button, LIGHTGRAY);
-			DrawText(Classes[i].classID, x_classes + 30, y_classes, 32, DARKBLUE);
+			DrawText(Classes[i].classID, x_classes+40, y_classes + j, 32, DARKBLUE);
+			if (y_classes + j - 12 < 77 || y_classes + j - 12 > 942) {
+				Class[i].state = false;
+			}
+			else Class[i].state = true;
 			Class[i].workbutton(mousePoint, CurrentUser, Classes[i].classID, ClassPage);
-			y_classes += 100;
+			j += 100;
 		}
+
+		DrawTexture(backgroundtmp, 0, 65, WHITE);
 		/// Back to profile page button
+		
 		backtoprofilepage.workbutton(mousePoint, CurrentUser, ProfilePageStaff);
+		CreateClass.workbutton(mousePoint, CurrentUser, createClassPage);
 		delete[] Class;
 		EndDrawing();
 	}
