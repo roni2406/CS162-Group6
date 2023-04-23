@@ -1176,6 +1176,9 @@ void addStudentCSV(const int screenWidth, const int screenHeight, account& Curre
 	Button4 backtoClasspage;
 	backtoClasspage.button = { 1270, 20, 200, 30 };
 
+	student* dupstu = nullptr;
+	int numDupStu = 0;
+
 	Texture2D confirmBtn = LoadTexture("confirmBtn.png");
 	float frameHeightconfirmBtn = (float)confirmBtn.height;
 	Rectangle sourceRecconfirmBtn = { 0, 0, (float)confirmBtn.width,frameHeightconfirmBtn };
@@ -1216,7 +1219,10 @@ void addStudentCSV(const int screenWidth, const int screenHeight, account& Curre
 		if (confirmBtnAction) {
 			if (checkdata_FileName(filename.text)) {
 				confirmBtnFalseDisplay = false;
-				addStudentsWithCSV(filename.text, classname);
+				if (addStudentsWithCSV(filename.text, classname, dupstu, numDupStu)) {
+					ClassPage(screenWidth, screenHeight, CurrentUser, classname);
+				}
+				//else{}
 			}
 			else confirmBtnFalseDisplay = true;
 		}
