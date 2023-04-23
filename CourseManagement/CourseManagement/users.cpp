@@ -214,7 +214,8 @@ bool checkStudentExistInClass(student x, char* className) {
 	//return false if the student have existed
 	ifstream fin;
 	fin.open("../data/Classes/" + string(className) + ".csv");
-	while (!fin.eof()) {
+	int n = countStudentInClass(className);
+	for (int i = 0; i < n; i++) {
 		student s;
 		s.inputStudentsWithCSVFile(fin);
 		if (strcmp(s.stuID, x.stuID) == 0) {
