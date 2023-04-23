@@ -60,7 +60,8 @@ void CoursePage(const int screenWidth, const int screenHeight, account& CurrentU
 void UpdateCoursePage(const int screenWidth, const int screenHeight, account& CurrentUser, char*& Year, char*& Semester, course*& Course, int n, int i);
 // in course page have following functions: delete, view student in the course, add student, delete student 
 void StudentCoursePage(); // ?
-void addStudentPage();
+void addStudentPageForCourse(const int screenWidth, const int screenHeight, account& CurrentUser, char*& coursename);
+void addStudentCSVForCourse(const int screenWidth, const int screenHeight, account& CurrentUser, char*& coursename);
 void deleteStudentPage();
 // export list student in the course
 void scoreboardPage();

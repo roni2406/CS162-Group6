@@ -1878,6 +1878,8 @@ void CoursePage(const int screenWidth, const int screenHeight, account& CurrentU
 
 
 		mousePoint = GetMousePosition();
+		addAStu.workbutton(mousePoint, CurrentUser, (char*&)Course.className, addStudentPageForCourse);
+		addStuCSV.workbutton(mousePoint, CurrentUser, (char*&)Course.className, addStudentCSVForCourse);
 		backtoviewcoursespage.workbutton(mousePoint, CurrentUser, Year, Semester, ViewCoursesPage);
 		EndDrawing();
 	}
@@ -1887,5 +1889,169 @@ void CoursePage(const int screenWidth, const int screenHeight, account& CurrentU
 	CloseWindow();
 }
 
+void addStudentCSVForCourse(const int screenWidth, const int screenHeight, account& CurrentUser, char*& coursename) {
+	Vector2 mousePoint = { 0.0f, 0.0f };
+	Rectangle background = { 0,0,float(screenWidth),float(screenHeight) };
 
+	Textbox1 filename;
+	filename.textbox = { 420,280,650,84 };
+
+	Button4 backtoClasspage;
+	backtoClasspage.button = { 1270, 20, 200, 30 };
+
+	Texture2D confirmBtn = LoadTexture("confirmBtn.png");
+	float frameHeightconfirmBtn = (float)confirmBtn.height;
+	Rectangle sourceRecconfirmBtn = { 0, 0, (float)confirmBtn.width,frameHeightconfirmBtn };
+	// Define button bounds on screen
+	Rectangle btnBoundsconfirmBtn = { 650, 420, (float)confirmBtn.width, frameHeightconfirmBtn };
+	int confirmBtnState = 0;               // Button state: 0-NORMAL, 1-MOUSE_HOVER, 2-PRESSED
+	bool confirmBtnAction = false;         // Button action should be activated
+	bool confirmBtnFalseDisplay = false;
+
+	while (!WindowShouldClose()) {
+		ClearBackground(WHITE);
+		BeginDrawing();
+
+		DrawText("  Call us : (028) 3835 4266         E - mail : info@fit.hcmus.edu.vn", 0, 20, 20, DARKBLUE);
+		DrawRectangleGradientEx(background, SKYBLUE, DARKBLUE, DARKBLUE, SKYBLUE);
+		DrawRectangle(0, 0, screenWidth, 60, WHITE);
+
+		DrawRectangleRec(backtoClasspage.button, WHITE);
+		DrawText("Back to your class", 1280, 20, 20, DARKBLUE);
+		DrawText("Add student(s)", 620, 12, 40, DARKBLUE);
+
+		DrawRectangle(347, 173, 818, 380, WHITE);
+		DrawRectangleRec(filename.textbox, LIGHTGRAY);
+		DrawText("* File name", 420, 235, 30, DARKBLUE);
+
+		filename.worktextbox(confirmBtnFalseDisplay);
+		DrawText(filename.text, 450, 300, 40, DARKBLUE);
+
+		////Function of buttons------------------------------------------------------------------------------------------------------------------------------
+		mousePoint = GetMousePosition();
+
+		///Confirm button
+		confirmBtnAction = false;
+		if (CheckCollisionPointRec(mousePoint, btnBoundsconfirmBtn)) {          // Check button state
+			if (IsMouseButtonPressed(MOUSE_BUTTON_LEFT)) confirmBtnAction = true;
+		}
+		else confirmBtnState = 0;
+		if (confirmBtnAction) {
+			/*if (checkdata_FileName(filename.text)) {
+				confirmBtnFalseDisplay = false;
+				addStudentsWithCSV(filename.text, classname);
+			}
+			else confirmBtnFalseDisplay = true;*/
+		}
+		if (confirmBtnFalseDisplay) DrawText("File name is invalid!!!", 440, 380, 20, RED);
+		// Calculate button frame rectangle to draw depending on button state
+		sourceRecconfirmBtn.y = confirmBtnState * frameHeightconfirmBtn;
+		DrawTextureRec(confirmBtn, sourceRecconfirmBtn, { btnBoundsconfirmBtn.x, btnBoundsconfirmBtn.y }, WHITE); // Draw button frame
+
+		/// Back to profile page button
+		/*backtoClasspage.workbutton(mousePoint, CurrentUser, classname, ClassPage);*/
+
+		EndDrawing();
+	}
+	CloseWindow();
+}
+
+
+void addStudentPageForCourse(const int screenWidth, const int screenHeight, account& CurrentUser, char*& coursename) {
+	Vector2 mousePoint = { 0.0f, 0.0f };
+	Rectangle background = { 0,0,float(screenWidth),float(screenHeight) };
+
+	Textbox1 Gender;
+	Gender.textbox = { 284, 627, 283, 84 };
+	Textbox1 birth;
+	birth.textbox = { 604, 627, 623, 84 };
+	Textbox1 Lastname;
+	Lastname.textbox = { 284,213,283,84 };
+	Textbox1 Firstname;
+	Firstname.textbox = { 610,213,617,84 };
+	Textbox1 studentID;
+	studentID.textbox = { 284,351,943,84 };
+	Textbox1 socialID;
+	socialID.textbox = { 284,489,943,84 };
+
+	Button4 backtoClasspage;
+	backtoClasspage.button = { 1270, 20, 200, 30 };
+
+	Texture2D confirmBtn = LoadTexture("confirmBtn.png");
+	float frameHeightconfirmBtn = (float)confirmBtn.height;
+	Rectangle sourceRecconfirmBtn = { 0, 0, (float)confirmBtn.width,frameHeightconfirmBtn };
+	// Define button bounds on screen
+	Rectangle btnBoundsconfirmBtn = { 650, 750, (float)confirmBtn.width, frameHeightconfirmBtn };
+	int confirmBtnState = 0;               // Button state: 0-NORMAL, 1-MOUSE_HOVER, 2-PRESSED
+	bool confirmBtnAction = false;         // Button action should be activated
+	bool confirmBtnFalseDisplay = false;
+	while (!WindowShouldClose()) {
+		ClearBackground(WHITE);
+		BeginDrawing();
+
+		DrawText("  Call us : (028) 3835 4266         E - mail : info@fit.hcmus.edu.vn", 0, 20, 20, DARKBLUE);
+		DrawRectangleGradientEx(background, SKYBLUE, DARKBLUE, DARKBLUE, SKYBLUE);
+		DrawRectangle(0, 0, screenWidth, 60, WHITE);
+
+		DrawRectangleRec(backtoClasspage.button, WHITE);
+		DrawText("Back to your class", 1280, 20, 20, DARKBLUE);
+		DrawText("Add a student", 620, 12, 40, DARKBLUE);
+
+		DrawRectangle(142, 148, 1227, 720, WHITE);
+		DrawRectangleRec(Lastname.textbox, LIGHTGRAY);
+		DrawText("* Last name", 284, 174, 30, DARKBLUE);
+		DrawRectangleRec(Firstname.textbox, LIGHTGRAY);
+		DrawText("* First name", 610, 174, 30, DARKBLUE);
+		DrawRectangleRec(studentID.textbox, LIGHTGRAY);
+		DrawText("* Student ID", 284, 312, 30, DARKBLUE);
+		DrawRectangleRec(socialID.textbox, LIGHTGRAY);
+		DrawText("* Social ID", 284, 450, 30, DARKBLUE);
+		DrawRectangleRec(birth.textbox, LIGHTGRAY);
+		DrawText("* Date of birth", 604, 588, 30, DARKBLUE);
+		DrawRectangleRec(Gender.textbox, LIGHTGRAY);
+		DrawText("* Gender", 284, 588, 30, DARKBLUE);
+
+		////Function_of_TextInputBoxes_----------------------------------------------------------------------------------------------------------------------
+		Lastname.worktextbox(confirmBtnFalseDisplay);
+		Firstname.worktextbox(confirmBtnFalseDisplay);
+		studentID.worktextbox(confirmBtnFalseDisplay);
+		socialID.worktextbox(confirmBtnFalseDisplay);
+		birth.worktextbox(confirmBtnFalseDisplay);
+		Gender.worktextbox(confirmBtnFalseDisplay);
+
+		DrawText(Lastname.text, 314, 233, 40, DARKBLUE);
+		DrawText(Firstname.text, 640, 233, 40, DARKBLUE);
+		DrawText(studentID.text, 314, 371, 40, DARKBLUE);
+		DrawText(socialID.text, 314, 509, 40, DARKBLUE);
+		DrawText(birth.text, 634, 647, 40, DARKBLUE);
+		DrawText(Gender.text, 314, 647, 40, DARKBLUE);
+
+		////Function of buttons------------	------------------------------------------------------------------------------------------------------------------
+		mousePoint = GetMousePosition();
+
+		///Confirm button
+		confirmBtnAction = false;
+		if (CheckCollisionPointRec(mousePoint, btnBoundsconfirmBtn)) {          // Check button state
+			if (IsMouseButtonPressed(MOUSE_BUTTON_LEFT)) confirmBtnAction = true;
+		}
+		else confirmBtnState = 0;
+		if (confirmBtnAction) {
+			/*if (addAStudentToClass(classname, Firstname.text, Lastname.text, Gender.text, birth.text, socialID.text, studentID.text)) {
+				confirmBtnFalseDisplay = false;
+				ClassPage(screenWidth, screenHeight, CurrentUser, classname);
+			}
+			else confirmBtnFalseDisplay = true;*/
+
+		}
+		if (confirmBtnFalseDisplay) DrawText("This class was created before!", 480, 560, 20, RED);
+		// Calculate button frame rectangle to draw depending on button state
+		sourceRecconfirmBtn.y = confirmBtnState * frameHeightconfirmBtn;
+		DrawTextureRec(confirmBtn, sourceRecconfirmBtn, { btnBoundsconfirmBtn.x, btnBoundsconfirmBtn.y }, WHITE); // Draw button frame
+
+		/// Back to profile page button
+		/*backtoClasspage.workbutton(mousePoint, CurrentUser, classname, ClassPage);*/
+		EndDrawing();
+	}
+	CloseWindow();
+}
 
