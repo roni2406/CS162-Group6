@@ -1650,8 +1650,8 @@ void UpdateCoursePage(const int screenWidth, const int screenHeight, account& Cu
 	Textbox1 sshours;
 	sshours.textbox = { 779, 827, 528, 47 };
 
-	Button6 backtosemesterpage;
-	backtosemesterpage.button = { 1200, 20, 200, 30 };
+	Button6 backtoviewcoursepage;
+	backtoviewcoursepage.button = { 1200, 20, 200, 30 };
 
 	Texture2D confirmBtn = LoadTexture("confirmBtn1.png");
 	float frameHeightconfirmBtn = (float)confirmBtn.height;
@@ -1669,10 +1669,10 @@ void UpdateCoursePage(const int screenWidth, const int screenHeight, account& Cu
 		DrawRectangleGradientEx(background, SKYBLUE, DARKBLUE, DARKBLUE, SKYBLUE);
 		DrawRectangle(0, 0, screenWidth, 60, WHITE);
 
-		DrawRectangleRec(backtosemesterpage.button, WHITE);
+		DrawRectangleRec(backtoviewcoursepage.button, WHITE);
 		DrawText(Year, 30, 15, 40, DARKBLUE);
 		DrawText(Semester, 670, 15, 40, DARKBLUE);
-		DrawText("Back to Semester Page", 1230, 20, 20, DARKBLUE);
+		DrawText("Back to View Course Page", 1230, 20, 20, DARKBLUE);
 
 		DrawRectangle(126, 92, 1260, 870, WHITE);
 		DrawRectangleRec(id.textbox, LIGHTGRAY);
@@ -1703,7 +1703,14 @@ void UpdateCoursePage(const int screenWidth, const int screenHeight, account& Cu
 		sshours.worktextbox(confirmBtnFalseDisplay);
 
 
-
+		if (id.lettercount == 0)			DrawText(Course[i].courseID, 198, 162, 25, BLACK);
+		if (coursename.lettercount == 0)	DrawText(Course[i].courseName, 198, 275, 25, BLACK);
+		if (classname.lettercount == 0)		DrawText(Course[i].className, 198, 388, 25, BLACK);
+		if (teachername.lettercount == 0)	DrawText(Course[i].teacherName, 198, 501, 25, BLACK);
+		if (nofc.lettercount == 0)			DrawText(Course[i].numOfCre, 198, 614, 25, BLACK);
+		if (maxstudents.lettercount == 0)	DrawText("50", 198, 727, 25, BLACK);
+		if (courseday.lettercount == 0)		DrawText(Course[i].dayofweek, 198, 840, 25, BLACK);
+		if (sshours.lettercount == 0)		DrawText(Course[i].sessionHour, 802, 840, 25, BLACK);
 		DrawText(id.text, 198, 162, 25, DARKBLUE);
 		DrawText(TextFormat("%i/%i", id.lettercount, MAX_INPUT_CHARS), 1270, 172, 20, DARKBLUE);
 		DrawText(coursename.text, 198, 275, 25, DARKBLUE);
@@ -1714,7 +1721,8 @@ void UpdateCoursePage(const int screenWidth, const int screenHeight, account& Cu
 		DrawText(TextFormat("%i/%i", teachername.lettercount, MAX_INPUT_CHARS), 1270, 511, 20, DARKBLUE);
 		DrawText(nofc.text, 198, 614, 25, DARKBLUE);
 		DrawText(TextFormat("%i/%i", nofc.lettercount, MAX_INPUT_CHARS), 1270, 624, 20, DARKBLUE);
-		DrawText("50", 198, 727, 25, DARKBLUE);
+		DrawText(maxstudents.text, 198, 727, 25, DARKBLUE);
+		DrawText(TextFormat("%i/%i", maxstudents.lettercount, MAX_INPUT_CHARS), 1270, 737, 20, DARKBLUE);
 		DrawText(courseday.text, 198, 840, 25, DARKBLUE);
 		DrawText(TextFormat("%i/%i", courseday.lettercount, MAX_INPUT_CHARS), 713, 855, 16, DARKBLUE);
 		DrawText(sshours.text, 802, 840, 25, DARKBLUE);
@@ -1731,17 +1739,14 @@ void UpdateCoursePage(const int screenWidth, const int screenHeight, account& Cu
 		}
 		else confirmBtnState = 0;
 		if (confirmBtnAction) {
-			if (!CheckValidCourse(coursename.text, id.text, classname.text, Year, Semester) ||
-				id.text[0] == '\0' || coursename.text[0] == '\0' || classname.text[0] == '\0' ||
-				teachername.text[0] == '\0' || nofc.text[0] == '\0' || courseday.text[0] == '\0' ||
-				sshours.text[0] == '\0') {
+			if (!CheckValidCourse(coursename.text, id.text, classname.text, Year, Semester)) {
 				confirmBtnFalseDisplay = true;
 			}
 			else {
 				updateCourse(Year, Semester, Course[i], coursename.text, id.text, classname.text, teachername.text, nofc.text, courseday.text, sshours.text);
 				ReturnCoursesToFile(Year, Semester, n, Course);
 				EndDrawing();
-				SemesterPage(screenWidth, screenHeight, CurrentUser, Year, Semester);
+				ViewCoursesPage(screenWidth, screenHeight, CurrentUser, Year, Semester);
 			}
 		}
 		if (confirmBtnFalseDisplay) DrawText("Some textboxes are blank. Please try again!", 582, 888, 15, RED);
@@ -1750,7 +1755,7 @@ void UpdateCoursePage(const int screenWidth, const int screenHeight, account& Cu
 		DrawTextureRec(confirmBtn, sourceRecconfirmBtn, { btnBoundsconfirmBtn.x, btnBoundsconfirmBtn.y }, WHITE); // Draw button frame
 
 		/// Back to profile page button
-		backtosemesterpage.workbutton(mousePoint, CurrentUser, Year, Semester, SemesterPage);
+		backtoviewcoursepage.workbutton(mousePoint, CurrentUser, Year, Semester, ViewCoursesPage);
 
 		EndDrawing();
 	}

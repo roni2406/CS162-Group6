@@ -132,13 +132,13 @@ void deleteCourse(course* courses, int no ,int& num, char* year, char* semester)
 	ReturnCoursesToFile(year, semester, num, courses);
 }
 bool updateCourse(char* year, char* semester, course& courses, char* courseName_tmp, char* ID, char* className_tmp, char* teacherName_tmp, char* nofc, char* courseday, char* sshours) {
-	strncpy_s(courses.courseName, courseName_tmp, '\n');
-	strncpy_s(courses.className, className_tmp, '\n');
-	strncpy_s(courses.courseID, ID, '\n');
-	strncpy_s(courses.teacherName, teacherName_tmp, '\n');
-	strncpy_s(courses.numOfCre, nofc, '\n');
-	strncpy_s(courses.dayofweek, courseday, '\n');
-	strncpy_s(courses.sessionHour, sshours, '\n');
+	if (courseName_tmp[0] != '\0')  strncpy_s(courses.courseName, courseName_tmp, '\n');
+	if (className_tmp[0] != '\0')	strncpy_s(courses.className, className_tmp, '\n');
+	if (ID[0] != '\0')				strncpy_s(courses.courseID, ID, '\n');
+	if (teacherName_tmp[0] != '\0') strncpy_s(courses.teacherName, teacherName_tmp, '\n');
+	if (nofc[0] != '\0')			strncpy_s(courses.numOfCre, nofc, '\n');
+	if (courseday[0] != '\0')			strncpy_s(courses.dayofweek, courseday, '\n');
+	if (sshours[0] != '\0')			strncpy_s(courses.sessionHour, sshours, '\n');
 	ofstream fout;
 	string tmp = "../data/" + (string)(year)+"/" + (string)(semester)+"/" + (string)(courses.courseName) + "-" + string(courses.className) + ".txt";
 	fout.open(tmp.c_str());
