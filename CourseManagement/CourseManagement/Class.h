@@ -10,7 +10,8 @@ struct Class {
     student* stuInClass;
 };
 
-// Function 
+// Function
+void sortClasses(Class* classList);
 // 2
 void InputAClass(char* classID, Class& className); 
 void CreateAClass(char* classID);       // front end

@@ -74,12 +74,23 @@ void viewClasses_PrepareData_SavedToClassArray(Class*& ClassList, ifstream& fin,
 	fin.close();
 }
 
+void sortClasses(Class* classList) {
+	int numOfClasses = countClasses();
+	for (int i = 0; i < numOfClasses; i++) {
+		for (int j = 0; j < numOfClasses - i - 1; j++)
+			if (strcmp(classList[j].classID, classList[j + 1].classID) == 1) {
+				swap(classList[j], classList[j + 1]);
+			}
+	}
+}
+
 Class* viewClasses()
 {
 	ifstream fin;
 	Class* ClassList = nullptr;
 	int numOfClasses = 0;
 	viewClasses_PrepareData_SavedToClassArray(ClassList, fin, numOfClasses);
+	sortClasses(ClassList);
 	return ClassList;
 }
 

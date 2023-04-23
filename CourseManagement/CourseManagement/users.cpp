@@ -90,6 +90,20 @@ void student::outputAStudentToFile(char* filename) {
 	fout.close();
 }
 
+void sortToStuID(student*& StudentArray, int numOfStudents)
+{
+	for (int i = 0; i < numOfStudents - 1; ++i)
+	{
+		for (int j = 0; j < numOfStudents - i - 1; ++j)
+		{
+			if (strcmp(StudentArray[j].stuID, StudentArray[j + 1].stuID) == 1)
+				swap(StudentArray[j], StudentArray[j + 1]);
+		}
+	}
+	for (int i = 0; i < numOfStudents; ++i)
+		StudentArray[i].No = i + 1;
+}
+
 bool student::checkData() {
 	if (!Student.checkData() || strlen(stuID) != 8)
 		return false;

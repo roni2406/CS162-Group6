@@ -34,6 +34,8 @@ struct student {
     bool checkData();
 };
 
+void sortToStuID(student*& StudentArray, int numOfStudents);
+
 struct staff {
     account staffAcc;
     person Staff;
