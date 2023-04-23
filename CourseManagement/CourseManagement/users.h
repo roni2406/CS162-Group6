@@ -34,8 +34,6 @@ struct student {
     bool checkData();
 };
 
-void sortToStuID(student*& StudentArray, int numOfStudents);
-
 struct staff {
     account staffAcc;
     person Staff;
@@ -51,10 +49,11 @@ bool addAStudentToClass(char* className, char* first_name, char* last_name, char
 
 //void addAStaff(char* filename, char* first_name, char* last_name, bool Gender, char* DoB, char* social_ID, char* staff_id);
 
-void addStudentsWithCSV(char* fileNameIn, char* fileNameOut);
-    // staff will input filename, fout is used for adding to class or course
+bool addStudentsWithCSV(char* fileNameIn, char* fileNameOut, student*& stuArr, int& numOfDupsStu);
+    // staff will input fileNameIn, fileNameOut is used for adding to class or course
 
-
+void sortToStuID(student*& StudentArray, int numOfStudents);
+bool checkStudentExistInClass(student x, char* className);
 
 bool checkdata_FileName(char* fileNameIn);
 

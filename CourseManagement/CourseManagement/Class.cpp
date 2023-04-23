@@ -123,6 +123,7 @@ student* viewStudentsInClass(char* className)
 		fin.ignore(100, '\n');
 	}
 	fin.close();
+	sortToStuID(Class, n);
 	return Class;
 }
 
