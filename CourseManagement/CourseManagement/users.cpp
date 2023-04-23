@@ -47,7 +47,7 @@ void person::outputAPersonToFile(ofstream& fout) {
 	fout << "," << socialID;
 }
 
-bool person::checkData(ifstream& fin) {
+bool person::checkData() {
 	if (!dob.checkdata() || strlen(socialID) != 12)
 		return false;
 	return true;
