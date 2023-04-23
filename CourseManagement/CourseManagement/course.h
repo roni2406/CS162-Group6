@@ -37,4 +37,6 @@ void deleteCourse(course* courses, int no, int& num, char* year, char* semester)
 bool CheckValidCourse(char* coursename, char* ID, char* classname, char* Year, char* semester);
 void LoadCourseFromFile(char* year, char* semester, int num, course* &courses);
 void exportStudentsInCourseToFile(char* addressOfOutputFile, char* schoolYear, char* semester, char* courseName);
+student* viewScoreBoardOfCourse(char* addressOfOutputFile, char* schoolYear, char* semester, char* courseName);
+
 #endif

@@ -250,8 +250,9 @@ void outputStudentAndScoreToFile(char* filename, student& s)
 void InputScoreBoardWithCSV(char* addressOfOutputFile, char* schoolYear, char* semester, char* courseName)
 {
 	ifstream fin;
-	fin.open("../data/" + string(schoolYear) + "/" + string(semester)
-		+ "/" + string(courseName) + ".csv");
+	//fin.open("../data/" + string(schoolYear) + "/" + string(semester)
+		//+ "/" + string(courseName) + ".csv");
+	fin.open(addressOfOutputFile);
 	while (!fin.eof()) 
 	{
 		student s;

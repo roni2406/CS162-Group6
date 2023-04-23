@@ -56,7 +56,7 @@ void addStudentsWithCSV(char* fileNameIn, char* fileNameOut);
 
 bool checkdata_FileName(char* fileNameIn);
 
-// Question 20
+// 20
 void inputStudentAndScoreWithCSV(ifstream& fin, student& s);
 void outputStudentAndScoreToFile(char* filename, student& s);
 void InputScoreBoardWithCSV(char* addressOfOutputFile, char* schoolYear, char* semester, char* courseName);

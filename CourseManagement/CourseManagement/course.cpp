@@ -172,3 +172,19 @@ void exportStudentsInCourseToFile(char* addressOfOutputFile, char* schoolYear, c
 		s.outputAStudentToFile(addressOfOutputFile);
 	}
 }
+
+// 21
+student* viewScoreBoardOfCourse(char* addressOfOutputFile, char* schoolYear, char* semester, char* courseName)
+{
+	course c;
+	c.countStu(schoolYear, semester);
+	int numOfS = c.numOfStu;
+	student* StuInCourse = nullptr;
+	StuInCourse = new student[numOfS];
+	ifstream fin;
+	fin.open(addressOfOutputFile);
+	for (int i = 0; i < numOfS; ++i) {
+		inputStudentAndScoreWithCSV(fin, StuInCourse[i]);
+	fin.close();
+	return StuInCourse;
+}
