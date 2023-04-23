@@ -131,6 +131,23 @@ void deleteCourse(course* courses, int no ,int& num, char* year, char* semester)
 	remove (tmp.c_str());
 	ReturnCoursesToFile(year, semester, num, courses);
 }
+bool updateCourse(char* year, char* semester, course& courses, char* courseName_tmp, char* ID, char* className_tmp, char* teacherName_tmp, char* nofc, char* courseday, char* sshours) {
+	strncpy_s(courses.courseName, courseName_tmp, '\n');
+	strncpy_s(courses.className, className_tmp, '\n');
+	strncpy_s(courses.courseID, ID, '\n');
+	strncpy_s(courses.teacherName, teacherName_tmp, '\n');
+	strncpy_s(courses.numOfCre, nofc, '\n');
+	strncpy_s(courses.dayofweek, courseday, '\n');
+	strncpy_s(courses.sessionHour, sshours, '\n');
+	ofstream fout;
+	string tmp = "../data/" + (string)(year)+"/" + (string)(semester)+"/" + (string)(courses.courseName) + "-" + string(courses.className) + ".txt";
+	fout.open(tmp.c_str());
+	fout << 1;
+	fout.close();
+	string tmp_new = "../data/" + (string)(year)+"/" + (string)(semester)+"/" + (string)(courseName_tmp) + "-" + string(className_tmp) + ".txt";
+	if (rename(tmp.c_str(), tmp_new.c_str()));
+	return true;
+}
 void deleteStudent(course* course, int k, int no) {
 	while (no < course[k].numOfStu-1) {
 		course[k].stuOfCourse[no] = course[k].stuOfCourse[no + 1];

@@ -1118,7 +1118,7 @@ void addStudentPage(const int screenWidth, const int screenHeight, account& Curr
 		DrawText(birth.text, 634, 647, 40, DARKBLUE);
 		DrawText(Gender.text, 314, 647, 40, DARKBLUE);
 
-		////Function of buttons------------------------------------------------------------------------------------------------------------------------------
+		////Function of buttons------------	------------------------------------------------------------------------------------------------------------------
 		mousePoint = GetMousePosition();
 
 		///Confirm button
@@ -1578,7 +1578,9 @@ void ViewCoursesPage(const int screenWidth, const int screenHeight, account& Cur
 				DrawText("Update", x + 7, y + 3 + 25, 20, MAROON);
 
 				if (CheckCollisionPointRec(GetMousePosition(), { float(x),float(y),160,25 }) && IsMouseButtonPressed(MOUSE_BUTTON_LEFT)) deleteCourse(courses, i, n, Year, Semester);
-				if (CheckCollisionPointRec(GetMousePosition(), { float(x),float(y) + 25,160,25 }) && IsMouseButtonPressed(MOUSE_BUTTON_LEFT)) deleteCourse(courses, i, n, Year, Semester);
+				if (CheckCollisionPointRec(GetMousePosition(), { float(x),float(y) + 25,160,25 }) && IsMouseButtonPressed(MOUSE_BUTTON_LEFT)) {
+					UpdateCoursePage(screenWidth, screenHeight, CurrentUser, Year, Semester, courses, n, i);
+				}
 				if (IsMouseButtonPressed(MOUSE_BUTTON_LEFT)) coursebutton[i].action1 = false;
 			}
 		}
@@ -1627,7 +1629,135 @@ void ViewCoursesPage(const int screenWidth, const int screenHeight, account& Cur
 	delete[] Semester;
 	CloseWindow();
 }
+void UpdateCoursePage(const int screenWidth, const int screenHeight, account& CurrentUser, char*& Year, char*& Semester, course* &Course, int n, int i) {
+	Vector2 mousePoint = { 0.0f, 0.0f };
+	Rectangle background = { 0,0,float(screenWidth),float(screenHeight) };
 
+	Textbox1 id;
+	id.textbox = { 175, 149, 1064, 47 };
+	Textbox1 coursename;
+	coursename.textbox = { 175, 262, 1064, 47 };
+	Textbox1 classname;
+	classname.textbox = { 175, 375, 1064, 47 };
+	Textbox1 teachername;
+	teachername.textbox = { 175, 488, 1064, 47 };
+	Textbox1 nofc;
+	nofc.textbox = { 175, 601, 1064, 47 };
+	Textbox1 maxstudents;
+	maxstudents.textbox = { 175, 714, 1064, 47 };
+	Textbox1 courseday;
+	courseday.textbox = { 175, 827, 528, 47 };
+	Textbox1 sshours;
+	sshours.textbox = { 779, 827, 528, 47 };
+
+	Button6 backtosemesterpage;
+	backtosemesterpage.button = { 1200, 20, 200, 30 };
+
+	Texture2D confirmBtn = LoadTexture("confirmBtn1.png");
+	float frameHeightconfirmBtn = (float)confirmBtn.height;
+	Rectangle sourceRecconfirmBtn = { 0, 0, (float)confirmBtn.width,frameHeightconfirmBtn };
+	// Define button bounds on screen
+	Rectangle btnBoundsconfirmBtn = { 670, 910, (float)confirmBtn.width, frameHeightconfirmBtn };
+	int confirmBtnState = 0;               // Button state: 0-NORMAL, 1-MOUSE_HOVER, 2-PRESSED
+	bool confirmBtnAction = false;         // Button action should be activated
+	bool confirmBtnFalseDisplay = false;
+	while (!WindowShouldClose()) {
+		ClearBackground(WHITE);
+		BeginDrawing();
+
+		DrawText("  Call us : (028) 3835 4266         E - mail : info@fit.hcmus.edu.vn", 0, 20, 20, DARKBLUE);
+		DrawRectangleGradientEx(background, SKYBLUE, DARKBLUE, DARKBLUE, SKYBLUE);
+		DrawRectangle(0, 0, screenWidth, 60, WHITE);
+
+		DrawRectangleRec(backtosemesterpage.button, WHITE);
+		DrawText(Year, 30, 15, 40, DARKBLUE);
+		DrawText(Semester, 670, 15, 40, DARKBLUE);
+		DrawText("Back to Semester Page", 1230, 20, 20, DARKBLUE);
+
+		DrawRectangle(126, 92, 1260, 870, WHITE);
+		DrawRectangleRec(id.textbox, LIGHTGRAY);
+		DrawText("* Course ID: ", 175, 120, 25, DARKBLUE);
+		DrawRectangleRec(coursename.textbox, LIGHTGRAY);
+		DrawText("* Course name: ", 175, 233, 25, DARKBLUE);
+		DrawRectangleRec(classname.textbox, LIGHTGRAY);
+		DrawText("* Class name: ", 175, 346, 25, DARKBLUE);
+		DrawRectangleRec(teachername.textbox, LIGHTGRAY);
+		DrawText("* Teacher name: ", 175, 459, 25, DARKBLUE);
+		DrawRectangleRec(nofc.textbox, LIGHTGRAY);
+		DrawText("* Number of credits: ", 175, 572, 25, DARKBLUE);
+		DrawRectangleRec(maxstudents.textbox, LIGHTGRAY);
+		DrawText("* Maximum students: ", 175, 685, 25, DARKBLUE);
+		DrawRectangleRec(courseday.textbox, LIGHTGRAY);
+		DrawText("* Course day: ", 175, 798, 25, DARKBLUE);
+		DrawRectangleRec(sshours.textbox, LIGHTGRAY);
+		DrawText("* Session hours: ", 779, 798, 25, DARKBLUE);
+
+		////Function_of_TextInputBoxes_----------------------------------------------------------------------------------------------------------------------
+		id.worktextbox(confirmBtnFalseDisplay);
+		coursename.worktextbox(confirmBtnFalseDisplay);
+		classname.worktextbox(confirmBtnFalseDisplay);
+		teachername.worktextbox(confirmBtnFalseDisplay);
+		nofc.worktextbox(confirmBtnFalseDisplay);
+		maxstudents.worktextbox(confirmBtnFalseDisplay);
+		courseday.worktextbox(confirmBtnFalseDisplay);
+		sshours.worktextbox(confirmBtnFalseDisplay);
+
+
+
+		DrawText(id.text, 198, 162, 25, DARKBLUE);
+		DrawText(TextFormat("%i/%i", id.lettercount, MAX_INPUT_CHARS), 1270, 172, 20, DARKBLUE);
+		DrawText(coursename.text, 198, 275, 25, DARKBLUE);
+		DrawText(TextFormat("%i/%i", coursename.lettercount, MAX_INPUT_CHARS), 1270, 285, 20, DARKBLUE);
+		DrawText(classname.text, 198, 388, 25, DARKBLUE);
+		DrawText(TextFormat("%i/%i", classname.lettercount, MAX_INPUT_CHARS), 1270, 398, 20, DARKBLUE);
+		DrawText(teachername.text, 198, 501, 25, DARKBLUE);
+		DrawText(TextFormat("%i/%i", teachername.lettercount, MAX_INPUT_CHARS), 1270, 511, 20, DARKBLUE);
+		DrawText(nofc.text, 198, 614, 25, DARKBLUE);
+		DrawText(TextFormat("%i/%i", nofc.lettercount, MAX_INPUT_CHARS), 1270, 624, 20, DARKBLUE);
+		DrawText("50", 198, 727, 25, DARKBLUE);
+		DrawText(courseday.text, 198, 840, 25, DARKBLUE);
+		DrawText(TextFormat("%i/%i", courseday.lettercount, MAX_INPUT_CHARS), 713, 855, 16, DARKBLUE);
+		DrawText(sshours.text, 802, 840, 25, DARKBLUE);
+		DrawText(TextFormat("%i/%i", sshours.lettercount, MAX_INPUT_CHARS), 1320, 855, 16, DARKBLUE);
+
+
+		////Function of buttons------------------------------------------------------------------------------------------------------------------------------
+		mousePoint = GetMousePosition();
+
+		///Confirm button
+		confirmBtnAction = false;
+		if (CheckCollisionPointRec(mousePoint, btnBoundsconfirmBtn)) {          // Check button state
+			if (IsMouseButtonPressed(MOUSE_BUTTON_LEFT)) confirmBtnAction = true;
+		}
+		else confirmBtnState = 0;
+		if (confirmBtnAction) {
+			if (!CheckValidCourse(coursename.text, id.text, classname.text, Year, Semester) ||
+				id.text[0] == '\0' || coursename.text[0] == '\0' || classname.text[0] == '\0' ||
+				teachername.text[0] == '\0' || nofc.text[0] == '\0' || courseday.text[0] == '\0' ||
+				sshours.text[0] == '\0') {
+				confirmBtnFalseDisplay = true;
+			}
+			else {
+				updateCourse(Year, Semester, Course[i], coursename.text, id.text, classname.text, teachername.text, nofc.text, courseday.text, sshours.text);
+				ReturnCoursesToFile(Year, Semester, n, Course);
+				EndDrawing();
+				SemesterPage(screenWidth, screenHeight, CurrentUser, Year, Semester);
+			}
+		}
+		if (confirmBtnFalseDisplay) DrawText("Some textboxes are blank. Please try again!", 582, 888, 15, RED);
+		// Calculate button frame rectangle to draw depending on button state
+		sourceRecconfirmBtn.y = confirmBtnState * frameHeightconfirmBtn;
+		DrawTextureRec(confirmBtn, sourceRecconfirmBtn, { btnBoundsconfirmBtn.x, btnBoundsconfirmBtn.y }, WHITE); // Draw button frame
+
+		/// Back to profile page button
+		backtosemesterpage.workbutton(mousePoint, CurrentUser, Year, Semester, SemesterPage);
+
+		EndDrawing();
+	}
+	delete[] Year;
+	delete[] Semester;
+	CloseWindow();
+}
 void CoursePage(const int screenWidth, const int screenHeight, account& CurrentUser, char*& Year, char*& Semester, course& Course) {
 	Rectangle background = { 0,0,float(screenWidth),float(screenHeight) };
 	Vector2 mousePoint = { 0.0f, 0.0f };

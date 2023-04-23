@@ -57,9 +57,8 @@ void SemesterPage(const int screenWidth, const int screenHeight, account& Curren
 void CreateCoursePage(const int screenWidth, const int screenHeight, account& CurrentUser, char*& Year, char*& Semester); // need to include struct semester to display and save data
 void ViewCoursesPage(const int screenWidth, const int screenHeight, account& CurrentUser, char*& Year, char*& Semester); // need to include struct semester to display and save data
 void CoursePage(const int screenWidth, const int screenHeight, account& CurrentUser, char*& Year, char* &Semester, course& Course); // need to include struct semester, course to display and save data
-
-// in course page have following functions: delete, view student in the course, add student, delete student
-void DeleteCoursePage(); //?
+void UpdateCoursePage(const int screenWidth, const int screenHeight, account& CurrentUser, char*& Year, char*& Semester, course*& Course, int n, int i);
+// in course page have following functions: delete, view student in the course, add student, delete student 
 void StudentCoursePage(); // ?
 void addStudentPage();
 void deleteStudentPage();
@@ -75,9 +74,9 @@ struct Button1 {
 	const int screenWidth = 1512;
 	const int screenHeight = 982;
 	Texture2D texture;
-	float frameHeight;
-	Rectangle sourceRec;
-	Rectangle btnBounds;
+	float frameHeight = 0;
+	Rectangle sourceRec = { 0, 0, 0, 0 };
+	Rectangle btnBounds = { 0, 0, 0, 0 };
 	int state = 0;					// Button state: 0-NORMAL, 1-MOUSE_HOVER, 2-PRESSED
 	bool action = false;			// Button action should be activated
 	void workbutton(Vector2 mousePoint, account& CurrentUser, void(*func)(const int screenWidth, const int screenHeight, account& CurrentUser));
@@ -99,9 +98,9 @@ struct Button3 {
 	const int screenWidth = 1512;
 	const int screenHeight = 982;
 	Texture2D texture;
-	float frameHeight;
-	Rectangle sourceRec;
-	Rectangle btnBounds;
+	float frameHeight = 0;
+	Rectangle sourceRec = { 0, 0, 0, 0 };
+	Rectangle btnBounds = { 0, 0, 0, 0 };
 	int state = 0;					// Button state: 0-NORMAL, 1-MOUSE_HOVER, 2-PRESSED
 	bool action = false;			// Button action should be activated
 	void workbutton(Vector2 mousePoint, account& CurrentUser, char*& a, void(*func)(const int screenWidth, const int screenHeight, account& CurrentUser, char*& a));
@@ -123,9 +122,9 @@ struct Button5 {
 	const int screenWidth = 1512;
 	const int screenHeight = 982;
 	Texture2D texture;
-	float frameHeight;
-	Rectangle sourceRec;
-	Rectangle btnBounds;
+	float frameHeight = 0;
+	Rectangle sourceRec = { 0, 0, 0, 0 };
+	Rectangle btnBounds = { 0, 0, 0, 0 };
 	int state = 0;					// Button state: 0-NORMAL, 1-MOUSE_HOVER, 2-PRESSED
 	bool action = false;			// Button action should be activated
 	void workbutton(Vector2 mousePoint, account& CurrentUser, char*& a, char*& b, void(*func)(const int screenWidth, const int screenHeight, account& CurrentUser, char*& a, char*& b));
