@@ -186,5 +186,6 @@ student* viewScoreBoardOfCourse(char* addressOfOutputFile, char* schoolYear, cha
 	for (int i = 0; i < numOfS; ++i)
 		inputStudentAndScoreWithCSV(fin, StuInCourse[i]);
 	fin.close();
+	sortToStuID(StuInCourse, numOfS);
 	return StuInCourse;
 }
