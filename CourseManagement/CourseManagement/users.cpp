@@ -41,8 +41,8 @@ void person::inputPersonsWithCSVFile(ifstream& fin) {
 }
 void person::outputAPersonToFile(ofstream& fout) {
 	fout << lastName << "," << firstName << ",";
-	if (gender == 1) fout << "male,";
-	else fout << "female,";
+	if (gender == 1) fout << "Male,";
+	else fout << "Female,";
 	dob.outputADateToFile(fout);
 	fout << "," << socialID;
 }
