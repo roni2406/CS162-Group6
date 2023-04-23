@@ -183,9 +183,8 @@ student* viewScoreBoardOfCourse(char* addressOfOutputFile, char* schoolYear, cha
 	StuInCourse = new student[numOfS];
 	ifstream fin;
 	fin.open(addressOfOutputFile);
-	for (int i = 0; i < numOfS; ++i) {
-		/*inputStudentAndScoreWithCSV(fin, StuInCourse[i]);*/
-		fin.close();
-		return StuInCourse;
-	}
+	for (int i = 0; i < numOfS; ++i)
+		inputStudentAndScoreWithCSV(fin, StuInCourse[i]);
+	fin.close();
+	return StuInCourse;
 }
