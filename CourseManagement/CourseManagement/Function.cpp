@@ -1570,14 +1570,14 @@ void CreateCoursePage(const int screenWidth, const int screenHeight, account& Cu
 		DrawText("* Course day: ", 175, 798, 25, DARKBLUE);
 		DrawRectangleRec(sshours.textbox, LIGHTGRAY);
 		DrawText("* Session hours: ", 779, 798, 25, DARKBLUE);
-	
+
 		////Function_of_TextInputBoxes_----------------------------------------------------------------------------------------------------------------------
 		id.worktextbox(confirmBtnFalseDisplay);
 		coursename.worktextbox(confirmBtnFalseDisplay);
 		classname.worktextbox(confirmBtnFalseDisplay);
 		teachername.worktextbox(confirmBtnFalseDisplay);
 		nofc.worktextbox(confirmBtnFalseDisplay);
-		maxstudents.worktextbox(confirmBtnFalseDisplay);	
+		maxstudents.worktextbox(confirmBtnFalseDisplay);
 		courseday.worktextbox(confirmBtnFalseDisplay);
 		sshours.worktextbox(confirmBtnFalseDisplay);
 
@@ -1593,7 +1593,11 @@ void CreateCoursePage(const int screenWidth, const int screenHeight, account& Cu
 		DrawText(TextFormat("%i/%i", teachername.lettercount, MAX_INPUT_CHARS), 1270, 511, 20, DARKBLUE);
 		DrawText(nofc.text, 198, 614, 25, DARKBLUE);
 		DrawText(TextFormat("%i/%i", nofc.lettercount, MAX_INPUT_CHARS), 1270, 624, 20, DARKBLUE);
-		DrawText("50", 198, 727, 25, DARKBLUE);
+		DrawText(maxstudents.text, 198, 727, 25, DARKBLUE);
+		DrawText(TextFormat("%i/%i", maxstudents.lettercount, MAX_INPUT_CHARS), 1270, 727, 20, DARKBLUE);
+		if (maxstudents.lettercount == 0) {
+			DrawText("50", 198, 727, 25, DARKBLUE);
+		}
 		DrawText(courseday.text, 198, 840, 25, DARKBLUE);
 		DrawText(TextFormat("%i/%i", courseday.lettercount, MAX_INPUT_CHARS), 713, 855, 16, DARKBLUE);
 		DrawText(sshours.text, 802, 840, 25, DARKBLUE);
@@ -1611,13 +1615,19 @@ void CreateCoursePage(const int screenWidth, const int screenHeight, account& Cu
 		else confirmBtnState = 0;
 		if (confirmBtnAction) {
 			if (!CheckValidCourse(coursename.text, id.text, classname.text, Year, Semester) ||
-				id.text[0] == '\0' || coursename.text[0] == '\0' || classname.text[0] == '\0' || 
-				teachername.text[0] == '\0' || nofc.text[0] == '\0' || courseday.text[0] == '\0' || 
+				id.text[0] == '\0' || coursename.text[0] == '\0' || classname.text[0] == '\0' ||
+				teachername.text[0] == '\0' || nofc.text[0] == '\0' || courseday.text[0] == '\0' ||
 				sshours.text[0] == '\0') {
 				confirmBtnFalseDisplay = true;
 			}
 			else {
-				AddCourseToFile(coursename.text, id.text, classname.text, teachername.text, nofc.text, courseday.text, sshours.text, Year, Semester);
+				if (maxstudents.lettercount == 0) {
+					maxstudents.text[0] = '5';
+					maxstudents.text[1] = '0';
+					maxstudents.text[2] = '\0';
+					AddCourseToFile(coursename.text, id.text, classname.text, teachername.text, nofc.text, maxstudents.text, courseday.text, sshours.text, Year, Semester);
+				}
+				else AddCourseToFile(coursename.text, id.text, classname.text, teachername.text, nofc.text, maxstudents.text, courseday.text, sshours.text, Year, Semester);
 				EndDrawing();
 				SemesterPage(screenWidth, screenHeight, CurrentUser, Year, Semester);
 			}
@@ -1647,7 +1657,7 @@ void ViewCoursesPage(const int screenWidth, const int screenHeight, account& Cur
 
 	Button6 backtosemesterpage;
 	backtosemesterpage.button = { 1190, 20, 250, 30 };
-	Button7* coursebutton = new Button7 [n];
+	Button7* coursebutton = new Button7[n];
 	int scrollspeed = 35;
 	int x_course = 11;
 	int y_course = 255;
@@ -1667,23 +1677,25 @@ void ViewCoursesPage(const int screenWidth, const int screenHeight, account& Cur
 		mousePoint = GetMousePosition();
 		for (int i = 0; i < n; ++i) {
 			DrawLine(x_course + 111, y_course + j - 24, x_course + 111, y_course + j + 38, BLACK);
-			DrawLine(x_course + 630, y_course + j - 24, x_course + 630, y_course + j + 38, BLACK);
-			DrawLine(x_course + 772, y_course + j - 24, x_course + 772, y_course + j + 38, BLACK);
-			DrawLine(x_course + 1147, y_course + j - 24, x_course + 1147, y_course + j + 38, BLACK);
-			DrawLine(x_course + 1254, y_course + j - 24, x_course + 1254, y_course + j + 38, BLACK);
-			DrawLine(x_course + 1397, y_course + j - 24, x_course + 1397, y_course + j + 38, BLACK);
+			DrawLine(x_course + 597, y_course + j - 24, x_course + 597, y_course + j + 38, BLACK);
+			DrawLine(x_course + 729, y_course + j - 24, x_course + 729, y_course + j + 38, BLACK);
+			DrawLine(x_course + 1056, y_course + j - 24, x_course + 1056, y_course + j + 38, BLACK);
+			DrawLine(x_course + 1139, y_course + j - 24, x_course + 1139, y_course + j + 38, BLACK);
+			DrawLine(x_course + 1283, y_course + j - 24, x_course + 1283, y_course + j + 38, BLACK);
+			DrawLine(x_course + 1414, y_course + j - 24, x_course + 1414, y_course + j + 38, BLACK);
 			DrawLine(x_course + 1501, y_course + j - 24, x_course + 1501, y_course + j + 38, BLACK);
 
 			DrawRectangleLines(0, y_course + j - 24, 1512, 62, BLACK);
 			DrawRectangleLines(0, y_course + j - 24, 1512, 62, BLACK);
-			coursebutton[i].button = {0, float(y_course + j), 1512, 20 };
+			coursebutton[i].button = { 0, float(y_course + j), 1512, 20 };
 			DrawText(courses[i].courseID, x_course, y_course + j, 20, BLACK);
-			DrawText(courses[i].courseName, x_course + 137, y_course + j, 20, BLACK);
-			DrawText(courses[i].className, x_course + 652, y_course + j, 20, BLACK);
-			DrawText(courses[i].teacherName, x_course + 793, y_course + j, 20, BLACK);
-			DrawText(courses[i].numOfCre, x_course + 1192, y_course + j, 20, BLACK);
-			DrawText(courses[i].dayofweek, x_course + 1279, y_course + j, 20, BLACK);
-			DrawText(courses[i].sessionHour, x_course + 1429, y_course + j, 20, BLACK);
+			DrawText(courses[i].courseName, x_course + 148, y_course + j, 20, BLACK);
+			DrawText(courses[i].className, x_course + 614, y_course + j, 20, BLACK);
+			DrawText(courses[i].teacherName, x_course + 742, y_course + j, 20, BLACK);
+			DrawText(courses[i].numOfCre, x_course + 1087, y_course + j, 20, BLACK);
+			DrawText(courses[i].maxStu, x_course + 1189, y_course + j, 20, BLACK);
+			DrawText(courses[i].dayofweek, x_course + 1320, y_course + j, 20, BLACK);
+			DrawText(courses[i].sessionHour, x_course + 1442, y_course + j, 20, BLACK);
 			if (y_course + j < 231) coursebutton[i].state = false;
 			coursebutton[i].workbutton(mousePoint, CurrentUser, Year, Semester, courses[i], CoursePage);
 			j += 61;
@@ -1698,9 +1710,13 @@ void ViewCoursesPage(const int screenWidth, const int screenHeight, account& Cur
 			}
 			if (coursebutton[i].remove == true) {
 				deleteCourse(courses, i, n, Year, Semester);
+				coursebutton[i].remove = false;
+				coursebutton[i].action1 = false;
 			}
 			if (coursebutton[i].update == true) {
 				UpdateCoursePage(screenWidth, screenHeight, CurrentUser, Year, Semester, courses, n, i);
+				coursebutton[i].update = false;
+				coursebutton[i].action1 = false;
 			}
 
 		}
@@ -1714,32 +1730,36 @@ void ViewCoursesPage(const int screenWidth, const int screenHeight, account& Cur
 		DrawRectangle(0, 189, 121, 42, LIGHTGRAY);
 		DrawRectangleLines(0, 189, 121, 42, BLACK);
 		DrawText("ID", 45, 203, 20, DARKBLUE);
-		
-		DrawRectangle(121, 189, 519, 42, LIGHTGRAY);
-		DrawRectangleLines(121, 189, 519, 42, BLACK);
-		DrawText("Course name", 325, 203, 20, DARKBLUE);
-		
-		DrawRectangle(640, 189, 142, 42, LIGHTGRAY);
-		DrawRectangleLines(640, 189, 142, 42, BLACK);
-		DrawText("Class name", 650, 203, 20, DARKBLUE);
 
-		DrawRectangle(782, 189, 375, 42, LIGHTGRAY);
-		DrawRectangleLines(782, 189, 375, 42, BLACK);
-		DrawText("Teacher name", 886, 203, 20, DARKBLUE);
+		DrawRectangle(121, 189, 486, 42, LIGHTGRAY);
+		DrawRectangleLines(121, 189, 486, 42, BLACK);
+		DrawText("Course name", 311, 203, 20, DARKBLUE);
 
-		DrawRectangle(1157, 189, 107, 42, LIGHTGRAY);
-		DrawRectangleLines(1157, 189, 107, 42, BLACK);
-		DrawText("Credits", 1177, 203, 20, DARKBLUE);
+		DrawRectangle(607, 189, 132, 42, LIGHTGRAY);
+		DrawRectangleLines(607, 189, 132, 42, BLACK);
+		DrawText("Class name", 617, 203, 20, DARKBLUE);
 
-		DrawRectangle(1264, 189, 143, 42, LIGHTGRAY);
-		DrawRectangleLines(1264, 189, 143, 42, BLACK);
-		DrawText("Course day", 1282, 203, 20, DARKBLUE);
+		DrawRectangle(739, 189, 327, 42, LIGHTGRAY);
+		DrawRectangleLines(739, 189, 327, 42, BLACK);
+		DrawText("Teacher name", 835, 203, 20, DARKBLUE);
 
-		DrawRectangle(1407, 189, 105, 42, LIGHTGRAY);
-		DrawRectangleLines(1407, 189, 105, 42, BLACK);
-		DrawText("Session", 1423, 203, 20, DARKBLUE);
-	
-		
+		DrawRectangle(1066, 189, 83, 42, LIGHTGRAY);
+		DrawRectangleLines(1066, 189, 83, 42, BLACK);
+		DrawText("Credits", 1071, 203, 20, DARKBLUE);
+
+		DrawRectangle(1149, 189, 144, 42, LIGHTGRAY);
+		DrawRectangleLines(1149, 189, 144, 42, BLACK);
+		DrawText("Max students", 1153, 203, 20, DARKBLUE);
+
+		DrawRectangle(1293, 189, 131, 42, LIGHTGRAY);
+		DrawRectangleLines(1293, 189, 131, 42, BLACK);
+		DrawText("Course day", 1300, 203, 20, DARKBLUE);
+
+		DrawRectangle(1424, 189, 88, 42, LIGHTGRAY);
+		DrawRectangleLines(1424, 189, 88, 42, BLACK);
+		DrawText("Session", 1430, 203, 20, DARKBLUE);
+
+
 		backtosemesterpage.workbutton(mousePoint, CurrentUser, Year, Semester, SemesterPage);
 		EndDrawing();
 	}
@@ -1863,7 +1883,7 @@ void UpdateCoursePage(const int screenWidth, const int screenHeight, account& Cu
 				confirmBtnFalseDisplay = true;
 			}
 			else {
-				updateCourse(Year, Semester, Course[i], coursename.text, id.text, classname.text, teachername.text, nofc.text, courseday.text, sshours.text);
+				updateCourse(Year, Semester, Course[i], coursename.text, id.text, classname.text, teachername.text, nofc.text, maxstudents.text, courseday.text, sshours.text);
 				ReturnCoursesToFile(Year, Semester, n, Course);
 				EndDrawing();
 				ViewCoursesPage(screenWidth, screenHeight, CurrentUser, Year, Semester);

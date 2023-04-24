@@ -2,7 +2,7 @@
 #include "Function.h"
 #include "users.h"
 
-void AddCourseToFile(char* coursename, char* id, char* classname, char* teacher, char* nofc, char* courseday,
+void AddCourseToFile(char* coursename, char* id, char* classname, char* teacher, char* nofc, char* maxstu, char* courseday,
 	char* sshour, char*& Year, char*& semester) {
 	ofstream f;
 	f.open("../data/" + (string)(Year) +  "/" + (string)(semester) + "/ListOfCourse.txt", ios::app);
@@ -11,6 +11,7 @@ void AddCourseToFile(char* coursename, char* id, char* classname, char* teacher,
 		<< classname << ","
 		<< teacher << ","
 		<< nofc << ","
+		<< maxstu << ","
 		<< courseday << ","
 		<< sshour << '\n';
 }
@@ -27,7 +28,7 @@ int countCourse(char*year, char*semester) {
 	}
 	return num-1;
 }
-void LoadCourseFromFile(char* year, char* semester,int num, course* &courses) {
+void LoadCourseFromFile(char* year, char* semester,int& num, course* &courses) {
 	ofstream fout;
 	fout.open("../data/" + (string)(year)+"/" + (string)(semester)+"/ListOfCourse.txt", ios::app);
 	fout.close();
@@ -40,12 +41,13 @@ void LoadCourseFromFile(char* year, char* semester,int num, course* &courses) {
 		fin.getline(courses[i].className, 1000, ',');
 		fin.getline(courses[i].teacherName, 1000, ',');
 		fin.getline(courses[i].numOfCre, 1000, ',');
+		fin.getline(courses[i].maxStu, 1000, ',');
 		fin.getline(courses[i].dayofweek, 1000, ',');
 		fin.getline(courses[i].sessionHour, 1000);
 	}
 	fin.close();
 }
-void ReturnCoursesToFile(char* year, char* semester, int num, course*& courses) {
+void ReturnCoursesToFile(char* year, char* semester, int& num, course*& courses) {
 	ofstream fout;
 	fout.open("../data/" + (string)(year)+"/" + (string)(semester)+"/ListOfCourse.txt");
 	for (int i = 0; i < num; i++) {
@@ -54,6 +56,7 @@ void ReturnCoursesToFile(char* year, char* semester, int num, course*& courses) 
 			<< courses[i].className		<< ','
 			<< courses[i].teacherName	<< ','
 			<< courses[i].numOfCre		<< ','
+			<< courses[i].maxStu		<< ','
 			<< courses[i].dayofweek	    << ','
 			<< courses[i].sessionHour	<< '\n';
 	}
@@ -121,31 +124,30 @@ void course::Return_stu(char* year, char* semester) {
 		  <<stuOfCourse[i].Student.socialID << "\n";
 		}
 }
-void deleteCourse(course* courses, int no ,int& num, char* year, char* semester) {
-	while (no<num-1) {
-		courses[no] = courses[no + 1];
-		++no;
+void deleteCourse(course*& courses, int no, int& num, char* year, char* semester) {
+	if (no >= num) {
+		return;
+	}
+	string tmp = "../data/" + (string)(year)+"/" + (string)(semester)+"/" + (string)(courses[no].courseName) + "-" + string(courses[no].className) + ".txt";
+	remove(tmp.c_str());
+	for (int i = no + 1; i < num; i++) {
+		courses[i - 1] = courses[i];
 	}
 	num--;
-	string tmp = "../data/" + (string)(year)+"/" + (string)(semester)+"/" + (string)(courses[no].courseName) + "-" + string(courses[no].className) + ".txt";
-	remove (tmp.c_str());
 	ReturnCoursesToFile(year, semester, num, courses);
 }
-bool updateCourse(char* year, char* semester, course& courses, char* courseName_tmp, char* ID, char* className_tmp, char* teacherName_tmp, char* nofc, char* courseday, char* sshours) {
+bool updateCourse(char* year, char* semester, course& courses, char* courseName_tmp, char* ID, char* className_tmp, char* teacherName_tmp, char* nofc, char* maxstu, char* courseday, char* sshours) {
 	if (courseName_tmp[0] != '\0')  strncpy_s(courses.courseName, courseName_tmp, '\n');
 	if (className_tmp[0] != '\0')	strncpy_s(courses.className, className_tmp, '\n');
 	if (ID[0] != '\0')				strncpy_s(courses.courseID, ID, '\n');
 	if (teacherName_tmp[0] != '\0') strncpy_s(courses.teacherName, teacherName_tmp, '\n');
 	if (nofc[0] != '\0')			strncpy_s(courses.numOfCre, nofc, '\n');
-	if (courseday[0] != '\0')			strncpy_s(courses.dayofweek, courseday, '\n');
+	if (maxstu[0] != '\0')			strncpy_s(courses.maxStu, maxstu, '\n');
+	if (courseday[0] != '\0')		strncpy_s(courses.dayofweek, courseday, '\n');
 	if (sshours[0] != '\0')			strncpy_s(courses.sessionHour, sshours, '\n');
-	ofstream fout;
 	string tmp = "../data/" + (string)(year)+"/" + (string)(semester)+"/" + (string)(courses.courseName) + "-" + string(courses.className) + ".txt";
-	fout.open(tmp.c_str());
-	fout << 1;
-	fout.close();
-	string tmp_new = "../data/" + (string)(year)+"/" + (string)(semester)+"/" + (string)(courseName_tmp) + "-" + string(className_tmp) + ".txt";
-	if (rename(tmp.c_str(), tmp_new.c_str()));
+	string tmp_new = "../data/" + (string)(year)+"/" + (string)(semester)+"/" + (string)(courseName_tmp)+"-" + string(className_tmp) + ".txt";
+	rename(tmp.c_str(), tmp_new.c_str());
 	return true;
 }
 void deleteStudent(course* course, int k, int no) {
