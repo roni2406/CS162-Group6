@@ -1601,13 +1601,14 @@ void ViewCoursesPage(const int screenWidth, const int screenHeight, account& Cur
 				DrawText("Delete", x + 7, y + 3, 20, MAROON);
 				DrawLine(x, y + 25, x + 160, y + 25, BLACK);
 				DrawText("Update", x + 7, y + 3 + 25, 20, MAROON);
-
-				if (CheckCollisionPointRec(GetMousePosition(), { float(x),float(y),160,25 }) && IsMouseButtonPressed(MOUSE_BUTTON_LEFT)) deleteCourse(courses, i, n, Year, Semester);
-				if (CheckCollisionPointRec(GetMousePosition(), { float(x),float(y) + 25,160,25 }) && IsMouseButtonPressed(MOUSE_BUTTON_LEFT)) {
-					UpdateCoursePage(screenWidth, screenHeight, CurrentUser, Year, Semester, courses, n, i);
-				}
-				if (IsMouseButtonPressed(MOUSE_BUTTON_LEFT)) coursebutton[i].action1 = false;
 			}
+			if (coursebutton[i].remove == true) {
+				deleteCourse(courses, i, n, Year, Semester);
+			}
+			if (coursebutton[i].update == true) {
+				UpdateCoursePage(screenWidth, screenHeight, CurrentUser, Year, Semester, courses, n, i);
+			}
+
 		}
 		DrawRectangle(0, 0, screenWidth, 60, WHITE);
 		DrawText(Year, 30, 15, 40, DARKBLUE);

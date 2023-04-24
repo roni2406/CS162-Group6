@@ -88,7 +88,19 @@ void Button7::workbutton(Vector2 mousePoint, account& CurrentUser, char*& a, cha
 	}
 	else {
 		action = false;
-	}	
+	}
+	if (CheckCollisionPointRec(GetMousePosition(), { float(x),float(y),160,25 })) {
+		action = false;
+		if (IsMouseButtonPressed(MOUSE_BUTTON_LEFT)) {
+			remove = true;
+		}
+	}
+	else if (CheckCollisionPointRec(GetMousePosition(), { float(x),float(y) + 25,160,25 })) {
+		if (IsMouseButtonPressed(MOUSE_BUTTON_LEFT)) {
+			update = true;
+		}
+	}
+	else if (IsMouseButtonPressed(MOUSE_BUTTON_LEFT)) action1 = false;
 	if (action && state)
 	{
 		EndDrawing();
