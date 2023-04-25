@@ -1527,7 +1527,7 @@ void CreateCoursePage(const int screenWidth, const int screenHeight, account& Cu
 	Textbox1 courseday;
 	courseday.textbox = { 175, 827, 528, 47 };
 	Textbox1 sshours;
-	sshours.textbox = { 779, 827, 528, 47 };
+	sshours.textbox = { 779, 827, 462, 47 };
 
 	Button6 backtosemesterpage;
 	backtosemesterpage.button = { 1200, 20, 200, 30 };
@@ -1601,7 +1601,7 @@ void CreateCoursePage(const int screenWidth, const int screenHeight, account& Cu
 		DrawText(courseday.text, 198, 840, 25, DARKBLUE);
 		DrawText(TextFormat("%i/%i", courseday.lettercount, MAX_INPUT_CHARS), 713, 855, 16, DARKBLUE);
 		DrawText(sshours.text, 802, 840, 25, DARKBLUE);
-		DrawText(TextFormat("%i/%i", sshours.lettercount, MAX_INPUT_CHARS), 1320, 855, 16, DARKBLUE);
+		DrawText(TextFormat("%i/%i", sshours.lettercount, MAX_INPUT_CHARS), 1270, 855, 16, DARKBLUE);
 
 
 		////Function of buttons------------------------------------------------------------------------------------------------------------------------------
