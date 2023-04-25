@@ -202,7 +202,7 @@ void course::add_stu(char* year, char* semester, int No, char* stuID, char lastN
 			<< d << ","
 			<< m << ","
 			<< y << ","
-			<< socialID << ",";
+			<< socialID << "\n";
 	}
 	fout.close();
 	Load_stu(year, semester);
