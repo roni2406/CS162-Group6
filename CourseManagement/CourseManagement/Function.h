@@ -40,7 +40,7 @@ void ChangePasswordPageStaff(const int screenWidth, const int screenHeight, acco
 
 void CreateSchoolYearPage(const int screenWidth,const int screenHeight, account& CurrentUser); 
 void ViewSchoolYearsPage(const int screenWidth, const int screenHeight, account& CurrentUser);
-void SchoolYearPage(const int screenWidth, const int screenHeight, account& CurrentUser, char* &Year);
+//void SchoolYearPage(const int screenWidth, const int screenHeight, account& CurrentUser, char* &Year);
 void viewClassinSchoolYearPage(); // thay bao z 
 
 void createClassPage(const int screenWidth, const int screenHeight, account& CurrentUser);
@@ -53,7 +53,7 @@ void dataExistedPage(const int screenWidth, const int screenHeight, account& Cur
 
 void CreateSemesterPage(const int screenWidth, const int screenHeight, account& CurrentUser, char* &Year);
 void ViewSemestersPage(const int screenWidth, const int screenHeight, account& CurrentUser, char*& Year);
-void SemesterPage(const int screenWidth, const int screenHeight, account& CurrentUser, char*& Year, char*& Semester); // need to include struct semester to display and save data
+//void SemesterPage(const int screenWidth, const int screenHeight, account& CurrentUser, char*& Year, char*& Semester); // need to include struct semester to display and save data
 
 void CreateCoursePage(const int screenWidth, const int screenHeight, account& CurrentUser, char*& Year, char*& Semester); // need to include struct semester to display and save data
 void ViewCoursesPage(const int screenWidth, const int screenHeight, account& CurrentUser, char*& Year, char*& Semester); // need to include struct semester to display and save data

@@ -762,7 +762,7 @@ void ViewSchoolYearsPage(const int screenWidth, const int screenHeight, account&
 				schoolyear[i].state = false;
 			}
 			else schoolyear[i].state = true;
-			schoolyear[i].workbutton(mousePoint, CurrentUser, Years[i], SchoolYearPage);
+			schoolyear[i].workbutton(mousePoint, CurrentUser, Years[i], ViewSemestersPage);
 			j += 100;
 		}
 
@@ -786,45 +786,45 @@ void ViewSchoolYearsPage(const int screenWidth, const int screenHeight, account&
 	CloseWindow();
 
 }
-void SchoolYearPage(const int screenWidth, const int screenHeight, account& CurrentUser, char* &Year) {
-	Rectangle background = { 0,0,float(screenWidth),float(screenHeight) };
-	Vector2 mousePoint = { 0.0f, 0.0f };
-
-	Button2 backtoviewschoolyearpage;
-	backtoviewschoolyearpage.button = { 1150, 20, 250, 30 };
-
-	Button3 createsemester;
-	createsemester.texture = LoadTexture("createsemester.png");
-	createsemester.frameHeight = (float)createsemester.texture.height;
-	createsemester.sourceRec = { 0, 0, (float)createsemester.texture.width, createsemester.frameHeight };
-	createsemester.btnBounds = { 350, 496, (float)createsemester.texture.width, createsemester.frameHeight };
-
-	Button3 viewsemester;
-	viewsemester.texture = LoadTexture("viewsemester.png");
-	viewsemester.frameHeight = (float)viewsemester.texture.height;
-	viewsemester.sourceRec = { 0, 0, (float)viewsemester.texture.width, viewsemester.frameHeight };
-	viewsemester.btnBounds = { 866, 496, (float)viewsemester.texture.width, viewsemester.frameHeight };
-
-	while (!WindowShouldClose()) {
-		ClearBackground(WHITE);
-		BeginDrawing();
-		DrawRectangleGradientEx(background, SKYBLUE, DARKBLUE, DARKBLUE, SKYBLUE);
-		DrawRectangle(0, 0, screenWidth, 60, WHITE);
-		DrawText(Year, 620, 15, 40, DARKBLUE);
-		DrawRectangleRec(backtoviewschoolyearpage.button, WHITE);
-		DrawText("Back to View School Year Page", 1150, 20, 20, DARKBLUE);
-		DrawRectangle(322, 136, 870, 806, WHITE);
-		DrawRectangleLines(321, 135, 872, 807, BLACK);
-
-		mousePoint = GetMousePosition();
-		backtoviewschoolyearpage.workbutton(mousePoint, CurrentUser, ViewSchoolYearsPage);
-		createsemester.workbutton(mousePoint, CurrentUser, Year, CreateSemesterPage);
-		viewsemester.workbutton(mousePoint, CurrentUser, Year, ViewSemestersPage);
-		EndDrawing();
-	}
-	delete[] Year;
-	CloseWindow();
-}
+//void SchoolYearPage(const int screenWidth, const int screenHeight, account& CurrentUser, char* &Year) {
+//	Rectangle background = { 0,0,float(screenWidth),float(screenHeight) };
+//	Vector2 mousePoint = { 0.0f, 0.0f };
+//
+//	Button2 backtoviewschoolyearpage;
+//	backtoviewschoolyearpage.button = { 1150, 20, 250, 30 };
+//
+//	Button3 createsemester;
+//	createsemester.texture = LoadTexture("createsemester.png");
+//	createsemester.frameHeight = (float)createsemester.texture.height;
+//	createsemester.sourceRec = { 0, 0, (float)createsemester.texture.width, createsemester.frameHeight };
+//	createsemester.btnBounds = { 350, 496, (float)createsemester.texture.width, createsemester.frameHeight };
+//
+//	Button3 viewsemester;
+//	viewsemester.texture = LoadTexture("viewsemester.png");
+//	viewsemester.frameHeight = (float)viewsemester.texture.height;
+//	viewsemester.sourceRec = { 0, 0, (float)viewsemester.texture.width, viewsemester.frameHeight };
+//	viewsemester.btnBounds = { 866, 496, (float)viewsemester.texture.width, viewsemester.frameHeight };
+//
+//	while (!WindowShouldClose()) {
+//		ClearBackground(WHITE);
+//		BeginDrawing();
+//		DrawRectangleGradientEx(background, SKYBLUE, DARKBLUE, DARKBLUE, SKYBLUE);
+//		DrawRectangle(0, 0, screenWidth, 60, WHITE);
+//		DrawText(Year, 620, 15, 40, DARKBLUE);
+//		DrawRectangleRec(backtoviewschoolyearpage.button, WHITE);
+//		DrawText("Back to View School Year Page", 1150, 20, 20, DARKBLUE);
+//		DrawRectangle(322, 136, 870, 806, WHITE);
+//		DrawRectangleLines(321, 135, 872, 807, BLACK);
+//
+//		mousePoint = GetMousePosition();
+//		backtoviewschoolyearpage.workbutton(mousePoint, CurrentUser, ViewSchoolYearsPage);
+//		createsemester.workbutton(mousePoint, CurrentUser, Year, CreateSemesterPage);
+//		viewsemester.workbutton(mousePoint, CurrentUser, Year, ViewSemestersPage);
+//		EndDrawing();
+//	}
+//	delete[] Year;
+//	CloseWindow();
+//}
 void createClassPage(const int screenWidth, const int screenHeight, account& CurrentUser) {
 	Vector2 mousePoint = { 0.0f, 0.0f };
 	Rectangle background = { 0,0,float(screenWidth),float(screenHeight)};
@@ -1343,8 +1343,8 @@ void CreateSemesterPage(const int screenWidth, const int screenHeight, account& 
 	Textbox1 enddate;
 	enddate.textbox = { 477, 462, 558, 106 };
 
-	Button4 backtoschoolyearpage;
-	backtoschoolyearpage.button = { 1170, 20, 200, 30 };
+	Button4 backtoviewsemesterpage;
+	backtoviewsemesterpage.button = { 1150, 20, 300, 30 };
 	
 	Texture2D confirmBtn = LoadTexture("confirmBtn.png");
 	float frameHeightconfirmBtn = (float)confirmBtn.height;
@@ -1362,8 +1362,8 @@ void CreateSemesterPage(const int screenWidth, const int screenHeight, account& 
 		DrawRectangleGradientEx(background, SKYBLUE, DARKBLUE, DARKBLUE, SKYBLUE);
 		DrawRectangle(0, 0, screenWidth, 60, WHITE);
 		DrawText(Year, 30, 15, 40, DARKBLUE);
-		DrawRectangleRec(backtoschoolyearpage.button, WHITE);
-		DrawText("Back to School Year Page", 1180, 20, 20, DARKBLUE);
+		DrawRectangleRec(backtoviewsemesterpage.button, WHITE);
+		DrawText("Back to View Semester Page", 1180, 20, 20, DARKBLUE);
 		DrawRectangle(355, 173, 818, 600, WHITE);
 		DrawRectangleRec(startdate.textbox, LIGHTGRAY);
 		DrawText("* Start date (dd/mm/YYYY): ", 477, 250, 30, DARKBLUE);
@@ -1394,7 +1394,7 @@ void CreateSemesterPage(const int screenWidth, const int screenHeight, account& 
 				if (createASemester(Year, startdate.text, enddate.text)) {
 					confirmBtnFalseDisplay = false;
 					EndDrawing();
-					SchoolYearPage(screenWidth, screenHeight, CurrentUser, Year);
+					ViewSemestersPage(screenWidth,screenHeight,CurrentUser,Year);
 				}
 				else confirmBtnFalseDisplay = false;
 			}
@@ -1406,7 +1406,7 @@ void CreateSemesterPage(const int screenWidth, const int screenHeight, account& 
 		DrawTextureRec(confirmBtn, sourceRecconfirmBtn, { btnBoundsconfirmBtn.x, btnBoundsconfirmBtn.y }, WHITE); // Draw button frame
 
 		/// Back to profile page button
-		backtoschoolyearpage.workbutton(mousePoint, CurrentUser, Year, SchoolYearPage);
+		backtoviewsemesterpage.workbutton(mousePoint, CurrentUser, Year, ViewSemestersPage);
 		EndDrawing();
 	}
 	delete[] Year;
@@ -1419,8 +1419,15 @@ void ViewSemestersPage(const int screenWidth, const int screenHeight, account& C
 
 	Rectangle background = { 0,0,float(screenWidth),float(screenHeight) };
 
-	Button4 backtoSchoolYearPage;
-	backtoSchoolYearPage.button = { 1190, 20, 200, 30 };
+	Button2 backtoviewschoolyearpage;
+	backtoviewschoolyearpage.button = { 1150, 20, 250, 30 };
+
+	Button3 createsemester;
+	createsemester.texture = LoadTexture("createsemester.png");
+	createsemester.frameHeight = (float)createsemester.texture.height;
+	createsemester.sourceRec = { 0, 0, (float)createsemester.texture.width, createsemester.frameHeight };
+	createsemester.btnBounds = { 10, 496, (float)createsemester.texture.width, createsemester.frameHeight };
+
 
 	int scrollspeed = 25;
 	int y_semester = 257;
@@ -1435,8 +1442,8 @@ void ViewSemestersPage(const int screenWidth, const int screenHeight, account& C
 		DrawRectangle(0, 0, screenWidth, 60, WHITE);
 		DrawText(Year, 30, 15, 40, DARKBLUE);
 		DrawText("SEMESTERS", 620, 15, 40, DARKBLUE);
-		DrawRectangleRec(backtoSchoolYearPage.button, WHITE);
-		DrawText("Back to School Year Page", 1200, 20, 20, DARKBLUE);
+		DrawRectangleRec(backtoviewschoolyearpage.button, WHITE);
+		DrawText("Back to list School Years", 1200, 20, 20, DARKBLUE);
 		DrawRectangle(322, 136, 870, 806, WHITE);
 		DrawRectangleLines(321, 135, 872, 807, BLACK);
 
@@ -1449,7 +1456,7 @@ void ViewSemestersPage(const int screenWidth, const int screenHeight, account& C
 			semester[i].button = {float( x_semester - 122), float(y_semester - 12), 421, 59 };
 			DrawRectangleRec(semester[i].button, LIGHTGRAY);
 			DrawText(semestername[i], x_semester + 30, y_semester, 32, DARKBLUE);
-			semester[i].workbutton(mousePoint, CurrentUser, Year, semestername[i], SemesterPage);
+			semester[i].workbutton(mousePoint, CurrentUser, Year, semestername[i], ViewCoursesPage);
 			y_semester += 100;
 		}
 		for (int i = 0; i < 3; ++i) {
@@ -1457,7 +1464,8 @@ void ViewSemestersPage(const int screenWidth, const int screenHeight, account& C
 		}
 		delete[] semestername;
 		/// Back to profile page button
-		backtoSchoolYearPage.workbutton(mousePoint, CurrentUser, Year, SchoolYearPage);
+		backtoviewschoolyearpage.workbutton(mousePoint, CurrentUser, ViewSchoolYearsPage);
+		createsemester.workbutton(mousePoint, CurrentUser, Year, CreateSemesterPage);
 		EndDrawing();
 	}
 	delete[] Year;
@@ -1465,47 +1473,47 @@ void ViewSemestersPage(const int screenWidth, const int screenHeight, account& C
 
 }
 
-void SemesterPage(const int screenWidth, const int screenHeight, account& CurrentUser, char*& Year, char*& Semester) {
-	Rectangle background = { 0,0,float(screenWidth),float(screenHeight) };
-	Vector2 mousePoint = { 0.0f, 0.0f };
-
-	Button4 backtoviewsemesterpage;
-	backtoviewsemesterpage.button = { 1150, 20, 250, 30 };
-
-	Button5 createcourse;
-	createcourse.texture = LoadTexture("createcourse.png");
-	createcourse.frameHeight = (float)createcourse.texture.height;
-	createcourse.sourceRec = { 0, 0, (float)createcourse.texture.width, createcourse.frameHeight };
-	createcourse.btnBounds = { 350, 496, (float)createcourse.texture.width, createcourse.frameHeight };
-
-	Button5 viewcourse;
-	viewcourse.texture = LoadTexture("viewcourse.png");
-	viewcourse.frameHeight = (float)viewcourse.texture.height;
-	viewcourse.sourceRec = { 0, 0, (float)viewcourse.texture.width, viewcourse.frameHeight };
-	viewcourse.btnBounds = { 866, 496, (float)viewcourse.texture.width, viewcourse.frameHeight };
-
-	while (!WindowShouldClose()) {
-		ClearBackground(WHITE);
-		BeginDrawing();
-		DrawRectangleGradientEx(background, SKYBLUE, DARKBLUE, DARKBLUE, SKYBLUE);
-		DrawRectangle(0, 0, screenWidth, 60, WHITE);
-		DrawText(Year, 30, 15, 40, DARKBLUE);
-		DrawText(Semester, 670, 15, 40, DARKBLUE);
-		DrawRectangleRec(backtoviewsemesterpage.button, WHITE);
-		DrawText("Back to View Semester Page", 1180, 20, 20, DARKBLUE);
-		DrawRectangle(322, 136, 870, 806, WHITE);
-		DrawRectangleLines(321, 135, 872, 807, BLACK);
-
-		mousePoint = GetMousePosition();
-		backtoviewsemesterpage.workbutton(mousePoint, CurrentUser, Year, ViewSemestersPage);
-		createcourse.workbutton(mousePoint, CurrentUser, Year, Semester, CreateCoursePage);
-		viewcourse.workbutton(mousePoint, CurrentUser, Year, Semester, ViewCoursesPage);
-		EndDrawing();
-	}
-	delete[] Year;
-	delete[] Semester;
-	CloseWindow();
-}
+//void SemesterPage(const int screenWidth, const int screenHeight, account& CurrentUser, char*& Year, char*& Semester) {
+//	Rectangle background = { 0,0,float(screenWidth),float(screenHeight) };
+//	Vector2 mousePoint = { 0.0f, 0.0f };
+//
+//	Button4 backtoviewsemesterpage;
+//	backtoviewsemesterpage.button = { 1150, 20, 300, 30 };
+//
+//	Button5 createcourse;
+//	createcourse.texture = LoadTexture("createcourse.png");
+//	createcourse.frameHeight = (float)createcourse.texture.height;
+//	createcourse.sourceRec = { 0, 0, (float)createcourse.texture.width, createcourse.frameHeight };
+//	createcourse.btnBounds = { 350, 496, (float)createcourse.texture.width, createcourse.frameHeight };
+//
+//	Button5 viewcourse;
+//	viewcourse.texture = LoadTexture("viewcourse.png");
+//	viewcourse.frameHeight = (float)viewcourse.texture.height;
+//	viewcourse.sourceRec = { 0, 0, (float)viewcourse.texture.width, viewcourse.frameHeight };
+//	viewcourse.btnBounds = { 866, 496, (float)viewcourse.texture.width, viewcourse.frameHeight };
+//
+//	while (!WindowShouldClose()) {
+//		ClearBackground(WHITE);
+//		BeginDrawing();
+//		DrawRectangleGradientEx(background, SKYBLUE, DARKBLUE, DARKBLUE, SKYBLUE);
+//		DrawRectangle(0, 0, screenWidth, 60, WHITE);
+//		DrawText(Year, 30, 15, 40, DARKBLUE);
+//		DrawText(Semester, 670, 15, 40, DARKBLUE);
+//		DrawRectangleRec(backtoviewsemesterpage.button, WHITE);
+//		DrawText("Back to View Semester Page", 1180, 20, 20, DARKBLUE);
+//		DrawRectangle(322, 136, 870, 806, WHITE);
+//		DrawRectangleLines(321, 135, 872, 807, BLACK);
+//
+//		mousePoint = GetMousePosition();
+//		backtoviewsemesterpage.workbutton(mousePoint, CurrentUser, Year, ViewSemestersPage);
+//		createcourse.workbutton(mousePoint, CurrentUser, Year, Semester, CreateCoursePage);
+//		viewcourse.workbutton(mousePoint, CurrentUser, Year, Semester, ViewCoursesPage);
+//		EndDrawing();
+//	}
+//	delete[] Year;
+//	delete[] Semester;
+//	CloseWindow();
+//}
 
 void CreateCoursePage(const int screenWidth, const int screenHeight, account& CurrentUser, char*& Year, char*& Semester) {
 	//ListCourse list;
@@ -1529,8 +1537,8 @@ void CreateCoursePage(const int screenWidth, const int screenHeight, account& Cu
 	Textbox1 sshours;
 	sshours.textbox = { 779, 827, 462, 47 };
 
-	Button6 backtosemesterpage;
-	backtosemesterpage.button = { 1200, 20, 200, 30 };
+	Button6 backtocoursepage;
+	backtocoursepage.button = { 1200, 20, 200, 30 };
 
 	Texture2D confirmBtn = LoadTexture("confirmBtn1.png");
 	float frameHeightconfirmBtn = (float)confirmBtn.height;
@@ -1548,10 +1556,10 @@ void CreateCoursePage(const int screenWidth, const int screenHeight, account& Cu
 		DrawRectangleGradientEx(background, SKYBLUE, DARKBLUE, DARKBLUE, SKYBLUE);
 		DrawRectangle(0, 0, screenWidth, 60, WHITE);
 
-		DrawRectangleRec(backtosemesterpage.button, WHITE);
+		DrawRectangleRec(backtocoursepage.button, WHITE);
 		DrawText(Year, 30, 15, 40, DARKBLUE);
 		DrawText(Semester, 670, 15, 40, DARKBLUE);
-		DrawText("Back to Semester Page", 1230, 20, 20, DARKBLUE);
+		DrawText("Back to Course Page", 1230, 20, 20, DARKBLUE);
 
 		DrawRectangle(126, 92, 1260, 870, WHITE);
 		DrawRectangleRec(id.textbox, LIGHTGRAY);
@@ -1629,7 +1637,7 @@ void CreateCoursePage(const int screenWidth, const int screenHeight, account& Cu
 				}
 				else AddCourseToFile(coursename.text, id.text, classname.text, teachername.text, nofc.text, maxstudents.text, courseday.text, sshours.text, Year, Semester);
 				EndDrawing();
-				SemesterPage(screenWidth, screenHeight, CurrentUser, Year, Semester);
+				ViewCoursesPage(screenWidth, screenHeight, CurrentUser, Year, Semester);
 			}
 		}
 		if (confirmBtnFalseDisplay) DrawText("Some textboxes are blank. Please try again!", 582, 888, 15, RED);
@@ -1638,7 +1646,7 @@ void CreateCoursePage(const int screenWidth, const int screenHeight, account& Cu
 		DrawTextureRec(confirmBtn, sourceRecconfirmBtn, { btnBoundsconfirmBtn.x, btnBoundsconfirmBtn.y }, WHITE); // Draw button frame
 
 		/// Back to profile page button
-		backtosemesterpage.workbutton(mousePoint, CurrentUser, Year, Semester, SemesterPage);
+		backtocoursepage.workbutton(mousePoint, CurrentUser, Year, Semester, ViewCoursesPage);
 
 		EndDrawing();
 	}
@@ -1655,8 +1663,15 @@ void ViewCoursesPage(const int screenWidth, const int screenHeight, account& Cur
 	Texture2D background2 = LoadTexture("course_background.png");
 	Vector2 mousePoint = { 0.0f, 0.0f };
 
-	Button6 backtosemesterpage;
-	backtosemesterpage.button = { 1190, 20, 250, 30 };
+	Button4 backtoviewsemesterpage;
+	backtoviewsemesterpage.button = { 1150, 20, 300, 30 };
+
+	Button5 createcourse;
+	createcourse.texture = LoadTexture("createcourse.png");
+	createcourse.frameHeight = (float)createcourse.texture.height;
+	createcourse.sourceRec = { 0, 0, (float)createcourse.texture.width, createcourse.frameHeight };
+	createcourse.btnBounds = { 350, 70, (float)createcourse.texture.width, createcourse.frameHeight };
+
 	Button7* coursebutton = new Button7[n];
 	int scrollspeed = 35;
 	int x_course = 11;
@@ -1723,8 +1738,8 @@ void ViewCoursesPage(const int screenWidth, const int screenHeight, account& Cur
 		DrawRectangle(0, 0, screenWidth, 60, WHITE);
 		DrawText(Year, 30, 15, 40, DARKBLUE);
 		DrawText(Semester, 670, 15, 40, DARKBLUE);
-		DrawRectangleRec(backtosemesterpage.button, WHITE);
-		DrawText("Back to Semester Page", 1200, 20, 20, DARKBLUE);
+		DrawRectangleRec(backtoviewsemesterpage.button, WHITE);
+		DrawText("Back to View Semester Page", 1180, 20, 20, DARKBLUE);
 		DrawTexture(background2, 0, 60, WHITE);
 
 		DrawRectangle(0, 189, 121, 42, LIGHTGRAY);
@@ -1760,7 +1775,8 @@ void ViewCoursesPage(const int screenWidth, const int screenHeight, account& Cur
 		DrawText("Session", 1430, 203, 20, DARKBLUE);
 
 
-		backtosemesterpage.workbutton(mousePoint, CurrentUser, Year, Semester, SemesterPage);
+		backtoviewsemesterpage.workbutton(mousePoint, CurrentUser, Year, ViewSemestersPage);
+		createcourse.workbutton(mousePoint, CurrentUser, Year, Semester, CreateCoursePage);
 		EndDrawing();
 	}
 	delete[] coursebutton;
