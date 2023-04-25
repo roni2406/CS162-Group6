@@ -5,6 +5,7 @@
 #include "semester.h"
 //#include "Function.h"
 #include "users.h"
+#include<string>
 using namespace std;
 
 void AddCourseToFile(char* coursename, char* id, char* classname, char* teacher, char* nofc, char* maxstu, char* courseday,
@@ -137,6 +138,7 @@ void course::Load_stu(char* year, char* semester) {
 		++i;
 	}
 } 
+
 void course::Return_stu(char* year, char* semester) {
 	ofstream f;
 	f.open("../data/" + (string)(year)+"/" + (string)(semester)+"/" + (string)(courseName)+"-" + string(className) + ".txt");
@@ -181,11 +183,29 @@ bool updateCourse(char* year, char* semester, course& courses, char* courseName_
 	return true;
 }
 void deleteStudent(course* course, int k, int no) {
-	while (no < course[k].numOfStu-1) {
+	while (no < course[k].numOfStu - 1) {
 		course[k].stuOfCourse[no] = course[k].stuOfCourse[no + 1];
 		++no;
 	}
 	--course[k].numOfStu;
+}
+void course::add_stu(char* year, char* semester, int No, char* stuID, char lastName, char* firstName, bool gen, int d, int m, int y, char* socialID) {
+	ofstream fout;
+	fout.open("../data/" + (string)(year)+"/" + (string)(semester)+"/" + (string)(courseName)+"-" + string(className) + ".txt", ios::app);
+	int maxstu = stoi(maxStu);
+	if (numOfStu < maxstu) {
+		fout << No << ","
+			<< stuID << ","
+			<< lastName << ","
+			<< firstName << ","
+			<< gen << ","
+			<< d << ","
+			<< m << ","
+			<< y << ","
+			<< socialID << ",";
+	}
+	fout.close();
+	Load_stu(year, semester);
 }
 //char* GetFileDrop() {
 //	char* filepath = new char;

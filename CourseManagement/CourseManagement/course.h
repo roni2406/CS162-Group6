@@ -22,6 +22,7 @@ struct course {
     void Load_stu( char* year, char* semester);
     void Return_stu(char* year, char* semester);
     void countStu(char* year, char* semester);
+    void add_stu(char* year, char* semester, int No, char* stuID, char lastName, char* firstName, bool gen, int d, int m, int y, char* socialID);
 };
 
 struct ListCourse {
