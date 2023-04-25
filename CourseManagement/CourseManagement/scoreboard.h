@@ -6,10 +6,11 @@ using namespace std;
 
 struct scoreboard 
 {
-    double totalMark;
-    double finalMark;
-    double midtermMark;
-    double otherMark;
+    char courseName[50];
+    double totalMark = 0;
+    double finalMark = 0;
+    double midtermMark = 0;
+    double otherMark = 0;
 
     void inputScoreBoardWithCSV(ifstream& fin);
     void inputScoreBoard(double midterm_mark, double final_mark, double other_mark, double total_mark);
