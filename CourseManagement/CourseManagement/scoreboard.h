@@ -4,7 +4,8 @@ using namespace std;
 #ifndef SCOREBOARD_H
 #define SCOREBOARD_H
 
-struct scoreboard {
+struct scoreboard 
+{
     double totalMark;
     double finalMark;
     double midtermMark;

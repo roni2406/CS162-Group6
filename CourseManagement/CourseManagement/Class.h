@@ -1,5 +1,6 @@
 #include <iostream>
 #include "users.h"
+#include "course.h"
 #include "Date.h"
 using namespace std;
 #ifndef CLASS_H
