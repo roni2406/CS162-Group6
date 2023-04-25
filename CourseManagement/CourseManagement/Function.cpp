@@ -734,7 +734,7 @@ void ViewSchoolYearsPage(const int screenWidth, const int screenHeight, account&
 	CreateSchoolYear.texture = LoadTexture("createSchoolYearBtn.png");
 	CreateSchoolYear.frameHeight = (float)CreateSchoolYear.texture.height;
 	CreateSchoolYear.sourceRec = { 0, 0, (float)CreateSchoolYear.texture.width, CreateSchoolYear.frameHeight };
-	CreateSchoolYear.btnBounds = { 1270, 170, (float)CreateSchoolYear.texture.width, CreateSchoolYear.frameHeight };
+	CreateSchoolYear.btnBounds = { 655, 75, (float)CreateSchoolYear.texture.width, CreateSchoolYear.frameHeight };
 
 	int y_schoolyear = 167;
 	int x_schoolyear = 668;
@@ -750,7 +750,7 @@ void ViewSchoolYearsPage(const int screenWidth, const int screenHeight, account&
 		BeginDrawing();
 		DrawRectangleGradientEx(background, SKYBLUE, DARKBLUE, DARKBLUE, SKYBLUE);
 		DrawRectangle(322, 136, 870, 806, WHITE);
-		DrawRectangleLines(321, 135, 872, 807, BLACK);
+		//DrawRectangleLines(321, 135, 872, 807, BLACK);
 		mousePoint = GetMousePosition();
 		Button4* schoolyear = new Button4[n];
 		int j = 0;
@@ -912,10 +912,10 @@ void ViewClassesPage(const int screenWidth, const int screenHeight, account& Cur
 	CreateClass.texture = LoadTexture("createClassBtn.png");
 	CreateClass.frameHeight = (float)CreateClass.texture.height;
 	CreateClass.sourceRec = { 0, 0, (float)CreateClass.texture.width, CreateClass.frameHeight };
-	CreateClass.btnBounds = { 1270, 170, (float)CreateClass.texture.width, CreateClass.frameHeight };
+	CreateClass.btnBounds = { 655, 75, (float)CreateClass.texture.width, CreateClass.frameHeight };
 
 	int scrollspeed = 35;
-	int y_classes = 167;
+	int y_classes = 210;
 	int x_classes = 668;
 
 	while (!WindowShouldClose()) {
@@ -933,7 +933,7 @@ void ViewClassesPage(const int screenWidth, const int screenHeight, account& Cur
 		DrawRectangleRec(backtoprofilepage.button, WHITE);
 		DrawText("Back to Profile Page", 1280, 20, 20, DARKBLUE);
 		DrawRectangle(322, 136, 870, 806, WHITE);
-		DrawRectangleLines(321, 135, 872, 807, BLACK);
+		//DrawRectangleLines(321, 135, 872, 807, BLACK);
 		mousePoint = GetMousePosition();
 		Button4* Class = new Button4[n];
 
@@ -1400,7 +1400,7 @@ void CreateSemesterPage(const int screenWidth, const int screenHeight, account& 
 			}
 			else confirmBtnFalseDisplay = true;
 		}
-		if (confirmBtnFalseDisplay) DrawText("Max semesters created or information must be written in right form. Please try again!", 477, 700, 20, RED);
+		if (confirmBtnFalseDisplay) DrawText("Max semesters created or information must be written in right form!", 430,600, 20, RED);
 		// Calculate button frame rectangle to draw depending on button state
 		sourceRecconfirmBtn.y = confirmBtnState * frameHeightconfirmBtn;
 		DrawTextureRec(confirmBtn, sourceRecconfirmBtn, { btnBoundsconfirmBtn.x, btnBoundsconfirmBtn.y }, WHITE); // Draw button frame
@@ -1426,16 +1426,16 @@ void ViewSemestersPage(const int screenWidth, const int screenHeight, account& C
 	createsemester.texture = LoadTexture("createsemester.png");
 	createsemester.frameHeight = (float)createsemester.texture.height;
 	createsemester.sourceRec = { 0, 0, (float)createsemester.texture.width, createsemester.frameHeight };
-	createsemester.btnBounds = { 10, 496, (float)createsemester.texture.width, createsemester.frameHeight };
+	createsemester.btnBounds = { 620, 170, (float)createsemester.texture.width, createsemester.frameHeight };
 
 
 	int scrollspeed = 25;
-	int y_semester = 257;
-	int x_semester = 668;
+	int y_semester = 486;
+	int x_semester = 680;
 
 	while (!WindowShouldClose()) {
 		//y_semester += ((GetMouseWheelMove() * scrollspeed) - (IsKeyDown(KEY_DOWN) - IsKeyDown(KEY_UP)));
-		if (y_semester > 202) y_semester = 202;
+		if (y_semester > 300) y_semester = 300;
 		ClearBackground(WHITE);
 		BeginDrawing();
 		DrawRectangleGradientEx(background, SKYBLUE, DARKBLUE, DARKBLUE, SKYBLUE);
