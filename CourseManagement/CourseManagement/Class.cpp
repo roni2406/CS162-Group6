@@ -160,3 +160,30 @@ bool CheckData_InputStudents(char* No, char* student_id, char* Gender, char* DoB
 
 	return true;
 }
+
+// 23 - In Progress
+student* viewStuWithScore(char* className, char* addressOfOutputFile, char* schoolYear,
+	char* semester, char* courseName)
+{
+	int numOfStuInClass = countStudentInClass(className);
+	student* StuInAClass = viewStudentsInClass(className);
+	int numOfCourses = countCourse(schoolYear, semester);
+	course* CoursesInSemester = viewCoursesInSemester(schoolYear, semester);
+	for (int i = 0; i < numOfCourses; ++i)
+	{
+		student* StuInACourse = viewScoreBoardOfCourse(addressOfOutputFile, schoolYear, semester, courseName);
+		CoursesInSemester[i].countStu(schoolYear, semester);
+		int numOfStuInCourse = CoursesInSemester[i].numOfStu;
+		for (int j = 0; j < numOfStuInCourse; ++j)
+		{
+			for(int k = 0; k < numOfStuInClass; ++k)
+			{
+				if (StuInAClass[k].stuID == StuInACourse[j].stuID)
+				{
+					// Add Score Here!
+					break;
+				}
+			}
+		}
+	}
+}

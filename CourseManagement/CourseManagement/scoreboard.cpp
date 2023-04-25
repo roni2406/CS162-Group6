@@ -2,7 +2,8 @@
 #include "scoreboard.h"
 using namespace std;
 
-void scoreboard::inputScoreBoardWithCSV(ifstream& fin) {
+void scoreboard::inputScoreBoardWithCSV(ifstream& fin) 
+{
 	fin.ignore(10, ',');
 	fin >> midtermMark;
 	fin.ignore(10, ',');
