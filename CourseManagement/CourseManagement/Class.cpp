@@ -180,7 +180,7 @@ student* viewStuWithScore(char* className, char* addressOfOutputFile, char* scho
 			{
 				if (StuInAClass[k].stuID == StuInACourse[j].stuID)
 				{
-					// Add Score Here!
+					// ...
 					break;
 				}
 			}

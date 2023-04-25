@@ -146,3 +146,84 @@ int countClasses()
 	viewClasses_PrepareData_SavedToClassArray(ClassList, fin, numOfClasses);
 	return numOfClasses;
 }
+
+// 16
+student* viewStudentsInClass(char* className)
+{
+	int n = countStudentInClass(className);
+	student* Class = nullptr;
+	if (n != 0) {
+		Class = new student[n];
+	}
+	ifstream fin;
+	fin.open("../data/Classes/" + string(className) + ".csv");
+	for (int i = 0; i < n; i++) {
+		Class[i].inputStudentsWithCSVFile(fin);
+		fin.ignore(100, '\n');
+	}
+	fin.close();
+	sortToStuID(Class, n);
+	return Class;
+}
+
+int countStudentInClass(char* className) {
+	int numOfStu = 0;
+	ifstream fin;
+	fin.open("../data/Classes/" + string(className) + ".csv");
+	fin.get();
+	while (!fin.eof()) {
+		++numOfStu;
+		fin.ignore(100, '\n');
+	}
+	fin.close();
+	return numOfStu;
+}
+
+bool CheckData_InputStudents(char* No, char* student_id, char* Gender, char* DoB, char* social_ID)
+{
+	int NoStu = atoi(No);
+	if (NoStu <= 0) return false;
+
+	int n = strlen(student_id);
+	if (n != 8) return false;
+
+	int GenderStu = atoi(Gender);
+	if (GenderStu != 0 && GenderStu != 1) return false;
+
+	Date tmp;
+	tmp.inputADateWithChar(DoB);
+	if (checkDateInput(DoB) == false || tmp.checkdata() == false) return false;
+
+	int m = strlen(social_ID);
+	if (m != 12) return false;
+
+	return true;
+}
+
+// 23 - In Progress
+student* viewStuWithScore(char* className, char* addressOfOutputFile, char* schoolYear,
+	char* semester, char* courseName)
+{
+	int numOfStuInClass = countStudentInClass(className);
+	student* StuInAClass = viewStudentsInClass(className);
+	int numOfCourses = countCourse(schoolYear, semester);
+	course* CoursesInSemester = viewCoursesInSemester(schoolYear, semester);
+	for (int i = 0; i < numOfCourses; ++i)
+	{
+		student* StuInACourse = viewScoreBoardOfCourse(addressOfOutputFile, schoolYear, semester, courseName);
+		CoursesInSemester[i].countStu(schoolYear, semester);
+		int numOfStuInCourse = CoursesInSemester[i].numOfStu;
+		for (int j = 0; j < numOfStuInCourse; ++j)
+		{
+			for (int k = 0; k < numOfStuInClass; ++k)
+			{
+				if (StuInAClass[k].stuID == StuInACourse[j].stuID)
+				{
+					// ...
+					break;
+				}
+			}
+		}
+	}
+	return nullptr; // temp
+}

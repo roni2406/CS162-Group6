@@ -56,4 +56,14 @@ void viewClasses_PrepareData_SavedToClassArray(Class*& ClassList, ifstream& fin,
 void viewClasses_OutputToConsole(Class* ClassList, int numOfClasses);
 Class* viewClasses();
 int countClasses();
+
+// 16
+student* viewStudentsInClass(char* className); // front end
+int countStudentInClass(char* className); // front end
+bool CheckData_InputStudents(char* No, char* student_id, char* Gender, char* DoB, char* social_ID);
+
+// 23
+student* viewStuWithScore(char* className, char* addressOfOutputFile, char* schoolYear,
+    char* semester, char* courseName);
+
 #endif 
