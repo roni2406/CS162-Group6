@@ -1670,7 +1670,7 @@ void ViewCoursesPage(const int screenWidth, const int screenHeight, account& Cur
 	createcourse.texture = LoadTexture("createcourse.png");
 	createcourse.frameHeight = (float)createcourse.texture.height;
 	createcourse.sourceRec = { 0, 0, (float)createcourse.texture.width, createcourse.frameHeight };
-	createcourse.btnBounds = { 350, 70, (float)createcourse.texture.width, createcourse.frameHeight };
+	createcourse.btnBounds = { 50, 85, (float)createcourse.texture.width, createcourse.frameHeight };
 
 	Button7* coursebutton = new Button7[n];
 	int scrollspeed = 35;
