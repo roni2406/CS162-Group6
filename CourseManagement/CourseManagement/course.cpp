@@ -28,7 +28,16 @@ int countCourse(char*year, char*semester) {
 	}
 	return num-1;
 }
-void LoadCourseFromFile(char* year, char* semester,int& num, course* &courses) {
+
+course* viewCoursesInSemester(char* year, char* semester)
+{
+	int numOfCourses = countCourse(year, semester);
+	course* TotalCoursesInSemester;
+	LoadCourseFromFile(year, semester, numOfCourses, TotalCoursesInSemester);
+	return TotalCoursesInSemester;
+}
+
+void LoadCourseFromFile(char* year, char* semester, int& num, course* &courses) {
 	ofstream fout;
 	fout.open("../data/" + (string)(year)+"/" + (string)(semester)+"/ListOfCourse.txt", ios::app);
 	fout.close();
