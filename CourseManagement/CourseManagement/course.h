@@ -1,6 +1,5 @@
 #include <iostream>
 #include "users.h"
-//#include "Function.h"
 using namespace std;
 
 
@@ -8,15 +7,15 @@ using namespace std;
 #define COURSE_H
 
 struct course {
-    char courseID[30];
-    char courseName[50];
-    char className[30];
-    char teacherName[30];
-    char numOfCre[30];
+    char* courseID;
+    char* courseName;
+    char* className;
+    char* teacherName;
+    char* numOfCre;
     int numOfStu = 0;
-    char maxStu[30];
-    char dayofweek[30];
-    char sessionHour[30]; // S1 (07:30), S2 (09:30), S3(13:30) and S4 (15:30)).
+    char* maxStu;
+    char* dayofweek;
+    char* sessionHour; // S1 (07:30), S2 (09:30), S3(13:30) and S4 (15:30)).
     // A course will be taught in only one session in a week
     char studentfile[30];
     student stuOfCourse[50];

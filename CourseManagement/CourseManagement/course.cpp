@@ -1,6 +1,11 @@
 #include "course.h"
-#include "Function.h"
+#include <iostream>
+#include <fstream>
+#include <string>
+#include "semester.h"
+//#include "Function.h"
 #include "users.h"
+using namespace std;
 
 void AddCourseToFile(char* coursename, char* id, char* classname, char* teacher, char* nofc, char* maxstu, char* courseday,
 	char* sshour, char*& Year, char*& semester) {
@@ -45,14 +50,30 @@ void LoadCourseFromFile(char* year, char* semester, int& num, course* &courses) 
 	fin.open("../data/" + (string)(year)+"/" + (string)(semester)+"/ListOfCourse.txt");
 	courses = new course[num];
 	for (int i = 0; i < num; i++) {
-		fin.getline(courses[i].courseName, 1000, ',');
-		fin.getline(courses[i].courseID, 1000, ',');
-		fin.getline(courses[i].className, 1000, ',');
-		fin.getline(courses[i].teacherName, 1000, ',');
-		fin.getline(courses[i].numOfCre, 1000, ',');
-		fin.getline(courses[i].maxStu, 1000, ',');
-		fin.getline(courses[i].dayofweek, 1000, ',');
-		fin.getline(courses[i].sessionHour, 1000);
+		courses[i].courseName = new char[100];
+		fin.get(courses[i].courseName, 100, ',');
+		fin.ignore(1000, ',');
+		courses[i].courseID = new char[100];
+		fin.get(courses[i].courseID, 100, ',');
+		fin.ignore(1000, ',');
+		courses[i].className = new char[100];
+		fin.get(courses[i].className, 100, ',');
+		fin.ignore(1000, ',');
+		courses[i].teacherName = new char[100];
+		fin.get(courses[i].teacherName, 100, ',');
+		fin.ignore(1000, ',');
+		courses[i].numOfCre = new char[100];
+		fin.get(courses[i].numOfCre, 100, ',');
+		fin.ignore(1000, ',');
+		courses[i].maxStu = new char[100];
+		fin.get(courses[i].maxStu, 100, ',');
+		fin.ignore(1000, ',');
+		courses[i].dayofweek = new char[100];
+		fin.get(courses[i].dayofweek, 100, ',');
+		fin.ignore(1000, ',');
+		courses[i].sessionHour = new char[100];
+		fin.get(courses[i].sessionHour, 100);
+		fin.ignore(1000, '\n');
 	}
 	fin.close();
 }
@@ -146,14 +167,14 @@ void deleteCourse(course*& courses, int no, int& num, char* year, char* semester
 	ReturnCoursesToFile(year, semester, num, courses);
 }
 bool updateCourse(char* year, char* semester, course& courses, char* courseName_tmp, char* ID, char* className_tmp, char* teacherName_tmp, char* nofc, char* maxstu, char* courseday, char* sshours) {
-	if (courseName_tmp[0] != '\0')  strncpy_s(courses.courseName, courseName_tmp, '\n');
-	if (className_tmp[0] != '\0')	strncpy_s(courses.className, className_tmp, '\n');
-	if (ID[0] != '\0')				strncpy_s(courses.courseID, ID, '\n');
-	if (teacherName_tmp[0] != '\0') strncpy_s(courses.teacherName, teacherName_tmp, '\n');
-	if (nofc[0] != '\0')			strncpy_s(courses.numOfCre, nofc, '\n');
-	if (maxstu[0] != '\0')			strncpy_s(courses.maxStu, maxstu, '\n');
-	if (courseday[0] != '\0')		strncpy_s(courses.dayofweek, courseday, '\n');
-	if (sshours[0] != '\0')			strncpy_s(courses.sessionHour, sshours, '\n');
+	if (courseName_tmp[0] != '\0')  courses.courseName = _strdup(courseName_tmp);
+	if (className_tmp[0] != '\0')	courses.className =  _strdup(className_tmp);
+	if (ID[0] != '\0')				courses.courseID = _strdup(ID);
+	if (teacherName_tmp[0] != '\0') courses.teacherName = _strdup(teacherName_tmp);
+	if (nofc[0] != '\0')			courses.numOfCre = _strdup(nofc);
+	if (maxstu[0] != '\0')			courses.maxStu = _strdup(maxstu);
+	if (courseday[0] != '\0')		courses.dayofweek = _strdup(courseday);
+	if (sshours[0] != '\0')			courses.sessionHour = _strdup(sshours);
 	string tmp = "../data/" + (string)(year)+"/" + (string)(semester)+"/" + (string)(courses.courseName) + "-" + string(courses.className) + ".txt";
 	string tmp_new = "../data/" + (string)(year)+"/" + (string)(semester)+"/" + (string)(courseName_tmp)+"-" + string(className_tmp) + ".txt";
 	rename(tmp.c_str(), tmp_new.c_str());
@@ -166,16 +187,16 @@ void deleteStudent(course* course, int k, int no) {
 	}
 	--course[k].numOfStu;
 }
-char* GetFileDrop() {
-	char* filepath = new char;
-	if (IsFileDropped())
-	{
-		FilePathList droppedFiles = LoadDroppedFiles();
-		TextCopy(filepath, droppedFiles.paths[0]);
-		UnloadDroppedFiles(droppedFiles);
-	}
-	return filepath;
-}
+//char* GetFileDrop() {
+//	char* filepath = new char;
+//	if (IsFileDropped())
+//	{
+//		FilePathList droppedFiles = LoadDroppedFiles();
+//		TextCopy(filepath, droppedFiles.paths[0]);
+//		UnloadDroppedFiles(droppedFiles);
+//	}
+//	return filepath;
+//}
 bool CheckValidCourse(char* coursename, char* ID, char* classname, char* Year, char* semester) {
 	int num = countCourse( Year, semester);
 	course* courses;

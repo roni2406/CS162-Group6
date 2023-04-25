@@ -186,4 +186,5 @@ student* viewStuWithScore(char* className, char* addressOfOutputFile, char* scho
 			}
 		}
 	}
+	return nullptr; // temp
 }
