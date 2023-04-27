@@ -47,7 +47,7 @@ int countStudentInCourse(char* schoolYear, char* semester, char* course);
 bool checkStudentExistInCourse(student x, char* schoolYear, char* semester, char* course);
 bool checkStuHaveClass(char* stuID);
 //front end
-bool addAStudentToClass(char* schoolYear, char* semester, char* course,
+bool addAStudentToCourse(char* schoolYear, char* semester, char* course,
     char* first_name, char* last_name, char* Gender, char* DoB, char* social_ID, char* student_id);
 bool addStudentsToCourseWithCSV(char* fileNameIn, char* schoolYear, char* semester, char* course,
     student*& stuArr, int& numOfDupsStu);

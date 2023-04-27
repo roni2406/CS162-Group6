@@ -292,7 +292,7 @@ bool checkStuHaveClass(char* stuID) {
 	return false;
 }
 
-bool addAStudentToClass(char* schoolYear, char* semester, char* course, 
+bool addAStudentToCourse(char* schoolYear, char* semester, char* course, 
 	char* first_name, char* last_name, char* Gender, char* DoB, char* social_ID, char* student_id) {
 
 	if (!checkDateInput(DoB) || (strcmp(Gender, "Male") != 0 && strcmp(Gender, "Female") != 0))
