@@ -205,16 +205,18 @@ void InputScoreBoardWithCSV(char* addressOfOutputFile, char* schoolYear, char* s
 }
 
 // 24
-void viewPersonalScoreBoard(student Stu, char* addressOfOutputFile, char* schoolYear,
-	char* semester, char* courseName, scoreboard*& saveFinal, char**& courseNameWithScoreBoard)
+void viewPersonalStudentScoreboard(student& Stu, char* addressOfOutputFile, char* schoolYear, char* semester,
+	char* courseName, int numOfCoursesOfStudent, scoreboard*& saveScore, char**& courseNameWithScoreBoard)
 {
-	saveFinal = new scoreboard[1000];
-	courseNameWithScoreBoard = new char* [1000];
-	for (int i = 0; i < 1000; i++) {
-		courseNameWithScoreBoard[i] = new char[100];
-	}
-
 	int numOfCourses = countCourse(schoolYear, semester);
+	saveScore = new scoreboard[numOfCourses];	// Have to show all Scores of A Score (students' case)
+	courseNameWithScoreBoard = new char*[numOfCourses];
+	for (int i = 0; i < numOfCourses; ++i)
+		courseNameWithScoreBoard[i] = new char[100];
+
+	// Probable Fix!
+	numOfCoursesOfStudent = 0;
+
 	course* CoursesInSemester = viewCoursesInSemester(schoolYear, semester);
 	for (int i = 0; i < numOfCourses; ++i)
 	{
@@ -223,15 +225,13 @@ void viewPersonalScoreBoard(student Stu, char* addressOfOutputFile, char* school
 		int numOfStuInCourse = CoursesInSemester[i].numOfStu;
 		for (int j = 0; j < numOfStuInCourse; ++j)
 		{
-			
-			
-				if (Stu.stuID == StuInACourse[j].stuID)
-				{
-					//saveFinal[k] = StuInACourse[j].mark;
-					//courseNameWithScoreBoard[k] = _strdup(CoursesInSemester[i].courseName);
-					break;
-				}
-			
+			if (Stu.stuID == StuInACourse[j].stuID)
+			{
+				saveScore[numOfCoursesOfStudent] = StuInACourse[j].mark;
+				courseNameWithScoreBoard[numOfCoursesOfStudent] = _strdup(CoursesInSemester[i].courseName);
+				++numOfCoursesOfStudent;
+				break;
+			}
 		}
 	}
 }
