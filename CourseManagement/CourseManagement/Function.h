@@ -59,11 +59,9 @@ void ViewCoursesPage(const int screenWidth, const int screenHeight, account& Cur
 void CoursePage(const int screenWidth, const int screenHeight, account& CurrentUser, char*& Year, char* &Semester, course& Course); // need to include struct semester, course to display and save data
 void UpdateCoursePage(const int screenWidth, const int screenHeight, account& CurrentUser, char*& Year, char*& Semester, course*& Course, int n, int i);
 // in course page have following functions: delete, view student in the course, add student, delete student 
-void StudentCoursePage(); // ?
-void addStudentPageForCourse(const int screenWidth, const int screenHeight, account& CurrentUser, char*& coursename);
-void addStudentCSVForCourse(const int screenWidth, const int screenHeight, account& CurrentUser, char*& coursename);
-void deleteStudentPage();
-// export list student in the course
+void addStudentPageForCourse(const int screenWidth, const int screenHeight, account& CurrentUser, char*& Year, char*& Semester, course& Course);
+void addStudentCSVForCourse(const int screenWidth, const int screenHeight, account& CurrentUser, char*& Year, char*& Semester, course& Course);
+
 void scoreboardPage();
 
 //// Objects
@@ -141,6 +139,19 @@ struct Button6 {
 };
 // used for just-text button which move to Course
 struct Button7 {
+	const int screenWidth = 1512;
+	const int screenHeight = 982;
+	Texture2D texture;
+	float frameHeight = 0;
+	Rectangle sourceRec = { 0, 0, 0, 0 };
+	Rectangle btnBounds = { 0, 0, 0, 0 };
+	int state = 0;					// Button state: 0-NORMAL, 1-MOUSE_HOVER, 2-PRESSED
+	bool action = false;			// Button action should be activated
+	void workbutton(Vector2 mousePoint, account& CurrentUser, course& d, char*& a, char*& b, 
+		void(*func)(const int screenWidth, const int screenHeight, account& CurrentUser, char*& a, char*& b, course& d));
+};
+
+struct Button8 {
 	int x = 0;
 	int y = 0;
 	const int screenWidth = 1512;
