@@ -29,8 +29,7 @@ void LogInPageStaff(const int screenWidth, const int screenHeight, account& Curr
 void SignUpPage(const int screenWidth, const int screenHeight, account& CurrentUser);
 
 void ProfilePageStudent(const int screenWidth, const int screenHeight, account& CurrentUser); // need to add information about student
-void ViewCoursesPageStudent();
-void CoursePageStudent();
+void CoursePageStudent(const int screenWidth, const int screenHeight, account& CurrentUser);
 void ScoreboardStudent();
 
 void ProfilePageStaff(const int screenWidth, const int screenHeight, account& CurrentUser); // need to add information about staff
