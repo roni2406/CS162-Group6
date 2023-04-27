@@ -140,20 +140,6 @@ bool addAStudentToClass(char* className, char* first_name, char* last_name, char
 	return true;
 }
 
-//void addAStaff(char* filename, char* first_name, char* last_name, bool Gender, char* DoB,
-//	char* social_ID, char* staff_id) {
-//
-//	staff s;
-//	person a;
-//	a.inputAPerson(first_name, last_name, Gender, DoB, social_ID);
-//	s.inputAStaff(staff_id, a);
-//
-//	ofstream fout;
-//	fout.open(filename, ios::app);
-//	s.outputAStaffToFile(fout);
-//	fout.close();
-//}
-
 bool addStudentsWithCSV(char* fileNameIn, char* fileNameOut, student*& stuArr, int& numOfDupsStu) {
 	bool returnValue = 1;
 	// return true if no duplicate => stuArr = nullptr and numOfDupsStu = 0
@@ -267,19 +253,26 @@ bool CheckData_InputStudents(char* No, char* student_id, char* Gender, char* DoB
 	return true;
 }
 
-// 23 - In Progress
+// 23 
 void viewStuWithScore(char* className, char* addressOfOutputFile, char* schoolYear,
-	char* semester, char* courseName, scoreboard*& saveFinal, char**& courseNameWithScoreBoard)
+	char* semester, char* courseName, int*& numOfCoursesPerStudent,
+	scoreboard**& saveFinal, char***& courseNameWithScoreBoard)
 {
-	saveFinal = new scoreboard[1000];
-	courseNameWithScoreBoard = new char* [1000];
-	for (int i = 0; i < 1000; i++) {
-		courseNameWithScoreBoard[i] = new char[100];
-	}
-
 	int numOfStuInClass = countStudentInClass(className);
-	student* StuInAClass = viewStudentsInClass(className);
 	int numOfCourses = countCourse(schoolYear, semester);
+	saveFinal = new scoreboard*[numOfStuInClass];
+	courseNameWithScoreBoard = new char** [numOfStuInClass];
+	for (int i = 0; i < numOfStuInClass; ++i)			// Number of Courses occurs in 1 Semester
+	{													// 1 students can NOT register more courses than this!
+		saveFinal[i] = new scoreboard[numOfCourses];
+		courseNameWithScoreBoard[i] = new char* [numOfCourses];
+		for (int j = 0; j < numOfCourses; ++j)			// Number of characters in 1 course
+			courseNameWithScoreBoard[i][j] = new char[100];
+	}
+	// Probable Fix!
+	 numOfCoursesPerStudent = new int[numOfStuInClass]{0};
+
+	student* StuInAClass = viewStudentsInClass(className);
 	course* CoursesInSemester = viewCoursesInSemester(schoolYear, semester);
 	for (int i = 0; i < numOfCourses; ++i)
 	{
@@ -292,8 +285,9 @@ void viewStuWithScore(char* className, char* addressOfOutputFile, char* schoolYe
 			{
 				if (StuInAClass[k].stuID == StuInACourse[j].stuID)
 				{
-					saveFinal[k] = StuInACourse[j].mark;
-					courseNameWithScoreBoard[k] = _strdup(CoursesInSemester[i].courseName);
+					saveFinal[k][numOfCoursesPerStudent[k]] = StuInACourse[j].mark;
+					courseNameWithScoreBoard[k][numOfCoursesPerStudent[k]] = _strdup(CoursesInSemester[i].courseName);
+					++numOfCoursesPerStudent[k];
 					break;
 				}
 			}

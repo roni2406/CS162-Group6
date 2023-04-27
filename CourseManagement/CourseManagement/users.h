@@ -52,4 +52,6 @@ void inputStudentAndScoreWithCSV(ifstream& fin, student& s);
 void outputStudentAndScoreToFile(char* filename, student& s);
 void InputScoreBoardWithCSV(char* addressOfOutputFile, char* schoolYear, char* semester, char* courseName);
 
+// 24
+
 #endif
