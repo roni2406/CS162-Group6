@@ -43,17 +43,7 @@ struct staff {
     void outputAStaffToFile(ofstream& fout);
 };
 
-
-bool addAStudentToClass(char* className, char* first_name, char* last_name, char* Gender, char* DoB,
-    char* social_ID, char* student_id);
-
-//void addAStaff(char* filename, char* first_name, char* last_name, bool Gender, char* DoB, char* social_ID, char* staff_id);
-
-bool addStudentsWithCSV(char* fileNameIn, char* fileNameOut, student*& stuArr, int& numOfDupsStu);
-    // staff will input fileNameIn, fileNameOut is used for adding to class or course
-
 void sortToStuID(student*& StudentArray, int numOfStudents);
-bool checkStudentExistInClass(student x, char* className);
 
 bool checkdata_FileName(char* fileNameIn);
 

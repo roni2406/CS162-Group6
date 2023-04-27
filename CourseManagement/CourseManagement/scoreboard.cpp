@@ -22,7 +22,14 @@ void scoreboard::inputScoreBoard(double midterm_mark, double final_mark, double 
 	otherMark = other_mark;
 }
 
-void scoreboard::outputScoreBoardToFile(ofstream& fout) 
+void scoreboard::outputScoreBoardToFile(char* fileName) 
 {
+	ofstream fout;
+	fout.open(fileName);
+	fout << midtermMark << "," << finalMark << "," << otherMark << "," << totalMark;
+	fout.close();
+}
+
+void scoreboard::outputScoreBoardToFile(ofstream& fout) {
 	fout << midtermMark << "," << finalMark << "," << otherMark << "," << totalMark;
 }

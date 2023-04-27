@@ -26,6 +26,14 @@ void viewClasses_PrepareData_SavedToClassArray(Class*& ClassList, ifstream& fin,
 Class* viewClasses(); // front end
 int countClasses(); // front end
 
+//---------------------------------
+bool addAStudentToClass(char* className, char* first_name, char* last_name, char* Gender, char* DoB,
+    char* social_ID, char* student_id);
+bool addStudentsWithCSV(char* fileNameIn, char* fileNameOut, student*& stuArr, int& numOfDupsStu);
+// staff will input fileNameIn, fileNameOut is used for adding to class or course
+bool checkStudentExistInClass(student x, char* className);
+
+//---------------------------------
 // 16
 student* viewStudentsInClass(char* className); // front end
 int countStudentInClass(char* className); // front end

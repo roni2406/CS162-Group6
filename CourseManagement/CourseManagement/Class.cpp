@@ -108,6 +108,112 @@ int countClasses()
 	return numOfClasses;
 }
 
+//---------------------------------------
+bool addAStudentToClass(char* className, char* first_name, char* last_name, char* Gender, char* DoB,
+	char* social_ID, char* student_id) {
+
+	if (!checkDateInput(DoB) || (strcmp(Gender, "Male") != 0 && strcmp(Gender, "Female") != 0))
+		return false;
+
+	bool gender;
+	if (strcmp(Gender, "Male") == 0) {
+		gender = 1;
+	}
+	else gender = 0;
+
+	string fileName = "../data/Classes/" + string(className) + ".csv";
+
+	student s;
+	s.inputAStudent(student_id, first_name, last_name, gender, DoB, social_ID);
+
+	if (!s.checkData()) return false;
+	if (!checkStudentExistInClass(s, className)) return false;
+	account studentAcc;
+	studentAcc.userName = _strdup(student_id);
+	studentAcc.password = _strdup(DoB);
+	addinfo(studentAcc, (char*)"../data/student_account.txt");
+
+	ofstream fout;
+	fout.open(fileName, ios::app);
+	s.outputAStudentToFile((char*)fileName.c_str());
+	fout.close();
+	return true;
+}
+
+//void addAStaff(char* filename, char* first_name, char* last_name, bool Gender, char* DoB,
+//	char* social_ID, char* staff_id) {
+//
+//	staff s;
+//	person a;
+//	a.inputAPerson(first_name, last_name, Gender, DoB, social_ID);
+//	s.inputAStaff(staff_id, a);
+//
+//	ofstream fout;
+//	fout.open(filename, ios::app);
+//	s.outputAStaffToFile(fout);
+//	fout.close();
+//}
+
+bool addStudentsWithCSV(char* fileNameIn, char* fileNameOut, student*& stuArr, int& numOfDupsStu) {
+	bool returnValue = 1;
+	// return true if no duplicate => stuArr = nullptr and numOfDupsStu = 0
+	// return false if there are dups => update stuArr and numofDupsStu
+	stuArr = new student[100];
+	numOfDupsStu = 0;
+
+	ifstream fin;
+	fin.open(fileNameIn);
+	string fileNameOutAddress = "../data/Classes/" + string(fileNameOut) + ".csv";
+	char* fileNameOutAddressChar = new char[100];
+	for (int i = 0; i < fileNameOutAddress.size(); i++) {
+		fileNameOutAddressChar[i] = fileNameOutAddress[i];
+	}
+	fileNameOutAddressChar[fileNameOutAddress.size()] = '\0';
+
+	while (!fin.eof()) {
+		student s;
+		s.inputStudentsWithCSVFile(fin);
+		if (checkStudentExistInClass(s, fileNameOut)) {
+			account stuAcc;
+			stuAcc.userName = _strdup(s.stuID);
+			stuAcc.password = _strdup(dateToChar(s.Student.dob));
+			addinfo(stuAcc, (char*)"../data/student_account.txt");
+			s.outputAStudentToFile(fileNameOutAddressChar);
+		}
+		else {
+			returnValue = 0;
+			stuArr[numOfDupsStu] = s;
+			++numOfDupsStu;
+		}
+	}
+	delete[] fileNameOutAddressChar;
+	fin.close();
+	if (returnValue) {
+		delete[] stuArr;
+		stuArr = nullptr;
+	}
+	return returnValue;
+}
+
+bool checkStudentExistInClass(student x, char* className) {
+	//return true if the student haven't existed
+	//return false if the student have existed
+	ifstream fin;
+	fin.open("../data/Classes/" + string(className) + ".csv");
+	int n = countStudentInClass(className);
+	for (int i = 0; i < n; i++) {
+		student s;
+		s.inputStudentsWithCSVFile(fin);
+		if (strcmp(s.stuID, x.stuID) == 0) {
+			fin.close();
+			return false;
+		}
+	}
+	fin.close();
+	return true;
+}
+
+//---------------------------------------
 // 16
 student* viewStudentsInClass(char* className)
 {
