@@ -268,9 +268,15 @@ bool CheckData_InputStudents(char* No, char* student_id, char* Gender, char* DoB
 }
 
 // 23 - In Progress
-student* viewStuWithScore(char* className, char* addressOfOutputFile, char* schoolYear,
-	char* semester, char* courseName)
+void viewStuWithScore(char* className, char* addressOfOutputFile, char* schoolYear,
+	char* semester, char* courseName, scoreboard*& saveFinal, char**& courseNameWithScoreBoard)
 {
+	saveFinal = new scoreboard[1000];
+	courseNameWithScoreBoard = new char* [1000];
+	for (int i = 0; i < 1000; i++) {
+		courseNameWithScoreBoard[i] = new char[100];
+	}
+
 	int numOfStuInClass = countStudentInClass(className);
 	student* StuInAClass = viewStudentsInClass(className);
 	int numOfCourses = countCourse(schoolYear, semester);
@@ -286,11 +292,11 @@ student* viewStuWithScore(char* className, char* addressOfOutputFile, char* scho
 			{
 				if (StuInAClass[k].stuID == StuInACourse[j].stuID)
 				{
-					// ...
+					saveFinal[k] = StuInACourse[j].mark;
+					courseNameWithScoreBoard[k] = _strdup(CoursesInSemester[i].courseName);
 					break;
 				}
 			}
 		}
 	}
-	return nullptr; // temp
 }
