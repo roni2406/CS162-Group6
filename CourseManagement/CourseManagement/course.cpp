@@ -90,6 +90,7 @@ void ReturnCoursesToFile(char* year, char* semester, int& num, course*& courses)
 	ofstream fout;
 	fout.open("../data/" + (string)(year)+"/" + (string)(semester)+"/ListOfCourse.txt");
 	for (int i = 0; i < num; i++) {
+		if (i >= 1) fout << "\n";
 		fout << courses[i].courseName	<< ','
 			<< courses[i].courseID		<< ','
 			<< courses[i].className		<< ','
@@ -97,7 +98,7 @@ void ReturnCoursesToFile(char* year, char* semester, int& num, course*& courses)
 			<< courses[i].numOfCre		<< ','
 			<< courses[i].maxStu		<< ','
 			<< courses[i].dayofweek	    << ','
-			<< courses[i].sessionHour	<< '\n';
+			<< courses[i].sessionHour	;
 	}
 	fout.close();
 }
