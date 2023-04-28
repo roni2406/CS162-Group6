@@ -25,8 +25,8 @@ void scoreboard::inputScoreBoard(double midterm_mark, double final_mark, double 
 void scoreboard::outputScoreBoardToFile(char* fileName) 
 {
 	ofstream fout;
-	fout.open(fileName);
-	fout << midtermMark << "," << finalMark << "," << otherMark << "," << totalMark;
+	fout.open(fileName, ios::app);
+	fout << "," << midtermMark << "," << finalMark << "," << otherMark << "," << totalMark;
 	fout.close();
 }
 

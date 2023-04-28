@@ -61,7 +61,7 @@ void UpdateCoursePage(const int screenWidth, const int screenHeight, account& Cu
 // in course page have following functions: delete, view student in the course, add student, delete student 
 void addStudentPageForCourse(const int screenWidth, const int screenHeight, account& CurrentUser, char*& Year, char*& Semester, course& Course);
 void addStudentCSVForCourse(const int screenWidth, const int screenHeight, account& CurrentUser, char*& Year, char*& Semester, course& Course);
-
+void dataExistedPageforCourse(const int screenWidth, const int screenHeight, account& CurrentUser, char* Year, char* Semester, course Course, int numDupStu, student* dupstu);
 void scoreboardPage();
 
 //// Objects
@@ -156,7 +156,7 @@ struct Button8 {
 	int y = 0;
 	const int screenWidth = 1512;
 	const int screenHeight = 982;
-	Rectangle button = { 0, 0, 0, 0 };
+	Rectangle button;
 	bool mouseonbutton = false;
 	bool state = true; // check if the button out of bounds
 	bool action = false; // move to another page

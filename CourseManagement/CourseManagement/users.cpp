@@ -221,7 +221,7 @@ void viewPersonalStudentScoreboard(student& Stu, char* addressOfOutputFile, char
 	for (int i = 0; i < numOfCourses; ++i)
 	{
 		student* StuInACourse = viewScoreBoardOfCourse(addressOfOutputFile, schoolYear, semester, courseName);
-		CoursesInSemester[i].countStu(schoolYear, semester);
+		countStu(CoursesInSemester[i], schoolYear, semester);
 		int numOfStuInCourse = CoursesInSemester[i].numOfStu;
 		for (int j = 0; j < numOfStuInCourse; ++j)
 		{

@@ -1739,6 +1739,7 @@ void ViewCoursesPage(const int screenWidth, const int screenHeight, account& Cur
 		DrawRectangleLines(0, 231, screenWidth, 751, BLACK);
 		int j = 0;
 		mousePoint = GetMousePosition();
+
 		for (int i = 0; i < n; ++i) {
 			DrawLine(x_course + 111, y_course + j - 24, x_course + 111, y_course + j + 38, BLACK);
 			DrawLine(x_course + 597, y_course + j - 24, x_course + 597, y_course + j + 38, BLACK);
@@ -1822,7 +1823,6 @@ void ViewCoursesPage(const int screenWidth, const int screenHeight, account& Cur
 		DrawRectangle(1424, 189, 88, 42, LIGHTGRAY);
 		DrawRectangleLines(1424, 189, 88, 42, BLACK);
 		DrawText("Session", 1430, 203, 20, DARKBLUE);
-
 
 		backtoviewsemesterpage.workbutton(mousePoint, CurrentUser, Year, ViewSemestersPage);
 		createcourse.workbutton(mousePoint, CurrentUser, Year, Semester, CreateCoursePage);
@@ -1969,15 +1969,15 @@ void UpdateCoursePage(const int screenWidth, const int screenHeight, account& Cu
 	CloseWindow();
 }
 void CoursePage(const int screenWidth, const int screenHeight, account& CurrentUser, char*& Year, char*& Semester, course& Course) {
+	student* listStudents;
+	int n = countStu(Course, Year, Semester);
+	Load_stu(Course, Year, Semester, listStudents);
+
 	Rectangle background = { 0,0,float(screenWidth),float(screenHeight) };
 	Vector2 mousePoint = { 0.0f, 0.0f };
 
 	Button6 backtoviewcoursespage;
 	backtoviewcoursespage.button = { 1160, 25, 250, 30 };
-	Course.countStu(Year, Semester);
-	Course.Load_stu(Year, Semester);
-	int n = Course.numOfStu;
-	student* listStudents = Course.stuOfCourse;
 	Texture2D background2 = LoadTexture("course_background.png");
 
 
@@ -1999,10 +1999,12 @@ void CoursePage(const int screenWidth, const int screenHeight, account& CurrentU
 	exportListStu.sourceRec = { 0, 0, (float)exportListStu.texture.width, exportListStu.frameHeight };
 	exportListStu.btnBounds = { 1028, 94, (float)exportListStu.texture.width, exportListStu.frameHeight};
 
+	Button8* studentbutton = new Button8[n];
 	int scrollspeed = 35;
 	int x_student = 11;
 	int y_student = 255;
-
+	int x = 0;
+	int y = 0;
 	while (!WindowShouldClose()) {
 		y_student += (int(GetMouseWheelMove()) * scrollspeed);
 		if (x_student > 11) x_student = 11;
@@ -2015,6 +2017,7 @@ void CoursePage(const int screenWidth, const int screenHeight, account& CurrentU
 		DrawRectangleLines(0, 231, screenWidth, 751, BLACK);
 		int j = 0;
 		mousePoint = GetMousePosition();
+		
 		for (int i = 0; i < n; ++i) {
 			DrawLine(x_student + 47, y_student + j - 1, x_student + 47, y_student + j + 61, BLACK);
 			DrawLine(x_student + 216, y_student + j - 1, x_student + 216, y_student + j + 61, BLACK);
@@ -2024,16 +2027,31 @@ void CoursePage(const int screenWidth, const int screenHeight, account& CurrentU
 			DrawLine(x_student + 1159, y_student + j - 1, x_student + 1159, y_student + j + 61, BLACK);
 			DrawLine(x_student + 1332, y_student + j - 1, x_student + 1332, y_student + j + 61, BLACK);
 			DrawLine(x_student + 1501, y_student + j - 1, x_student + 1501, y_student + j + 61, BLACK);
+
 			DrawRectangleLines(0, y_student + j - 1, 1512, 62, BLACK);
 			DrawRectangleLines(0, y_student + j - 1, 1512, 62, BLACK);
+			studentbutton[i].button = { 0, float(y_student + j), 1512, 62 };
 			char* stuNo = new char[10];
 			int_to_char(listStudents[i].No, stuNo);
 			DrawText(stuNo, x_student + 13, y_student + j + 30, 20, BLACK);
 			DrawText(listStudents[i].stuID, x_student + 72, y_student + j + 30, 20, BLACK);
 			DrawText(listStudents[i].Student.lastName, x_student + 260, y_student + j + 30, 20, BLACK);
 			DrawText(listStudents[i].Student.firstName, x_student + 528, y_student + j + 30, 20, BLACK);
-
+			if (y_student + j < 231) studentbutton[i].state = false;
+			studentbutton[i].workbutton(mousePoint, CurrentUser, Year, Semester, Course, CoursePage);
 			j += 61;
+
+			if (studentbutton[i].action1 == true) {
+				x = studentbutton[i].x;
+				y = studentbutton[i].y;
+				DrawRectangle(x, y, 160, 25, LIGHTGRAY);
+				DrawText("Remove", x + 7, y + 3, 20, MAROON);
+			}
+			if (studentbutton[i].remove == true) {
+				deleteStudent(Course, i, n, Year, Semester);
+				studentbutton[i].remove = false;
+				studentbutton[i].action1 = false;
+			}
 		}
 		DrawRectangle(0, 0, screenWidth, 70, WHITE);
 		DrawText(Course.courseID, 30, 10, 20, DARKBLUE);
@@ -2041,7 +2059,7 @@ void CoursePage(const int screenWidth, const int screenHeight, account& CurrentU
 		DrawText(Year, 720, 12, 20, DARKBLUE);
 		DrawText(Semester, 720, 35, 30, DARKBLUE);
 		DrawRectangleRec(backtoviewcoursespage.button, WHITE);
-		DrawText("Back to View Courses Page", 1180, 25, 20, DARKBLUE);
+		DrawText("Back to Courses Page", 1180, 25, 20, DARKBLUE);
 		DrawTexture(background2, 0, 70, WHITE);
 
 		DrawRectangle(0, 189, 58, 65, LIGHTGRAY);
@@ -2083,6 +2101,7 @@ void CoursePage(const int screenWidth, const int screenHeight, account& CurrentU
 		backtoviewcoursespage.workbutton(mousePoint, CurrentUser, Year, Semester, ViewCoursesPage);
 		EndDrawing();
 	}
+	delete[] studentbutton;
 	//delete[] listStudents;
 	delete[] Year;
 	delete[] Semester;
@@ -2222,7 +2241,7 @@ void addStudentCSVForCourse(const int screenWidth, const int screenHeight, accou
 		DrawRectangle(0, 0, screenWidth, 60, WHITE);
 
 		DrawRectangleRec(backtoCoursepage.button, WHITE);
-		DrawText("Back to your class", 1280, 20, 20, DARKBLUE);
+		DrawText("Back to Course Page", 1280, 20, 20, DARKBLUE);
 		DrawText("Add student(s)", 620, 12, 40, DARKBLUE);
 
 		DrawRectangle(347, 173, 818, 380, WHITE);
@@ -2248,7 +2267,7 @@ void addStudentCSVForCourse(const int screenWidth, const int screenHeight, accou
 					CoursePage(screenWidth, screenHeight, CurrentUser, Year, Semester, Course);
 				}
 				else {
-					dataExistedPage(screenWidth, screenHeight, CurrentUser, fileCourse, numDupStu, dupstu);
+					dataExistedPageforCourse(screenWidth, screenHeight, CurrentUser, Year, Semester, Course, numDupStu, dupstu);
 				}
 			}
 		}
@@ -2265,7 +2284,98 @@ void addStudentCSVForCourse(const int screenWidth, const int screenHeight, accou
 	delete dupstu;
 	CloseWindow();
 }
+void dataExistedPageforCourse(const int screenWidth, const int screenHeight, account& CurrentUser, char* Year, char* Semester, course Course, int numDupStu, student* dupstu) {
+	int n = numDupStu;
+	student* StuExisted = dupstu;
+	Rectangle background = { 0,0,float(screenWidth),float(screenHeight) };
+	Vector2 mousePoint = { 0.0f, 0.0f };
 
+	Button8 backtoCoursepage;
+	backtoCoursepage.button = { 1270, 20, 200, 30 };
+
+	int scrollspeed = 35;
+	int x_student = 11;
+	int y_student = 126;
+
+	while (!WindowShouldClose()) {
+		y_student += (int(GetMouseWheelMove()) * scrollspeed);
+		if (x_student > 11) x_student = 11;
+		if (y_student > 126) y_student = 126;
+		ClearBackground(WHITE);
+		BeginDrawing();
+
+
+		DrawRectangleGradientEx(background, SKYBLUE, DARKBLUE, DARKBLUE, SKYBLUE);
+		DrawRectangle(0, 125, screenWidth, 900, WHITE);
+		int j = 0;
+
+		mousePoint = GetMousePosition();
+		for (int i = 0; i < n; ++i) {
+			DrawLine(x_student + 47, y_student + j - 1, x_student + 47, y_student + j + 61, BLACK);
+			DrawLine(x_student + 216, y_student + j - 1, x_student + 216, y_student + j + 61, BLACK);
+			DrawLine(x_student + 395, y_student + j - 1, x_student + 395, y_student + j + 61, BLACK);
+			DrawLine(x_student + 851, y_student + j - 1, x_student + 851, y_student + j + 61, BLACK);
+			DrawLine(x_student + 1039, y_student + j - 1, x_student + 1039, y_student + j + 61, BLACK);
+			DrawLine(x_student + 1281, y_student + j - 1, x_student + 1281, y_student + j + 61, BLACK);
+			DrawLine(x_student + 1501, y_student + j - 1, x_student + 1501, y_student + j + 61, BLACK);
+
+			DrawRectangleLines(0, y_student + j - 1, 1512, 62, BLACK);
+			DrawRectangleLines(0, y_student + j - 1, 1512, 62, BLACK);
+			char* stuNo = new char[10];
+			int_to_char(StuExisted[i].No, stuNo);
+			DrawText(stuNo, x_student + 13, y_student + j + 30, 20, BLACK);
+			DrawText(StuExisted[i].stuID, x_student + 72, y_student + j + 30, 20, BLACK);
+			DrawText(StuExisted[i].Student.lastName, x_student + 260, y_student + j + 30, 20, BLACK);
+			DrawText(StuExisted[i].Student.firstName, x_student + 528, y_student + j + 30, 20, BLACK);
+
+			if (StuExisted[i].Student.gender) DrawText("Male", x_student + 912, y_student + j + 30, 20, BLACK);
+			else DrawText("Female", x_student + 912, y_student + j + 30, 20, BLACK);
+
+			DrawText(dateToChar(StuExisted[i].Student.dob), x_student + 1097, y_student + j + 30, 20, BLACK);
+			DrawText(StuExisted[i].Student.socialID, x_student + 1300, y_student + j + 30, 20, BLACK);
+			j += 61;
+		}
+
+		DrawRectangle(0, 0, 1512, 60, WHITE);
+		DrawText("These students have already existed in this course", 10, 10, 40, RED);
+
+		DrawRectangleRec(backtoCoursepage.button, WHITE);
+		DrawText("Back to Course Page", 1280, 20, 20, DARKBLUE);
+
+		DrawRectangle(0, 60, 58, 65, LIGHTGRAY);
+		DrawRectangleLines(0, 60, 58, 65, BLACK);
+		DrawText("No", 8, 76, 24, DARKBLUE);
+
+		DrawRectangle(58, 60, 173, 65, LIGHTGRAY);
+		DrawRectangleLines(58, 60, 173, 65, BLACK);
+		DrawText("Student ID", 84, 76, 24, DARKBLUE);
+
+		DrawRectangle(227, 60, 179, 65, LIGHTGRAY);
+		DrawRectangleLines(227, 60, 179, 65, BLACK);
+		DrawText("Last name", 256, 76, 24, DARKBLUE);
+
+		DrawRectangle(406, 60, 456, 65, LIGHTGRAY);
+		DrawRectangleLines(406, 60, 456, 65, BLACK);
+		DrawText("First name", 569, 76, 24, DARKBLUE);
+
+		DrawRectangle(862, 60, 188, 65, LIGHTGRAY);
+		DrawRectangleLines(862, 60, 188, 65, BLACK);
+		DrawText("Gender", 910, 76, 24, DARKBLUE);
+
+		DrawRectangle(1050, 60, 242, 65, LIGHTGRAY);
+		DrawRectangleLines(1050, 60, 242, 65, BLACK);
+		DrawText("Date of Birth", 1095, 76, 24, DARKBLUE);
+
+		DrawRectangle(1292, 60, 220, 65, LIGHTGRAY);
+		DrawRectangleLines(1292, 60, 220, 65, BLACK);
+		DrawText("Social ID", 1345, 76, 24, DARKBLUE);
+
+		backtoCoursepage.workbutton(mousePoint, CurrentUser, Year, Semester, Course, CoursePage);
+
+		EndDrawing();
+	}
+	CloseWindow();
+}
 
 
 
