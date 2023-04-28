@@ -209,16 +209,17 @@ void deleteStudent(course& course, int no, int& n, char* Year, char* Semester) {
 //	fout.close();
 //	Load_stu(year, semester);
 //}
-//char* GetFileDrop() {
-//	char* filepath = new char;
-//	if (IsFileDropped())
-//	{
-//		FilePathList droppedFiles = LoadDroppedFiles();
-//		TextCopy(filepath, droppedFiles.paths[0]);
-//		UnloadDroppedFiles(droppedFiles);
-//	}
-//	return filepath;
-//}
+bool FileDrop(char*&filename) {
+	bool is_drop = 0;
+	if (IsFileDropped())
+	{
+		FilePathList droppedFiles = LoadDroppedFiles();
+		TextCopy(filename, droppedFiles.paths[0]);
+		is_drop = 1;
+		UnloadDroppedFiles(droppedFiles);
+	}
+	return is_drop;
+}
 bool CheckValidCourse(char* coursename, char* ID, char* classname, char* Year, char* semester) {
 	int num = countCourse( Year, semester);
 	course* courses;

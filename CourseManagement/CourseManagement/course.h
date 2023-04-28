@@ -33,6 +33,7 @@ void deleteCourse(course*& courses, int no, int& num, char* year, char* semester
 bool updateCourse(char* year, char* semester, course& courses, char* courseName_tmp, char* ID, char* className_tmp, char* teacherName_tmp, char* nofc, char* maxstu, char* courseday, char* sshours);
 bool CheckValidCourse(char* coursename, char* ID, char* classname, char* Year, char* semester);
 void LoadCourseFromFile(char* year, char* semester, int& num, course* &courses);
+bool FileDrop(char*& filename);
 void exportStudentsInCourseToFile(char* addressOfOutputFile, char* schoolYear, char* semester, char* courseName);
 
 // 17
@@ -52,6 +53,10 @@ void Return_stu(course& Course, char* year, char* semester);
 int countStu(course& Course, char* year, char* semester);
 void deleteStudent(course& Course, int no, int&n, char* Year, char* Semester);
 //-------------------------------------
+// 14
+int countCoursesOfAStudent(char* stuID, char* schoolYear, char* semester);
+course* viewCoursesOfAStudent(char* stuID, char* schoolYear, char* semester);
+
 // 21
 student* viewScoreBoardOfCourse(char* addressOfOutputFile, char* schoolYear, char* semester, char* courseName);
 
