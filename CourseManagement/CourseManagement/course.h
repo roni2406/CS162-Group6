@@ -52,6 +52,10 @@ void Return_stu(course& Course, char* year, char* semester);
 int countStu(course& Course, char* year, char* semester);
 void deleteStudent(course& Course, int no, int&n, char* Year, char* Semester);
 //-------------------------------------
+// 14
+int countCoursesOfAStudent(char* stuID, char* schoolYear, char* semester);
+course* viewCoursesOfAStudent(char* stuID, char* schoolYear, char* semester);
+
 // 21
 student* viewScoreBoardOfCourse(char* addressOfOutputFile, char* schoolYear, char* semester, char* courseName);
 
