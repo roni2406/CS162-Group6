@@ -152,13 +152,14 @@ void Textbox1::worktextbox(bool& somethingfalsedisplay) {
 			if (lettercount < 0) lettercount = 0;
 			text[lettercount] = '\0';
 		}
-		/*if (IsKeyDown(KEY_LEFT_CONTROL) && IsKeyDown(KEY_V)) {
+		if (IsKeyDown(KEY_LEFT_CONTROL) && IsKeyDown(KEY_V)) {
+			lettercount = 0;
 			const char* a = GetClipboardText();
-			for (int i = 0; i < strlen(a); ++i) {
+			for (int i = 1; i < strlen(a) - 1; ++i) {
 				text[lettercount++] = a[i];
 			}
 			text[lettercount] = '\0';
-		}*/
+		}
 	}
 	if (mouseontextbox) {
 		DrawRectangleLines((int)textbox.x, (int)textbox.y, (int)textbox.width, (int)textbox.height, BLUE);
