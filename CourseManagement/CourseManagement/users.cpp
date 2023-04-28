@@ -205,8 +205,9 @@ void InputScoreBoardWithCSV(char* addressOfOutputFile, char* schoolYear, char* s
 }
 
 // 24
-void viewPersonalStudentScoreboard(student& Stu, char* addressOfOutputFile, char* schoolYear, char* semester,
-	char* courseName, int numOfCoursesOfStudent, scoreboard*& saveScore, char**& courseNameWithScoreBoard)
+
+void viewPersonalStudentScoreboard(char* stuID, char* addressOfOutputFile, char* schoolYear, char* semester,
+	char* courseName, int& numOfCoursesOfStudent, scoreboard*& saveScore, char**& courseNameWithScoreBoard)
 {
 	int numOfCourses = countCourse(schoolYear, semester);
 	saveScore = new scoreboard[numOfCourses];	// Have to show all Scores of A Score (students' case)
@@ -225,7 +226,7 @@ void viewPersonalStudentScoreboard(student& Stu, char* addressOfOutputFile, char
 		int numOfStuInCourse = CoursesInSemester[i].numOfStu;
 		for (int j = 0; j < numOfStuInCourse; ++j)
 		{
-			if (Stu.stuID == StuInACourse[j].stuID)
+			if (stuID == StuInACourse[j].stuID)
 			{
 				saveScore[numOfCoursesOfStudent] = StuInACourse[j].mark;
 				courseNameWithScoreBoard[numOfCoursesOfStudent] = _strdup(CoursesInSemester[i].courseName);

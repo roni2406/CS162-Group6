@@ -112,3 +112,32 @@ char* dateToChar(Date date) {
 
 	return ans;
 }
+
+void getNowDate(Date& now) {
+	char c[9];
+	_strdate_s(c);
+	int i = 0;
+	int cnt = 0;
+	char get[10];
+	while (c[i] != '/') {
+		get[cnt++] = c[i++];
+	}
+	get[2] = '\0';
+	now.m = atoi(get);
+	cnt = 0;
+	i++;
+
+	while (c[i] != '/') {
+		get[cnt++] = c[i++];
+	}
+	get[2] = '\0';
+	now.d = atoi(get);
+	cnt = 0;
+	i++;
+
+	while (c[i] != '\0') {
+		get[cnt++] = c[i++];
+	}
+	get[2] = '\0';
+	now.y = atoi(get) + 2000;
+}

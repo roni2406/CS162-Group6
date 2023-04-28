@@ -90,6 +90,7 @@ void ReturnCoursesToFile(char* year, char* semester, int& num, course*& courses)
 	ofstream fout;
 	fout.open("../data/" + (string)(year)+"/" + (string)(semester)+"/ListOfCourse.txt");
 	for (int i = 0; i < num; i++) {
+		if (i >= 1) fout << "\n";
 		fout << courses[i].courseName	<< ','
 			<< courses[i].courseID		<< ','
 			<< courses[i].className		<< ','
@@ -97,7 +98,7 @@ void ReturnCoursesToFile(char* year, char* semester, int& num, course*& courses)
 			<< courses[i].numOfCre		<< ','
 			<< courses[i].maxStu		<< ','
 			<< courses[i].dayofweek	    << ','
-			<< courses[i].sessionHour	<< '\n';
+			<< courses[i].sessionHour	;
 	}
 	fout.close();
 }
@@ -377,4 +378,54 @@ student* viewScoreBoardOfCourse(char* addressOfOutputFile, char* schoolYear, cha
 	fin.close();
 	sortToStuID(StuInCourse, numOfS);
 	return StuInCourse;
+}
+
+// 14
+int countCoursesOfAStudent(char* stuID, char* schoolYear, char* semester)
+{
+	int numOfCoursesOfAStudent = 0;
+
+	int numOfCourses = countCourse(schoolYear, semester);
+	course* CoursesInSemester = viewCoursesInSemester(schoolYear, semester);
+	for (int i = 0; i < numOfCourses; ++i)
+	{
+		countStu(CoursesInSemester[i], schoolYear, semester);
+		int numOfStuInCourse = CoursesInSemester[i].numOfStu;
+		student* Course = nullptr;
+		Load_stu(CoursesInSemester[i], schoolYear, semester, Course);
+		for (int j = 0; j < numOfStuInCourse; ++j)
+		{
+			if (stuID == Course[j].stuID)
+			{
+				++numOfCoursesOfAStudent;
+				break;
+			}
+		}
+	}
+	return numOfCoursesOfAStudent;
+}
+
+course* viewCoursesOfAStudent(char* stuID, char* schoolYear, char* semester)
+{
+	int numOfCourses = countCourse(schoolYear, semester);
+
+	course* saveCourse = new course[numOfCourses];
+	int cnt = 0;
+	course* CoursesInSemester = viewCoursesInSemester(schoolYear, semester);
+	for (int i = 0; i < numOfCourses; ++i)
+	{
+		countStu(CoursesInSemester[i], schoolYear, semester);
+		int numOfStuInCourse = CoursesInSemester[i].numOfStu;
+		student* Course = nullptr;
+		Load_stu(CoursesInSemester[i], schoolYear, semester, Course);
+		for (int j = 0; j < numOfStuInCourse; ++j)
+		{
+			if (stuID == Course[j].stuID)
+			{
+				saveCourse[cnt++] = CoursesInSemester[i];
+				break;
+			}
+		}
+	}
+	return saveCourse;
 }
