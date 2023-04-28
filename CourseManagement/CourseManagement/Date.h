@@ -14,7 +14,7 @@ struct Date {
     void outputADateToFile(ofstream& fout);
     bool checkdata();
 };
-
+void double_to_char(double num, char* result);
 void int_to_char(int num, char* result);
 bool checkDateInput(char* date);
 char* dateToChar(Date date);

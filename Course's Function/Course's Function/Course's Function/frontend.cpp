@@ -204,7 +204,9 @@ void Stus_to_Course(ListCourse& list) {
 			filedropped = 1;
 			UnloadDroppedFiles(droppedFiles);
 		}
-
+		if (filedropped)
+			DrawText(file, 200, 255, 48, BLUE);
+		else DrawText("Drop Here ", 626, 255, 48, GRAY);
 		BeginDrawing();
 		ClearBackground(WHITE);
 

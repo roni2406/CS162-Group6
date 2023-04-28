@@ -72,6 +72,31 @@ bool checkDateInput(char* date) {
 	if (cnt != 2) return false;
 	return true;
 }
+void double_to_char(double num, char* result) {
+	int tmp = int(num * 100);
+	if (tmp % 10 == 0) {
+		if (tmp % 100 == 0) {
+			int_to_char(tmp % 100, result);
+			return;
+		}
+		else {
+			int_to_char(tmp % 10, result);
+			char tmp1 = result[1];
+			result[1] = ',';
+			result[2] = tmp1;
+			result[3] = '\0';
+			return;
+		}
+	}
+	int_to_char(tmp, result);
+	char tmp1 = result[1];
+	result[1] = ',';
+	char tmp2 = result[2];
+	result[2] = tmp1;
+	result[3] = tmp2;
+	result[4] = '\0';
+	return;
+}
 
 void int_to_char(int num, char* result) {
 	int temp = num;

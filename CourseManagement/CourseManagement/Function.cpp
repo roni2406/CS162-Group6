@@ -2037,6 +2037,18 @@ void CoursePage(const int screenWidth, const int screenHeight, account& CurrentU
 			DrawText(listStudents[i].stuID, x_student + 72, y_student + j + 30, 20, BLACK);
 			DrawText(listStudents[i].Student.lastName, x_student + 260, y_student + j + 30, 20, BLACK);
 			DrawText(listStudents[i].Student.firstName, x_student + 528, y_student + j + 30, 20, BLACK);
+			char* finalMark = new char[5];
+			char* midtermMark = new char[5];
+			char* otherMark = new char[5];
+			char* totalMark = new char[5];
+			double_to_char(listStudents[i].mark.totalMark, totalMark);
+			DrawText(totalMark, x_student + 901, y_student + j + 30, 20, BLACK);
+			double_to_char(listStudents[i].mark.finalMark, finalMark);
+			DrawText(finalMark, x_student + 1055, y_student + j + 30, 20, BLACK);
+			double_to_char(listStudents[i].mark.midtermMark, midtermMark);
+			DrawText(midtermMark, x_student + 1217, y_student + j + 30, 20, BLACK);
+			double_to_char(listStudents[i].mark.otherMark, otherMark);
+			DrawText(otherMark, x_student + 1384, y_student + j + 30, 20, BLACK);
 			if (y_student + j < 231) studentbutton[i].state = false;
 			studentbutton[i].workbutton(mousePoint, CurrentUser, Year, Semester, Course, CoursePage);
 			j += 61;
@@ -2052,6 +2064,11 @@ void CoursePage(const int screenWidth, const int screenHeight, account& CurrentU
 				studentbutton[i].remove = false;
 				studentbutton[i].action1 = false;
 			}
+			delete stuNo;
+			delete finalMark;
+			delete midtermMark;
+			delete totalMark;
+			delete otherMark;
 		}
 		DrawRectangle(0, 0, screenWidth, 70, WHITE);
 		DrawText(Course.courseID, 30, 10, 20, DARKBLUE);
