@@ -76,11 +76,11 @@ void double_to_char(double num, char* result) {
 	int tmp = int(num * 100);
 	if (tmp % 10 == 0) {
 		if (tmp % 100 == 0) {
-			int_to_char(tmp % 100, result);
+			int_to_char(tmp / 100, result);
 			return;
 		}
 		else {
-			int_to_char(tmp % 10, result);
+			int_to_char(tmp / 10, result);
 			char tmp1 = result[1];
 			result[1] = ',';
 			result[2] = tmp1;

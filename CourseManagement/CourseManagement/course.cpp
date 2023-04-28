@@ -71,11 +71,9 @@ void LoadCourseFromFile(char* year, char* semester, int& num, course* &courses) 
 		courses[i].teacherName = new char[100];
 		fin.get(courses[i].teacherName, 100, ',');
 		fin.ignore(1000, ',');
-		courses[i].numOfCre = new char[100];
-		fin.get(courses[i].numOfCre, 100, ',');
+		fin >> courses[i].numOfCre;
 		fin.ignore(1000, ',');
-		courses[i].maxStu = new char[100];
-		fin.get(courses[i].maxStu, 100, ',');
+		fin >> courses[i].maxStu;
 		fin.ignore(1000, ',');
 		courses[i].dayofweek = new char[100];
 		fin.get(courses[i].dayofweek, 100, ',');
@@ -176,8 +174,8 @@ bool updateCourse(char* year, char* semester, course& courses, char* courseName_
 	if (className_tmp[0] != '\0')	courses.className =  _strdup(className_tmp);
 	if (ID[0] != '\0')				courses.courseID = _strdup(ID);
 	if (teacherName_tmp[0] != '\0') courses.teacherName = _strdup(teacherName_tmp);
-	if (nofc[0] != '\0')			courses.numOfCre = _strdup(nofc);
-	if (maxstu[0] != '\0')			courses.maxStu = _strdup(maxstu);
+	if (nofc[0] != '\0')			courses.numOfCre = atoi(nofc);
+	if (maxstu[0] != '\0')			courses.maxStu = atoi(maxstu);
 	if (courseday[0] != '\0')		courses.dayofweek = _strdup(courseday);
 	if (sshours[0] != '\0')			courses.sessionHour = _strdup(sshours);
 	string tmp = "../data/" + (string)(year)+"/" + (string)(semester)+"/" + (string)(courses.courseName) + "-" + string(courses.className) + ".csv";

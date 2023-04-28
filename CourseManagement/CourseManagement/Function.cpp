@@ -1757,8 +1757,12 @@ void ViewCoursesPage(const int screenWidth, const int screenHeight, account& Cur
 			DrawText(courses[i].courseName, x_course + 148, y_course + j, 20, BLACK);
 			DrawText(courses[i].className, x_course + 614, y_course + j, 20, BLACK);
 			DrawText(courses[i].teacherName, x_course + 742, y_course + j, 20, BLACK);
-			DrawText(courses[i].numOfCre, x_course + 1087, y_course + j, 20, BLACK);
-			DrawText(courses[i].maxStu, x_course + 1189, y_course + j, 20, BLACK);
+			char* nofc = new char[10];
+			int_to_char(courses[i].numOfCre, nofc);
+			DrawText(nofc, x_course + 1087, y_course + j, 20, BLACK);
+			char* maxstu = new char[10];
+			int_to_char(courses[i].maxStu, maxstu);
+			DrawText(maxstu, x_course + 1189, y_course + j, 20, BLACK);
 			DrawText(courses[i].dayofweek, x_course + 1320, y_course + j, 20, BLACK);
 			DrawText(courses[i].sessionHour, x_course + 1442, y_course + j, 20, BLACK);
 			if (y_course + j < 231) coursebutton[i].state = false;
@@ -1912,7 +1916,11 @@ void UpdateCoursePage(const int screenWidth, const int screenHeight, account& Cu
 		if (coursename.lettercount == 0)	DrawText(Course[i].courseName, 198, 275, 25, BLACK);
 		if (classname.lettercount == 0)		DrawText(Course[i].className, 198, 388, 25, BLACK);
 		if (teachername.lettercount == 0)	DrawText(Course[i].teacherName, 198, 501, 25, BLACK);
-		if (nofc.lettercount == 0)			DrawText(Course[i].numOfCre, 198, 614, 25, BLACK);
+		if (nofc.lettercount == 0) {
+			char* nofc = new char[10];
+			int_to_char(Course[i].numOfCre, nofc);
+			DrawText(nofc, 198, 614, 25, BLACK);
+		}
 		if (maxstudents.lettercount == 0)	DrawText("50", 198, 727, 25, BLACK);
 		if (courseday.lettercount == 0)		DrawText(Course[i].dayofweek, 198, 840, 25, BLACK);
 		if (sshours.lettercount == 0)		DrawText(Course[i].sessionHour, 802, 840, 25, BLACK);
