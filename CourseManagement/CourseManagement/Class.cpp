@@ -254,13 +254,12 @@ bool CheckData_InputStudents(char* No, char* student_id, char* Gender, char* DoB
 }
 
 // 23 
-void viewStuWithScore(char* className, char* addressOfOutputFile, char* schoolYear,
-	char* semester, char* courseName, int*& numOfCoursesPerStudent,
+void viewStuWithScore(char* className, char* schoolYear, char* semester, int*& numOfCoursesPerStudent,
 	scoreboard**& saveFinal, char***& courseNameWithScoreBoard)
 {
 	int numOfStuInClass = countStudentInClass(className);
 	int numOfCourses = countCourse(schoolYear, semester);
-	saveFinal = new scoreboard*[numOfStuInClass];
+	saveFinal = new scoreboard * [numOfStuInClass];
 	courseNameWithScoreBoard = new char** [numOfStuInClass];
 	for (int i = 0; i < numOfStuInClass; ++i)			// Number of Courses occurs in 1 Semester
 	{													// 1 students can NOT register more courses than this!
@@ -269,23 +268,23 @@ void viewStuWithScore(char* className, char* addressOfOutputFile, char* schoolYe
 		for (int j = 0; j < numOfCourses; ++j)			// Number of characters in 1 course
 			courseNameWithScoreBoard[i][j] = new char[100];
 	}
-	// Probable Fix!
-	 numOfCoursesPerStudent = new int[numOfStuInClass]{0};
+	numOfCoursesPerStudent = new int[numOfStuInClass] {0};
 
 	student* StuInAClass = viewStudentsInClass(className);
 	course* CoursesInSemester = viewCoursesInSemester(schoolYear, semester);
 	for (int i = 0; i < numOfCourses; ++i)
 	{
-		student* StuInACourse = viewScoreBoardOfCourse(addressOfOutputFile, schoolYear, semester, courseName);
 		countStu(CoursesInSemester[i], schoolYear, semester);
 		int numOfStuInCourse = CoursesInSemester[i].numOfStu;
+		student* StuInCourse = nullptr;
+		Load_stu(CoursesInSemester[i], schoolYear, semester, StuInCourse);
 		for (int j = 0; j < numOfStuInCourse; ++j)
 		{
-			for(int k = 0; k < numOfStuInClass; ++k)
+			for (int k = 0; k < numOfStuInClass; ++k)
 			{
-				if (StuInAClass[k].stuID == StuInACourse[j].stuID)
+				if (StuInAClass[k].stuID == StuInCourse[j].stuID)
 				{
-					saveFinal[k][numOfCoursesPerStudent[k]] = StuInACourse[j].mark;
+					saveFinal[k][numOfCoursesPerStudent[k]] = StuInCourse[j].mark;
 					courseNameWithScoreBoard[k][numOfCoursesPerStudent[k]] = _strdup(CoursesInSemester[i].courseName);
 					++numOfCoursesPerStudent[k];
 					break;
