@@ -102,6 +102,7 @@ void ReturnCoursesToFile(char* year, char* semester, int& num, course*& courses)
 	fout.close();
 }
 int countStu(course& Course, char* year, char* semester) {
+	Course.numOfStu = 0;
 	ofstream fout;
 	fout.open("../data/" + (string)(year)+"/" + (string)(semester)+"/" + (string)(Course.courseName)+"-" + string(Course.className) + ".csv", ios::app);
 	fout.close();
@@ -118,60 +119,42 @@ int countStu(course& Course, char* year, char* semester) {
 	fin.close();
 }
 void Load_stu(course& Course, char* year, char* semester, student*& liststudents) {
-	ifstream f;
-	f.open("../data/" + (string)(year)+"/" + (string)(semester)+"/"+(string)(Course.courseName) + "-" + string(Course.className) + ".csv");
+	ifstream fin;
+	fin.open("../data/" + (string)(year)+"/" + (string)(semester)+"/"+(string)(Course.courseName) + "-" + string(Course.className) + ".csv");
+
 	int n = Course.numOfStu;
-	if (n != 0) {
-		Course.stuOfCourse = new student[n];
-	}
-	if (!f)return;
+	Course.stuOfCourse = new student[n];
+
 	int i = 0;
 	while (i<n) {
-		f >> Course.stuOfCourse[i].No;
-		f.ignore(100, ',');
-		Course.stuOfCourse[i].stuID = new char[100];
-		f.get(Course.stuOfCourse[i].stuID, 100,',');
-		f.ignore(100,',');
-		Course.stuOfCourse[i].Student.lastName = new char[100];
-		f.get(Course.stuOfCourse[i].Student.lastName, 100,',');
-		f.ignore(100,',');
-		Course.stuOfCourse[i].Student.firstName = new char[100];
-		f.get(Course.stuOfCourse[i].Student.firstName, 100,',');
-		f.ignore(100,',');
-		char* tmp = new char[100];
-		f.get(tmp, 100, ',');
-		if (strcmp(tmp, (char*)"Male") == 0) Course.stuOfCourse[i].Student.gender = 1;
-		else Course.stuOfCourse[i].Student.gender = 0;
-		delete[] tmp;
-		f.ignore(100,',');
-		f >> Course.stuOfCourse[i].Student.dob.d;
-		f.ignore(100,'/');
-		f >> Course.stuOfCourse[i].Student.dob.m;
-		f.ignore(100,'/');
-		f >> Course.stuOfCourse[i].Student.dob.y;
-		f.ignore(100,',');
-		Course.stuOfCourse[i].Student.socialID = new char[100];
-		f.get(Course.stuOfCourse[i].Student.socialID, 100);
-		f.ignore(100, '\n');
+		inputStudentAndScoreWithCSV(fin, Course.stuOfCourse[i]);
 		++i;
 	}
-	f.close();
+	fin.close();
+	sortToStuID(Course.stuOfCourse, Course.numOfStu);
 	liststudents = Course.stuOfCourse;
 } 
 
-void Return_stu(course& Course, char* year, int& num, char* semester) {
+void Return_stu(course& Course, char* year, char* semester) {
+	sortToStuID(Course.stuOfCourse, Course.numOfStu);
 	ofstream f;
-	f.open("../data/" + (string)(year)+"/" + (string)(semester)+"/" + (string)(Course.courseName)+"-" + string(Course.className) + ".csv");
-	for (int i = 0 ; i < num ; i++) {
-		f << Course.stuOfCourse[i].No<<","
-		  << Course.stuOfCourse[i].stuID << ","
-		  << Course.stuOfCourse[i].Student.lastName << ","
-		  << Course.stuOfCourse[i].Student.firstName << ","
-		  << Course.stuOfCourse[i].Student.gender << ","
-		  << Course.stuOfCourse[i].Student.dob.d << "/"
-		  << Course.stuOfCourse[i].Student.dob.m << "/"
-		  << Course.stuOfCourse[i].Student.dob.y << ","
-		  << Course.stuOfCourse[i].Student.socialID << "\n";
+	f.open("../data/" + (string)(year)+"/" + (string)(semester)+"/" + (string)(Course.courseName) + "-" + string(Course.className) + ".csv");
+	for (int i = 0; i < Course.numOfStu; i++) {
+		if (i >= 1) f << "\n";
+		f << Course.stuOfCourse[i].No << ","
+			<< Course.stuOfCourse[i].stuID << ","
+			<< Course.stuOfCourse[i].Student.lastName << ","
+			<< Course.stuOfCourse[i].Student.firstName << ","
+			<< Course.stuOfCourse[i].Student.gender << ","
+			<< Course.stuOfCourse[i].Student.dob.d << "/"
+			<< Course.stuOfCourse[i].Student.dob.m << "/"
+			<< Course.stuOfCourse[i].Student.dob.y << ","
+			<< Course.stuOfCourse[i].Student.socialID << ","
+			<< Course.stuOfCourse[i].mark.midtermMark << ","
+			<< Course.stuOfCourse[i].mark.finalMark << ","
+			<< Course.stuOfCourse[i].mark.otherMark << ","
+			<< Course.stuOfCourse[i].mark.totalMark;
+
 	}
 	f.close();
 }
@@ -201,14 +184,13 @@ bool updateCourse(char* year, char* semester, course& courses, char* courseName_
 	rename(tmp.c_str(), tmp_new.c_str());
 	return true;
 }
-void deleteStudent(course& course, int no, int& num, char* Year, char* Semester) {
-	for (int i = no + 1; i < num; ++i) {
+void deleteStudent(course& course, int no, int& n, char* Year, char* Semester) {
+	for (int i = no + 1; i < course.numOfStu; ++i) {
 		course.stuOfCourse[i - 1] = course.stuOfCourse[i];
-		--course.stuOfCourse[i - 1].No;
 	}
-	num--;
 	course.numOfStu--;
-	Return_stu(course, Year, num, Semester);
+	n--;
+	Return_stu(course, Year, Semester);
 }
 //void course::add_stu(char* year, char* semester, int No, char* stuID, char lastName, char* firstName, bool gen, int d, int m, int y, char* socialID) {
 //	ofstream fout;
@@ -331,7 +313,7 @@ bool addAStudentToCourse(char* schoolYear, char* semester, char* course,
 	student s;
 	s.inputAStudent(student_id, first_name, last_name, gender, DoB, social_ID);
 
-	if (!s.checkData() && !checkStuHaveClass(s.stuID)) return false;
+	if (!s.checkData() || !checkStuHaveClass(s.stuID)) return false;
 	if (!checkStudentExistInCourse(s, schoolYear, semester, course)) return false;
 
 	ofstream fout;

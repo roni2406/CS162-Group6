@@ -42,14 +42,15 @@ course* viewCoursesInSemester(char* year, char* semester);
 bool checkStudentExistInCourse(student x, char* schoolYear, char* semester, char* course);
 bool checkStuHaveClass(char* stuID);
 //front end
+int countStudentInCourse(char* schoolYear, char* semester, char* course);
 bool addAStudentToCourse(char* schoolYear, char* semester, char* course,
     char* first_name, char* last_name, char* Gender, char* DoB, char* social_ID, char* student_id);
 bool addStudentsToCourseWithCSV(char* fileNameIn, char* schoolYear, char* semester, char* course,
     student*& stuArr, int& numOfDupsStu);
 void Load_stu(course& Course, char* year, char* semester, student*& liststudents);
-void Return_stu(course& Course, char* year, int& num, char* semester);
+void Return_stu(course& Course, char* year, char* semester);
 int countStu(course& Course, char* year, char* semester);
-void deleteStudent(course& Course, int no, int& num, char* Year, char* Semester);
+void deleteStudent(course& Course, int no, int&n, char* Year, char* Semester);
 //-------------------------------------
 // 21
 student* viewScoreBoardOfCourse(char* addressOfOutputFile, char* schoolYear, char* semester, char* courseName);

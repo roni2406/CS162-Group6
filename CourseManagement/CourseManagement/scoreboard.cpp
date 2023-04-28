@@ -31,5 +31,5 @@ void scoreboard::outputScoreBoardToFile(char* fileName)
 }
 
 void scoreboard::outputScoreBoardToFile(ofstream& fout) {
-	fout << midtermMark << "," << finalMark << "," << otherMark << "," << totalMark;
+	fout << "," << midtermMark << "," << finalMark << "," << otherMark << "," << totalMark;
 }

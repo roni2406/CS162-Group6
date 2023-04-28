@@ -98,10 +98,12 @@ void Button8::workbutton(Vector2 mousePoint, account& CurrentUser, char*& a, cha
 			x = GetMouseX();
 			y = GetMouseY();
 			action1 = true;
+			action = false;
 		}
 	}
 	else {
 		action = false;
+		action1 = false;
 	}
 	if (CheckCollisionPointRec(GetMousePosition(), { float(x),float(y),160,25 })) {
 		action = false;
