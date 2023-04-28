@@ -1974,8 +1974,8 @@ void CoursePage(const int screenWidth, const int screenHeight, account& CurrentU
 
 	Button6 backtoviewcoursespage;
 	backtoviewcoursespage.button = { 1160, 25, 250, 30 };
-	Course.Load_stu(Year, Semester);
 	Course.countStu(Year, Semester);
+	Course.Load_stu(Year, Semester);
 	int n = Course.numOfStu;
 	student* listStudents = Course.stuOfCourse;
 	Texture2D background2 = LoadTexture("course_background.png");
@@ -2020,9 +2020,9 @@ void CoursePage(const int screenWidth, const int screenHeight, account& CurrentU
 			DrawLine(x_student + 216, y_student + j - 1, x_student + 216, y_student + j + 61, BLACK);
 			DrawLine(x_student + 395, y_student + j - 1, x_student + 395, y_student + j + 61, BLACK);
 			DrawLine(x_student + 851, y_student + j - 1, x_student + 851, y_student + j + 61, BLACK);
-			DrawLine(x_student + 1021, y_student + j - 1, x_student + 1021, y_student + j + 61, BLACK);
+			DrawLine(x_student + 1008, y_student + j - 1, x_student + 1008, y_student + j + 61, BLACK);
 			DrawLine(x_student + 1159, y_student + j - 1, x_student + 1159, y_student + j + 61, BLACK);
-			DrawLine(x_student + 1324, y_student + j - 1, x_student + 1324, y_student + j + 61, BLACK);
+			DrawLine(x_student + 1332, y_student + j - 1, x_student + 1332, y_student + j + 61, BLACK);
 			DrawLine(x_student + 1501, y_student + j - 1, x_student + 1501, y_student + j + 61, BLACK);
 			DrawRectangleLines(0, y_student + j - 1, 1512, 62, BLACK);
 			DrawRectangleLines(0, y_student + j - 1, 1512, 62, BLACK);
@@ -2201,8 +2201,8 @@ void addStudentCSVForCourse(const int screenWidth, const int screenHeight, accou
 	Textbox1 filename;
 	filename.textbox = { 420,280,650,84 };
 
-	Button4 backtoClasspage;
-	backtoClasspage.button = { 1270, 20, 200, 30 };
+	Button8 backtoCoursepage;
+	backtoCoursepage.button = { 1270, 20, 200, 30 };
 
 	Texture2D confirmBtn = LoadTexture("confirmBtn.png");
 	float frameHeightconfirmBtn = (float)confirmBtn.height;
@@ -2221,7 +2221,7 @@ void addStudentCSVForCourse(const int screenWidth, const int screenHeight, accou
 		DrawRectangleGradientEx(background, SKYBLUE, DARKBLUE, DARKBLUE, SKYBLUE);
 		DrawRectangle(0, 0, screenWidth, 60, WHITE);
 
-		DrawRectangleRec(backtoClasspage.button, WHITE);
+		DrawRectangleRec(backtoCoursepage.button, WHITE);
 		DrawText("Back to your class", 1280, 20, 20, DARKBLUE);
 		DrawText("Add student(s)", 620, 12, 40, DARKBLUE);
 
@@ -2258,7 +2258,7 @@ void addStudentCSVForCourse(const int screenWidth, const int screenHeight, accou
 		DrawTextureRec(confirmBtn, sourceRecconfirmBtn, { btnBoundsconfirmBtn.x, btnBoundsconfirmBtn.y }, WHITE); // Draw button frame
 
 		/// Back to profile page button
-		/*backtoClasspage.workbutton(mousePoint, CurrentUser, classname, ClassPage);*/
+		backtoCoursepage.workbutton(mousePoint, CurrentUser, Year, Semester, Course, CoursePage);
 
 		EndDrawing();
 	}

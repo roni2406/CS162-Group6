@@ -95,21 +95,24 @@ void ReturnCoursesToFile(char* year, char* semester, int& num, course*& courses)
 }
 void course:: countStu(char* year, char* semester) {
 	ifstream fin;
-	fin.open("../data/" + (string)(year)+"/" + (string)(semester)+"/" + (string)(courseName)+"-" + string(className) + ".txt");
+	fin.open("../data/" + (string)(year)+"/" + (string)(semester)+"/" + (string)(courseName)+"-" + string(className) + ".csv");
 	int num = 0;
 	while (!fin.eof()) {
 		++num;
 		fin.ignore(500, '\n');
 	}
-	numOfStu= num -1;
+	numOfStu = num;
 }
 void course::Load_stu(char* year, char* semester) {
 	ofstream fout;
-	fout.open("../data/" + (string)(year)+"/" + (string)(semester)+"/" + (string)(courseName)+ "-" + string(className) + ".txt", ios::app);
+	fout.open("../data/" + (string)(year)+"/" + (string)(semester)+"/" + (string)(courseName)+ "-" + string(className) + ".csv", ios::app);
 	fout.close();
 	ifstream f;
-	f.open("../data/" + (string)(year)+"/" + (string)(semester)+"/"+(string)(courseName) + "-" + string(className) + ".txt");
-
+	f.open("../data/" + (string)(year)+"/" + (string)(semester)+"/"+(string)(courseName) + "-" + string(className) + ".csv");
+	int n = numOfStu;
+	if (n != 0) {
+		stuOfCourse = new student[n];
+	}
 	if (!f)return;
 	int i = 0;
 	while (i<numOfStu) {
@@ -124,7 +127,11 @@ void course::Load_stu(char* year, char* semester) {
 		stuOfCourse[i].Student.firstName = new char[100];
 		f.get(stuOfCourse[i].Student.firstName, 100,',');
 		f.ignore(100,',');
-		f >> stuOfCourse[i].Student.gender;
+		char* tmp = new char[100];
+		f.get(tmp, 100, ',');
+		if (strcmp(tmp, (char*)"Male") == 0) stuOfCourse[i].Student.gender = 1;
+		else stuOfCourse[i].Student.gender = 0;
+		delete[] tmp;
 		f.ignore(100,',');
 		f >> stuOfCourse[i].Student.dob.d;
 		f.ignore(100,'/');
@@ -134,14 +141,14 @@ void course::Load_stu(char* year, char* semester) {
 		f.ignore(100,',');
 		stuOfCourse[i].Student.socialID = new char[100];
 		f.get(stuOfCourse[i].Student.socialID, 100);
-		f.ignore();
+		f.ignore(100, '\n');
 		++i;
 	}
 } 
 
 void course::Return_stu(char* year, char* semester) {
 	ofstream f;
-	f.open("../data/" + (string)(year)+"/" + (string)(semester)+"/" + (string)(courseName)+"-" + string(className) + ".txt");
+	f.open("../data/" + (string)(year)+"/" + (string)(semester)+"/" + (string)(courseName)+"-" + string(className) + ".csv");
 	int i = 0;
 	if (!f)return;
 		for(int i =0;i<numOfStu;i++){
@@ -160,7 +167,7 @@ void deleteCourse(course*& courses, int no, int& num, char* year, char* semester
 	if (no >= num) {
 		return;
 	}
-	string tmp = "../data/" + (string)(year)+"/" + (string)(semester)+"/" + (string)(courses[no].courseName) + "-" + string(courses[no].className) + ".txt";
+	string tmp = "../data/" + (string)(year)+"/" + (string)(semester)+"/" + (string)(courses[no].courseName) + "-" + string(courses[no].className) + ".csv";
 	remove(tmp.c_str());
 	for (int i = no + 1; i < num; i++) {
 		courses[i - 1] = courses[i];
@@ -177,8 +184,8 @@ bool updateCourse(char* year, char* semester, course& courses, char* courseName_
 	if (maxstu[0] != '\0')			courses.maxStu = _strdup(maxstu);
 	if (courseday[0] != '\0')		courses.dayofweek = _strdup(courseday);
 	if (sshours[0] != '\0')			courses.sessionHour = _strdup(sshours);
-	string tmp = "../data/" + (string)(year)+"/" + (string)(semester)+"/" + (string)(courses.courseName) + "-" + string(courses.className) + ".txt";
-	string tmp_new = "../data/" + (string)(year)+"/" + (string)(semester)+"/" + (string)(courseName_tmp)+"-" + string(className_tmp) + ".txt";
+	string tmp = "../data/" + (string)(year)+"/" + (string)(semester)+"/" + (string)(courses.courseName) + "-" + string(courses.className) + ".csv";
+	string tmp_new = "../data/" + (string)(year)+"/" + (string)(semester)+"/" + (string)(courseName_tmp)+"-" + string(className_tmp) + ".csv";
 	rename(tmp.c_str(), tmp_new.c_str());
 	return true;
 }
@@ -191,7 +198,7 @@ void deleteStudent(course* course, int k, int no) {
 }
 void course::add_stu(char* year, char* semester, int No, char* stuID, char lastName, char* firstName, bool gen, int d, int m, int y, char* socialID) {
 	ofstream fout;
-	fout.open("../data/" + (string)(year)+"/" + (string)(semester)+"/" + (string)(courseName)+"-" + string(className) + ".txt", ios::app);
+	fout.open("../data/" + (string)(year)+"/" + (string)(semester)+"/" + (string)(courseName)+"-" + string(className) + ".csv", ios::app);
 	int maxstu = stoi(maxStu);
 	if (numOfStu < maxstu) {
 		fout << No << ","
@@ -245,7 +252,7 @@ void exportStudentsInCourseToFile(char* addressOfOutputFile, char* schoolYear, c
 int countStudentInCourse(char* schoolYear, char* semester, char* course) {
 	int numOfStu = 0;
 	ifstream fin;
-	fin.open("../data/" + string(schoolYear) + " " + string(semester) + " " + string(course) + ".csv");
+	fin.open("../data/" + string(schoolYear) + "/" + string(semester) + "/" + string(course) + ".csv");
 	fin.get();
 	while (!fin.eof()) {
 		++numOfStu;
@@ -259,7 +266,7 @@ bool checkStudentExistInCourse(student x, char* schoolYear, char* semester, char
 	//return true if the student haven't existed
 	//return false if the student have existed
 	ifstream fin;
-	fin.open("../data/" + string(schoolYear) + " " + string(semester) + " " + string(course) + ".csv");
+	fin.open("../data/" + string(schoolYear) + "/" + string(semester) + "/" + string(course) + ".csv");
 	int n = countStudentInCourse(schoolYear, semester, course);
 	for (int i = 0; i < n; i++) {
 		student s;
@@ -304,7 +311,7 @@ bool addAStudentToCourse(char* schoolYear, char* semester, char* course,
 	}
 	else gender = 0;
 
-	string fileName = "../data/" + string(schoolYear) + " " + string(semester) + " " + string(course) + ".csv";
+	string fileName = "../data/" + string(schoolYear) + "/" + string(semester) + "/" + string(course) + ".csv";
 
 	student s;
 	s.inputAStudent(student_id, first_name, last_name, gender, DoB, social_ID);
@@ -329,7 +336,7 @@ bool addStudentsToCourseWithCSV(char* fileNameIn, char* schoolYear, char* semest
 
 	ifstream fin;
 	fin.open(fileNameIn);
-	string fileNameOutAddress = "../data/" + string(schoolYear) + " " + string(semester) + " " + string(course) + ".csv";
+	string fileNameOutAddress = "../data/" + string(schoolYear) + "/" + string(semester) + "/" + string(course) + ".csv";
 	char* fileNameOutAddressChar = new char[100];
 	for (int i = 0; i < fileNameOutAddress.size(); i++) {
 		fileNameOutAddressChar[i] = fileNameOutAddress[i];
