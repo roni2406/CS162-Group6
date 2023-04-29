@@ -2149,8 +2149,7 @@ void CoursePage(const int screenWidth, const int screenHeight, account& CurrentU
 
 		if (exportListStu.action) {
 			for (int i = 0; i < n; ++i) {
-				studentbutton[i].action = false;
-				studentbutton[i].action1 = false;
+				studentbutton[i].state = false;
 			}
 			DrawRectangle(165, 190, 1161, 618, BLUE);
 			DrawText("OUT", 1254, 210, 44, RED);
