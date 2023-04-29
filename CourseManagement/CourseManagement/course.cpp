@@ -395,6 +395,7 @@ student* viewScoreBoardOfCourse(char* addressOfOutputFile, char* schoolYear, cha
 // 14
 int countCoursesOfAStudent(char* stuID, char* schoolYear, char* semester)
 {
+	if (schoolYear == nullptr || semester == nullptr) return 0;
 	int numOfCoursesOfAStudent = 0;
 
 	int numOfCourses = countCourse(schoolYear, semester);
@@ -419,6 +420,7 @@ int countCoursesOfAStudent(char* stuID, char* schoolYear, char* semester)
 
 course* viewCoursesOfAStudent(char* stuID, char* schoolYear, char* semester)
 {
+	if (schoolYear == nullptr || semester == nullptr) return nullptr;
 	int numOfCourses = countCourse(schoolYear, semester);
 
 	course* saveCourse = new course[numOfCourses];
