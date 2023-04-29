@@ -1,4 +1,5 @@
 #include "Function.h"
+#include "users.h"
 using namespace std;
 
 
@@ -410,7 +411,7 @@ void ProfilePageStudent(const int screenWidth, const int screenHeight, account& 
 		ChangePass.workbutton(mousePoint, CurrentUser, ChangePasswordPageStudent);
 		LogOut.workbutton(mousePoint, CurrentUser, LogInPageStudent);
 		scoreboard.workbutton(mousePoint, CurrentUser, LogInPageStudent);
-		course.workbutton(mousePoint, CurrentUser, LogInPageStudent);
+		course.workbutton(mousePoint, CurrentUser, CoursePageStudent);
 
 		//// display schoolyear from createschoolyear page--------------------------------------------------------------------------------------------
 		EndDrawing();
@@ -421,12 +422,20 @@ void CoursePageStudent(const int screenWidth, const int screenHeight, account& C
 	Rectangle background = { 0,0,float(screenWidth),float(screenHeight) };
 	Vector2 mousePoint = { 0.0f, 0.0f };
 
-	int n = 3;
-	Rectangle test = { 200,200,300,100 };
+	int cntYears = 0;
+	char** YearName = nullptr;
+	getStudyingSchoolYear(CurrentUser.userName, cntYears, YearName);
+
+
+	int n = 3;    //count semester
+	Rectangle semesters = { 60,100,200,50 };
+	Rectangle schoolyears = { 360,100,200,50 };
 	bool action = false;
 	bool actionF = false;
 	bool actionS = false;
 	bool actionA = false;
+	bool action1 = false;
+	bool* actionYear = new bool[cntYears] {0};
 
 	while (!WindowShouldClose()) {
 		mousePoint = GetMousePosition();
@@ -436,51 +445,70 @@ void CoursePageStudent(const int screenWidth, const int screenHeight, account& C
 		DrawRectangle(0, 0, screenWidth, 60, WHITE);
 		DrawText("COURSE MANAGEMENT SYSTEM", 430, 10, 40, DARKBLUE);
 
+		DrawRectangleRec(schoolyears, WHITE);
+		DrawText("Years", 420, 115, 20, BLACK);
+		DrawRectangleRec(semesters, WHITE);
+		DrawText("Semesters", 105, 115, 20, BLACK);
+		int z = 0, r = 0;
 
-
-		DrawRectangleRec(test, WHITE);
-
-		int z = 0;
-
-
-		if (CheckCollisionPointRec(mousePoint, { 200,200,300,100 })) {
-			if (IsMouseButtonPressed(MOUSE_BUTTON_LEFT)) action = true;
+		if (CheckCollisionPointRec(mousePoint, schoolyears)) {
+			if (IsMouseButtonPressed(MOUSE_BUTTON_LEFT)) {
+				action1 = true;
+				for (int i = 0; i < cntYears; ++i) {
+					actionYear[i] = 0;
+				}
+			}
 		}
-
-		if (action) {
-			for (int i = 0; i < n; ++i) {
-				DrawRectangle(200, 300 + z, 300, 100, GRAY);
-				if (i == 0) DrawText("Fall", 230, 320 + z, 30, BLACK);
-				else if (i == 1) DrawText("Summer", 230, 320 + z, 30, BLACK);
-				else if (i == 2) DrawText("Autumn", 230, 320 + z, 30, BLACK);
-				z += 100;
+		if (action1) {
+			for (int i = 0; i < cntYears; ++i) {
+				DrawRectangle(360, 150 + r, 200, 50, GRAY);
+				DrawText(YearName[i], 430, 165 + r, 20, BLACK);
+				r += 50;
 			}
 		}
 
-		if (CheckCollisionPointRec(mousePoint, { 200,300,300,100 })) {
+		if (CheckCollisionPointRec(mousePoint, semesters)) {
+			if (IsMouseButtonPressed(MOUSE_BUTTON_LEFT)) {
+				action = true;
+				actionA = false;
+				actionF = false;
+				actionS = false;
+			}
+		}
+		if (action) {
+			for (int i = 0; i < n; ++i) {
+				DrawRectangle(60, 150 + z, 200, 50, GRAY);
+				if (i == 0) DrawText("Fall", 130, 165 + z, 20, BLACK);
+				else if (i == 1) DrawText("Summer", 130, 165 + z, 20, BLACK);
+				else if (i == 2) DrawText("Autumn", 130, 165 + z, 20, BLACK);
+				z += 50;
+			}
+		}
+
+		if (CheckCollisionPointRec(mousePoint, { 60,150,200, 50 })) {
 			if (IsMouseButtonPressed(MOUSE_BUTTON_LEFT)) actionF = true;
 		}
 		if (actionF) {
-			DrawRectangleRec(test, GRAY);
-			DrawText("Fall", 230, 220, 30, BLACK);
+			DrawRectangleRec(semesters, GRAY);
+			DrawText("Fall", 105, 115, 20, BLACK);
 			action = false;
 		}
 
-		if (CheckCollisionPointRec(mousePoint, { 200,400,300,100 }) ) {
+		if (CheckCollisionPointRec(mousePoint, { 60,200,200, 50 }) ) {
 			if (IsMouseButtonPressed(MOUSE_BUTTON_LEFT)) actionS = true;
 		}
 		if (actionS) {
-			DrawRectangleRec(test, GRAY);
-			DrawText("Summer", 230, 220, 30, BLACK);
+			DrawRectangleRec(semesters, GRAY);
+			DrawText("Summer", 105, 115, 20, BLACK);
 			action = false;
 		}
 
-		if (CheckCollisionPointRec(mousePoint, { 200,500,300,100 })) {
+		if (CheckCollisionPointRec(mousePoint, { 60,250,200, 50 })) {
 			if (IsMouseButtonPressed(MOUSE_BUTTON_LEFT)) actionA = true;
 		}
 		if (actionA) {
-			DrawRectangleRec(test, GRAY);
-			DrawText("Autumn", 230, 220, 30, BLACK);
+			DrawRectangleRec(semesters, GRAY);
+			DrawText("Autumn", 105, 115, 20, BLACK);
 			action = false;
 		}
 
