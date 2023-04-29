@@ -2175,10 +2175,18 @@ void CoursePage(const int screenWidth, const int screenHeight, account& CurrentU
 				DrawText("File is exported to the folder! File name is: ", 582, 888, 15, GREEN);
 				DrawText(filename, 982, 888, 15, GREEN);
 			}
+			if (ExportStu.mouseontextbox) {
+				confirmBtnFalseDisplay1 = false;
+			}
 			// Calculate button frame rectangle to draw depending on button state
 
 			if (CheckCollisionPointRec(mousePoint, turnOffexport)) {
-				if (IsMouseButtonPressed(MOUSE_BUTTON_LEFT)) exportListStu.action = false;
+				if (IsMouseButtonPressed(MOUSE_BUTTON_LEFT)) {
+					exportListStu.action = false;
+					for (int i = 0; i < n; ++i) {
+						studentbutton[i].state = true;
+					}
+				}
 			}
 			sourceRecconfirmBtn.y = confirmBtnState * frameHeightconfirmBtn;
 			DrawTextureRec(confirmBtn, sourceRecconfirmBtn, { btnBoundsconfirmBtn.x, btnBoundsconfirmBtn.y }, WHITE); // Draw button frame
