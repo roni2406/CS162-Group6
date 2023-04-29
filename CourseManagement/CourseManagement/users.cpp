@@ -91,20 +91,6 @@ void student::outputAStudentToFile(char* filename) {
 	fout.close();
 }
 
-void sortToStuID(student*& StudentArray, int numOfStudents)
-{
-	for (int i = 0; i < numOfStudents - 1; ++i)
-	{
-		for (int j = 0; j < numOfStudents - i - 1; ++j)
-		{
-			if (strcmp(StudentArray[j].stuID, StudentArray[j + 1].stuID) == 1)
-				swap(StudentArray[j], StudentArray[j + 1]);
-		}
-	}
-	for (int i = 0; i < numOfStudents; ++i)
-		StudentArray[i].No = i + 1;
-}
-
 bool student::checkData() {
 	if (!Student.checkData() || strlen(stuID) != 8)
 		return false;
@@ -123,6 +109,20 @@ void staff::outputAStaffToFile(ofstream& fout) {
 }
 
 //other
+void sortToStuID(student*& StudentArray, int numOfStudents)
+{
+	for (int i = 0; i < numOfStudents - 1; ++i)
+	{
+		for (int j = 0; j < numOfStudents - i - 1; ++j)
+		{
+			if (strcmp(StudentArray[j].stuID, StudentArray[j + 1].stuID) == 1)
+				swap(StudentArray[j], StudentArray[j + 1]);
+		}
+	}
+	for (int i = 0; i < numOfStudents; ++i)
+		StudentArray[i].No = i + 1;
+}
+
 bool checkdata_FileName(char* fileNameIn)
 {
 	int n = strlen(fileNameIn);
@@ -131,21 +131,41 @@ bool checkdata_FileName(char* fileNameIn)
 	else return false;
 }
 
-char* getSchoolYearOfAStu(char* stuID) {
-	char* year = new char[3];
-	year[0] = stuID[0];
-	year[1] = stuID[1];
-	year[2] = '\0';
-	int yearInNum = atoi(year);
-	char* nextYear = new char[3];
-	int_to_char(yearInNum, nextYear);
-	
-	string schoolYear = "20" + string(year) + "-20" + string(nextYear);
-	
-	delete[] year;
-	delete[] nextYear;
-	char* getSchoolYear = (char*)schoolYear.c_str();
-	return getSchoolYear;
+void getStudyingSchoolYear(char* stuID, int& numOfschoolYear, char**& schoolYear) {
+	char* first2degitOfstuID = new char[3];
+	first2degitOfstuID[0] = stuID[0];
+	first2degitOfstuID[1] = stuID[1];
+	first2degitOfstuID[2] = '\0';
+
+	char now[9];
+	_strdate_s(now);
+	char* nowYear = new char[3];
+	nowYear[0] = now[0];
+	nowYear[1] = now[1];
+	nowYear[2] = '\0';
+
+	numOfschoolYear = atoi(first2degitOfstuID) - atoi(nowYear);
+	schoolYear = new char* [numOfschoolYear];
+	for (int i = 0; i < numOfschoolYear; i++) {
+		schoolYear[i] = new char[10];
+	}
+
+	int yearInNum = atoi(first2degitOfstuID);
+	for (int i = 0; i < numOfschoolYear; i++) {
+		char* prevYear = new char[3];
+		int_to_char(yearInNum, prevYear);
+		++yearInNum;
+		char* nextYear = new char[3];
+		int_to_char(yearInNum, nextYear);
+
+		string makeSchoolYear = "20" + string(prevYear) + "-20" + string(nextYear);
+		schoolYear[i] = (char*)makeSchoolYear.c_str();
+
+		delete[] prevYear;
+		delete[] nextYear;
+	}
+	delete[] first2degitOfstuID;
+	delete[] nowYear;
 }
 
 // 20

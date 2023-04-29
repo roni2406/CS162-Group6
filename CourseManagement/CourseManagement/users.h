@@ -44,6 +44,7 @@ struct staff {
 };
 
 void sortToStuID(student*& StudentArray, int numOfStudents);
+void getStudyingSchoolYear(char* stuID, int& numOfschoolYear, char**& schoolYear);
 
 bool checkdata_FileName(char* fileNameIn);
 
