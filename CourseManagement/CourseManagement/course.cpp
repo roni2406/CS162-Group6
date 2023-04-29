@@ -247,7 +247,13 @@ bool exportStudentsInCourseToFile(char* addressOfOutputFile, char* schoolYear, c
 	while (!fin.eof()) {
 		student s;
 		s.inputStudentsWithCSVFile(fin);
-		s.outputAStudentToFile(addressOfOutputFile);
+		ofstream fout;
+		string tmp = string(addressOfOutputFile) + "/" + string(courseName) + ".csv";
+		fout.open(tmp, ios::app);
+		if (!fout) return false;
+		fout.close();
+		char* filename = (char*)tmp.c_str();
+		s.outputAStudentToFile(filename);
 	}
 	fin.close();
 	return true;
