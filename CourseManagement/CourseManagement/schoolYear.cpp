@@ -19,6 +19,18 @@ bool schoolYear::checkdata() {
         return false;
     }
     delete[] Years;
+
+    char* s1 = new char[5];
+    char* s2 = new char[5];
+    for (int i = 0; i < 4; i++) {
+        s1[i] = sYear[i];
+        s2[i] = sYear[i + 5];
+    }
+    int year1 = atoi(s1);
+    int year2 = atoi(s2);
+    if (year2 - year1 != 1) {
+        return false;
+    }
     return true;
 }
 

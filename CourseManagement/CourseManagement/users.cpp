@@ -1,4 +1,5 @@
 #include <iostream>
+#include <string>
 #include <fstream>
 #include "Date.h"
 #include "scoreboard.h"
@@ -128,6 +129,23 @@ bool checkdata_FileName(char* fileNameIn)
 	if (fileNameIn[n - 4] == '.' && fileNameIn[n - 3] == 'c'
 		&& fileNameIn[n - 2] == 's' && fileNameIn[n - 1] == 'v') return true;
 	else return false;
+}
+
+char* getSchoolYearOfAStu(char* stuID) {
+	char* year = new char[3];
+	year[0] = stuID[0];
+	year[1] = stuID[1];
+	year[2] = '\0';
+	int yearInNum = atoi(year);
+	char* nextYear = new char[3];
+	int_to_char(yearInNum, nextYear);
+	
+	string schoolYear = "20" + string(year) + "-20" + string(nextYear);
+	
+	delete[] year;
+	delete[] nextYear;
+	char* getSchoolYear = (char*)schoolYear.c_str();
+	return getSchoolYear;
 }
 
 // 20
