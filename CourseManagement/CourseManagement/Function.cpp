@@ -1770,6 +1770,9 @@ void ViewCoursesPage(const int screenWidth, const int screenHeight, account& Cur
 			j += 61;
 
 			if (coursebutton[i].action1 == true) {
+				for (int j = 0; j < n; ++j) {
+					if (j != i) coursebutton[j].action1 = false;
+				}
 				x = coursebutton[i].x;
 				y = coursebutton[i].y;
 				DrawRectangle(x, y, 160, 50, LIGHTGRAY);
@@ -2062,6 +2065,9 @@ void CoursePage(const int screenWidth, const int screenHeight, account& CurrentU
 			j += 61;
 
 			if (studentbutton[i].action1 == true) {
+				for (int j = 0; j < n; ++j) {
+					if (j != i) studentbutton[j].action1 = false;
+				}
 				x = studentbutton[i].x;
 				y = studentbutton[i].y;
 				DrawRectangle(x, y, 160, 25, LIGHTGRAY);
