@@ -2004,12 +2004,26 @@ void CoursePage(const int screenWidth, const int screenHeight, account& CurrentU
 	addAStu.sourceRec = { 0, 0, (float)addAStu.texture.width, addAStu.frameHeight };
 	addAStu.btnBounds = { 599, 94, (float)addAStu.texture.width, addAStu.frameHeight};
 	
-	Button7 exportListStu; // caution
+	Button0 exportListStu; // caution
 	exportListStu.texture = LoadTexture("exportlistofstu.png");
 	exportListStu.frameHeight = (float)exportListStu.texture.height;
 	exportListStu.sourceRec = { 0, 0, (float)exportListStu.texture.width, exportListStu.frameHeight };
 	exportListStu.btnBounds = { 1028, 94, (float)exportListStu.texture.width, exportListStu.frameHeight};
 
+	Textbox1 ExportStu;
+	ExportStu.textbox = { 237, 377, 950, 47 };
+	
+	Texture2D confirmBtn = LoadTexture("confirmBtn1.png");
+	float frameHeightconfirmBtn = (float)confirmBtn.height;
+	Rectangle sourceRecconfirmBtn = { 0, 0, (float)confirmBtn.width,frameHeightconfirmBtn };
+	// Define button bounds on screen
+	Rectangle btnBoundsconfirmBtn = { 670, 470, (float)confirmBtn.width, frameHeightconfirmBtn };
+	int confirmBtnState = 0;               // Button state: 0-NORMAL, 1-MOUSE_HOVER, 2-PRESSED
+	bool confirmBtnAction = false;         // Button action should be activated
+	bool confirmBtnFalseDisplay = false;
+	bool confirmBtnFalseDisplay1 = false;
+
+	Rectangle turnOffexport = { 1235, 189, 91, 76 };
 	Button8* studentbutton = new Button8[n];
 	int scrollspeed = 35;
 	int x_student = 11;
@@ -2078,11 +2092,11 @@ void CoursePage(const int screenWidth, const int screenHeight, account& CurrentU
 				studentbutton[i].remove = false;
 				studentbutton[i].action1 = false;
 			}
-			delete stuNo;
-			delete finalMark;
-			delete midtermMark;
-			delete totalMark;
-			delete otherMark;
+			delete [] stuNo;
+			delete [] finalMark;
+			delete [] midtermMark;
+			delete [] totalMark;
+			delete [] otherMark;
 		}
 		DrawRectangle(0, 0, screenWidth, 70, WHITE);
 		DrawText(Course.courseID, 30, 10, 20, DARKBLUE);
@@ -2128,7 +2142,48 @@ void CoursePage(const int screenWidth, const int screenHeight, account& CurrentU
 		mousePoint = GetMousePosition();
 		addAStu.workbutton(mousePoint, CurrentUser, Course, Year, Semester, addStudentPageForCourse);
 		addStuCSV.workbutton(mousePoint, CurrentUser, Course, Year, Semester, addStudentCSVForCourse);
-		exportListStu.workbutton(mousePoint, CurrentUser, Course, Year, Semester, addStudentCSVForCourse);
+		exportListStu.workbutton(mousePoint);
+
+		string tmp = string(Course.courseName) + "-" + string(Course.className);
+		char* filename = (char*)tmp.c_str();
+
+		if (exportListStu.action) {
+			for (int i = 0; i < n; ++i) {
+				studentbutton[i].action = false;
+				studentbutton[i].action1 = false;
+			}
+			DrawRectangle(165, 190, 1161, 618, BLUE);
+			DrawText("OUT", 1254, 210, 44, RED);
+			DrawText("* Please input the link path to folder you want to export files to: ", 237, 298, 25, BLACK);
+			DrawRectangleRec(ExportStu.textbox, LIGHTGRAY);
+			ExportStu.worktextbox(confirmBtnFalseDisplay);
+			DrawText(ExportStu.text, 260, 390, 25, DARKBLUE);
+			DrawText(TextFormat("%i/%i", ExportStu.lettercount, MAX_INPUT_CHARS), 1218, 400, 20, DARKBLUE);
+
+			confirmBtnAction = false;
+			if (CheckCollisionPointRec(mousePoint, btnBoundsconfirmBtn)) {          // Check button state
+				if (IsMouseButtonPressed(MOUSE_BUTTON_LEFT)) confirmBtnAction = true;
+			}
+			else confirmBtnState = 0;
+			if (confirmBtnAction) {
+				if (exportStudentsInCourseToFile(ExportStu.text, Year, Semester, filename)) {
+					confirmBtnFalseDisplay1 = true;
+				}
+				else confirmBtnFalseDisplay = true;
+			}
+			if (confirmBtnFalseDisplay) DrawText("Could not export to the folder", 582, 888, 15, RED);
+			if (confirmBtnFalseDisplay1) {
+				DrawText("File is exported to the folder! File name is: ", 582, 888, 15, GREEN);
+				DrawText(filename, 982, 888, 15, GREEN);
+			}
+			// Calculate button frame rectangle to draw depending on button state
+
+			if (CheckCollisionPointRec(mousePoint, turnOffexport)) {
+				if (IsMouseButtonPressed(MOUSE_BUTTON_LEFT)) exportListStu.action = false;
+			}
+			sourceRecconfirmBtn.y = confirmBtnState * frameHeightconfirmBtn;
+			DrawTextureRec(confirmBtn, sourceRecconfirmBtn, { btnBoundsconfirmBtn.x, btnBoundsconfirmBtn.y }, WHITE); // Draw button frame
+		}
 		backtoviewcoursespage.workbutton(mousePoint, CurrentUser, Year, Semester, ViewCoursesPage);
 		EndDrawing();
 	}
@@ -2407,6 +2462,8 @@ void dataExistedPageforCourse(const int screenWidth, const int screenHeight, acc
 	}
 	CloseWindow();
 }
+void updateStudent(const int screenWidth, const int screenHeight, account& CurrentUser, char*& Year, char*& Semester, course& Course) {
 
+}
 
 

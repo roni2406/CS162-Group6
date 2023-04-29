@@ -239,16 +239,18 @@ bool CheckValidCourse(char* coursename, char* ID, char* classname, char* Year, c
 	return 1;
 }
 
-void exportStudentsInCourseToFile(char* addressOfOutputFile, char* schoolYear, char* semester, char* courseName) {
+bool exportStudentsInCourseToFile(char* addressOfOutputFile, char* schoolYear, char* semester, char* courseName) {
 	ifstream fin;
 	fin.open("../data/" + string(schoolYear) + "/" + string(semester)
 		+ "/" + string(courseName) + ".csv");
+	if (!fin) return false;
 	while (!fin.eof()) {
 		student s;
 		s.inputStudentsWithCSVFile(fin);
 		s.outputAStudentToFile(addressOfOutputFile);
 	}
 	fin.close();
+	return true;
 }
 //---------------------------------------------------------------
 int countStudentInCourse(char* schoolYear, char* semester, char* course) {

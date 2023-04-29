@@ -18,7 +18,7 @@ const int screenWidth = 1512;
 const int screenHeight = 982;
 const int MAX_INPUT_CHARS = 200;
 const int MAX_SCHOOLYEARS = 10;
-
+const float BACKSPACE_DELAY = 0.5f;
 
 //// Page
 void StudentorStaffPage(const int screenWidth, const int screenHeight, account& CurrentUser);
@@ -40,7 +40,6 @@ void ChangePasswordPageStaff(const int screenWidth, const int screenHeight, acco
 void CreateSchoolYearPage(const int screenWidth,const int screenHeight, account& CurrentUser); 
 void ViewSchoolYearsPage(const int screenWidth, const int screenHeight, account& CurrentUser);
 //void SchoolYearPage(const int screenWidth, const int screenHeight, account& CurrentUser, char* &Year);
-void viewClassinSchoolYearPage(); // thay bao z 
 
 void createClassPage(const int screenWidth, const int screenHeight, account& CurrentUser);
 void ViewClassesPage(const int screenWidth, const int screenHeight, account& CurrentUser);
@@ -58,16 +57,25 @@ void CreateCoursePage(const int screenWidth, const int screenHeight, account& Cu
 void ViewCoursesPage(const int screenWidth, const int screenHeight, account& CurrentUser, char*& Year, char*& Semester); // need to include struct semester to display and save data
 void CoursePage(const int screenWidth, const int screenHeight, account& CurrentUser, char*& Year, char* &Semester, course& Course); // need to include struct semester, course to display and save data
 void UpdateCoursePage(const int screenWidth, const int screenHeight, account& CurrentUser, char*& Year, char*& Semester, course*& Course, int n, int i);
-// in course page have following functions: delete, view student in the course, add student, delete student 
+
 void addStudentPageForCourse(const int screenWidth, const int screenHeight, account& CurrentUser, char*& Year, char*& Semester, course& Course);
 void addStudentCSVForCourse(const int screenWidth, const int screenHeight, account& CurrentUser, char*& Year, char*& Semester, course& Course);
 void dataExistedPageforCourse(const int screenWidth, const int screenHeight, account& CurrentUser, char* Year, char* Semester, course Course, int numDupStu, student* dupstu);
-void scoreboardPage();
-
+void updateStudent(const int screenWidth, const int screenHeight, account& CurrentUser, char*& Year, char*& Semester, course& Course);
 //// Objects
 
 /// button:
-
+struct Button0 {
+	const int screenWidth = 1512;
+	const int screenHeight = 982;
+	Texture2D texture;
+	float frameHeight = 0;
+	Rectangle sourceRec = { 0, 0, 0, 0 };
+	Rectangle btnBounds = { 0, 0, 0, 0 };
+	int state = 0;					// Button state: 0-NORMAL, 1-MOUSE_HOVER, 2-PRESSED
+	bool action = false;
+	void workbutton(Vector2 mousePoint);
+};
 // used for "bo-goc" button and have 1 case display ( can be used now)
 struct Button1 {
 	const int screenWidth = 1512;
@@ -172,6 +180,7 @@ struct Button8 {
 struct Textbox1 {
 	char text[MAX_INPUT_CHARS + 1] = "\0";
 	int lettercount = 0;
+	float delay_time = 0.0f;
 	Rectangle textbox;
 	bool mouseontextbox = false;
 	void worktextbox(bool& somethingfalsedisplay);
@@ -183,11 +192,19 @@ struct Textbox2 {
 	char hiddentext[MAX_INPUT_CHARS + 1] = "\0";
 	int lettercount = 0;
 	int lettercounthidden = 0;
+	float delay_time = 0.0f;
 	Rectangle textbox;
 	bool mouseontextbox = false;
 	void worktextbox(bool& somethingfalsedisplay);
 };
 
-// schoolyear text (use for multiple page (global variable))
-
+// used for update student's result
+struct Textbox3 {
+	char text[5] = "\0";
+	int lettercount = 0;
+	float delay_time = 0.0f;
+	Rectangle textbox;
+	bool mouseontextbox = false;
+	void worktextbox(bool& somethingfalsedisplay);
+};
 

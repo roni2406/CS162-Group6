@@ -34,7 +34,7 @@ bool updateCourse(char* year, char* semester, course& courses, char* courseName_
 bool CheckValidCourse(char* coursename, char* ID, char* classname, char* Year, char* semester);
 void LoadCourseFromFile(char* year, char* semester, int& num, course* &courses);
 bool FileDrop(char*& filename);
-void exportStudentsInCourseToFile(char* addressOfOutputFile, char* schoolYear, char* semester, char* courseName);
+bool exportStudentsInCourseToFile(char* addressOfOutputFile, char* schoolYear, char* semester, char* courseName);
 
 // 17
 course* viewCoursesInSemester(char* year, char* semester);
