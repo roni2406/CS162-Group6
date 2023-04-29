@@ -139,12 +139,13 @@ void getStudyingSchoolYear(char* stuID, int& numOfschoolYear, char**& schoolYear
 
 	char now[9];
 	_strdate_s(now);
+	now[8] = '\0';
 	char* nowYear = new char[3];
-	nowYear[0] = now[0];
-	nowYear[1] = now[1];
+	nowYear[0] = now[6];
+	nowYear[1] = now[7];
 	nowYear[2] = '\0';
-
-	numOfschoolYear =  atoi(nowYear) - atoi(first2degitOfstuID);
+	
+	numOfschoolYear = atoi(nowYear) - atoi(first2degitOfstuID);
 	schoolYear = new char* [numOfschoolYear];
 	for (int i = 0; i < numOfschoolYear; i++) {
 		schoolYear[i] = new char[10];
@@ -159,7 +160,11 @@ void getStudyingSchoolYear(char* stuID, int& numOfschoolYear, char**& schoolYear
 		int_to_char(yearInNum, nextYear);
 
 		string makeSchoolYear = "20" + string(prevYear) + "-20" + string(nextYear);
-		schoolYear[i] = (char*)makeSchoolYear.c_str();
+		//schoolYear[i] = (char*)makeSchoolYear.c_str();
+		for (int j = 0; j < 9; j++) {
+			schoolYear[i][j] = makeSchoolYear[j];
+		}
+		schoolYear[i][9] = '\0';
 
 		delete[] prevYear;
 		delete[] nextYear;
