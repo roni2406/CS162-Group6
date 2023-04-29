@@ -1,3 +1,1 @@
 123,123,231,213,4,57,MON,S1
-asd,asd,dsa,sda,2,50,asd,asd
-dsa,asdasd,adsads,dsa,2,50,ads,dsa
