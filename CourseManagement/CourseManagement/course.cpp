@@ -210,6 +210,8 @@ void deleteStudent(course& course, int no, int& n, char* Year, char* Semester) {
 //	fout.close();
 //	Load_stu(year, semester);
 //}
+
+/*
 bool FileDrop(char*&filename) {
 	bool is_drop = 0;
 	if (IsFileDropped())
@@ -221,6 +223,8 @@ bool FileDrop(char*&filename) {
 	}
 	return is_drop;
 }
+*/
+
 bool CheckValidCourse(char* coursename, char* ID, char* classname, char* Year, char* semester) {
 	int num = countCourse( Year, semester);
 	course* courses;
