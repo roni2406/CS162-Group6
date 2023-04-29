@@ -2013,11 +2013,11 @@ void CoursePage(const int screenWidth, const int screenHeight, account& CurrentU
 	Textbox1 ExportStu;
 	ExportStu.textbox = { 237, 377, 950, 47 };
 	
-	Texture2D confirmBtn = LoadTexture("confirmBtn1.png");
+	Texture2D confirmBtn = LoadTexture("ConfirmBtn2.png");
 	float frameHeightconfirmBtn = (float)confirmBtn.height;
 	Rectangle sourceRecconfirmBtn = { 0, 0, (float)confirmBtn.width,frameHeightconfirmBtn };
 	// Define button bounds on screen
-	Rectangle btnBoundsconfirmBtn = { 670, 470, (float)confirmBtn.width, frameHeightconfirmBtn };
+	Rectangle btnBoundsconfirmBtn = { 620, 490, (float)confirmBtn.width, frameHeightconfirmBtn };
 	int confirmBtnState = 0;               // Button state: 0-NORMAL, 1-MOUSE_HOVER, 2-PRESSED
 	bool confirmBtnAction = false;         // Button action should be activated
 	bool confirmBtnFalseDisplay = false;
@@ -2151,13 +2151,14 @@ void CoursePage(const int screenWidth, const int screenHeight, account& CurrentU
 			for (int i = 0; i < n; ++i) {
 				studentbutton[i].state = false;
 			}
-			DrawRectangle(165, 190, 1161, 618, BLUE);
-			DrawText("OUT", 1254, 210, 44, RED);
-			DrawText("* Please input the link path to folder you want to export files to: ", 237, 298, 25, BLACK);
-			DrawRectangleRec(ExportStu.textbox, LIGHTGRAY);
+			
+			DrawRectangleGradientV(165, 220, 1161, 370, DARKBLUE, BLUE);
+			DrawText("Back", 1210, 240,30, WHITE);
+			DrawText("* Please input the link path to folder you want to export files to: ", 237, 330, 25, WHITE);
+			DrawRectangleRec(ExportStu.textbox, WHITE);
 			ExportStu.worktextbox(confirmBtnFalseDisplay);
 			DrawText(ExportStu.text, 260, 390, 25, DARKBLUE);
-			DrawText(TextFormat("%i/%i", ExportStu.lettercount, MAX_INPUT_CHARS), 1218, 400, 20, DARKBLUE);
+			DrawText(TextFormat("%i/%i", ExportStu.lettercount, MAX_INPUT_CHARS), 1218, 390, 20, WHITE);
 
 			confirmBtnAction = false;
 			if (CheckCollisionPointRec(mousePoint, btnBoundsconfirmBtn)) {          // Check button state
@@ -2170,10 +2171,14 @@ void CoursePage(const int screenWidth, const int screenHeight, account& CurrentU
 				}
 				else confirmBtnFalseDisplay = true;
 			}
-			if (confirmBtnFalseDisplay) DrawText("Could not export to the folder", 582, 888, 15, RED);
+			if (confirmBtnFalseDisplay) {
+				DrawRectangle(238, 444, 335, 28, YELLOW);
+				DrawText("Could not export to the folder!", 242, 448, 20, RED);
+			}
 			if (confirmBtnFalseDisplay1) {
-				DrawText("File is exported to the folder! File name is: ", 582, 888, 15, GREEN);
-				DrawText(filename, 982, 888, 15, GREEN);
+				DrawRectangle(238, 444, 635, 28, WHITE);
+				DrawText("File is exported to the folder! File name is: ", 242, 448, 20, GREEN);
+				DrawText(filename, 692, 448, 20, GREEN);
 			}
 			if (ExportStu.mouseontextbox) {
 				confirmBtnFalseDisplay1 = false;
