@@ -216,10 +216,22 @@ void Textbox1::worktextbox(bool& somethingfalsedisplay) {
 		if (IsKeyDown(KEY_LEFT_CONTROL) && IsKeyDown(KEY_V)) {
 			lettercount = 0;
 			const char* a = GetClipboardText();
-			for (int i = 1; i < strlen(a) - 1; ++i) {
-				text[lettercount++] = a[i];
+			if (a[0] == '\'') {
+				for (int i = 1; i < strlen(a) - 1; ++i) {
+					text[lettercount++] = a[i];
+				}
+				text[lettercount] = '\0';
 			}
-			text[lettercount] = '\0';
+			else {
+				for (int i = 0; i < strlen(a); ++i) {
+					text[lettercount++] = a[i];
+				}
+				text[lettercount] = '\0';
+			}
+		}
+		if (IsKeyDown(KEY_LEFT_CONTROL) && IsKeyDown(KEY_Z)) {
+			text[0] = '\0';
+			lettercount = 0;
 		}
 	}
 	if (mouseontextbox) {
@@ -288,12 +300,28 @@ void Textbox2::worktextbox(bool& somethingfalsedisplay) {
 			lettercounthidden = 0;
 			lettercount = 0;
 			const char* a = GetClipboardText();
-			for (int i = 1; i < strlen(a) - 1; ++i) {
-				text[lettercount++] = a[i];
-				hiddentext[lettercounthidden] = a[i];
+			if (a[0] == '\'') {
+				for (int i = 1; i < strlen(a) - 1; ++i) {
+					text[lettercount++] = a[i];
+					hiddentext[lettercounthidden++] = '*';
+				}
+				text[lettercount] = '\0';
+				hiddentext[lettercounthidden] = '\0';
 			}
-			text[lettercount] = '\0';
-			hiddentext[lettercounthidden] = '\0';
+			else {
+				for (int i = 0 ; i < strlen(a); ++i) {
+					text[lettercount++] = a[i];
+					hiddentext[lettercounthidden++] = '*';
+				}
+				text[lettercount] = '\0';
+				hiddentext[lettercounthidden] = '\0';
+			}
+		}
+		if (IsKeyDown(KEY_LEFT_CONTROL) && IsKeyDown(KEY_Z)) {
+			text[0] = '\0';
+			hiddentext[0] = '\0';
+			lettercount = 0;
+			lettercounthidden = 0;
 		}
 	}
 
@@ -348,11 +376,24 @@ void Textbox3::worktextbox(bool& somethingfalsedisplay) {
 		if (IsKeyDown(KEY_LEFT_CONTROL) && IsKeyDown(KEY_V)) {
 			lettercount = 0;
 			const char* a = GetClipboardText();
-			for (int i = 1; i < strlen(a) - 1; ++i) {
-				text[lettercount++] = a[i];
+			if (a[0] == '\'') {
+				for (int i = 1; i < strlen(a) - 1; ++i) {
+					text[lettercount++] = a[i];
+				}
+				text[lettercount] = '\0';
 			}
-			text[lettercount] = '\0';
+			else {
+				for (int i = 0; i < strlen(a); ++i) {
+					text[lettercount++] = a[i];
+				}
+				text[lettercount] = '\0';
+			}
 		}
+		if (IsKeyDown(KEY_LEFT_CONTROL) && IsKeyDown(KEY_Z)) {
+			text[0] = '\0';
+			lettercount = 0;
+		}
+
 	}
 	if (mouseontextbox) {
 		DrawRectangleLines((int)textbox.x, (int)textbox.y, (int)textbox.width, (int)textbox.height, BLUE);
