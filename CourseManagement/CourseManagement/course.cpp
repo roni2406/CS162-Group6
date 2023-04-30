@@ -455,7 +455,10 @@ bool checkDataUpdateStudent(char* mark) {
 		if (i == 1) {
 			if (mark[i] != '.' && mark[i] != 48) return false;
 		}
-		else if (mark[i] < 46 || mark[i] > 57 || mark[i] == 47) return false;
+		else if (i == 2) {
+			if (mark[i] != '.' && (mark[i] < 48 || mark[i] > 57)) return false;
+		}
+		else if (mark[i] < 48 || mark[i] > 57) return false;
 	}
 	return true;
 }

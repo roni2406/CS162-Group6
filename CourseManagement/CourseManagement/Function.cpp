@@ -2727,7 +2727,7 @@ void updateStudent(const int screenWidth, const int screenHeight, account& Curre
 	float frameHeightconfirmBtn = (float)confirmBtn.height;
 	Rectangle sourceRecconfirmBtn = { 0, 0, (float)confirmBtn.width,frameHeightconfirmBtn };
 	// Define button bounds on screen
-	Rectangle btnBoundsconfirmBtn = { 670, 910, (float)confirmBtn.width, frameHeightconfirmBtn };
+	Rectangle btnBoundsconfirmBtn = { 670, 456, (float)confirmBtn.width, frameHeightconfirmBtn };
 	int confirmBtnState = 0;               // Button state: 0-NORMAL, 1-MOUSE_HOVER, 2-PRESSED
 	bool confirmBtnAction = false;         // Button action should be activated
 	bool confirmBtnFalseDisplay = false;
@@ -2740,11 +2740,12 @@ void updateStudent(const int screenWidth, const int screenHeight, account& Curre
 		DrawRectangle(0, 0, screenWidth, 60, WHITE);
 
 		DrawRectangleRec(backtocoursepage.button, WHITE);
-		DrawText(Year, 30, 15, 40, DARKBLUE);
-		DrawText(Semester, 670, 15, 40, DARKBLUE);
+		DrawText(Course.courseID, 30, 10, 20, DARKBLUE);
+		DrawText(Course.className, 30, 40, 20, DARKBLUE);
+		DrawText(s.stuID, 662, 15, 40, DARKBLUE);
 		DrawText("Back to Course Page", 1230, 20, 20, DARKBLUE);
 
-		DrawRectangle(126, 264, 1260, 266, WHITE);
+		DrawRectangle(126, 264, 1260, 316, WHITE);
 		DrawText("* Total Mark: ", 233, 340, 25, DARKBLUE);
 		DrawRectangleRec(totalMark.textbox, LIGHTGRAY);
 		DrawText("* Final Mark: ", 530, 340, 25, DARKBLUE);
@@ -2813,8 +2814,9 @@ void updateStudent(const int screenWidth, const int screenHeight, account& Curre
 				EndDrawing();
 				CoursePage(screenWidth, screenHeight, CurrentUser, Year, Semester, Course);
 			}
+			else confirmBtnFalseDisplay = true;
 		}
-		if (confirmBtnFalseDisplay) DrawText("Some inputs are wrong. Please try again!", 582, 402, 15, RED);
+		if (confirmBtnFalseDisplay) DrawText("Some inputs are in wrong format. Please try again!", 505, 431, 20, RED);
 		// Calculate button frame rectangle to draw depending on button state
 		sourceRecconfirmBtn.y = confirmBtnState * frameHeightconfirmBtn;
 		DrawTextureRec(confirmBtn, sourceRecconfirmBtn, { btnBoundsconfirmBtn.x, btnBoundsconfirmBtn.y }, WHITE); // Draw button frame
