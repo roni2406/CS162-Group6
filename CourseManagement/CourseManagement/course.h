@@ -64,4 +64,8 @@ student* viewScoreBoardOfCourse(char* addressOfOutputFile, char* schoolYear, cha
 bool checkDataUpdateStudent(char* mark);
 bool UpdateStudentMark(student& s, char* totalMark, char* finalMark, char* midtermMark, char* otherMark);
 
+// Need Functions to Get Overall GPA:
+int countOverallNumberOfCourses(char* stuID);
+
+
 #endif

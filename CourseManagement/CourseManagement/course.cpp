@@ -476,23 +476,52 @@ bool UpdateStudentMark(student& s, char* totalMark, char* finalMark, char* midte
 }
 
 // Need Functions to Get Overall GPA:
-/*
 int countOverallNumberOfCourses(char* stuID)
 {
+	int numCoursesFromStart = 0;
+	int numOfSchoolYear = 0;
 	char** schoolYear = nullptr;
-	getStudyingSchoolYear
+	getStudyingSchoolYear(stuID, numOfSchoolYear, schoolYear);
 	string* Semester = new string[3];
 	Semester[0] = "Autumn";
 	Semester[1] = "Fall";
 	Semester[2] = "Summer";
-	int numOfSchoolYear = countSchoolYear();
-	for (int i = 1; i <= numOfSchoolYear; ++i)
+	char** semester = new char* [3];
+	for (int i = 0; i < 3; ++i)
+		semester[i] = new char[10];
+	for (int i = 0; i < 3; ++i)
 	{
-		char* schoolYear = new char[10];
-		for (int j = 1; j <= 3; ++j)
-		{
-
-		}
+		for (int j = 0; j < Semester[i].size(); ++j)
+			semester[i][j] = Semester[i][j];
 	}
+	for (int i = 0; i < 3; ++i)
+		semester[i][Semester[i].size()] = '\0';
+	
+	for (int i = 0; i < numOfSchoolYear; ++i)
+		for (int j = 0; j < 3; ++j)
+			numCoursesFromStart += countCoursesOfAStudent(stuID, schoolYear[i], semester[i]);
+}
+
+/*
+course* GetOverallCourseListFromStart(char* stuID)
+{
+	int numCoursesFromStart = 0;
+	int numOfSchoolYear = 0;
+	char** schoolYear = nullptr;
+	getStudyingSchoolYear(stuID, numOfSchoolYear, schoolYear);
+	string* Semester = new string[3];
+	Semester[0] = "Autumn";
+	Semester[1] = "Fall";
+	Semester[2] = "Summer";
+	char** semester = new char* [3];
+	for (int i = 0; i < 3; ++i)
+		semester[i] = new char[10];
+	for (int i = 0; i < 3; ++i)
+	{
+		for (int j = 0; j < Semester[i].size(); ++j)
+			semester[i][j] = Semester[i][j];
+	}
+	for (int i = 0; i < 3; ++i)
+		semester[i][Semester[i].size()] = '\0';
 }
 */
