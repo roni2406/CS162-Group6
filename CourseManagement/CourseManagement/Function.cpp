@@ -53,10 +53,16 @@ void LogInPageStudent(const int screenWidth, const int screenHeight, account& Cu
 	password.textbox = { 477, 453,558,106 };
 
 	Button0 viewPass;
-	viewPass.texture = LoadTexture("viewPassButton.png");
+	viewPass.texture = LoadTexture("showpass.png");
 	viewPass.frameHeight = (float)viewPass.texture.height;
 	viewPass.sourceRec = { 0, 0, (float)viewPass.texture.width, viewPass.frameHeight };
-	viewPass.btnBounds = { 477, 570, (float)viewPass.texture.width, viewPass.frameHeight };
+	viewPass.btnBounds = { 665, 410, (float)viewPass.texture.width, viewPass.frameHeight };
+
+	Button0 hidePass;
+	hidePass.texture = LoadTexture("hidepass.png");
+	hidePass.frameHeight = (float)hidePass.texture.height;
+	hidePass.sourceRec = { 0, 0, (float)hidePass.texture.width, hidePass.frameHeight };
+	hidePass.btnBounds = { 665, 406, (float)hidePass.texture.width, hidePass.frameHeight };
 
 	Button2 backtopreviouspage;
 	backtopreviouspage.button = { 1200, 20, 300, 30 };
@@ -107,6 +113,7 @@ void LogInPageStudent(const int screenWidth, const int screenHeight, account& Cu
 			DrawText(password.hiddentext, 500, 490, 40, DARKBLUE);
 		}
 		if (!viewPass.hidden) {
+			DrawTextureRec(hidePass.texture, hidePass.sourceRec, { hidePass.btnBounds.x,hidePass.btnBounds.y }, WHITE);
 			DrawText(password.text, 500, 490, 40, DARKBLUE);
 		}
 		DrawText(TextFormat("%i/%i", password.lettercount, MAX_INPUT_CHARS), 1050, 500, 20, DARKBLUE);
@@ -146,43 +153,41 @@ void LogInPageStudent(const int screenWidth, const int screenHeight, account& Cu
 	CloseWindow();
 }
 void LogInPageStaff(const int screenWidth, const int screenHeight, account& CurrentUser) {
-
 	Rectangle background = { 0,0,float(screenWidth),float(screenHeight) };
 
 	//Initialize textbox-------------------------------------------------------
 	Textbox1 username;
-	username.textbox = { 477, 239,558,106 };
+	username.textbox = { 477, 289,558,106 };
 
 	Textbox2 password;
-	password.textbox = { 477, 403,558,106 };
+	password.textbox = { 477, 453,558,106 };
+
+	Button0 viewPass;
+	viewPass.texture = LoadTexture("showpass.png");
+	viewPass.frameHeight = (float)viewPass.texture.height;
+	viewPass.sourceRec = { 0, 0, (float)viewPass.texture.width, viewPass.frameHeight };
+	viewPass.btnBounds = { 665, 410, (float)viewPass.texture.width, viewPass.frameHeight };
+
+	Button0 hidePass;
+	hidePass.texture = LoadTexture("hidepass.png");
+	hidePass.frameHeight = (float)hidePass.texture.height;
+	hidePass.sourceRec = { 0, 0, (float)hidePass.texture.width, hidePass.frameHeight };
+	hidePass.btnBounds = { 665, 406, (float)hidePass.texture.width, hidePass.frameHeight };
 
 	Button2 backtopreviouspage;
 	backtopreviouspage.button = { 1200, 20, 300, 30 };
+
 	////initialize login button---------------------------------------------------------------------------------------------------
 	Texture2D loginButton = LoadTexture("loginButton.png");
 
 	float frameHeightloginButton = (float)loginButton.height;
 	Rectangle sourceRecloginButton = { 0, 0, (float)loginButton.width, frameHeightloginButton };
 	// Define button bounds on screen
-	Rectangle btnBoundsloginButton = { (screenWidth / 2.0f - loginButton.width / 2.0f) - 10, 550, (float)loginButton.width, frameHeightloginButton };
-
-	Button0 viewPass;
-	viewPass.texture = LoadTexture("viewPassButton.png");
-	viewPass.frameHeight = (float)viewPass.texture.height;
-	viewPass.sourceRec = { 0, 0, (float)viewPass.texture.width, viewPass.frameHeight };
-	viewPass.btnBounds = { 477, 520, (float)viewPass.texture.width, viewPass.frameHeight };
-
+	Rectangle btnBoundsloginButton = { (screenWidth / 2.0f - loginButton.width / 2.0f) - 10, 600, (float)loginButton.width, frameHeightloginButton };
 
 	int loginbtnState = 0;               // Button state: 0-NORMAL, 1-MOUSE_HOVER, 2-PRESSED
 	bool loginbtnAction = false;         // Button action should be activated
 	bool isLoginFalseDisplay = false;
-
-	////initialize signup button---------------------------------------------------------------------------------------------------
-	Button1 SignUp;
-	SignUp.texture = LoadTexture("signupButton.png");
-	SignUp.frameHeight = (float)SignUp.texture.height;
-	SignUp.sourceRec = { 0, 0, (float)SignUp.texture.width, SignUp.frameHeight };
-	SignUp.btnBounds = { (screenWidth / 2.0f - SignUp.texture.width / 2.0f) - 10, 650, (float)SignUp.texture.width, SignUp.frameHeight };
 
 	bool stafforstudent = true;
 	////initialize for login--------------------------------------------------------------------------------------------------------------
@@ -203,24 +208,25 @@ void LogInPageStaff(const int screenWidth, const int screenHeight, account& Curr
 		DrawRectangleRec(backtopreviouspage.button, WHITE);
 		DrawText("Back to the previous page", 1200, 20, 20, DARKBLUE);
 		DrawRectangleRec(password.textbox, LIGHTGRAY);
-		DrawText("* Username", 477, 200, 30, DARKBLUE);
-		DrawText("* Password", 477, 364, 30, DARKBLUE);
-		DrawText("or", 735, 615, 30, DARKBLUE);
+		DrawText("* Username", 477, 250, 30, DARKBLUE);
+		DrawText("* Password", 477, 414, 30, DARKBLUE);
 
 		////Function_of_TextInputBoxes_----------------------------------------------------------------------------------------------------------------------
 		username.worktextbox(isLoginFalseDisplay);
 		password.worktextbox(isLoginFalseDisplay);
 		viewPass.workbutton(mousePoint);
 
-		DrawText(username.text, 500, 270, 40, DARKBLUE);
-		DrawText(TextFormat("%i/%i", username.lettercount, MAX_INPUT_CHARS), 1050, 280, 20, DARKBLUE);
+
+		DrawText(username.text, 500, 320, 40, DARKBLUE);
+		DrawText(TextFormat("%i/%i", username.lettercount, MAX_INPUT_CHARS), 1050, 330, 20, DARKBLUE);
 		if (viewPass.hidden) {
-			DrawText(password.hiddentext, 500, 434, 40, DARKBLUE);
+			DrawText(password.hiddentext, 500, 490, 40, DARKBLUE);
 		}
 		if (!viewPass.hidden) {
-			DrawText(password.text, 500, 434, 40, DARKBLUE);
+			DrawTextureRec(hidePass.texture, hidePass.sourceRec, { hidePass.btnBounds.x,hidePass.btnBounds.y }, WHITE);
+			DrawText(password.text, 500, 490, 40, DARKBLUE);
 		}
-		DrawText(TextFormat("%i/%i", password.lettercount, MAX_INPUT_CHARS), 1050, 444, 20, DARKBLUE);
+		DrawText(TextFormat("%i/%i", password.lettercount, MAX_INPUT_CHARS), 1050, 500, 20, DARKBLUE);
 
 		////Function of login button-------------------------------------------------------------------------------------------------------------------------
 		mousePoint = GetMousePosition();
@@ -243,7 +249,7 @@ void LogInPageStaff(const int screenWidth, const int screenHeight, account& Curr
 			}
 			else isLoginFalseDisplay = true;
 		}
-		if (isLoginFalseDisplay) DrawText("Invalid username or password!", 477, 520, 20, RED);
+		if (isLoginFalseDisplay) DrawText("Invalid username or password!", 477, 570, 20, RED);
 
 		// Calculate button frame rectangle to draw depending on button state
 		sourceRecloginButton.y = loginbtnState * frameHeightloginButton;
@@ -252,135 +258,11 @@ void LogInPageStaff(const int screenWidth, const int screenHeight, account& Curr
 
 		////Function of signup button-------------------------------------------------------------------------------------------------------------------------
 		backtopreviouspage.workbutton(mousePoint, CurrentUser, StudentorStaffPage);
-		SignUp.workbutton(mousePoint, CurrentUser, SignUpPage);
 		EndDrawing();
 	}
 	CloseWindow();
 }
 
-void SignUpPage(const int screenWidth, const int screenHeight, account& CurrentUser) {
-	Rectangle background = { 0,0,float(screenWidth),float(screenHeight) };
-
-	//Initialize---------------------------------------------------------------------
-	Textbox1 username;
-	username.textbox = { 471, 200, 558, 112 };
-
-	Textbox2 password;
-	password.textbox = { 471, 373, 558, 112 };
-	Textbox2 confirmpass;
-	confirmpass.textbox = { 471, 546, 558, 112 };
-
-	Button2 backtologinsite;
-	backtologinsite.button = { 1300, 20, 200, 30 };
-
-	Texture2D viewPassButton = LoadTexture("confirmBtn1.png");
-	float frameHeightviewPassButton = (float)viewPassButton.height;
-	Rectangle sourceRecviewPassButton = { 0, 0, (float)viewPassButton.width, frameHeightviewPassButton };
-	Rectangle btnBoundsviewPassButton = { (screenWidth / 2.0f - viewPassButton.width / 2.0f) - 10, 300, (float)viewPassButton.width, frameHeightviewPassButton };
-	bool state = false;
-	////initialize signup button---------------------------------------------------------------------------------------------------
-	Texture2D signupButton = LoadTexture("signupButton.png");
-	float frameHeightsignupButton = (float)signupButton.height;
-	Rectangle sourceRecsignupButton = { 0, 0, (float)signupButton.width, frameHeightsignupButton };
-	Rectangle btnBoundssignupButton = { (screenWidth / 2.0f - signupButton.width / 2.0f) - 10, 700, (float)signupButton.width, frameHeightsignupButton };
-
-	int signupbtnState = 0;               // Button state: 0-NORMAL, 1-MOUSE_HOVER, 2-PRESSED
-	bool signupbtnAction = false;         // Button action should be activated
-	bool issignupFalseDisplay = false;
-
-	//// initialize for sign up-------------------------------------------------------------------------------------------------------
-	account newinfo;
-
-	Vector2 mousePoint = { 0.0f, 0.0f };
-
-	//SetTargetFPS(40);
-
-	//Draw----------------------------------------------------------------------------------------------------------------------------
-	while (!WindowShouldClose()) {
-		ClearBackground(WHITE);
-
-		BeginDrawing();
-		DrawRectangleGradientEx(background, SKYBLUE, DARKBLUE, DARKBLUE, SKYBLUE);
-		DrawRectangle(348, 110, 800, 680, WHITE);
-		DrawRectangle(0, 0, screenWidth, 60, WHITE);
-		DrawRectangleRec(backtologinsite.button, WHITE);
-		DrawText("  Call us : (028) 3835 4266         E - mail : info@fit.hcmus.edu.vn", 0, 20, 20, DARKBLUE);
-		DrawText("Back to Log in Site", 1300, 20, 20, DARKBLUE);
-		DrawRectangleRec(username.textbox, LIGHTGRAY);
-		DrawRectangleRec(password.textbox, LIGHTGRAY);
-		DrawRectangleRec(confirmpass.textbox, LIGHTGRAY);
-		DrawText("* Username", 471, 165, 30, DARKBLUE);
-		DrawText("* Password", 471, 338, 30, DARKBLUE);
-		DrawText("* Confirm Password", 471, 511, 30, DARKBLUE);
-
-		////Function_of_TextInputBoxes_----------------------------------------------------------------------------------------------------------------------
-		username.worktextbox(issignupFalseDisplay);
-		password.worktextbox(issignupFalseDisplay);
-		confirmpass.worktextbox(issignupFalseDisplay);
-
-		DrawText(username.text, 500, 231, 40, DARKBLUE);
-		if (CheckCollisionPointRec(mousePoint, btnBoundsviewPassButton)) {
-			DrawRectangleLines((screenWidth / 2.0f - viewPassButton.width / 2.0f) - 10, 300, (float)viewPassButton.width, frameHeightviewPassButton, BLACK);
-			if (IsMouseButtonPressed(MOUSE_BUTTON_LEFT) && state) {
-				state = false;
-			}
-			else if (IsMouseButtonPressed(MOUSE_BUTTON_LEFT) && !state) {
-				state = true;
-			}
-		}
-		if (state) DrawText(password.text, 500, 400, 40, DARKBLUE);
-		if (!state) DrawText(password.hiddentext, 500, 400, 40, DARKBLUE);
-		DrawText(confirmpass.hiddentext, 500, 573, 40, DARKBLUE);
-
-		DrawText(TextFormat("%i/%i", username.lettercount, MAX_INPUT_CHARS), 1050, 280, 20, DARKBLUE);
-		DrawText(TextFormat("%i/%i", password.lettercount, MAX_INPUT_CHARS), 1050, 450, 20, DARKBLUE);
-		DrawText(TextFormat("%i/%i", confirmpass.lettercount, MAX_INPUT_CHARS), 1050, 620, 20, DARKBLUE);
-		////-------------------------------------------------------------------------------------------------------------------------------------------------
-
-		////Function of signup button------------------------------------------------------------------------------------------------------------------------
-
-		mousePoint = GetMousePosition();
-		signupbtnAction = false;
-
-		if (CheckCollisionPointRec(mousePoint, btnBoundssignupButton)) {          // Check button state
-			if (IsMouseButtonPressed(MOUSE_BUTTON_LEFT)) signupbtnAction = true;
-		}
-		else signupbtnState = false;
-
-		newinfo.userName = _strdup(username.text);
-		newinfo.password = _strdup(password.text);
-
-		if (signupbtnAction)
-		{
-			if (username.text[0] == '\0' || password.text[0] == '\0' || confirmpass.text[0] == '\0') {
-				issignupFalseDisplay = true;
-			}
-			else if (StaffSignup(newinfo, confirmpass.text)) {
-				issignupFalseDisplay = false;
-				EndDrawing();
-				LogInPageStaff(screenWidth, screenHeight, CurrentUser);
-			}
-			else
-				issignupFalseDisplay = true;
-		}
-		if (issignupFalseDisplay) DrawText("Username have been used or wrong password! Please try again!", 430, 673, 20, RED);
-
-		// Calculate button frame rectangle to draw depending on button state
-		sourceRecsignupButton.y = signupbtnState * frameHeightsignupButton;
-		DrawTextureRec(signupButton, sourceRecsignupButton, { btnBoundssignupButton.x, btnBoundssignupButton.y }, WHITE);
-		
-		// Draw button frame
-		sourceRecviewPassButton.y = state * frameHeightviewPassButton;
-		DrawTextureRec(viewPassButton, sourceRecviewPassButton, { btnBoundsviewPassButton.x, btnBoundsviewPassButton.y }, WHITE);
-		///Function of back to log in site
-		backtologinsite.workbutton(mousePoint, CurrentUser, LogInPageStaff);
-		//--------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-
-		EndDrawing();
-	}
-	CloseWindow();
-
-}
 void ProfilePageStudent(const int screenWidth, const int screenHeight, account& CurrentUser) {
 	////Initialize variable---------------------------------------------------------------------------------------------
 	Texture2D avatar;
@@ -765,22 +647,40 @@ void ChangePasswordPageStudent(const int screenWidth, const int screenHeight, ac
 	backtoprofilepage.button = { 1270, 20, 200, 30 };
 
 	Button0 viewPass1;
-	viewPass1.texture = LoadTexture("viewPassButton.png");
+	viewPass1.texture = LoadTexture("showpass.png");
 	viewPass1.frameHeight = (float)viewPass1.texture.height;
 	viewPass1.sourceRec = { 0, 0, (float)viewPass1.texture.width, viewPass1.frameHeight };
-	viewPass1.btnBounds = { 931, 200, (float)viewPass1.texture.width, viewPass1.frameHeight };
+	viewPass1.btnBounds = { 965, 200, (float)viewPass1.texture.width, viewPass1.frameHeight };
 
 	Button0 viewPass2;
-	viewPass2.texture = LoadTexture("viewPassButton.png");
+	viewPass2.texture = LoadTexture("showpass.png");
 	viewPass2.frameHeight = (float)viewPass2.texture.height;
 	viewPass2.sourceRec = { 0, 0, (float)viewPass2.texture.width, viewPass2.frameHeight };
-	viewPass2.btnBounds = { 931, 364, (float)viewPass2.texture.width, viewPass2.frameHeight };
+	viewPass2.btnBounds = { 965, 362, (float)viewPass2.texture.width, viewPass2.frameHeight };
 
 	Button0 viewPass3;
-	viewPass3.texture = LoadTexture("viewPassButton.png");
+	viewPass3.texture = LoadTexture("showpass.png");
 	viewPass3.frameHeight = (float)viewPass3.texture.height;
 	viewPass3.sourceRec = { 0, 0, (float)viewPass3.texture.width, viewPass3.frameHeight };
-	viewPass3.btnBounds = { 931, 528, (float)viewPass3.texture.width, viewPass3.frameHeight };
+	viewPass3.btnBounds = { 965, 526, (float)viewPass3.texture.width, viewPass3.frameHeight };
+
+	Button0 hidePass1;
+	hidePass1.texture = LoadTexture("hidepass.png");
+	hidePass1.frameHeight = (float)hidePass1.texture.height;
+	hidePass1.sourceRec = { 0, 0, (float)hidePass1.texture.width, hidePass1.frameHeight };
+	hidePass1.btnBounds = { 965, 196, (float)hidePass1.texture.width, hidePass1.frameHeight };
+
+	Button0 hidePass2;
+	hidePass2.texture = LoadTexture("hidepass.png");
+	hidePass2.frameHeight = (float)hidePass2.texture.height;
+	hidePass2.sourceRec = { 0, 0, (float)hidePass2.texture.width, hidePass2.frameHeight };
+	hidePass2.btnBounds = { 965, 358, (float)hidePass2.texture.width, hidePass2.frameHeight };
+
+	Button0 hidePass3;
+	hidePass3.texture = LoadTexture("hidepass.png");
+	hidePass3.frameHeight = (float)hidePass3.texture.height;
+	hidePass3.sourceRec = { 0, 0, (float)hidePass3.texture.width, hidePass3.frameHeight };
+	hidePass3.btnBounds = { 965, 522, (float)hidePass3.texture.width, hidePass3.frameHeight };
 
 	bool isChangePassFalseDisplay = false;
 	Texture2D confirmBtn = LoadTexture("confirmBtn.png");
@@ -823,18 +723,21 @@ void ChangePasswordPageStudent(const int screenWidth, const int screenHeight, ac
 		}
 		if (!viewPass1.hidden) {
 			DrawText(oldpass.text, 500, 270, 40, DARKBLUE);
+			DrawTextureRec(hidePass1.texture, hidePass1.sourceRec, { hidePass1.btnBounds.x,hidePass1.btnBounds.y }, WHITE);
 		}
 		if (viewPass2.hidden) {
 			DrawText(newpass.hiddentext, 500, 434, 40, DARKBLUE);
 		}
 		if (!viewPass2.hidden) {
 			DrawText(newpass.text, 500, 434, 40, DARKBLUE);
+			DrawTextureRec(hidePass2.texture, hidePass2.sourceRec, { hidePass2.btnBounds.x,hidePass2.btnBounds.y }, WHITE);
 		}
 		if (viewPass3.hidden) {
 			DrawText(confirmnewpass.hiddentext, 500, 598, 40, DARKBLUE);
 		}
 		if (!viewPass3.hidden) {
 			DrawText(confirmnewpass.text, 500, 598, 40, DARKBLUE);
+			DrawTextureRec(hidePass3.texture, hidePass3.sourceRec, { hidePass3.btnBounds.x,hidePass3.btnBounds.y }, WHITE);
 		}
 
 		DrawText(TextFormat("%i/%i", oldpass.lettercount, MAX_INPUT_CHARS), 1050, 280, 20, DARKBLUE);
@@ -888,22 +791,40 @@ void ChangePasswordPageStaff(const int screenWidth, const int screenHeight, acco
 	backtoprofilepage.button = { 1270, 20, 200, 30 };
 
 	Button0 viewPass1;
-	viewPass1.texture = LoadTexture("viewPassButton.png");
+	viewPass1.texture = LoadTexture("showpass.png");
 	viewPass1.frameHeight = (float)viewPass1.texture.height;
 	viewPass1.sourceRec = { 0, 0, (float)viewPass1.texture.width, viewPass1.frameHeight };
-	viewPass1.btnBounds = { 931, 200, (float)viewPass1.texture.width, viewPass1.frameHeight };
+	viewPass1.btnBounds = { 965, 200, (float)viewPass1.texture.width, viewPass1.frameHeight };
 
 	Button0 viewPass2;
-	viewPass2.texture = LoadTexture("viewPassButton.png");
+	viewPass2.texture = LoadTexture("showpass.png");
 	viewPass2.frameHeight = (float)viewPass2.texture.height;
 	viewPass2.sourceRec = { 0, 0, (float)viewPass2.texture.width, viewPass2.frameHeight };
-	viewPass2.btnBounds = { 931, 364, (float)viewPass2.texture.width, viewPass2.frameHeight };
+	viewPass2.btnBounds = { 965, 362, (float)viewPass2.texture.width, viewPass2.frameHeight };
 
 	Button0 viewPass3;
-	viewPass3.texture = LoadTexture("viewPassButton.png");
+	viewPass3.texture = LoadTexture("showpass.png");
 	viewPass3.frameHeight = (float)viewPass3.texture.height;
 	viewPass3.sourceRec = { 0, 0, (float)viewPass3.texture.width, viewPass3.frameHeight };
-	viewPass3.btnBounds = { 931, 528, (float)viewPass3.texture.width, viewPass3.frameHeight };
+	viewPass3.btnBounds = { 965, 526, (float)viewPass3.texture.width, viewPass3.frameHeight };
+
+	Button0 hidePass1;
+	hidePass1.texture = LoadTexture("hidepass.png");
+	hidePass1.frameHeight = (float)hidePass1.texture.height;
+	hidePass1.sourceRec = { 0, 0, (float)hidePass1.texture.width, hidePass1.frameHeight };
+	hidePass1.btnBounds = { 965, 196, (float)hidePass1.texture.width, hidePass1.frameHeight };
+
+	Button0 hidePass2;
+	hidePass2.texture = LoadTexture("hidepass.png");
+	hidePass2.frameHeight = (float)hidePass2.texture.height;
+	hidePass2.sourceRec = { 0, 0, (float)hidePass2.texture.width, hidePass2.frameHeight };
+	hidePass2.btnBounds = { 965, 358, (float)hidePass2.texture.width, hidePass2.frameHeight };
+
+	Button0 hidePass3;
+	hidePass3.texture = LoadTexture("hidepass.png");
+	hidePass3.frameHeight = (float)hidePass3.texture.height;
+	hidePass3.sourceRec = { 0, 0, (float)hidePass3.texture.width, hidePass3.frameHeight };
+	hidePass3.btnBounds = { 965, 522, (float)hidePass3.texture.width, hidePass3.frameHeight };
 
 	bool isChangePassFalseDisplay = false;
 
@@ -947,18 +868,21 @@ void ChangePasswordPageStaff(const int screenWidth, const int screenHeight, acco
 		}
 		if (!viewPass1.hidden) {
 			DrawText(oldpass.text, 500, 270, 40, DARKBLUE);
+			DrawTextureRec(hidePass1.texture, hidePass1.sourceRec, { hidePass1.btnBounds.x,hidePass1.btnBounds.y }, WHITE);
 		}
 		if (viewPass2.hidden) {
 			DrawText(newpass.hiddentext, 500, 434, 40, DARKBLUE);
 		}
 		if (!viewPass2.hidden) {
 			DrawText(newpass.text, 500, 434, 40, DARKBLUE);
+			DrawTextureRec(hidePass2.texture, hidePass2.sourceRec, { hidePass2.btnBounds.x,hidePass2.btnBounds.y }, WHITE);
 		}
 		if (viewPass3.hidden) {
 			DrawText(confirmnewpass.hiddentext, 500, 598, 40, DARKBLUE);
 		}
 		if (!viewPass3.hidden) {
 			DrawText(confirmnewpass.text, 500, 598, 40, DARKBLUE);
+			DrawTextureRec(hidePass3.texture, hidePass3.sourceRec, { hidePass3.btnBounds.x,hidePass3.btnBounds.y }, WHITE);
 		}
 
 		DrawText(TextFormat("%i/%i", oldpass.lettercount, MAX_INPUT_CHARS), 1050, 280, 20, DARKBLUE);
