@@ -499,13 +499,16 @@ int countOverallNumberOfCourses(char* stuID)
 	
 	for (int i = 0; i < numOfSchoolYear; ++i)
 		for (int j = 0; j < 3; ++j)
-			numCoursesFromStart += countCoursesOfAStudent(stuID, schoolYear[i], semester[i]);
+			numCoursesFromStart += countCoursesOfAStudent(stuID, schoolYear[i], semester[j]);
+	return numCoursesFromStart;
 }
 
-/*
 course* GetOverallCourseListFromStart(char* stuID)
 {
-	int numCoursesFromStart = 0;
+	int numCoursesFromStart = countOverallNumberOfCourses(stuID);
+	course* AllCoursesFromStart = new course[numCoursesFromStart];
+	
+
 	int numOfSchoolYear = 0;
 	char** schoolYear = nullptr;
 	getStudyingSchoolYear(stuID, numOfSchoolYear, schoolYear);
@@ -523,5 +526,64 @@ course* GetOverallCourseListFromStart(char* stuID)
 	}
 	for (int i = 0; i < 3; ++i)
 		semester[i][Semester[i].size()] = '\0';
+
+	
+	int cnt = 0;
+	for (int i = 0; i < numOfSchoolYear; ++i)
+	{
+		for (int j = 0; j < 3; ++j)
+		{
+			int numOfCoursesOfCurrentSemester = countCourse(schoolYear[i], semester[j]);
+			course* CoursesOfCurrentSemester = viewCoursesOfAStudent(stuID, schoolYear[i], semester[j]);
+			for (int k = 0; k < numOfCoursesOfCurrentSemester; ++k)
+			{
+				AllCoursesFromStart[cnt + k] = CoursesOfCurrentSemester[k];
+			}
+			cnt += numOfCoursesOfCurrentSemester;
+		}
+	}
+	return AllCoursesFromStart;
+}
+
+/*
+scoreboard* GetScoresListFromStart(char* stuID)
+{
+	int numCoursesFromStart = countOverallNumberOfCourses(stuID);
+	scoreboard* AllScoresFromStart = new scoreboard[numCoursesFromStart];
+
+
+	int numOfSchoolYear = 0;
+	char** schoolYear = nullptr;
+	getStudyingSchoolYear(stuID, numOfSchoolYear, schoolYear);
+	string* Semester = new string[3];
+	Semester[0] = "Autumn";
+	Semester[1] = "Fall";
+	Semester[2] = "Summer";
+	char** semester = new char* [3];
+	for (int i = 0; i < 3; ++i)
+		semester[i] = new char[10];
+	for (int i = 0; i < 3; ++i)
+	{
+		for (int j = 0; j < Semester[i].size(); ++j)
+			semester[i][j] = Semester[i][j];
+	}
+	for (int i = 0; i < 3; ++i)
+		semester[i][Semester[i].size()] = '\0';
+
+
+	int cnt = 0;
+	for (int i = 0; i < numOfSchoolYear; ++i)
+	{
+		for (int j = 0; j < 3; ++j)
+		{
+			int numOfCoursesOfCurrentSemester = countCourse(schoolYear[i], semester[j]);
+			scoreboard* OfCurrentSemester = viewCoursesOfAStudent(stuID, schoolYear[i], semester[j]);
+			for (int k = 0; k < numOfCoursesOfCurrentSemester; ++k)
+			{
+				AllCoursesFromStart[cnt + k] = CoursesOfCurrentSemester[k];
+			}
+			cnt += numOfCoursesOfCurrentSemester;
+		}
+	}
 }
 */

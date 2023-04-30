@@ -66,6 +66,7 @@ bool UpdateStudentMark(student& s, char* totalMark, char* finalMark, char* midte
 
 // Need Functions to Get Overall GPA:
 int countOverallNumberOfCourses(char* stuID);
+course* GetOverallCourseListFromStart(char* stuID);
 
 
 #endif
