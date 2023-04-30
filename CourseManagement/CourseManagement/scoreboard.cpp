@@ -5,13 +5,13 @@ using namespace std;
 void scoreboard::inputScoreBoardWithCSV(ifstream& fin) 
 {
 	fin.ignore(10, ',');
-	fin >> midtermMark;
+	fin >> totalMark;
 	fin.ignore(10, ',');
 	fin >> finalMark;
 	fin.ignore(10, ',');
-	fin >> otherMark;
+	fin >> midtermMark;
 	fin.ignore(10, ',');
-	fin >> totalMark;
+	fin >> otherMark;
 	fin.ignore(10, '\n');
 }
 
@@ -26,10 +26,10 @@ void scoreboard::outputScoreBoardToFile(char* fileName)
 {
 	ofstream fout;
 	fout.open(fileName, ios::app);
-	fout << "," << midtermMark << "," << finalMark << "," << otherMark << "," << totalMark;
+	fout << "," << totalMark << "," << finalMark << "," << midtermMark << "," << otherMark;
 	fout.close();
 }
 
 void scoreboard::outputScoreBoardToFile(ofstream& fout) {
-	fout << "," << midtermMark << "," << finalMark << "," << otherMark << "," << totalMark;
+	fout << "," << totalMark << "," << finalMark << "," << midtermMark << "," << otherMark;
 }

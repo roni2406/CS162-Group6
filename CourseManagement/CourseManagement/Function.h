@@ -61,7 +61,7 @@ void UpdateCoursePage(const int screenWidth, const int screenHeight, account& Cu
 void addStudentPageForCourse(const int screenWidth, const int screenHeight, account& CurrentUser, char*& Year, char*& Semester, course& Course);
 void addStudentCSVForCourse(const int screenWidth, const int screenHeight, account& CurrentUser, char*& Year, char*& Semester, course& Course);
 void dataExistedPageforCourse(const int screenWidth, const int screenHeight, account& CurrentUser, char* Year, char* Semester, course Course, int numDupStu, student* dupstu);
-void updateStudent(const int screenWidth, const int screenHeight, account& CurrentUser, char*& Year, char*& Semester, course& Course);
+void updateStudent(const int screenWidth, const int screenHeight, account& CurrentUser, char*& Year, char*& Semester, course& Course, student& s);
 //// Objects
 
 /// button:
@@ -172,6 +172,22 @@ struct Button8 {
 	bool remove = false; // delete course
 	bool update = false;
 	void workbutton(Vector2 mousePoint, account& CurrentUser, char*&a, char*& b, course& c, void(*func)(const int screenWidth, const int screenHeight, account& CurrentUser, char*& a, char*& b, course& c));
+
+};
+
+struct Button9 {
+	int x = 0;
+	int y = 0;
+	const int screenWidth = 1512;
+	const int screenHeight = 982;
+	Rectangle button;
+	bool mouseonbutton = false;
+	bool state = true; // check if the button out of bounds
+	bool action = false; // move to another page
+	bool action1 = false; // open a small window to do something
+	bool remove = false; // delete course
+	bool update = false;
+	void workbutton(Vector2 mousePoint, account& CurrentUser, char*& a, char*& b, course& c, student& s, void(*func)(const int screenWidth, const int screenHeight, account& CurrentUser, char*& a, char*& b, course& c, student& s));
 
 };
 /// textbox

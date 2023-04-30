@@ -131,6 +131,42 @@ void Button8::workbutton(Vector2 mousePoint, account& CurrentUser, char*& a, cha
 		func(screenWidth, screenHeight, CurrentUser, a, b, c);
 	}
 }
+
+void Button9::workbutton(Vector2 mousePoint, account& CurrentUser, char*& a, char*& b, course& c, student& s, void(*func)(const int screenWidth, const int screenHeight, account& CurrentUser, char*& a, char*& b, course& c, student& s)) {
+	if (CheckCollisionPointRec(mousePoint, button) && state) {          // Check button state
+		if (IsMouseButtonPressed(MOUSE_BUTTON_LEFT)) {
+			action = true;
+			action1 = false;
+		}
+		if (IsMouseButtonPressed(MOUSE_BUTTON_RIGHT)) {
+			x = GetMouseX();
+			y = GetMouseY();
+			action1 = true;
+			action = false;
+		}
+	}
+	else {
+		action = false;
+	}
+	if (CheckCollisionPointRec(GetMousePosition(), { float(x),float(y),160,25 })) {
+		action = false;
+		if (IsMouseButtonPressed(MOUSE_BUTTON_LEFT)) {
+			remove = true;
+		}
+	}
+	else if (CheckCollisionPointRec(GetMousePosition(), { float(x),float(y) + 25,160,25 })) {
+		action = false;
+		if (IsMouseButtonPressed(MOUSE_BUTTON_LEFT)) {
+			update = true;
+		}
+	}
+	else if (IsMouseButtonPressed(MOUSE_BUTTON_LEFT)) action1 = false;
+	if (action && state)
+	{
+		EndDrawing();
+		func(screenWidth, screenHeight, CurrentUser, a, b, c, s);
+	}
+}
 // Textbox
 void Textbox1::worktextbox(bool& somethingfalsedisplay) {
 	if (CheckCollisionPointRec(GetMousePosition(), textbox)) mouseontextbox = true;

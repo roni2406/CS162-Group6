@@ -2185,7 +2185,7 @@ void CoursePage(const int screenWidth, const int screenHeight, account& CurrentU
 	bool confirmBtnFalseDisplay1 = false;
 
 	Rectangle turnOffexport = { 1235, 189, 91, 76 };
-	Button8* studentbutton = new Button8[n];
+	Button9* studentbutton = new Button9[n];
 	int scrollspeed = 35;
 	int x_student = 11;
 	int y_student = 255;
@@ -2236,7 +2236,7 @@ void CoursePage(const int screenWidth, const int screenHeight, account& CurrentU
 			double_to_char(listStudents[i].mark.otherMark, otherMark);
 			DrawText(otherMark, x_student + 1384, y_student + j + 30, 20, BLACK);
 			if (y_student + j < 231) studentbutton[i].state = false;
-			studentbutton[i].workbutton(mousePoint, CurrentUser, Year, Semester, Course, CoursePage);
+			studentbutton[i].workbutton(mousePoint, CurrentUser, Year, Semester, Course, listStudents[i], updateStudent);
 			j += 61;
 
 			if (studentbutton[i].action1 == true) {
@@ -2635,8 +2635,125 @@ void dataExistedPageforCourse(const int screenWidth, const int screenHeight, acc
 	}
 	CloseWindow();
 }
-void updateStudent(const int screenWidth, const int screenHeight, account& CurrentUser, char*& Year, char*& Semester, course& Course) {
+void updateStudent(const int screenWidth, const int screenHeight, account& CurrentUser, char*& Year, char*& Semester, course& Course, student& s) {
+	Vector2 mousePoint = { 0.0f, 0.0f };
+	Rectangle background = { 0,0,float(screenWidth),float(screenHeight) };
 
+	Textbox3 totalMark;
+	totalMark.textbox = { 233, 369, 137, 47 };
+	Textbox3 finalMark;
+	finalMark.textbox = { 530, 369, 137, 47 };
+	Textbox3 midtermMark;
+	midtermMark.textbox = { 827, 369, 137, 47 };
+	Textbox3 otherMark;
+	otherMark.textbox = { 1124, 369, 137, 47 };
+
+	Button8 backtocoursepage;
+	backtocoursepage.button = { 1200, 20, 200, 30 };
+
+	Texture2D confirmBtn = LoadTexture("confirmBtn1.png");
+	float frameHeightconfirmBtn = (float)confirmBtn.height;
+	Rectangle sourceRecconfirmBtn = { 0, 0, (float)confirmBtn.width,frameHeightconfirmBtn };
+	// Define button bounds on screen
+	Rectangle btnBoundsconfirmBtn = { 670, 910, (float)confirmBtn.width, frameHeightconfirmBtn };
+	int confirmBtnState = 0;               // Button state: 0-NORMAL, 1-MOUSE_HOVER, 2-PRESSED
+	bool confirmBtnAction = false;         // Button action should be activated
+	bool confirmBtnFalseDisplay = false;
+	while (!WindowShouldClose()) {
+		ClearBackground(WHITE);
+		BeginDrawing();
+
+		DrawText("  Call us : (028) 3835 4266         E - mail : info@fit.hcmus.edu.vn", 0, 20, 20, DARKBLUE);
+		DrawRectangleGradientEx(background, SKYBLUE, DARKBLUE, DARKBLUE, SKYBLUE);
+		DrawRectangle(0, 0, screenWidth, 60, WHITE);
+
+		DrawRectangleRec(backtocoursepage.button, WHITE);
+		DrawText(Year, 30, 15, 40, DARKBLUE);
+		DrawText(Semester, 670, 15, 40, DARKBLUE);
+		DrawText("Back to Course Page", 1230, 20, 20, DARKBLUE);
+
+		DrawRectangle(126, 264, 1260, 266, WHITE);
+		DrawText("* Total Mark: ", 233, 340, 25, DARKBLUE);
+		DrawRectangleRec(totalMark.textbox, LIGHTGRAY);
+		DrawText("* Final Mark: ", 530, 340, 25, DARKBLUE);
+		DrawRectangleRec(finalMark.textbox, LIGHTGRAY);
+		DrawText("* Midterm Mark: ", 827, 340, 25, DARKBLUE);
+		DrawRectangleRec(midtermMark.textbox, LIGHTGRAY);
+		DrawText("* Other Mark: ", 1124, 340, 25, DARKBLUE);
+		DrawRectangleRec(otherMark.textbox, LIGHTGRAY);
+
+
+		////Function_of_TextInputBoxes_----------------------------------------------------------------------------------------------------------------------
+		totalMark.worktextbox(confirmBtnFalseDisplay);
+		finalMark.worktextbox(confirmBtnFalseDisplay);
+		midtermMark.worktextbox(confirmBtnFalseDisplay);
+		otherMark.worktextbox(confirmBtnFalseDisplay);
+
+
+
+		if (totalMark.lettercount == 0) {
+			char* Total = new char[5];
+			double_to_char(s.mark.totalMark, Total);
+			DrawText(Total, 256, 382, 25, BLACK);
+		}
+		if (finalMark.lettercount == 0) {
+			char* Final = new char[5];
+			double_to_char(s.mark.finalMark, Final);
+			DrawText(Final, 553, 382, 25, BLACK);
+		}
+		if (midtermMark.lettercount == 0) {
+			char* Midterm = new char[5];
+			double_to_char(s.mark.midtermMark, Midterm);
+			DrawText(Midterm, 850, 382, 25, BLACK);
+		}
+		if (otherMark.lettercount == 0) {
+			char* Other = new char[5];
+			double_to_char(s.mark.otherMark, Other);
+			DrawText(Other, 1147, 382, 25, BLACK);
+		}
+
+
+		DrawText(totalMark.text, 256, 382, 25, DARKBLUE);
+		DrawText(TextFormat("%i/%i", totalMark.lettercount, 4), 395, 392, 20, DARKBLUE);
+		DrawText(finalMark.text, 553, 382, 25, DARKBLUE);
+		DrawText(TextFormat("%i/%i", finalMark.lettercount, 4), 692, 392, 20, DARKBLUE);
+		DrawText(midtermMark.text, 850, 382, 25, DARKBLUE);
+		DrawText(TextFormat("%i/%i", midtermMark.lettercount, 4), 989, 392, 20, DARKBLUE);
+		DrawText(otherMark.text, 1147, 382, 25, DARKBLUE);
+		DrawText(TextFormat("%i/%i", otherMark.lettercount, 4), 1286, 392, 20, DARKBLUE);
+
+
+
+		////Function of buttons------------------------------------------------------------------------------------------------------------------------------
+		mousePoint = GetMousePosition();
+
+		///Confirm button
+		confirmBtnAction = false;
+		if (CheckCollisionPointRec(mousePoint, btnBoundsconfirmBtn)) {          // Check button state
+			if (IsMouseButtonPressed(MOUSE_BUTTON_LEFT)) confirmBtnAction = true;
+		}
+		else confirmBtnState = 0;
+		if (confirmBtnAction) {
+			if (UpdateStudentMark(s, totalMark.text, finalMark.text, midtermMark.text, otherMark.text)) {
+				Return_stu(Course, Year, Semester);
+				confirmBtnFalseDisplay = false;
+				EndDrawing();
+				CoursePage(screenWidth, screenHeight, CurrentUser, Year, Semester, Course);
+			}
+		}
+		if (confirmBtnFalseDisplay) DrawText("Some inputs are wrong. Please try again!", 582, 402, 15, RED);
+		// Calculate button frame rectangle to draw depending on button state
+		sourceRecconfirmBtn.y = confirmBtnState * frameHeightconfirmBtn;
+		DrawTextureRec(confirmBtn, sourceRecconfirmBtn, { btnBoundsconfirmBtn.x, btnBoundsconfirmBtn.y }, WHITE); // Draw button frame
+
+		/// Back to profile page button
+		backtocoursepage.workbutton(mousePoint, CurrentUser, Year, Semester, Course, CoursePage);
+
+		EndDrawing();
+	}
+	delete[] Year;
+	delete[] Semester;
+	CloseWindow();
 }
 
 

@@ -60,4 +60,8 @@ course* viewCoursesOfAStudent(char* stuID, char* schoolYear, char* semester);
 // 21
 student* viewScoreBoardOfCourse(char* addressOfOutputFile, char* schoolYear, char* semester, char* courseName);
 
+// 22
+bool checkDataUpdateStudent(char* mark);
+bool UpdateStudentMark(student& s, char* totalMark, char* finalMark, char* midtermMark, char* otherMark);
+
 #endif

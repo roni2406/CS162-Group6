@@ -150,10 +150,10 @@ void Return_stu(course& Course, char* year, char* semester) {
 			<< Course.stuOfCourse[i].Student.dob.m << "/"
 			<< Course.stuOfCourse[i].Student.dob.y << ","
 			<< Course.stuOfCourse[i].Student.socialID << ","
-			<< Course.stuOfCourse[i].mark.midtermMark << ","
+			<< Course.stuOfCourse[i].mark.totalMark << ","
 			<< Course.stuOfCourse[i].mark.finalMark << ","
-			<< Course.stuOfCourse[i].mark.otherMark << ","
-			<< Course.stuOfCourse[i].mark.totalMark;
+			<< Course.stuOfCourse[i].mark.midtermMark << ","
+			<< Course.stuOfCourse[i].mark.otherMark;
 
 	}
 	f.close();
@@ -442,4 +442,26 @@ course* viewCoursesOfAStudent(char* stuID, char* schoolYear, char* semester)
 		}
 	}
 	return saveCourse;
+}
+
+bool checkDataUpdateStudent(char* mark) {
+	for (int i = 0; i < strlen(mark); ++i) {
+		if (i == 1) {
+			if (mark[i] != '.' && mark[i] != 48) return false;
+		}
+		else if (mark[i] < 46 || mark[i] > 57 || mark[i] == 47) return false;
+	}
+	return true;
+}
+bool UpdateStudentMark(student& s, char* totalMark, char* finalMark, char* midtermMark, char* otherMark) {
+	// check data
+	if (!checkDataUpdateStudent(totalMark)) return false;
+	if (!checkDataUpdateStudent(finalMark)) return false;
+	if (!checkDataUpdateStudent(midtermMark)) return false;
+	if (!checkDataUpdateStudent(otherMark)) return false;
+	if (totalMark[0] != '\0')		s.mark.totalMark = atof(totalMark);
+	if (finalMark[0] != '\0')		s.mark.finalMark = atof(finalMark);
+	if (midtermMark[0] != '\0')		s.mark.midtermMark = atof(midtermMark);
+	if (otherMark[0] != '\0')		s.mark.otherMark = atof(otherMark);
+	return true;
 }
