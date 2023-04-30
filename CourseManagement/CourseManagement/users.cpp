@@ -291,28 +291,24 @@ double getSemesterGPA(char* stuID, char* schoolYear, char* semester)
 		SemesterGPA += ListOfStudyingCourses[i].numOfCre * ListOfStudyingScores[i].totalMark;
 	}
 	SemesterGPA /= numOfSemesterCredits;
-	SemesterGPA = round(SemesterGPA * 100.0) / 100.0;
 	return SemesterGPA;
 }
 
-/*
 double getOverallGPA(char* stuID)
 {
 	double OverallGPA = 0;
 	course* ListOfStudyingCourses = GetOverallCourseListFromStart(stuID);
-	scoreboard* ListOfStudyingScores = GetsaveScore(stuID, schoolYear, semester);
+	scoreboard* ListOfStudyingScores = GetOverallScoresListFromStart(stuID);
 	int numOfStudyingCourses = countOverallNumberOfCourses(stuID);
-	int numOfSemesterCredits = 0;
+	int numOfOverallCredits = 0;
 	for (int i = 0; i < numOfStudyingCourses; ++i)
 	{
-		numOfSemesterCredits += ListOfStudyingCourses[i].numOfCre;
-		SemesterGPA += ListOfStudyingCourses[i].numOfCre * ListOfStudyingScores[i].totalMark;
+		numOfOverallCredits += ListOfStudyingCourses[i].numOfCre;
+		OverallGPA += ListOfStudyingCourses[i].numOfCre * ListOfStudyingScores[i].totalMark;
 	}
-	SemesterGPA /= numOfSemesterCredits;
-	SemesterGPA = round(SemesterGPA * 100.0) / 100.0;
-	return SemesterGPA;
+	OverallGPA /= numOfOverallCredits;
+	return OverallGPA;
 }
-*/
 
 void OutputToFileCoursesAndScores(char* stuID, char* schoolYear, char* semester, char* filename)
 {

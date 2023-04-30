@@ -546,7 +546,7 @@ course* GetOverallCourseListFromStart(char* stuID)
 }
 
 
-scoreboard* GetScoresListFromStart(char* stuID)
+scoreboard* GetOverallScoresListFromStart(char* stuID)
 {
 	int numCoursesFromStart = countOverallNumberOfCourses(stuID);
 	scoreboard* AllScoresFromStart = new scoreboard[numCoursesFromStart];
