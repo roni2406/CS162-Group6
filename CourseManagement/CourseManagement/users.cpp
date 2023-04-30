@@ -252,7 +252,7 @@ void InputScoreBoardWithCSV(char* addressOfOutputFile, char* schoolYear, char* s
 void viewPersonalStudentScoreboard(char* stuID, char* schoolYear, char* semester, scoreboard*& saveScore)
 {
 	int numOfCourses = countCourse(schoolYear, semester);
-	saveScore = new scoreboard[numOfCourses];	// Have to show all Scores of A Score (students' case)
+	saveScore = new scoreboard[numOfCourses];	
 	int cnt = 0;
 	course* CoursesInSemester = viewCoursesInSemester(schoolYear, semester);
 	for (int i = 0; i < numOfCourses; ++i)
@@ -292,6 +292,7 @@ double getSemesterGPA(char* stuID, char* schoolYear, char* semester)
 		SemesterGPA += ListOfStudyingCourses[i].numOfCre * ListOfStudyingScores[i].totalMark;
 	}
 	SemesterGPA /= numOfSemesterCredits;
+	SemesterGPA = round(SemesterGPA * 100.0) / 100.0;
 	return SemesterGPA;
 }
 
