@@ -333,7 +333,7 @@ void ProfilePageStudent(const int screenWidth, const int screenHeight, account& 
 		////change password button function-----------------------------------------------------------------------------------------------------------
 		ChangePass.workbutton(mousePoint, CurrentUser, ChangePasswordPageStudent);
 		LogOut.workbutton(mousePoint, CurrentUser, LogInPageStudent);
-		scoreboard.workbutton(mousePoint, CurrentUser, LogInPageStudent);
+		scoreboard.workbutton(mousePoint, CurrentUser, ScoreboardStudent);
 		course.workbutton(mousePoint, CurrentUser, CoursePageStudent);
 
 		//// display schoolyear from createschoolyear page--------------------------------------------------------------------------------------------
@@ -385,8 +385,8 @@ void CoursePageStudent(const int screenWidth, const int screenHeight, account& C
 		DrawText("Years", 420, 115, 20, DARKBLUE);
 		DrawRectangleRec(semesters, WHITE);
 		DrawText("Semesters", 105, 115, 20, DARKBLUE);
-		DrawRectangleRec(ok, WHITE);
-		DrawText("OK", 690, 115, 20, DARKBLUE);
+		DrawRectangleRec(ok, DARKBLUE);
+		DrawText("OK", 690, 115, 20, WHITE);
 		int z = 0, r = 0,j=0;
 
 		DrawRectangle(0, 189, 121, 42, LIGHTGRAY);
@@ -528,7 +528,6 @@ void CoursePageStudent(const int screenWidth, const int screenHeight, account& C
 
 			DrawRectangleLines(0, y_course + j - 24, 1512, 62, BLACK);
 			DrawRectangleLines(0, y_course + j - 24, 1512, 62, BLACK);
-			//coursebutton[i].button = { 0, float(y_course + j), 1512, 20 };
 			DrawText(courses[i].courseID, x_course, y_course + j, 20, BLACK);
 			DrawText(courses[i].courseName, x_course + 148, y_course + j, 20, BLACK);
 			DrawText(courses[i].className, x_course + 614, y_course + j, 20, BLACK);
@@ -541,8 +540,6 @@ void CoursePageStudent(const int screenWidth, const int screenHeight, account& C
 			DrawText(maxstu, x_course + 1189, y_course + j, 20, BLACK);
 			DrawText(courses[i].dayofweek, x_course + 1320, y_course + j, 20, BLACK);
 			DrawText(courses[i].sessionHour, x_course + 1442, y_course + j, 20, BLACK);
-			/*if (y_course + j < 231) coursebutton[i].state = false;
-			coursebutton[i].workbutton(mousePoint, CurrentUser, Year, Semester, courses[i], CoursePage);*/
 			j += 61;
 		}
 		
@@ -550,6 +547,236 @@ void CoursePageStudent(const int screenWidth, const int screenHeight, account& C
 			DrawText("No Data Available !!!", 420, 470, 70, RED);
 		}
 
+		backtopreviouspage.workbutton(mousePoint, CurrentUser, ProfilePageStudent);
+		EndDrawing();
+	}
+	CloseWindow();
+}
+void ScoreboardStudent(const int screenWidth, const int screenHeight, account& CurrentUser) {
+	Rectangle background = { 0,0,float(screenWidth),float(screenHeight) };
+	Vector2 mousePoint = { 0.0f, 0.0f };
+	int cntCourse = 0;
+	course* courses = nullptr;
+	scoreboard* ScoreBoard = nullptr;
+
+	int cntYears = 0;
+	char** YearName = nullptr;
+	getStudyingSchoolYear(CurrentUser.userName, cntYears, YearName);
+
+	int n = 3;    //count semester
+	Rectangle ok = { 660,100,80,50 };
+	Rectangle semesters = { 60,100,200,50 };
+	Rectangle schoolyears = { 360,100,200,50 };
+	bool action = false;
+	bool actionF = false;
+	bool actionS = false;
+	bool actionA = false;
+	bool action1 = false;
+	bool* actionYear = new bool[cntYears] {0};
+	bool actionOK = false;
+
+	char* yearnametmp = nullptr;
+	char* semesternametmp = nullptr;
+
+	Button2 backtopreviouspage;
+	backtopreviouspage.button = { 1200, 20, 300, 30 };
+
+	int scrollspeed = 35;
+	int x_course = 42;
+	int y_course = 276;
+	while (!WindowShouldClose()) {
+		mousePoint = GetMousePosition();
+		ClearBackground(WHITE);
+		BeginDrawing();
+		DrawRectangleGradientEx(background, SKYBLUE, DARKBLUE, DARKBLUE, SKYBLUE);
+		DrawRectangle(0, 0, screenWidth, 60, WHITE);
+		DrawText("COURSE MANAGEMENT SYSTEM", 430, 10, 40, DARKBLUE);
+
+		DrawRectangleRec(schoolyears, WHITE);
+		DrawText("Years", 420, 115, 20, DARKBLUE);
+		DrawRectangleRec(semesters, WHITE);
+		DrawText("Semesters", 105, 115, 20, DARKBLUE);
+		DrawRectangleRec(ok, DARKBLUE);
+		DrawText("OK", 690, 115, 20, WHITE);
+		int z = 0, r = 0, j = 0;
+
+		DrawRectangle(846, 101, 252, 55, WHITE);
+		DrawText("Semester GPA:", 857, 116,24, DARKBLUE);
+		DrawRectangle(1195, 101, 220, 55, WHITE);
+		DrawText("Overall GPA:", 1203, 116, 24, DARKBLUE);
+
+		DrawRectangle(0, 189, 231, 65, LIGHTGRAY);
+		DrawRectangleLines(0, 189, 231, 65, BLACK);
+		DrawText("Course ID", 56, 210, 24, DARKBLUE);
+
+		DrawRectangle(231, 189, 646, 65, LIGHTGRAY);
+		DrawRectangleLines(231, 189, 646, 65, BLACK);
+		DrawText("Course Name", 497, 210, 24, DARKBLUE);
+
+		DrawRectangle(877,189, 124, 65, LIGHTGRAY);
+		DrawRectangleLines(877, 189, 124, 65, BLACK);
+		DrawText("Credits", 899, 210, 24, DARKBLUE);
+
+		DrawRectangle(1001, 189, 169, 65, LIGHTGRAY);
+		DrawRectangleLines(1001, 189, 169, 65, BLACK);
+		DrawText("Class", 1055, 210, 24, DARKBLUE);
+
+		DrawRectangle(1170, 189, 231, 65, LIGHTGRAY);
+		DrawRectangleLines(1170, 189, 231, 65, BLACK);
+		DrawText("Total", 1183, 210, 24, DARKBLUE);
+
+		DrawRectangle(1256, 189,85, 65, LIGHTGRAY);
+		DrawRectangleLines(1256, 189, 85, 65, BLACK);
+		DrawText("F", 1290, 210, 24, DARKBLUE);
+
+		DrawRectangle(1341, 189, 85, 65, LIGHTGRAY);
+		DrawRectangleLines(1341, 189, 85, 65, BLACK);
+		DrawText("M", 1375, 210, 24, DARKBLUE);
+
+		DrawRectangle(1426, 189, 86, 65, LIGHTGRAY);
+		DrawRectangleLines(1426, 189, 86, 65, BLACK);
+		DrawText("O", 1460, 210, 24, DARKBLUE);
+
+		DrawRectangle(0, 255, 1512, 751, WHITE);
+
+		if (CheckCollisionPointRec(mousePoint, schoolyears)) {
+			if (IsMouseButtonPressed(MOUSE_BUTTON_LEFT)) {
+				action1 = true;
+				for (int i = 0; i < cntYears; ++i) {
+					actionYear[i] = 0;
+				}
+			}
+		}
+		if (action1) {
+			for (int i = 0; i < cntYears; ++i) {
+				DrawRectangle(360, 150 + r, 200, 50, DARKBLUE);
+				DrawText(YearName[i], 410, 165 + r, 20, WHITE);
+				r += 50;
+			}
+		}
+
+		for (int k = 0; k < cntYears; ++k) {
+			if (CheckCollisionPointRec(mousePoint, { 420, (float)(150 + 50 * k),200,50 }) && action1) {
+				if (IsMouseButtonPressed(MOUSE_BUTTON_LEFT)) {
+					actionYear[k] = true;
+				}
+			}
+			if (actionYear[k]) {
+				DrawRectangleRec(schoolyears, DARKBLUE);
+				DrawText(YearName[k], 410, 115, 20, WHITE);
+				action1 = false;
+				yearnametmp = _strdup(YearName[k]);
+			}
+		}
+
+		if (CheckCollisionPointRec(mousePoint, semesters)) {
+			if (IsMouseButtonPressed(MOUSE_BUTTON_LEFT)) {
+				action = true;
+				actionA = false;
+				actionF = false;
+				actionS = false;
+			}
+		}
+		if (action) {
+			for (int i = 0; i < n; ++i) {
+				DrawRectangle(60, 150 + z, 200, 50, DARKBLUE);
+				if (i == 0) DrawText("Fall", 130, 165 + z, 20, WHITE);
+				else if (i == 1) DrawText("Summer", 130, 165 + z, 20, WHITE);
+				else if (i == 2) DrawText("Autumn", 130, 165 + z, 20, WHITE);
+				z += 50;
+			}
+		}
+
+		if (CheckCollisionPointRec(mousePoint, { 60,150,200, 50 }) && action) {
+			if (IsMouseButtonPressed(MOUSE_BUTTON_LEFT)) actionF = true;
+		}
+		if (actionF) {
+			DrawRectangleRec(semesters, DARKBLUE);
+			DrawText("Fall", 130, 115, 20, WHITE);
+			action = false;
+			semesternametmp = (char*)"Fall";
+		}
+
+		if (CheckCollisionPointRec(mousePoint, { 60,200,200, 50 }) && action && (n != 2 || n == 3)) {
+			if (IsMouseButtonPressed(MOUSE_BUTTON_LEFT)) actionS = true;
+		}
+		if (actionS) {
+			DrawRectangleRec(semesters, DARKBLUE);
+			DrawText("Summer", 130, 115, 20, WHITE);
+			action = false;
+			semesternametmp = (char*)"Summer";
+		}
+
+		if (CheckCollisionPointRec(mousePoint, { 60,250,200, 50 }) && action && n == 3) {
+			if (IsMouseButtonPressed(MOUSE_BUTTON_LEFT)) actionA = true;
+		}
+		if (actionA) {
+			DrawRectangleRec(semesters, DARKBLUE);
+			DrawText("Autumn", 130, 115, 20, WHITE);
+			action = false;
+			semesternametmp = (char*)"Autumn";
+		}
+
+		if (CheckCollisionPointRec(mousePoint, ok)) {
+			if (IsMouseButtonPressed(MOUSE_BUTTON_LEFT)) {
+				actionOK = true;
+			}
+		}
+		if (actionOK) {
+			cntCourse = countCoursesOfAStudent(CurrentUser.userName, yearnametmp, semesternametmp);
+			courses = viewCoursesOfAStudent(CurrentUser.userName, yearnametmp, semesternametmp);
+			ScoreBoard = GetsaveScore(CurrentUser.userName, yearnametmp, semesternametmp);
+			actionOK = false;
+		}
+
+		for (int i = 0; i < cntCourse; ++i) {
+			DrawLine(x_course + 190, y_course + j - 24, x_course + 190, y_course + j + 38, BLACK);
+			DrawLine(x_course + 836, y_course + j - 24, x_course + 836, y_course + j + 38, BLACK);
+			DrawLine(x_course + 960, y_course + j - 24, x_course + 960, y_course + j + 38, BLACK);
+			DrawLine(x_course + 1129, y_course + j - 24, x_course + 1129, y_course + j + 38, BLACK);
+			DrawLine(x_course + 1215, y_course + j - 24, x_course + 1215, y_course + j + 38, BLACK);
+			DrawLine(x_course + 1300, y_course + j - 24, x_course + 1300, y_course + j + 38, BLACK);
+			DrawLine(x_course + 1385, y_course + j - 24, x_course + 1385, y_course + j + 38, BLACK);
+			DrawLine(x_course + 1471, y_course + j - 24, x_course + 1471, y_course + j + 38, BLACK);
+			DrawLine(x_course + 189, y_course + j - 24, x_course + 189, y_course + j + 38, BLACK);
+			DrawLine(x_course + 835, y_course + j - 24, x_course + 835, y_course + j + 38, BLACK);
+			DrawLine(x_course + 959, y_course + j - 24, x_course + 959, y_course + j + 38, BLACK);
+			DrawLine(x_course + 1128, y_course + j - 24, x_course + 1128, y_course + j + 38, BLACK);
+			DrawLine(x_course + 1214, y_course + j - 24, x_course + 1214, y_course + j + 38, BLACK);
+			DrawLine(x_course + 1299, y_course + j - 24, x_course + 1299, y_course + j + 38, BLACK);
+			DrawLine(x_course + 1384, y_course + j - 24, x_course + 1384, y_course + j + 38, BLACK);
+			DrawLine(x_course + 1470, y_course + j - 24, x_course + 1470, y_course + j + 38, BLACK);
+
+			DrawRectangleLines(0, y_course + j - 24, 1512, 62, BLACK);
+			DrawRectangleLines(0, y_course + j - 24, 1512, 62, BLACK);
+			DrawText(courses[i].courseID, x_course, y_course + j, 20, BLACK);
+			DrawText(courses[i].courseName, x_course + 241, y_course + j, 20, BLACK);
+			char* nofc = new char[10];
+			int_to_char(courses[i].numOfCre, nofc);
+			DrawText(nofc, x_course + 880, y_course + j, 20, BLACK);
+			DrawText(courses[i].className, x_course + 992, y_course + j, 20, BLACK);
+			char* tmp1 = new char[10];
+			double_to_char(ScoreBoard[i].totalMark,tmp1 );
+			DrawText(tmp1, x_course + 1150, y_course + j, 20, BLACK);
+			char* tmp2 = new char[10];
+			double_to_char(ScoreBoard[i].finalMark, tmp2);
+			DrawText(tmp2, x_course + 1239, y_course + j, 20, BLACK);
+			char* tmp3 = new char[10];
+			double_to_char(ScoreBoard[i].midtermMark, tmp3);
+			DrawText(tmp3, x_course + 1324, y_course + j, 20, BLACK);
+			char* tmp4 = new char[10];
+			double_to_char(ScoreBoard[i].otherMark, tmp2);
+			DrawText(tmp4, x_course + 1406, y_course + j, 20, BLACK);
+
+			j += 61;
+			delete[] nofc;
+			delete[] tmp1;
+			delete[] tmp2;
+			delete[] tmp3;
+			delete[] tmp4;
+		}
+
+		DrawText("Back to the previous page", 1200, 20, 20, DARKBLUE);
 		backtopreviouspage.workbutton(mousePoint, CurrentUser, ProfilePageStudent);
 		EndDrawing();
 	}
@@ -1060,45 +1287,7 @@ void ViewSchoolYearsPage(const int screenWidth, const int screenHeight, account&
 	CloseWindow();
 
 }
-//void SchoolYearPage(const int screenWidth, const int screenHeight, account& CurrentUser, char* &Year) {
-//	Rectangle background = { 0,0,float(screenWidth),float(screenHeight) };
-//	Vector2 mousePoint = { 0.0f, 0.0f };
-//
-//	Button2 backtoviewschoolyearpage;
-//	backtoviewschoolyearpage.button = { 1150, 20, 250, 30 };
-//
-//	Button3 createsemester;
-//	createsemester.texture = LoadTexture("createsemester.png");
-//	createsemester.frameHeight = (float)createsemester.texture.height;
-//	createsemester.sourceRec = { 0, 0, (float)createsemester.texture.width, createsemester.frameHeight };
-//	createsemester.btnBounds = { 350, 496, (float)createsemester.texture.width, createsemester.frameHeight };
-//
-//	Button3 viewsemester;
-//	viewsemester.texture = LoadTexture("viewsemester.png");
-//	viewsemester.frameHeight = (float)viewsemester.texture.height;
-//	viewsemester.sourceRec = { 0, 0, (float)viewsemester.texture.width, viewsemester.frameHeight };
-//	viewsemester.btnBounds = { 866, 496, (float)viewsemester.texture.width, viewsemester.frameHeight };
-//
-//	while (!WindowShouldClose()) {
-//		ClearBackground(WHITE);
-//		BeginDrawing();
-//		DrawRectangleGradientEx(background, SKYBLUE, DARKBLUE, DARKBLUE, SKYBLUE);
-//		DrawRectangle(0, 0, screenWidth, 60, WHITE);
-//		DrawText(Year, 620, 15, 40, DARKBLUE);
-//		DrawRectangleRec(backtoviewschoolyearpage.button, WHITE);
-//		DrawText("Back to View School Year Page", 1150, 20, 20, DARKBLUE);
-//		DrawRectangle(322, 136, 870, 806, WHITE);
-//		DrawRectangleLines(321, 135, 872, 807, BLACK);
-//
-//		mousePoint = GetMousePosition();
-//		backtoviewschoolyearpage.workbutton(mousePoint, CurrentUser, ViewSchoolYearsPage);
-//		createsemester.workbutton(mousePoint, CurrentUser, Year, CreateSemesterPage);
-//		viewsemester.workbutton(mousePoint, CurrentUser, Year, ViewSemestersPage);
-//		EndDrawing();
-//	}
-//	delete[] Year;
-//	CloseWindow();
-//}
+
 void createClassPage(const int screenWidth, const int screenHeight, account& CurrentUser) {
 	Vector2 mousePoint = { 0.0f, 0.0f };
 	Rectangle background = { 0,0,float(screenWidth),float(screenHeight) };
@@ -1751,47 +1940,6 @@ void ViewSemestersPage(const int screenWidth, const int screenHeight, account& C
 
 }
 
-//void SemesterPage(const int screenWidth, const int screenHeight, account& CurrentUser, char*& Year, char*& Semester) {
-//	Rectangle background = { 0,0,float(screenWidth),float(screenHeight) };
-//	Vector2 mousePoint = { 0.0f, 0.0f };
-//
-//	Button4 backtoviewsemesterpage;
-//	backtoviewsemesterpage.button = { 1150, 20, 300, 30 };
-//
-//	Button5 createcourse;
-//	createcourse.texture = LoadTexture("createcourse.png");
-//	createcourse.frameHeight = (float)createcourse.texture.height;
-//	createcourse.sourceRec = { 0, 0, (float)createcourse.texture.width, createcourse.frameHeight };
-//	createcourse.btnBounds = { 350, 496, (float)createcourse.texture.width, createcourse.frameHeight };
-//
-//	Button5 viewcourse;
-//	viewcourse.texture = LoadTexture("viewcourse.png");
-//	viewcourse.frameHeight = (float)viewcourse.texture.height;
-//	viewcourse.sourceRec = { 0, 0, (float)viewcourse.texture.width, viewcourse.frameHeight };
-//	viewcourse.btnBounds = { 866, 496, (float)viewcourse.texture.width, viewcourse.frameHeight };
-//
-//	while (!WindowShouldClose()) {
-//		ClearBackground(WHITE);
-//		BeginDrawing();
-//		DrawRectangleGradientEx(background, SKYBLUE, DARKBLUE, DARKBLUE, SKYBLUE);
-//		DrawRectangle(0, 0, screenWidth, 60, WHITE);
-//		DrawText(Year, 30, 15, 40, DARKBLUE);
-//		DrawText(Semester, 670, 15, 40, DARKBLUE);
-//		DrawRectangleRec(backtoviewsemesterpage.button, WHITE);
-//		DrawText("Back to View Semester Page", 1180, 20, 20, DARKBLUE);
-//		DrawRectangle(322, 136, 870, 806, WHITE);
-//		DrawRectangleLines(321, 135, 872, 807, BLACK);
-//
-//		mousePoint = GetMousePosition();
-//		backtoviewsemesterpage.workbutton(mousePoint, CurrentUser, Year, ViewSemestersPage);
-//		createcourse.workbutton(mousePoint, CurrentUser, Year, Semester, CreateCoursePage);
-//		viewcourse.workbutton(mousePoint, CurrentUser, Year, Semester, ViewCoursesPage);
-//		EndDrawing();
-//	}
-//	delete[] Year;
-//	delete[] Semester;
-//	CloseWindow();
-//}
 
 void CreateCoursePage(const int screenWidth, const int screenHeight, account& CurrentUser, char*& Year, char*& Semester) {
 	//ListCourse list;
