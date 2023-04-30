@@ -1832,7 +1832,7 @@ void CreateCoursePage(const int screenWidth, const int screenHeight, account& Cu
 		}
 		else confirmBtnState = 0;
 		if (confirmBtnAction) {
-			if (!CheckValidCourse(coursename.text, id.text, classname.text, Year, Semester) ||
+			if (!CheckValidCourse(coursename.text, id.text, classname.text, nofc.text, Year, Semester) ||
 				id.text[0] == '\0' || coursename.text[0] == '\0' || classname.text[0] == '\0' ||
 				teachername.text[0] == '\0' || nofc.text[0] == '\0' || courseday.text[0] == '\0' ||
 				sshours.text[0] == '\0') {
@@ -2116,7 +2116,7 @@ void UpdateCoursePage(const int screenWidth, const int screenHeight, account& Cu
 		}
 		else confirmBtnState = 0;
 		if (confirmBtnAction) {
-			if (!CheckValidCourse(coursename.text, id.text, classname.text, Year, Semester)) {
+			if (!CheckValidCourse(coursename.text, id.text, classname.text, nofc.text, Year, Semester)) {
 				confirmBtnFalseDisplay = true;
 			}
 			else {

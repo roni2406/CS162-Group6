@@ -225,7 +225,10 @@ bool FileDrop(char*&filename) {
 }
 */
 
-bool CheckValidCourse(char* coursename, char* ID, char* classname, char* Year, char* semester) {
+bool CheckValidCourse(char* coursename, char* ID, char* classname, char* nofc, char* Year, char* semester) {
+	for (int i = 0; i < strlen(nofc); ++i) {
+		if (nofc[i] < 48 || nofc[i] > 57) return 0;
+	}
 	int num = countCourse( Year, semester);
 	course* courses;
 	LoadCourseFromFile(Year, semester, num, courses);
