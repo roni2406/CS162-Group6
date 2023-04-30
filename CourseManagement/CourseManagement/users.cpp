@@ -279,6 +279,22 @@ scoreboard* GetsaveScore(char* stuID, char* schoolYear, char* semester)
 	return saveScore;
 }
 
+double getSemesterGPA(char* stuID, char* schoolYear, char* semester)
+{
+	double SemesterGPA = 0;
+	course* ListOfStudyingCourses = viewCoursesOfAStudent(stuID, schoolYear, semester);
+	scoreboard* ListOfStudyingScores = GetsaveScore(stuID, schoolYear, semester);
+	int numOfStudyingCourses = countCoursesOfAStudent(stuID, schoolYear, semester);
+	int numOfSemesterCredits = 0;
+	for (int i = 0; i < numOfStudyingCourses; ++i)
+	{
+		numOfSemesterCredits += ListOfStudyingCourses[i].numOfCre;
+		SemesterGPA += ListOfStudyingCourses[i].numOfCre * ListOfStudyingScores[i].totalMark;
+	}
+	SemesterGPA /= numOfSemesterCredits;
+	return SemesterGPA;
+}
+
 void OutputToFileCoursesAndScores(char* stuID, char* schoolYear, char* semester, char* filename)
 {
 	ofstream fout;
