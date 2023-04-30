@@ -58,4 +58,5 @@ void viewPersonalStudentScoreboard(char* stuID, char* schoolYear, char* semester
 scoreboard* GetsaveScore(char* stuID, char* schoolYear, char* semester);
 void OutputToFileCoursesAndScores(char* stuID, char* schoolYear, char* semester);
 double getSemesterGPA(char* stuID, char* schoolYear, char* semester);
+double getOverallGPA(char* stuID);
 #endif
