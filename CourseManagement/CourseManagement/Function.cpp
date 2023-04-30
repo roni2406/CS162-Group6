@@ -125,6 +125,7 @@ void LogInPageStudent(const int screenWidth, const int screenHeight, account& Cu
 		if (CheckCollisionPointRec(mousePoint, btnBoundsloginButton)) {          // Check button state
 			if (IsMouseButtonPressed(MOUSE_BUTTON_LEFT)) loginbtnAction = true;
 		}
+		else if (IsKeyPressed(KEY_ENTER)) loginbtnAction = true;
 		else loginbtnState = 0;
 
 
@@ -235,6 +236,7 @@ void LogInPageStaff(const int screenWidth, const int screenHeight, account& Curr
 		if (CheckCollisionPointRec(mousePoint, btnBoundsloginButton)) {          // Check button state
 			if (IsMouseButtonPressed(MOUSE_BUTTON_LEFT)) loginbtnAction = true;
 		}
+		else if (IsKeyPressed(KEY_ENTER)) loginbtnAction = true;
 		else loginbtnState = 0;
 
 
@@ -752,6 +754,7 @@ void ChangePasswordPageStudent(const int screenWidth, const int screenHeight, ac
 		if (CheckCollisionPointRec(mousePoint, btnBoundsconfirmBtn)) {          // Check button state
 			if (IsMouseButtonPressed(MOUSE_BUTTON_LEFT)) confirmBtnAction = true;
 		}
+		else if (IsKeyPressed(KEY_ENTER)) confirmBtnAction = true;
 		else confirmBtnState = 0;
 		if (confirmBtnAction) {
 			if (usechangePassFunction(CurrentUser, oldpass.text, newpass.text, confirmnewpass.text, stafforstudent) && oldpass.text[0] != '\0' && newpass.text[0] != '\0' && confirmnewpass.text[0] != '\0') {
@@ -897,6 +900,7 @@ void ChangePasswordPageStaff(const int screenWidth, const int screenHeight, acco
 		if (CheckCollisionPointRec(mousePoint, btnBoundsconfirmBtn)) {          // Check button state
 			if (IsMouseButtonPressed(MOUSE_BUTTON_LEFT)) confirmBtnAction = true;
 		}
+		else if (IsKeyPressed(KEY_ENTER)) confirmBtnAction = true;
 		else confirmBtnState = 0;
 		if (confirmBtnAction) {
 			if (usechangePassFunction(CurrentUser, oldpass.text, newpass.text, confirmnewpass.text, stafforstudent) && oldpass.text[0] != '\0' && newpass.text[0] != '\0' && confirmnewpass.text[0] != '\0') {
@@ -967,6 +971,7 @@ void CreateSchoolYearPage(const int screenWidth, const int screenHeight, account
 		if (CheckCollisionPointRec(mousePoint, btnBoundsconfirmBtn)) {          // Check button state
 			if (IsMouseButtonPressed(MOUSE_BUTTON_LEFT)) confirmBtnAction = true;
 		}
+		else if (IsKeyPressed(KEY_ENTER)) confirmBtnAction = true;
 		else confirmBtnState = 0;
 		if (confirmBtnAction) {
 			if (createASchoolYear(schoolyear.text)) {
@@ -1142,6 +1147,7 @@ void createClassPage(const int screenWidth, const int screenHeight, account& Cur
 		if (CheckCollisionPointRec(mousePoint, btnBoundsconfirmBtn)) {          // Check button state
 			if (IsMouseButtonPressed(MOUSE_BUTTON_LEFT)) confirmBtnAction = true;
 		}
+		else if (IsKeyPressed(KEY_ENTER)) confirmBtnAction = true;
 		else confirmBtnState = 0;
 		if (confirmBtnAction) {
 			if (!CheckClassExisted(classname.text)) {
@@ -1414,6 +1420,7 @@ void addStudentPage(const int screenWidth, const int screenHeight, account& Curr
 		if (CheckCollisionPointRec(mousePoint, btnBoundsconfirmBtn)) {          // Check button state
 			if (IsMouseButtonPressed(MOUSE_BUTTON_LEFT)) confirmBtnAction = true;
 		}
+		else if (IsKeyPressed(KEY_ENTER)) confirmBtnAction = true;
 		else confirmBtnState = 0;
 		if (confirmBtnAction) {
 			if (addAStudentToClass(classname, Firstname.text, Lastname.text, Gender.text, birth.text, socialID.text, studentID.text)) {
@@ -1484,6 +1491,7 @@ void addStudentCSV(const int screenWidth, const int screenHeight, account& Curre
 		if (CheckCollisionPointRec(mousePoint, btnBoundsconfirmBtn)) {          // Check button state
 			if (IsMouseButtonPressed(MOUSE_BUTTON_LEFT)) confirmBtnAction = true;
 		}
+		else if (IsKeyPressed(KEY_ENTER)) confirmBtnAction = true;
 		else confirmBtnState = 0;
 		if (confirmBtnAction) {
 			if (checkdata_FileName(filename.text)) {
@@ -1657,6 +1665,7 @@ void CreateSemesterPage(const int screenWidth, const int screenHeight, account& 
 		if (CheckCollisionPointRec(mousePoint, btnBoundsconfirmBtn)) {          // Check button state
 			if (IsMouseButtonPressed(MOUSE_BUTTON_LEFT)) confirmBtnAction = true;
 		}
+		else if (IsKeyPressed(KEY_ENTER)) confirmBtnAction = true;
 		else confirmBtnState = 0;
 		if (confirmBtnAction) {
 			if (n < 3) {
@@ -1889,6 +1898,7 @@ void CreateCoursePage(const int screenWidth, const int screenHeight, account& Cu
 		if (CheckCollisionPointRec(mousePoint, btnBoundsconfirmBtn)) {          // Check button state
 			if (IsMouseButtonPressed(MOUSE_BUTTON_LEFT)) confirmBtnAction = true;
 		}
+		else if (IsKeyPressed(KEY_ENTER)) confirmBtnAction = true;
 		else confirmBtnState = 0;
 		if (confirmBtnAction) {
 			if (!CheckValidCourse(coursename.text, id.text, classname.text, nofc.text, maxstudents.text, Year, Semester) ||
@@ -2173,6 +2183,7 @@ void UpdateCoursePage(const int screenWidth, const int screenHeight, account& Cu
 		if (CheckCollisionPointRec(mousePoint, btnBoundsconfirmBtn)) {          // Check button state
 			if (IsMouseButtonPressed(MOUSE_BUTTON_LEFT)) confirmBtnAction = true;
 		}
+		else if (IsKeyPressed(KEY_ENTER)) confirmBtnAction = true;
 		else confirmBtnState = 0;
 		if (confirmBtnAction) {
 			if (!CheckValidCourse(coursename.text, id.text, classname.text, nofc.text, maxstudents.text, Year, Semester)) {
@@ -2505,6 +2516,7 @@ void addStudentPageForCourse(const int screenWidth, const int screenHeight, acco
 		if (CheckCollisionPointRec(mousePoint, btnBoundsconfirmBtn)) {          // Check button state
 			if (IsMouseButtonPressed(MOUSE_BUTTON_LEFT)) confirmBtnAction = true;
 		}
+		else if (IsKeyPressed(KEY_ENTER)) confirmBtnAction = true;
 		else confirmBtnState = 0;
 		if (confirmBtnAction) {
 			if (addAStudentToCourse(Year, Semester, filename, Firstname.text, Lastname.text, Gender.text, birth.text, socialID.text, studentID.text)) {
@@ -2577,6 +2589,7 @@ void addStudentCSVForCourse(const int screenWidth, const int screenHeight, accou
 		if (CheckCollisionPointRec(mousePoint, btnBoundsconfirmBtn)) {          // Check button state
 			if (IsMouseButtonPressed(MOUSE_BUTTON_LEFT)) confirmBtnAction = true;
 		}
+		else if (IsKeyPressed(KEY_ENTER)) confirmBtnAction = true;
 		else confirmBtnState = 0;
 		if (confirmBtnAction) {
 			if (checkdata_FileName(filename.text)) {
@@ -2791,6 +2804,7 @@ void updateStudent(const int screenWidth, const int screenHeight, account& Curre
 		if (CheckCollisionPointRec(mousePoint, btnBoundsconfirmBtn)) {          // Check button state
 			if (IsMouseButtonPressed(MOUSE_BUTTON_LEFT)) confirmBtnAction = true;
 		}
+		else if (IsKeyPressed(KEY_ENTER)) confirmBtnAction = true;
 		else confirmBtnState = 0;
 		if (confirmBtnAction) {
 			if (UpdateStudentMark(s, totalMark.text, finalMark.text, midtermMark.text, otherMark.text)) {
