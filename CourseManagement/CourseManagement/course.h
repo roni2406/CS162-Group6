@@ -31,7 +31,7 @@ int countCourse(char* year, char* semester);
 void ReturnCoursesToFile(char* year, char* semester, int& num, course*& courses);
 void deleteCourse(course*& courses, int no, int& num, char* year, char* semester);
 bool updateCourse(char* year, char* semester, course& courses, char* courseName_tmp, char* ID, char* className_tmp, char* teacherName_tmp, char* nofc, char* maxstu, char* courseday, char* sshours);
-bool CheckValidCourse(char* coursename, char* ID, char* classname, char* nofc, char* Year, char* semester);
+bool CheckValidCourse(char* coursename, char* ID, char* classname, char* nofc, char* maxstudents, char* Year, char* semester);
 void LoadCourseFromFile(char* year, char* semester, int& num, course* &courses);
 bool FileDrop(char*& filename);
 bool exportStudentsInCourseToFile(char* addressOfOutputFile, char* schoolYear, char* semester, char* courseName);

@@ -248,7 +248,15 @@ void SignUpPage(const int screenWidth, const int screenHeight, account& CurrentU
 	Button2 backtologinsite;
 	backtologinsite.button = { 1300, 20, 200, 30 };
 
-
+	Texture2D viewPassButton = LoadTexture("signupButton.png");
+	float frameHeightviewPassButton = (float)viewPassButton.height;
+	Rectangle sourceRecviewPassButton = { 0, 0, (float)viewPassButton.width, frameHeightviewPassButton };
+	Rectangle btnBoundsviewPassButton = { (screenWidth / 2.0f - viewPassButton.width / 2.0f) - 10, 300, (float)viewPassButton.width, frameHeightviewPassButton };
+	bool view = false;
+	bool state = false;
+	int viewPassbtnState = 0;               // Button state: 0-NORMAL, 1-MOUSE_HOVER, 2-PRESSED
+	bool viewPassbtnAction = false;         // Button action should be activated
+	bool viewPassFalseDisplay = false;
 
 	////initialize signup button---------------------------------------------------------------------------------------------------
 	Texture2D signupButton = LoadTexture("signupButton.png");
@@ -290,9 +298,17 @@ void SignUpPage(const int screenWidth, const int screenHeight, account& CurrentU
 		password.worktextbox(issignupFalseDisplay);
 		confirmpass.worktextbox(issignupFalseDisplay);
 
-
 		DrawText(username.text, 500, 231, 40, DARKBLUE);
-		DrawText(password.hiddentext, 500, 400, 40, DARKBLUE);
+		if (CheckCollisionPointRec(mousePoint, btnBoundsviewPassButton)) {
+			if (IsMouseButtonPressed(MOUSE_BUTTON_LEFT) && !state) {
+				state = true;
+			}
+			if (IsMouseButtonPressed(MOUSE_BUTTON_LEFT) && state) {
+				state = false;
+			}
+		}
+		if (state) DrawText(password.text, 500, 400, 40, DARKBLUE);
+		if (!state) DrawText(password.hiddentext, 500, 400, 40, DARKBLUE);
 		DrawText(confirmpass.hiddentext, 500, 573, 40, DARKBLUE);
 
 		DrawText(TextFormat("%i/%i", username.lettercount, MAX_INPUT_CHARS), 1050, 280, 20, DARKBLUE);
@@ -331,8 +347,11 @@ void SignUpPage(const int screenWidth, const int screenHeight, account& CurrentU
 
 		// Calculate button frame rectangle to draw depending on button state
 		sourceRecsignupButton.y = signupbtnState * frameHeightsignupButton;
-		DrawTextureRec(signupButton, sourceRecsignupButton, { btnBoundssignupButton.x, btnBoundssignupButton.y }, WHITE); // Draw button frame
-
+		DrawTextureRec(signupButton, sourceRecsignupButton, { btnBoundssignupButton.x, btnBoundssignupButton.y }, WHITE);
+		
+		// Draw button frame
+		sourceRecviewPassButton.y = viewPassbtnState * frameHeightviewPassButton;
+		DrawTextureRec(viewPassButton, sourceRecviewPassButton, { btnBoundsviewPassButton.x, btnBoundsviewPassButton.y }, WHITE);
 		///Function of back to log in site
 		backtologinsite.workbutton(mousePoint, CurrentUser, LogInPageStaff);
 		//--------------------------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -1832,7 +1851,7 @@ void CreateCoursePage(const int screenWidth, const int screenHeight, account& Cu
 		}
 		else confirmBtnState = 0;
 		if (confirmBtnAction) {
-			if (!CheckValidCourse(coursename.text, id.text, classname.text, nofc.text, Year, Semester) ||
+			if (!CheckValidCourse(coursename.text, id.text, classname.text, nofc.text, maxstudents.text, Year, Semester) ||
 				id.text[0] == '\0' || coursename.text[0] == '\0' || classname.text[0] == '\0' ||
 				teachername.text[0] == '\0' || nofc.text[0] == '\0' || courseday.text[0] == '\0' ||
 				sshours.text[0] == '\0') {
@@ -2116,7 +2135,7 @@ void UpdateCoursePage(const int screenWidth, const int screenHeight, account& Cu
 		}
 		else confirmBtnState = 0;
 		if (confirmBtnAction) {
-			if (!CheckValidCourse(coursename.text, id.text, classname.text, nofc.text, Year, Semester)) {
+			if (!CheckValidCourse(coursename.text, id.text, classname.text, nofc.text, maxstudents.text, Year, Semester)) {
 				confirmBtnFalseDisplay = true;
 			}
 			else {
