@@ -55,4 +55,6 @@ void InputScoreBoardWithCSV(char* addressOfOutputFile, char* schoolYear, char* s
 
 // 24
 void viewPersonalStudentScoreboard(char* stuID, char* schoolYear, char* semester, scoreboard*& saveScore);
+scoreboard* GetsaveScore(char* stuID, char* schoolYear, char* semester);
+void OutputToFileCoursesAndScores(char* stuID, char* schoolYear, char* semester);
 #endif

@@ -271,3 +271,33 @@ void viewPersonalStudentScoreboard(char* stuID, char* schoolYear, char* semester
 		}
 	}
 }
+
+scoreboard* GetsaveScore(char* stuID, char* schoolYear, char* semester)
+{
+	scoreboard* saveScore = nullptr;
+	viewPersonalStudentScoreboard(stuID, schoolYear, semester, saveScore);
+	return saveScore;
+}
+
+void OutputToFileCoursesAndScores(char* stuID, char* schoolYear, char* semester, char* filename)
+{
+	ofstream fout;
+	course* ListOfStudyingCourses = viewCoursesOfAStudent(stuID, schoolYear, semester);
+	scoreboard* ListOfStudyingScores = GetsaveScore(stuID, schoolYear, semester);
+	int numOfStudyingCourses = countCoursesOfAStudent(stuID, schoolYear, semester);
+	fout.open(filename);
+	for (int i = 0; i < numOfStudyingCourses; ++i)
+	{
+		fout << ListOfStudyingCourses[i].courseID << ","
+			 << ListOfStudyingCourses[i].courseName << ","
+			 << ListOfStudyingCourses[i].numOfCre << ","
+			 << ListOfStudyingCourses[i].className << ","
+			 << ListOfStudyingScores[i].totalMark << ","
+			 << ListOfStudyingScores[i].finalMark << ","
+			 << ListOfStudyingScores[i].midtermMark << ","
+			 << ListOfStudyingScores[i].otherMark;
+		if (i != numOfStudyingCourses - 1)
+			fout << '\n';
+	}
+	fout.close();
+}
