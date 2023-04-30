@@ -414,7 +414,7 @@ int countCoursesOfAStudent(char* stuID, char* schoolYear, char* semester)
 		Load_stu(CoursesInSemester[i], schoolYear, semester, Course);
 		for (int j = 0; j < numOfStuInCourse; ++j)
 		{
-			if (stuID == Course[j].stuID)
+			if (strcmp(stuID,Course[j].stuID)==0)
 			{
 				++numOfCoursesOfAStudent;
 				break;
@@ -440,7 +440,7 @@ course* viewCoursesOfAStudent(char* stuID, char* schoolYear, char* semester)
 		Load_stu(CoursesInSemester[i], schoolYear, semester, Course);
 		for (int j = 0; j < numOfStuInCourse; ++j)
 		{
-			if (stuID == Course[j].stuID)
+			if (strcmp(stuID,Course[j].stuID)==0)
 			{
 				saveCourse[cnt++] = CoursesInSemester[i];
 				break;
