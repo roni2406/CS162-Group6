@@ -474,3 +474,25 @@ bool UpdateStudentMark(student& s, char* totalMark, char* finalMark, char* midte
 	if (otherMark[0] != '\0')		s.mark.otherMark = atof(otherMark);
 	return true;
 }
+
+// Need Functions to Get Overall GPA:
+/*
+int countOverallNumberOfCourses(char* stuID)
+{
+	char** schoolYear = nullptr;
+	getStudyingSchoolYear
+	string* Semester = new string[3];
+	Semester[0] = "Autumn";
+	Semester[1] = "Fall";
+	Semester[2] = "Summer";
+	int numOfSchoolYear = countSchoolYear();
+	for (int i = 1; i <= numOfSchoolYear; ++i)
+	{
+		char* schoolYear = new char[10];
+		for (int j = 1; j <= 3; ++j)
+		{
+
+		}
+	}
+}
+*/

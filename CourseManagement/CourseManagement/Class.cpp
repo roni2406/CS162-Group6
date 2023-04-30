@@ -282,7 +282,7 @@ void viewStuWithScore(char* className, char* schoolYear, char* semester, int*& n
 		{
 			for (int k = 0; k < numOfStuInClass; ++k)
 			{
-				if (StuInAClass[k].stuID == StuInCourse[j].stuID)
+				if (strcmp(StuInAClass[k].stuID, StuInCourse[j].stuID) == 0)
 				{
 					saveFinal[k][numOfCoursesPerStudent[k]] = StuInCourse[j].mark;
 					courseNameWithScoreBoard[k][numOfCoursesPerStudent[k]] = _strdup(CoursesInSemester[i].courseName);

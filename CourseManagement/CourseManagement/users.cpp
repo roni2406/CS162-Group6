@@ -145,7 +145,7 @@ void getStudyingSchoolYear(char* stuID, int& numOfschoolYear, char**& schoolYear
 	nowYear[1] = now[7];
 	nowYear[2] = '\0';
 	
-	numOfschoolYear = atoi(nowYear) - atoi(first2degitOfstuID);
+	numOfschoolYear = atoi(nowYear) - atoi(first2degitOfstuID) + 1;
 	schoolYear = new char* [numOfschoolYear];
 	for (int i = 0; i < numOfschoolYear; i++) {
 		schoolYear[i] = new char[10];
@@ -160,7 +160,6 @@ void getStudyingSchoolYear(char* stuID, int& numOfschoolYear, char**& schoolYear
 		int_to_char(yearInNum, nextYear);
 
 		string makeSchoolYear = "20" + string(prevYear) + "-20" + string(nextYear);
-		//schoolYear[i] = (char*)makeSchoolYear.c_str();
 		for (int j = 0; j < 9; j++) {
 			schoolYear[i][j] = makeSchoolYear[j];
 		}
@@ -263,7 +262,7 @@ void viewPersonalStudentScoreboard(char* stuID, char* schoolYear, char* semester
 		Load_stu(CoursesInSemester[i], schoolYear, semester, StuInCourse);
 		for (int j = 0; j < numOfStuInCourse; ++j)
 		{
-			if (stuID == StuInCourse[j].stuID)
+			if (strcmp(stuID, StuInCourse[j].stuID) == 0)
 			{
 				saveScore[cnt++] = StuInCourse[j].mark;
 				break;
