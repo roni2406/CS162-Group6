@@ -1,7 +1,13 @@
 #include "Function.h"
 void Button0::workbutton(Vector2 mousePoint) {
 	if (CheckCollisionPointRec(mousePoint, btnBounds)) {          // Check button state
-		if (IsMouseButtonPressed(MOUSE_BUTTON_LEFT)) action = true;
+		if (IsMouseButtonPressed(MOUSE_BUTTON_LEFT) && hidden) {
+			action = true;
+			hidden = false;
+		}
+		else if (IsMouseButtonPressed(MOUSE_BUTTON_LEFT) && !hidden) {
+			hidden = true;
+		}
 	}
 	else state = 0;
 	// Calculate button frame rectangle to draw depending on button state

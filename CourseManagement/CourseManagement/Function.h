@@ -74,6 +74,7 @@ struct Button0 {
 	Rectangle btnBounds = { 0, 0, 0, 0 };
 	int state = 0;					// Button state: 0-NORMAL, 1-MOUSE_HOVER, 2-PRESSED
 	bool action = false;
+	bool hidden = true;
 	void workbutton(Vector2 mousePoint);
 };
 // used for "bo-goc" button and have 1 case display ( can be used now)
