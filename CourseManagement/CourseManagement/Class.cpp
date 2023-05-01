@@ -328,7 +328,7 @@ int* GetNumOfCoursesPerStudent(char* className, char* schoolYear, char* semester
 {
 	student* StuInAClass = viewStudentsInClass(className);
 	int numOfStuInClass = countStudentInClass(className);
-	int* numOfCoursesPerStudent = new int[numOfStuInClass];
+	int* numOfCoursesPerStudent = new int[numOfStuInClass] {0};
 	for (int i = 0; i < numOfStuInClass; ++i)
 		numOfCoursesPerStudent[i] = countCoursesOfAStudent(StuInAClass[i].stuID, schoolYear, semester);
 	return numOfCoursesPerStudent;
@@ -338,9 +338,12 @@ course** GetSemesterCourses_Class(char* className, char* schoolYear, char* semes
 {
 	student* StuInAClass = viewStudentsInClass(className);
 	int numOfStuInClass = countStudentInClass(className);
+	int numOfCourse = countCourse(schoolYear, semester);
 	course** SemesterCourses_Class = new course * [numOfStuInClass];
-	for (int i = 0; i < numOfStuInClass; ++i)
+	for (int i = 0; i < numOfStuInClass; ++i) {
+		SemesterCourses_Class[i] = new course[numOfCourse];
 		SemesterCourses_Class[i] = viewCoursesOfAStudent(StuInAClass[i].stuID, schoolYear, semester);
+	}
 	return SemesterCourses_Class;
 }
 
@@ -348,9 +351,12 @@ scoreboard** GetSemesterScore_Class(char* className, char* schoolYear, char* sem
 {
 	student* StuInAClass = viewStudentsInClass(className);
 	int numOfStuInClass = countStudentInClass(className);
+	int numOfScore = countCourse(schoolYear, semester);
 	scoreboard** SemesterScores_Class = new scoreboard * [numOfStuInClass];
-	for (int i = 0; i < numOfStuInClass; ++i)
+	for (int i = 0; i < numOfStuInClass; ++i) {
+		SemesterScores_Class[i] = new scoreboard[numOfScore];
 		SemesterScores_Class[i] = GetsaveScore(StuInAClass[i].stuID, schoolYear, semester);
+	}
 	return SemesterScores_Class;
 }
 
