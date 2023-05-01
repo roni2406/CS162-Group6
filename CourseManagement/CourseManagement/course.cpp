@@ -498,8 +498,10 @@ int countOverallNumberOfCourses(char* stuID)
 		semester[i][Semester[i].size()] = '\0';
 	
 	for (int i = 0; i < numOfSchoolYear; ++i)
+	{
 		for (int j = 0; j < 3; ++j)
 			numCoursesFromStart += countCoursesOfAStudent(stuID, schoolYear[i], semester[j]);
+	}
 	return numCoursesFromStart;
 }
 
