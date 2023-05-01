@@ -254,6 +254,8 @@ bool CheckData_InputStudents(char* No, char* student_id, char* Gender, char* DoB
 }
 
 // 23 
+// Old Code
+/*
 void viewStuWithScore(char* className, char* schoolYear, char* semester, int*& numOfCoursesPerStudent,
 	scoreboard**& ScoresInSemester_Class, course**& CoursesInSemester_Class)
 {
@@ -318,6 +320,38 @@ course** GetSemesterCourses_Class(char* className, char* schoolYear, char* semes
 	course** SemesterCourses_Class = nullptr;
 	viewStuWithScore(className, schoolYear, semester, numOfCoursesPerStudent, SemesterScores_Class, SemesterCourses_Class);
 	return SemesterCourses_Class;
+}
+*/
+
+// New Version
+int* GetNumOfCoursesPerStudent(char* className, char* schoolYear, char* semester)
+{
+	student* StuInAClass = viewStudentsInClass(className);
+	int numOfStuInClass = countStudentInClass(className);
+	int* numOfCoursesPerStudent = new int[numOfStuInClass];
+	for (int i = 0; i < numOfStuInClass; ++i)
+		numOfCoursesPerStudent[i] = countCoursesOfAStudent(StuInAClass[i].stuID, schoolYear, semester);
+	return numOfCoursesPerStudent;
+}
+
+course** GetSemesterCourses_Class(char* className, char* schoolYear, char* semester)
+{
+	student* StuInAClass = viewStudentsInClass(className);
+	int numOfStuInClass = countStudentInClass(className);
+	course** SemesterCourses_Class = new course * [numOfStuInClass];
+	for (int i = 0; i < numOfStuInClass; ++i)
+		SemesterCourses_Class[i] = viewCoursesOfAStudent(StuInAClass[i].stuID, schoolYear, semester);
+	return SemesterCourses_Class;
+}
+
+scoreboard** GetSemesterScore_Class(char* className, char* schoolYear, char* semester)
+{
+	student* StuInAClass = viewStudentsInClass(className);
+	int numOfStuInClass = countStudentInClass(className);
+	scoreboard** SemesterScores_Class = new scoreboard * [numOfStuInClass];
+	for (int i = 0; i < numOfStuInClass; ++i)
+		SemesterScores_Class[i] = GetsaveScore(StuInAClass[i].stuID, schoolYear, semester);
+	return SemesterScores_Class;
 }
 
 double* GetSemesterGPA_Class(char* className, char* schoolYear, char* semester)
