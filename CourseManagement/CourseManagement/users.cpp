@@ -178,7 +178,7 @@ bool checkSemesterAndSchoolYear(char* semester, char* schoolyear) {
 	while (!file_schoolyear.eof()) {
 		file_schoolyear.get(tmp_schoolyear, 100, '\n');
 		if (strcmp(tmp_schoolyear, schoolyear) == 0) {
-			ifstream file_semester("../data/" + (string)(schoolyear)+"Semester.csv");
+			ifstream file_semester("../data/" + (string)(schoolyear)+"/Semester.csv");
 			file_semester.get();
 			while (!file_semester.eof()) {
 				++numSemester;
