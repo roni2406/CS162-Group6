@@ -509,7 +509,8 @@ void CoursePageStudent(const int screenWidth, const int screenHeight, account& C
 				actionOK = true;
 			}
 		}
-		if (actionOK && yearnametmp && semesternametmp ) {
+
+		if (actionOK && yearnametmp && semesternametmp) {
 			cntCourse = countCoursesOfAStudent(CurrentUser.userName, yearnametmp, semesternametmp);
 			courses = viewCoursesOfAStudent(CurrentUser.userName, yearnametmp, semesternametmp);
 			actionOK = false;
@@ -576,6 +577,7 @@ void ScoreboardStudent(const int screenWidth, const int screenHeight, account& C
 	bool actionOK = false;
 	bool GPA = false;
 
+	//double overallGPAd = getOverallGPA(CurrentUser.userName);
 	char* yearnametmp = nullptr;
 	char* semesternametmp = nullptr;
 
@@ -643,6 +645,8 @@ void ScoreboardStudent(const int screenWidth, const int screenHeight, account& C
 
 		DrawRectangle(0, 255, 1512, 751, WHITE);
 
+		/*double_to_char(overallGPAd, overallGPA);
+		DrawText(overallGPA, 1360, 116, 24, DARKBLUE);*/
 		
 		
 
@@ -734,18 +738,15 @@ void ScoreboardStudent(const int screenWidth, const int screenHeight, account& C
 			courses = viewCoursesOfAStudent(CurrentUser.userName, yearnametmp, semesternametmp);
 			ScoreBoard = GetsaveScore(CurrentUser.userName, yearnametmp, semesternametmp);
 			double_to_char(getSemesterGPA(CurrentUser.userName, yearnametmp, semesternametmp), semesterGPA);
-			double_to_char(getOverallGPA(CurrentUser.userName), overallGPA);
 			actionOK = false;
 			GPA = true;
 		}
 
 		if (GPA) {
 			DrawText(semesterGPA, 1050, 116, 24, DARKBLUE);
-			DrawText(overallGPA, 1360, 116, 24, DARKBLUE);
 		}
 		else {
 			DrawText("0.0", 1050, 116, 24, DARKBLUE);
-			DrawText("0.0", 1360, 116, 24, DARKBLUE);
 		}
 
 		for (int i = 0; i < cntCourse; ++i) {
