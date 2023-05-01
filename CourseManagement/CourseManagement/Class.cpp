@@ -255,41 +255,67 @@ bool CheckData_InputStudents(char* No, char* student_id, char* Gender, char* DoB
 
 // 23 
 void viewStuWithScore(char* className, char* schoolYear, char* semester, int*& numOfCoursesPerStudent,
-	scoreboard**& saveFinal, char***& courseNameWithScoreBoard)
+	scoreboard**& ScoresInSemester_Class, course**& CoursesInSemester_Class)
 {
 	int numOfStuInClass = countStudentInClass(className);
 	int numOfCourses = countCourse(schoolYear, semester);
-	saveFinal = new scoreboard * [numOfStuInClass];
-	courseNameWithScoreBoard = new char** [numOfStuInClass];
-	for (int i = 0; i < numOfStuInClass; ++i)			// Number of Courses occurs in 1 Semester
-	{													// 1 students can NOT register more courses than this!
-		saveFinal[i] = new scoreboard[numOfCourses];
-		courseNameWithScoreBoard[i] = new char* [numOfCourses];
-		for (int j = 0; j < numOfCourses; ++j)			// Number of characters in 1 course
-			courseNameWithScoreBoard[i][j] = new char[100];
+	ScoresInSemester_Class = new scoreboard * [numOfStuInClass];
+	CoursesInSemester_Class = new course* [numOfStuInClass];
+	for (int i = 0; i < numOfStuInClass; ++i)			
+	{													
+		ScoresInSemester_Class[i] = new scoreboard[numOfCourses];
+		CoursesInSemester_Class[i] = new course [numOfCourses];
 	}
 	numOfCoursesPerStudent = new int[numOfStuInClass] {0};
 
+
 	student* StuInAClass = viewStudentsInClass(className);
-	course* CoursesInSemester = viewCoursesInSemester(schoolYear, semester);
+	course* CoursesListInSemester = viewCoursesInSemester(schoolYear, semester);
 	for (int i = 0; i < numOfCourses; ++i)
 	{
-		countStu(CoursesInSemester[i], schoolYear, semester);
-		int numOfStuInCourse = CoursesInSemester[i].numOfStu;
+		countStu(CoursesListInSemester[i], schoolYear, semester);
+		int numOfStuInCourse = CoursesListInSemester[i].numOfStu;
 		student* StuInCourse = nullptr;
-		Load_stu(CoursesInSemester[i], schoolYear, semester, StuInCourse);
+		Load_stu(CoursesListInSemester[i], schoolYear, semester, StuInCourse);
 		for (int j = 0; j < numOfStuInCourse; ++j)
 		{
 			for (int k = 0; k < numOfStuInClass; ++k)
 			{
 				if (strcmp(StuInAClass[k].stuID, StuInCourse[j].stuID) == 0)
 				{
-					saveFinal[k][numOfCoursesPerStudent[k]] = StuInCourse[j].mark;
-					courseNameWithScoreBoard[k][numOfCoursesPerStudent[k]] = _strdup(CoursesInSemester[i].courseName);
+					ScoresInSemester_Class[k][numOfCoursesPerStudent[k]] = StuInCourse[j].mark;
+					CoursesInSemester_Class[k][numOfCoursesPerStudent[k]] = CoursesListInSemester[i];
 					++numOfCoursesPerStudent[k];
 					break;
 				}
 			}
 		}
 	}
+}
+
+int* GetNumOfCoursesPerStudent(char* className, char* schoolYear, char* semester)
+{
+	int* numOfCoursesPerStudent = nullptr;
+	scoreboard** SemesterScores_Class = nullptr;
+	course** SemesterCourses_Class = nullptr;
+	viewStuWithScore(className, schoolYear, semester, numOfCoursesPerStudent, SemesterScores_Class, SemesterCourses_Class);
+	return numOfCoursesPerStudent;
+}
+
+scoreboard** GetSemesterScore_Class(char* className, char* schoolYear, char* semester)
+{
+	int* numOfCoursesPerStudent = nullptr;
+	scoreboard** SemesterScores_Class = nullptr;
+	course** SemesterCourses_Class = nullptr;
+	viewStuWithScore(className, schoolYear, semester, numOfCoursesPerStudent, SemesterScores_Class, SemesterCourses_Class);
+	return SemesterScores_Class;
+}
+
+course** GetSemesterCourses_Class(char* className, char* schoolYear, char* semester)
+{
+	int* numOfCoursesPerStudent = nullptr;
+	scoreboard** SemesterScores_Class = nullptr;
+	course** SemesterCourses_Class = nullptr;
+	viewStuWithScore(className, schoolYear, semester, numOfCoursesPerStudent, SemesterScores_Class, SemesterCourses_Class);
+	return SemesterCourses_Class;
 }
