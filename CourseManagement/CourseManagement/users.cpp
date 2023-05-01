@@ -173,7 +173,7 @@ void getStudyingSchoolYear(char* stuID, int& numOfschoolYear, char**& schoolYear
 }
 bool checkSemesterAndSchoolYear(char* semester, char* schoolyear) {
 	int numSemester = 0;
-	ifstream file_schoolyear("..\data\schoolYear.txt");
+	ifstream file_schoolyear("../data/schoolYear.txt");
 	char* tmp_schoolyear = new char[100];
 	while (!file_schoolyear.eof()) {
 		file_schoolyear.get(tmp_schoolyear, 100, '\n');
