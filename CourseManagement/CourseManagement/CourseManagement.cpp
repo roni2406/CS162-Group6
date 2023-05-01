@@ -12,7 +12,6 @@ int main()
     account CurrentUser;
     InitWindow(screenWidth, screenHeight, "Course Management System");
     StudentorStaffPage(screenWidth, screenHeight, CurrentUser);
-    //CoursePageStudent(screenWidth,screenHeight,CurrentUser);
     return 0;
 }
 

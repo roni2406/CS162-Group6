@@ -574,12 +574,13 @@ void ScoreboardStudent(const int screenWidth, const int screenHeight, account& C
 	bool action1 = false;
 	bool* actionYear = new bool[cntYears] {0};
 	bool actionOK = false;
-	bool semesterGPA = false;
+	bool GPA = false;
 
 	char* yearnametmp = nullptr;
 	char* semesternametmp = nullptr;
 
-	char* semesterOverall = new char[5];
+	char* semesterGPA = new char[5];
+	char* overallGPA = new char[5];
 
 	Button2 backtopreviouspage;
 	backtopreviouspage.button = { 1200, 20, 300, 30 };
@@ -732,12 +733,20 @@ void ScoreboardStudent(const int screenWidth, const int screenHeight, account& C
 			cntCourse = countCoursesOfAStudent(CurrentUser.userName, yearnametmp, semesternametmp);
 			courses = viewCoursesOfAStudent(CurrentUser.userName, yearnametmp, semesternametmp);
 			ScoreBoard = GetsaveScore(CurrentUser.userName, yearnametmp, semesternametmp);
-			double_to_char(getSemesterGPA(CurrentUser.userName, yearnametmp, semesternametmp), semesterOverall);
+			double_to_char(getSemesterGPA(CurrentUser.userName, yearnametmp, semesternametmp), semesterGPA);
+			double_to_char(getOverallGPA(CurrentUser.userName), overallGPA);
 			actionOK = false;
-			semesterGPA = true;
+			GPA = true;
 		}
 
-		if (semesterGPA) DrawText(semesterOverall, 1050, 116, 24, DARKBLUE);
+		if (GPA) {
+			DrawText(semesterGPA, 1050, 116, 24, DARKBLUE);
+			DrawText(overallGPA, 1360, 116, 24, DARKBLUE);
+		}
+		else {
+			DrawText("0.0", 1050, 116, 24, DARKBLUE);
+			DrawText("0.0", 1360, 116, 24, DARKBLUE);
+		}
 
 		for (int i = 0; i < cntCourse; ++i) {
 			DrawLine(x_course + 190, y_course + j - 24, x_course + 190, y_course + j + 38, BLACK);
