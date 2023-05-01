@@ -318,9 +318,9 @@ double getSemesterGPA(char* stuID, char* schoolYear, char* semester)
 double getOverallGPA(char* stuID)
 {
 	double OverallGPA = 0;
+	int numOfStudyingCourses = countOverallNumberOfCourses(stuID);
 	course* ListOfStudyingCourses = GetOverallCourseListFromStart(stuID);
 	scoreboard* ListOfStudyingScores = GetOverallScoresListFromStart(stuID);
-	int numOfStudyingCourses = countOverallNumberOfCourses(stuID);
 	int numOfOverallCredits = 0;
 	for (int i = 0; i < numOfStudyingCourses; ++i)
 	{
