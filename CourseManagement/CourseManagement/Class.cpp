@@ -319,3 +319,23 @@ course** GetSemesterCourses_Class(char* className, char* schoolYear, char* semes
 	viewStuWithScore(className, schoolYear, semester, numOfCoursesPerStudent, SemesterScores_Class, SemesterCourses_Class);
 	return SemesterCourses_Class;
 }
+
+double* GetSemesterGPA_Class(char* className, char* schoolYear, char* semester)
+{
+	student* StuInAClass = viewStudentsInClass(className);
+	int numOfStuInClass = countStudentInClass(className);
+	double* SemesterGPA_Class = new double[numOfStuInClass];
+	for (int i = 0; i < numOfStuInClass; ++i)
+		SemesterGPA_Class[i] = getSemesterGPA(StuInAClass[i].stuID, schoolYear, semester);
+	return SemesterGPA_Class;
+}
+
+double* GetOverallGPA_Class(char* className)
+{
+	student* StuInAClass = viewStudentsInClass(className);
+	int numOfStuInClass = countStudentInClass(className);
+	double* OverallGPA_Class = new double[numOfStuInClass];
+	for (int i = 0; i < numOfStuInClass; ++i)
+		OverallGPA_Class[i] = getOverallGPA(StuInAClass[i].stuID);
+	return OverallGPA_Class;
+}

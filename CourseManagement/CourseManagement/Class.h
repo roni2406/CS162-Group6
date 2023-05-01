@@ -45,4 +45,6 @@ void viewStuWithScore(char* className, char* schoolYear, char* semester, int*& n
 int* GetNumOfCoursesPerStudent(char* className, char* schoolYear, char* semester);
 scoreboard** GetSemesterScore_Class(char* className, char* schoolYear, char* semester);
 course** GetSemesterCourses_Class(char* className, char* schoolYear, char* semester);
+double* GetSemesterGPA_Class(char* className, char* schoolYear, char* semester);
+double* GetOverallGPA_Class(char* className);
 #endif
