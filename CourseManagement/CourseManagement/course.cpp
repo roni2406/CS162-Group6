@@ -535,7 +535,7 @@ course* GetOverallCourseListFromStart(char* stuID)
 	{
 		for (int j = 0; j < 3; ++j)
 		{
-			int numOfCoursesOfCurrentSemester = countCourse(schoolYear[i], semester[j]);
+			int numOfCoursesOfCurrentSemester = countCoursesOfAStudent(stuID, schoolYear[i], semester[j]);
 			course* CoursesOfCurrentSemester = viewCoursesOfAStudent(stuID, schoolYear[i], semester[j]);
 			for (int k = 0; k < numOfCoursesOfCurrentSemester; ++k)
 				AllCoursesFromStart[cnt + k] = CoursesOfCurrentSemester[k];
@@ -578,7 +578,7 @@ scoreboard* GetOverallScoresListFromStart(char* stuID)
 	{
 		for (int j = 0; j < 3; ++j)
 		{
-			int numOfCoursesOfCurrentSemester = countCourse(schoolYear[i], semester[j]);
+			int numOfCoursesOfCurrentSemester = countCoursesOfAStudent(stuID, schoolYear[i], semester[j]);
 			scoreboard* ScoresOfCurrentSemester = GetsaveScore(stuID, schoolYear[i], semester[j]);
 			for (int k = 0; k < numOfCoursesOfCurrentSemester; ++k)
 				AllScoresFromStart[cnt + k] = ScoresOfCurrentSemester[k];

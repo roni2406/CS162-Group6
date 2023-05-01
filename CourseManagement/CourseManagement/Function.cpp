@@ -577,7 +577,7 @@ void ScoreboardStudent(const int screenWidth, const int screenHeight, account& C
 	bool actionOK = false;
 	bool GPA = false;
 
-	//double overallGPAd = getOverallGPA(CurrentUser.userName);
+	double overallGPAd = getOverallGPA(CurrentUser.userName);
 	char* yearnametmp = nullptr;
 	char* semesternametmp = nullptr;
 
@@ -645,8 +645,8 @@ void ScoreboardStudent(const int screenWidth, const int screenHeight, account& C
 
 		DrawRectangle(0, 255, 1512, 751, WHITE);
 
-		/*double_to_char(overallGPAd, overallGPA);
-		DrawText(overallGPA, 1360, 116, 24, DARKBLUE);*/
+		double_to_char(overallGPAd, overallGPA);
+		DrawText(overallGPA, 1360, 116, 24, DARKBLUE);
 		
 		
 
