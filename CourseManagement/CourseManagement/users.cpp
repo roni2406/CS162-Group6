@@ -171,7 +171,28 @@ void getStudyingSchoolYear(char* stuID, int& numOfschoolYear, char**& schoolYear
 	delete[] first2degitOfstuID;
 	delete[] nowYear;
 }
-
+bool checkSemesterAndSchoolYear(char* semester, char* schoolyear) {
+	int numSemester = 0;
+	ifstream file_schoolyear("..\data\schoolYear.txt");
+	char* tmp_schoolyear = new char[100];
+	while (!file_schoolyear.eof()) {
+		file_schoolyear.get(tmp_schoolyear, 100, '\n');
+		if (strcmp(tmp_schoolyear, schoolyear) == 0) {
+			ifstream file_semester("../data/" + (string)(schoolyear)+"Semester.csv");
+			file_semester.get();
+			while (!file_semester.eof()) {
+				++numSemester;
+				file_semester.ignore(500, '\n');
+			}
+			if (strcmp(semester, "Fall") == 0 && numSemester >= 1) return true;
+			if (strcmp(semester, "Summer") == 0 && numSemester >= 2) return true;
+			if (strcmp(semester, "Autumn") == 0 && numSemester >= 3) return true;
+			file_semester.close();
+		}
+	}
+	file_schoolyear.close();
+	return false;
+}
 // 20
 void inputStudentAndScoreWithCSV(ifstream& fin, student& s)
 {
