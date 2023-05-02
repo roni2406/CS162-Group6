@@ -237,7 +237,7 @@ bool CheckData_InputStudents(char* No, char* student_id, char* Gender, char* DoB
 	int NoStu = atoi(No);
 	if (NoStu <= 0) return false;
 
-	int n = strlen(student_id);
+	int n = (int)strlen(student_id);
 	if (n != 8) return false;
 
 	int GenderStu = atoi(Gender);
@@ -247,7 +247,7 @@ bool CheckData_InputStudents(char* No, char* student_id, char* Gender, char* DoB
 	tmp.inputADateWithChar(DoB);
 	if (checkDateInput(DoB) == false || tmp.checkdata() == false) return false;
 
-	int m = strlen(social_ID);
+	int m = (int)strlen(social_ID);
 	if (m != 12) return false;
 
 	return true;

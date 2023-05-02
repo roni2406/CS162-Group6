@@ -1,1 +1,2 @@
 Data Structures,CS163,22TT2,Dinh Ba Tien,4,60,MON,S1
+General Physics III,PH213,22TT2,Vu Thi Hanh Thu,4,60,THU,S1

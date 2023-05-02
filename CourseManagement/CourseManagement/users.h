@@ -24,7 +24,7 @@ struct student {
     account stuAcc;
     int No;
     person Student;
-    char* stuID;
+    char* stuID = nullptr;
     scoreboard mark;
 
     void inputAStudent(char* student_id, char* first_name, char* last_name, 
@@ -37,7 +37,7 @@ struct student {
 struct staff {
     account staffAcc;
     person Staff;
-    char* staffID;
+    char* staffID = nullptr;
 
     void inputAStaff(char* staff_id, person sta);
     void outputAStaffToFile(ofstream& fout);

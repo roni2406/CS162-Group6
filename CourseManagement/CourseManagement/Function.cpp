@@ -346,7 +346,6 @@ void CoursePageStudent(const int screenWidth, const int screenHeight, account& C
 	Vector2 mousePoint = { 0.0f, 0.0f };
 	int cntCourse = 0;
 	course* courses = nullptr;
-
 	int cntYears = 0;
 	char** YearName = nullptr;
 	getStudyingSchoolYear(CurrentUser.userName, cntYears, YearName);
@@ -550,14 +549,14 @@ void CoursePageStudent(const int screenWidth, const int screenHeight, account& C
 			DrawText(maxstu, x_course + 1189, y_course + j, 20, BLACK);
 			DrawText(courses[i].dayofweek, x_course + 1320, y_course + j, 20, BLACK);
 			DrawText(courses[i].sessionHour, x_course + 1442, y_course + j, 20, BLACK);
+			delete[] nofc;
+			delete[] maxstu;
 			j += 61;
 		}
-		
-	
-
 		backtopreviouspage.workbutton(mousePoint, CurrentUser, ProfilePageStudent);
 		EndDrawing();
 	}
+	delete[] courses;
 	CloseWindow();
 }
 void ScoreboardStudent(const int screenWidth, const int screenHeight, account& CurrentUser) {

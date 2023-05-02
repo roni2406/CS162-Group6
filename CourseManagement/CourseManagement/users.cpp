@@ -125,7 +125,7 @@ void sortToStuID(student*& StudentArray, int numOfStudents)
 
 bool checkdata_FileName(char* fileNameIn)
 {
-	int n = strlen(fileNameIn);
+	int n = (int)strlen(fileNameIn);
 	if (fileNameIn[n - 4] == '.' && fileNameIn[n - 3] == 'c'
 		&& fileNameIn[n - 2] == 's' && fileNameIn[n - 1] == 'v') return true;
 	else return false;

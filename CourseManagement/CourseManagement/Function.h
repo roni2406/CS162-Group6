@@ -26,18 +26,16 @@ void StudentorStaffPage(const int screenWidth, const int screenHeight, account& 
 void LogInPageStudent(const int screenWidth, const int screenHeight, account& CurrentUser);
 void LogInPageStaff(const int screenWidth, const int screenHeight, account& CurrentUser);
 
-void ProfilePageStudent(const int screenWidth, const int screenHeight, account& CurrentUser); // need to add information about student
+void ProfilePageStudent(const int screenWidth, const int screenHeight, account& CurrentUser); 
 void CoursePageStudent(const int screenWidth, const int screenHeight, account& CurrentUser);
 void ScoreboardStudent(const int screenWidth, const int screenHeight, account& CurrentUser);
 
-void ProfilePageStaff(const int screenWidth, const int screenHeight, account& CurrentUser); // need to add information about staff
-
+void ProfilePageStaff(const int screenWidth, const int screenHeight, account& CurrentUser); 
 void ChangePasswordPageStudent(const int screenWidth, const int screenHeight, account& CurrentUser);
 void ChangePasswordPageStaff(const int screenWidth, const int screenHeight, account& CurrentUser);
 
 void CreateSchoolYearPage(const int screenWidth,const int screenHeight, account& CurrentUser); 
 void ViewSchoolYearsPage(const int screenWidth, const int screenHeight, account& CurrentUser);
-//void SchoolYearPage(const int screenWidth, const int screenHeight, account& CurrentUser, char* &Year);
 
 void createClassPage(const int screenWidth, const int screenHeight, account& CurrentUser);
 void ViewClassesPage(const int screenWidth, const int screenHeight, account& CurrentUser);
@@ -45,15 +43,13 @@ void ClassPage(const int screenWidth, const int screenHeight, account& CurrentUs
 void addStudentPage(const int screenWidth, const int screenHeight, account& CurrentUser, char*& classname);
 void addStudentCSV(const int screenWidth, const int screenHeight, account& CurrentUser, char*& classname);
 void dataExistedPage(const int screenWidth, const int screenHeight, account& CurrentUser, char*& classname, int numDupStu, student* dupstu);
-void scoreBoardStudentInClass(const int screenWidth, const int screenHeight, account& CurrentUser, int cntCourse, char* classname, student s, course* courses, scoreboard* score);
 
 void CreateSemesterPage(const int screenWidth, const int screenHeight, account& CurrentUser, char* &Year);
 void ViewSemestersPage(const int screenWidth, const int screenHeight, account& CurrentUser, char*& Year);
-//void SemesterPage(const int screenWidth, const int screenHeight, account& CurrentUser, char*& Year, char*& Semester); // need to include struct semester to display and save data
 
-void CreateCoursePage(const int screenWidth, const int screenHeight, account& CurrentUser, char*& Year, char*& Semester); // need to include struct semester to display and save data
-void ViewCoursesPage(const int screenWidth, const int screenHeight, account& CurrentUser, char*& Year, char*& Semester); // need to include struct semester to display and save data
-void CoursePage(const int screenWidth, const int screenHeight, account& CurrentUser, char*& Year, char* &Semester, course& Course); // need to include struct semester, course to display and save data
+void CreateCoursePage(const int screenWidth, const int screenHeight, account& CurrentUser, char*& Year, char*& Semester); 
+void ViewCoursesPage(const int screenWidth, const int screenHeight, account& CurrentUser, char*& Year, char*& Semester); 
+void CoursePage(const int screenWidth, const int screenHeight, account& CurrentUser, char*& Year, char* &Semester, course& Course); 
 void UpdateCoursePage(const int screenWidth, const int screenHeight, account& CurrentUser, char*& Year, char*& Semester, course*& Course, int n, int i);
 
 void addStudentPageForCourse(const int screenWidth, const int screenHeight, account& CurrentUser, char*& Year, char*& Semester, course& Course);
@@ -63,14 +59,16 @@ void updateStudent(const int screenWidth, const int screenHeight, account& Curre
 //// Objects
 
 /// button:
+
+// used for create a page in a page
 struct Button0 {
 	const int screenWidth = 1512;
 	const int screenHeight = 982;
-	Texture2D texture;
+	Texture2D texture = {};
 	float frameHeight = 0;
 	Rectangle sourceRec = { 0, 0, 0, 0 };
 	Rectangle btnBounds = { 0, 0, 0, 0 };
-	int state = 0;					// Button state: 0-NORMAL, 1-MOUSE_HOVER, 2-PRESSED
+	int state = 0;					
 	bool action = false;
 	bool hidden = true;
 	void workbutton(Vector2 mousePoint);
@@ -79,12 +77,12 @@ struct Button0 {
 struct Button1 {
 	const int screenWidth = 1512;
 	const int screenHeight = 982;
-	Texture2D texture;
+	Texture2D texture = {};
 	float frameHeight = 0;
 	Rectangle sourceRec = { 0, 0, 0, 0 };
 	Rectangle btnBounds = { 0, 0, 0, 0 };
-	int state = 0;					// Button state: 0-NORMAL, 1-MOUSE_HOVER, 2-PRESSED
-	bool action = false;			// Button action should be activated
+	int state = 0;					
+	bool action = false;			
 	void workbutton(Vector2 mousePoint, account& CurrentUser, void(*func)(const int screenWidth, const int screenHeight, account& CurrentUser));
 };
 
@@ -99,11 +97,11 @@ struct Button2 {
 
 };
 
-// used for "bo-goc" button that need to update information Year
+// used for "bo-goc" button that need to update an information
 struct Button3 {
 	const int screenWidth = 1512;
 	const int screenHeight = 982;
-	Texture2D texture;
+	Texture2D texture = {};
 	float frameHeight = 0;
 	Rectangle sourceRec = { 0, 0, 0, 0 };
 	Rectangle btnBounds = { 0, 0, 0, 0 };
@@ -127,7 +125,7 @@ struct Button4 {
 struct Button5 {
 	const int screenWidth = 1512;
 	const int screenHeight = 982;
-	Texture2D texture;
+	Texture2D texture = {};
 	float frameHeight = 0;
 	Rectangle sourceRec = { 0, 0, 0, 0 };
 	Rectangle btnBounds = { 0, 0, 0, 0 };
@@ -148,7 +146,7 @@ struct Button6 {
 struct Button7 {
 	const int screenWidth = 1512;
 	const int screenHeight = 982;
-	Texture2D texture;
+	Texture2D texture = {};
 	float frameHeight = 0;
 	Rectangle sourceRec = { 0, 0, 0, 0 };
 	Rectangle btnBounds = { 0, 0, 0, 0 };
@@ -163,7 +161,7 @@ struct Button8 {
 	int y = 0;
 	const int screenWidth = 1512;
 	const int screenHeight = 982;
-	Rectangle button;
+	Rectangle button = { 0, 0, 0, 0 };
 	bool mouseonbutton = false;
 	bool state = true; // check if the button out of bounds
 	bool action = false; // move to another page
@@ -179,7 +177,7 @@ struct Button9 {
 	int y = 0;
 	const int screenWidth = 1512;
 	const int screenHeight = 982;
-	Rectangle button;
+	Rectangle button = { 0, 0, 0, 0 };
 	bool mouseonbutton = false;
 	bool state = true; // check if the button out of bounds
 	bool action = false; // move to another page
@@ -195,7 +193,7 @@ struct Button10 {
 	int y = 0;
 	const int screenWidth = 1512;
 	const int screenHeight = 982;
-	Rectangle button;
+	Rectangle button = { 0, 0, 0, 0 };
 	bool mouseonbutton = false;
 	bool state = true;
 	bool state1 = true; // check if the button out of bounds

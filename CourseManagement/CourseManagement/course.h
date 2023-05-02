@@ -7,17 +7,17 @@ using namespace std;
 #define COURSE_H
 
 struct course {
-    char* courseID;
-    char* courseName;
-    char* className;
-    char* teacherName;
+    char* courseID = nullptr;
+    char* courseName = nullptr;
+    char* className = nullptr;
+    char* teacherName = nullptr;
     int numOfCre;
     int numOfStu = 0;
     int maxStu;
-    char* dayofweek;
-    char* sessionHour; // S1 (07:30), S2 (09:30), S3(13:30) and S4 (15:30)).
+    char* dayofweek = nullptr;
+    char* sessionHour = nullptr;
+    // S1 (07:30), S2 (09:30), S3(13:30) and S4 (15:30)).
     // A course will be taught in only one session in a week
-    char studentfile[30];
     student* stuOfCourse = nullptr;
 };
 
