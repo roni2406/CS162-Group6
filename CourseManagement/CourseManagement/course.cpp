@@ -171,18 +171,20 @@ void deleteCourse(course*& courses, int no, int& num, char* year, char* semester
 	ReturnCoursesToFile(year, semester, num, courses);
 }
 bool updateCourse(char* year, char* semester, course& courses, char* courseName_tmp, char* ID, char* className_tmp, char* teacherName_tmp, char* nofc, char* maxstu, char* courseday, char* sshours) {
+	string tmp = "../data/" + (string)(year)+"/" + (string)(semester)+"/" + (string)(courses.courseName) + "-" + string(courses.className) + ".csv";
 	if (courseName_tmp[0] != '\0')  courses.courseName = _strdup(courseName_tmp);
-	if (className_tmp[0] != '\0')	courses.className =  _strdup(className_tmp);
+	else courseName_tmp = _strdup(courses.courseName);
+	if (className_tmp[0] != '\0')	courses.className = _strdup(className_tmp);
+	else className_tmp = _strdup(courses.className);
 	if (ID[0] != '\0')				courses.courseID = _strdup(ID);
 	if (teacherName_tmp[0] != '\0') courses.teacherName = _strdup(teacherName_tmp);
 	if (nofc[0] != '\0')			courses.numOfCre = atoi(nofc);
 	if (maxstu[0] != '\0')			courses.maxStu = atoi(maxstu);
 	if (courseday[0] != '\0')		courses.dayofweek = _strdup(courseday);
 	if (sshours[0] != '\0')			courses.sessionHour = _strdup(sshours);
-	string tmp = "../data/" + (string)(year)+"/" + (string)(semester)+"/" + (string)(courses.courseName) + "-" + string(courses.className) + ".csv";
 	string tmp_new = "../data/" + (string)(year)+"/" + (string)(semester)+"/" + (string)(courseName_tmp)+"-" + string(className_tmp) + ".csv";
-	rename(tmp.c_str(), tmp_new.c_str());
-	return true;
+	if (rename(tmp.c_str(), tmp_new.c_str()) == 0) return true;
+	else return false;
 }
 void deleteStudent(course& course, int no, int& n, char* Year, char* Semester) {
 	for (int i = no + 1; i < course.numOfStu; ++i) {
