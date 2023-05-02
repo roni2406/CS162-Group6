@@ -202,8 +202,7 @@ struct Button10 {
 	bool action1 = false; // open a small window to do something
 	bool remove = false; // delete course
 	bool update = false;
-	void workbutton(Vector2 mousePoint, account& CurrentUser, int e, char* a, student s, course* c, scoreboard* b, 
-		void(*func)(const int screenWidth, const int screenHeight, account& CurrentUser, int e, char* a, student s, course* c, scoreboard* b));
+	void workbutton(Vector2 mousePoint);
 
 };
 /// textbox

@@ -53,7 +53,7 @@ void Button3::workbutton(Vector2 mousePoint, account& CurrentUser, char*& a, voi
 	DrawTextureRec(texture, sourceRec, { btnBounds.x, btnBounds.y }, WHITE); // Draw button frame
 }
 void Button4::workbutton(Vector2 mousePoint, account& CurrentUser, char*& a, void(*func)(const int screenWidth, const int screenHeight, account& CurrentUser, char*& a)) {
-	if (CheckCollisionPointRec(mousePoint, button)) {          // Check button state
+	if (CheckCollisionPointRec(mousePoint, button) && state) {          // Check button state
 		if (IsMouseButtonPressed(MOUSE_BUTTON_LEFT)) action = true;
 	}
 	else action = false;
@@ -174,8 +174,7 @@ void Button9::workbutton(Vector2 mousePoint, account& CurrentUser, char*& a, cha
 	}
 }
 
-void Button10::workbutton(Vector2 mousePoint, account& CurrentUser, int e, char* a, student s, course* c, scoreboard* b, 
-	void(*func)(const int screenWidth, const int screenHeight, account& CurrentUser, int e, char* a, student s, course* c, scoreboard* b)) {
+void Button10::workbutton(Vector2 mousePoint) {
 	if (CheckCollisionPointRec(mousePoint, button) && state) {          // Check button state
 		if (IsMouseButtonPressed(MOUSE_BUTTON_LEFT)) {
 			action = true;
@@ -187,9 +186,6 @@ void Button10::workbutton(Vector2 mousePoint, account& CurrentUser, int e, char*
 			action1 = true;
 			action = false;
 		}
-	}
-	else {
-		action = false;
 	}
 	if (CheckCollisionPointRec(GetMousePosition(), { float(x),float(y),160,25 })) {
 		action = false;
@@ -204,11 +200,6 @@ void Button10::workbutton(Vector2 mousePoint, account& CurrentUser, int e, char*
 		}
 	}
 	else if (IsMouseButtonPressed(MOUSE_BUTTON_LEFT)) action1 = false;
-	if (action && state)
-	{
-		EndDrawing();
-		func(screenWidth, screenHeight, CurrentUser, e, a, s, c, b);
-	}
 }
 // Textbox
 void Textbox1::worktextbox(bool& somethingfalsedisplay) {
