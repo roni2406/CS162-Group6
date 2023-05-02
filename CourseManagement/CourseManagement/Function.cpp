@@ -5,6 +5,8 @@ using namespace std;
 
 //FRONT_END--------------------------------------------------------
 void StudentorStaffPage(const int screenWidth, const int screenHeight, account& CurrentUser) {
+	Font Title = LoadFontEx("../Montserrat/static/Montserrat-Bold.ttf", 120, 0, 250);
+	Font medium = LoadFontEx("../Montserrat/static/Montserrat-Medium.ttf", 120, 0, 250);
 	Rectangle background = { 0,0,float(screenWidth),float(screenHeight) };
 	Vector2 mousePoint = { 0.0f, 0.0f };
 
@@ -20,19 +22,22 @@ void StudentorStaffPage(const int screenWidth, const int screenHeight, account& 
 
 	SetTargetFPS(40);
 	while (!WindowShouldClose()) {
-		ClearBackground(WHITE);
 		BeginDrawing();
 		DrawRectangleGradientEx(background, SKYBLUE, DARKBLUE, DARKBLUE, SKYBLUE);
 		DrawRectangle(0, 0, screenWidth, 60, WHITE);
-		DrawText("COURSE MANAGEMENT SYSTEM", 430, 10, 40, DARKBLUE);
 		DrawRectangle(552, 148, 408, 59, WHITE);
 		DrawText("You are a", 660, 157, 40, DARKBLUE);
+		DrawTextEx(Title, "COURSE MANAGEMENT SYSTEM", { 340, 5 }, 60, 1, DARKBLUE);
+		DrawRectangle(570, 148, 367, 59, WHITE);
+		DrawTextEx(medium, "Welcome", { 635, 150 }, 60, 0, DARKBLUE);
 		DrawRectangleRec(student.button, WHITE);
-		DrawText("STUDENT", 260, 333, 36, DARKBLUE);
-		DrawTexture(Student, 200, 390, RAYWHITE);
+		DrawRectangle(23, 295, 645, 80, DARKBLUE);
+		DrawTextEx(medium, "STUDENT", { 255,310 }, 45,1, WHITE);
+		DrawTexture(Student, 140, 390, RAYWHITE);
 		DrawRectangleRec(staff.button, WHITE);
-		DrawText("STAFF", 1107, 333, 36, DARKBLUE);
-		DrawTexture(Staff, 996, 407, RAYWHITE);
+		DrawRectangle(839, 295, 645, 80, DARKBLUE);
+		DrawTextEx(medium, "STAFF", { 1100,310 }, 45, 1, WHITE);
+		DrawTexture(Staff, 966, 390, RAYWHITE);
 
 		mousePoint = GetMousePosition();
 		staff.workbutton(mousePoint, CurrentUser, LogInPageStaff);
