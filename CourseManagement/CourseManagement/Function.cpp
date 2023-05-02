@@ -1533,12 +1533,21 @@ void ClassPage(const int screenWidth, const int screenHeight, account& CurrentUs
 		DrawRectangle(0, 231, screenWidth, 751, WHITE);
 		DrawRectangleLines(0, 231, screenWidth, 751, BLACK);
 
-		if (actionOK && yearnametmp && semesternametmp) {
-			cntCourse = GetNumOfCoursesPerStudent(Classname, yearnametmp, semesternametmp);
-			SemesterCourses_Class = GetSemesterCourses_Class(Classname, yearnametmp, semesternametmp);
-			SemesterScore_Class = GetSemesterScore_Class(Classname, yearnametmp, semesternametmp);
-			semesterGPA = GetSemesterGPA_Class(Classname, yearnametmp, semesternametmp);
-			overallGPA = GetOverallGPA_Class(Classname);
+		if (actionOK && yearnametmp && semesternametmp){
+			if (checkSemesterAndSchoolYear(semesternametmp, yearnametmp)) {
+				cntCourse = GetNumOfCoursesPerStudent(Classname, yearnametmp, semesternametmp);
+				SemesterCourses_Class = GetSemesterCourses_Class(Classname, yearnametmp, semesternametmp);
+				SemesterScore_Class = GetSemesterScore_Class(Classname, yearnametmp, semesternametmp);
+				semesterGPA = GetSemesterGPA_Class(Classname, yearnametmp, semesternametmp);
+				overallGPA = GetOverallGPA_Class(Classname);
+			}
+			else {
+				cntCourse = nullptr;
+				SemesterCourses_Class = nullptr;
+				SemesterScore_Class = nullptr;
+				semesterGPA = nullptr;
+				overallGPA = nullptr;
+			}
 			actionOK = false;
 		}
 		int j = 0;
