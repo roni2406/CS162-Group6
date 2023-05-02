@@ -581,8 +581,8 @@ void CoursePageStudent(const int screenWidth, const int screenHeight, account& C
 	delete[] actionYear;
 	//free (yearnametmp);
 	//free (semesternametmp);
-	_CrtSetReportMode(_CRT_WARN, _CRTDBG_MODE_DEBUG);
-	_CrtDumpMemoryLeaks();
+	 
+	 
 	CloseWindow();
 }
 void ScoreboardStudent(const int screenWidth, const int screenHeight, account& CurrentUser) {
@@ -841,8 +841,8 @@ void ScoreboardStudent(const int screenWidth, const int screenHeight, account& C
 		backtopreviouspage.workbutton(mousePoint, CurrentUser, ProfilePageStudent);
 		EndDrawing();
 	}
-	_CrtSetReportMode(_CRT_WARN, _CRTDBG_MODE_DEBUG);
-	_CrtDumpMemoryLeaks();
+	 
+	
 	CloseWindow();
 }
 void ProfilePageStaff(const int screenWidth, const int screenHeight, account& CurrentUser) {
@@ -920,8 +920,8 @@ void ProfilePageStaff(const int screenWidth, const int screenHeight, account& Cu
 		//// display schoolyear from createschoolyear page--------------------------------------------------------------------------------------------
 		EndDrawing();
 	}
-	_CrtSetReportMode(_CRT_WARN, _CRTDBG_MODE_DEBUG);
-	_CrtDumpMemoryLeaks();
+	 
+	
 	CloseWindow();
 }
 void ChangePasswordPageStudent(const int screenWidth, const int screenHeight, account& CurrentUser) {
@@ -1067,8 +1067,8 @@ void ChangePasswordPageStudent(const int screenWidth, const int screenHeight, ac
 		backtoprofilepage.workbutton(mousePoint, CurrentUser, ProfilePageStudent);
 		EndDrawing();
 	}
-	_CrtSetReportMode(_CRT_WARN, _CRTDBG_MODE_DEBUG);
-	_CrtDumpMemoryLeaks();
+	 
+	
 	CloseWindow();
 }
 void ChangePasswordPageStaff(const int screenWidth, const int screenHeight, account& CurrentUser) {
@@ -1215,8 +1215,8 @@ void ChangePasswordPageStaff(const int screenWidth, const int screenHeight, acco
 		backtoprofilepage.workbutton(mousePoint, CurrentUser, ProfilePageStaff);
 		EndDrawing();
 	}
-	_CrtSetReportMode(_CRT_WARN, _CRTDBG_MODE_DEBUG);
-	_CrtDumpMemoryLeaks();
+	 
+	
 	CloseWindow();
 }
 
@@ -1287,8 +1287,8 @@ void CreateSchoolYearPage(const int screenWidth, const int screenHeight, account
 
 		EndDrawing();
 	}
-	_CrtSetReportMode(_CRT_WARN, _CRTDBG_MODE_DEBUG);
-	_CrtDumpMemoryLeaks();
+	 
+	
 	CloseWindow();
 }
 void ViewSchoolYearsPage(const int screenWidth, const int screenHeight, account& CurrentUser) {
@@ -1354,8 +1354,8 @@ void ViewSchoolYearsPage(const int screenWidth, const int screenHeight, account&
 		delete[] Years[i];
 	}
 	delete[] Years;
-	_CrtSetReportMode(_CRT_WARN, _CRTDBG_MODE_DEBUG);
-	_CrtDumpMemoryLeaks();
+	 
+	
 	CloseWindow();
 
 }
@@ -1428,8 +1428,8 @@ void createClassPage(const int screenWidth, const int screenHeight, account& Cur
 		backtoprofilepage.workbutton(mousePoint, CurrentUser, ViewClassesPage);
 		EndDrawing();
 	}
-	_CrtSetReportMode(_CRT_WARN, _CRTDBG_MODE_DEBUG);
-	_CrtDumpMemoryLeaks();
+	 
+	
 	CloseWindow();
 }
 void ViewClassesPage(const int screenWidth, const int screenHeight, account& CurrentUser) {
@@ -1496,8 +1496,8 @@ void ViewClassesPage(const int screenWidth, const int screenHeight, account& Cur
 		EndDrawing();
 	}
 	delete[] Classes;
-	_CrtSetReportMode(_CRT_WARN, _CRTDBG_MODE_DEBUG);
-	_CrtDumpMemoryLeaks();
+	 
+	
 	CloseWindow();
 
 }
@@ -1616,9 +1616,9 @@ void ClassPage(const int screenWidth, const int screenHeight, account& CurrentUs
 
 			if (y_student + j < 231) studentbutton[i].state = false;
 			else studentbutton[i].state = true;
-			if (SemesterCourses_Class && SemesterScore_Class && cntCourse) {
+			//if (SemesterCourses_Class && SemesterScore_Class && cntCourse) {
 				studentbutton[i].workbutton(mousePoint);
-			}
+			//}
 			j += 61;
 		}
 		DrawRectangle(0, 0, screenWidth, 60, WHITE);
@@ -1738,7 +1738,12 @@ void ClassPage(const int screenWidth, const int screenHeight, account& CurrentUs
 		}
 
 		if (CheckCollisionPointRec(mousePoint, { 60,250,200, 50 }) && action0 && n1 == 3) {
-			if (IsMouseButtonPressed(MOUSE_BUTTON_LEFT)) actionA = true;
+			if (IsMouseButtonPressed(MOUSE_BUTTON_LEFT)) {
+				actionA = true;
+				for (int i = 0; i < n; ++i) {
+					studentbutton[i].action = false;
+				}
+			}
 		}
 		if (actionA) {
 			DrawRectangleRec(semesters, DARKBLUE);
@@ -1783,13 +1788,17 @@ void ClassPage(const int screenWidth, const int screenHeight, account& CurrentUs
 				DrawRectangle(836, 263, 252, 55, WHITE);
 				DrawText("Semester GPA:", 847, 278, 24, DARKBLUE);
 				char* semestergpa = new char[5];
-				double_to_char(semesterGPA[i], semestergpa);
-				DrawText(semestergpa, 1028, 278, 24, DARKBLUE);
+				char* overallgpa = new char[5];
+				if (semesterGPA) {
+					double_to_char(semesterGPA[i], semestergpa);
+					DrawText(semestergpa, 1028, 278, 24, DARKBLUE);
+				}
 				DrawRectangle(1190, 263, 252, 55, WHITE);
 				DrawText("Overall GPA:", 1201, 278, 24, DARKBLUE);
-				char* overallgpa = new char[5];
-				double_to_char(semesterGPA[i], overallgpa);
-				DrawText(overallgpa, 1363, 278, 24, DARKBLUE);
+				if (overallGPA) {
+					double_to_char(semesterGPA[i], overallgpa);
+					DrawText(overallgpa, 1363, 278, 24, DARKBLUE);
+				}
 
 				DrawRectangle(24, 360, 121, 42, LIGHTGRAY);
 				DrawRectangleLines(24, 360, 121, 42, BLACK);
@@ -1818,40 +1827,40 @@ void ClassPage(const int screenWidth, const int screenHeight, account& CurrentUs
 				DrawRectangle(1338, 360, 148, 42, LIGHTGRAY);
 				DrawRectangleLines(1338, 360, 148, 42, BLACK);
 				DrawText("Midterm Mark", 1344, 372, 20, DARKBLUE);
+				if (SemesterCourses_Class && SemesterScore_Class) {
+					for (int i1 = 0; i1 < cntCourse[i]; ++i1) {
+						DrawLine(x_course + 134, y_course + 147, x_course + 134, y_course + 209, BLACK);
+						DrawLine(x_course + 653, y_course + 147, x_course + 653, y_course + 209, BLACK);
+						DrawLine(x_course + 851, y_course + 147, x_course + 851, y_course + 209, BLACK);
+						DrawLine(x_course + 1031, y_course + 147, x_course + 1031, y_course + 209, BLACK);
+						DrawLine(x_course + 1179, y_course + 147, x_course + 1179, y_course + 209, BLACK);
+						DrawLine(x_course + 1327, y_course + 147, x_course + 1327, y_course + 209, BLACK);
+						DrawLine(x_course + 1475, y_course + 147, x_course + 1475, y_course + 209, BLACK);
 
-				for (int i1 = 0; i1 < cntCourse[i]; ++i1) {
-					DrawLine(x_course + 134, y_course + 147, x_course + 134, y_course + 209, BLACK);
-					DrawLine(x_course + 653, y_course + 147, x_course + 653, y_course + 209, BLACK);
-					DrawLine(x_course + 851, y_course + 147, x_course + 851, y_course + 209, BLACK);
-					DrawLine(x_course + 1031, y_course + 147, x_course + 1031, y_course + 209, BLACK);
-					DrawLine(x_course + 1179, y_course + 147, x_course + 1179, y_course + 209, BLACK);
-					DrawLine(x_course + 1327, y_course + 147, x_course + 1327, y_course + 209, BLACK);
-					DrawLine(x_course + 1475, y_course + 147, x_course + 1475, y_course + 209, BLACK);
+						DrawRectangleLines(24, y_course + 147, 1464, 62, BLACK);
+						DrawText(SemesterCourses_Class[i][i1].courseID, x_course + 23, y_course + 167, 20, BLACK);
+						DrawText(SemesterCourses_Class[i][i1].courseName, x_course + 160, y_course + 167, 20, BLACK);
+						DrawText(SemesterCourses_Class[i][i1].className, x_course + 709, y_course + 167, 20, BLACK);
+						char* nofc = new char[10];
+						int_to_char(SemesterCourses_Class[i][i1].numOfCre, nofc);
+						DrawText(nofc, x_course + 930, y_course + 167, 20, BLACK);
+						char* total = new char[10];
+						double_to_char(SemesterScore_Class[i][i1].totalMark, total);
+						DrawText(total, x_course + 1102, y_course + 167, 20, BLACK);
+						char* Final = new char[10];
+						double_to_char(SemesterScore_Class[i][i1].finalMark, Final);
+						DrawText(Final, x_course + 1240, y_course + 167, 20, BLACK);
+						char* Midterm = new char[10];
+						double_to_char(SemesterScore_Class[i][i1].midtermMark, Midterm);
+						DrawText(Midterm, x_course + 1384, y_course + 167, 20, BLACK);
 
-					DrawRectangleLines(24, y_course + 147, 1464, 62, BLACK);
-					DrawText(SemesterCourses_Class[i][i1].courseID, x_course + 23, y_course + 167, 20, BLACK);
-					DrawText(SemesterCourses_Class[i][i1].courseName, x_course + 160, y_course + 167, 20, BLACK);
-					DrawText(SemesterCourses_Class[i][i1].className, x_course + 709, y_course + 167, 20, BLACK);
-					char* nofc = new char[10];
-					int_to_char(SemesterCourses_Class[i][i1].numOfCre, nofc);
-					DrawText(nofc, x_course + 930, y_course + 167, 20, BLACK);
-					char* total = new char[10];
-					double_to_char(SemesterScore_Class[i][i1].totalMark, total);
-					DrawText(total, x_course + 1102, y_course + 167, 20, BLACK);
-					char* Final = new char[10];
-					double_to_char(SemesterScore_Class[i][i1].finalMark, Final);
-					DrawText(Final, x_course + 1240, y_course + 167, 20, BLACK);
-					char* Midterm = new char[10];
-					double_to_char(SemesterScore_Class[i][i1].midtermMark, Midterm);
-					DrawText(Midterm, x_course + 1384, y_course + 167, 20, BLACK);
-
-					delete[] nofc;
-					delete[] total;
-					delete[] Final;
-					delete[] Midterm;
+						delete[] nofc;
+						delete[] total;
+						delete[] Final;
+						delete[] Midterm;
+					}
 				}
-
-				if (cntCourse[i] == 0) {
+				if ((!cntCourse || !SemesterCourses_Class || !SemesterScore_Class || !overallGPA || !semesterGPA) || (cntCourse && cntCourse[i] == 0)) {
 					DrawText("No Data Available !!!", 420, 470, 70, RED);
 				}
 
@@ -1883,8 +1892,8 @@ void ClassPage(const int screenWidth, const int screenHeight, account& CurrentUs
 	delete[] SemesterCourses_Class;
 	delete[] SemesterScore_Class;
 	//delete[] listStudents;
-	_CrtSetReportMode(_CRT_WARN, _CRTDBG_MODE_DEBUG);
-	_CrtDumpMemoryLeaks();
+	 
+	 
 	CloseWindow();
 }
 void addStudentPage(const int screenWidth, const int screenHeight, account& CurrentUser, char*& classname) {
@@ -1983,8 +1992,8 @@ void addStudentPage(const int screenWidth, const int screenHeight, account& Curr
 		backtoClasspage.workbutton(mousePoint, CurrentUser, classname, ClassPage);
 		EndDrawing();
 	}
-	_CrtSetReportMode(_CRT_WARN, _CRTDBG_MODE_DEBUG);
-	_CrtDumpMemoryLeaks();
+	 
+	 
 	CloseWindow();
 }
 
@@ -2154,8 +2163,8 @@ void dataExistedPage(const int screenWidth, const int screenHeight, account& Cur
 
 		EndDrawing();
 	}
-	_CrtSetReportMode(_CRT_WARN, _CRTDBG_MODE_DEBUG);
-	_CrtDumpMemoryLeaks();
+	 
+	 
 	CloseWindow();
 }
 void CreateSemesterPage(const int screenWidth, const int screenHeight, account& CurrentUser, char*& Year) {
@@ -2236,8 +2245,8 @@ void CreateSemesterPage(const int screenWidth, const int screenHeight, account& 
 		EndDrawing();
 	}
 	delete[] Year;
-	_CrtSetReportMode(_CRT_WARN, _CRTDBG_MODE_DEBUG);
-	_CrtDumpMemoryLeaks();
+	 
+	 
 	CloseWindow();
 }
 void ViewSemestersPage(const int screenWidth, const int screenHeight, account& CurrentUser, char*& Year) {
@@ -2297,8 +2306,8 @@ void ViewSemestersPage(const int screenWidth, const int screenHeight, account& C
 		EndDrawing();
 	}
 	delete[] Year;
-	_CrtSetReportMode(_CRT_WARN, _CRTDBG_MODE_DEBUG);
-	_CrtDumpMemoryLeaks();
+	 
+	 
 	CloseWindow();
 
 }
@@ -2442,8 +2451,8 @@ void CreateCoursePage(const int screenWidth, const int screenHeight, account& Cu
 	}
 	delete[] Year;
 	delete[] Semester;
-	_CrtSetReportMode(_CRT_WARN, _CRTDBG_MODE_DEBUG);
-	_CrtDumpMemoryLeaks();
+	 
+	 
 	CloseWindow();
 }
 
@@ -2583,8 +2592,6 @@ void ViewCoursesPage(const int screenWidth, const int screenHeight, account& Cur
 	delete[] courses;
 	delete[] Year;
 	delete[] Semester;
-	_CrtSetReportMode(_CRT_WARN, _CRTDBG_MODE_DEBUG);
-	_CrtDumpMemoryLeaks();
 	CloseWindow();
 }
 void UpdateCoursePage(const int screenWidth, const int screenHeight, account& CurrentUser, char*& Year, char*& Semester, course*& Course, int n, int i) {
@@ -2724,8 +2731,6 @@ void UpdateCoursePage(const int screenWidth, const int screenHeight, account& Cu
 	}
 	delete[] Year;
 	delete[] Semester;
-	_CrtSetReportMode(_CRT_WARN, _CRTDBG_MODE_DEBUG);
-	_CrtDumpMemoryLeaks();
 	CloseWindow();
 }
 void CoursePage(const int screenWidth, const int screenHeight, account& CurrentUser, char*& Year, char*& Semester, course& Course) {
@@ -2953,8 +2958,6 @@ void CoursePage(const int screenWidth, const int screenHeight, account& CurrentU
 	//delete[] listStudents;
 	delete[] Year;
 	delete[] Semester;
-	_CrtSetReportMode(_CRT_WARN, _CRTDBG_MODE_DEBUG);
-	_CrtDumpMemoryLeaks();
 	CloseWindow();
 }
 void addStudentPageForCourse(const int screenWidth, const int screenHeight, account& CurrentUser, char*& Year, char*& Semester, course& Course) {
@@ -3056,8 +3059,6 @@ void addStudentPageForCourse(const int screenWidth, const int screenHeight, acco
 		backtoCoursepage.workbutton(mousePoint, CurrentUser, Year, Semester, Course, CoursePage);
 		EndDrawing();
 	}
-	_CrtSetReportMode(_CRT_WARN, _CRTDBG_MODE_DEBUG);
-	_CrtDumpMemoryLeaks();
 	CloseWindow();
 }
 void addStudentCSVForCourse(const int screenWidth, const int screenHeight, account& CurrentUser, char*& Year, char*& Semester, course& Course) {
@@ -3136,8 +3137,6 @@ void addStudentCSVForCourse(const int screenWidth, const int screenHeight, accou
 		EndDrawing();
 	}
 	delete dupstu;
-	_CrtSetReportMode(_CRT_WARN, _CRTDBG_MODE_DEBUG);
-	_CrtDumpMemoryLeaks();
 	CloseWindow();
 }
 void dataExistedPageforCourse(const int screenWidth, const int screenHeight, account& CurrentUser, char* Year, char* Semester, course Course, int numDupStu, student* dupstu) {
@@ -3230,8 +3229,6 @@ void dataExistedPageforCourse(const int screenWidth, const int screenHeight, acc
 
 		EndDrawing();
 	}
-	_CrtSetReportMode(_CRT_WARN, _CRTDBG_MODE_DEBUG);
-	_CrtDumpMemoryLeaks();
 	CloseWindow();
 }
 void updateStudent(const int screenWidth, const int screenHeight, account& CurrentUser, char*& Year, char*& Semester, course& Course, student& s) {
@@ -3355,8 +3352,8 @@ void updateStudent(const int screenWidth, const int screenHeight, account& Curre
 	}
 	delete[] Year;
 	delete[] Semester;
-	_CrtSetReportMode(_CRT_WARN, _CRTDBG_MODE_DEBUG);
-	_CrtDumpMemoryLeaks();
+	 
+	 
 	CloseWindow();
 }
 
