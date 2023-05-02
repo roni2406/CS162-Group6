@@ -146,6 +146,9 @@ void getStudyingSchoolYear(char* stuID, int& numOfschoolYear, char**& schoolYear
 	nowYear[2] = '\0';
 	
 	numOfschoolYear = atoi(nowYear) - atoi(first2degitOfstuID) + 1;
+	if (numOfschoolYear > 7) {
+		numOfschoolYear = 7;
+	}
 	schoolYear = new char* [numOfschoolYear];
 	for (int i = 0; i < numOfschoolYear; i++) {
 		schoolYear[i] = new char[10];
