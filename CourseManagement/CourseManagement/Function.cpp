@@ -511,11 +511,20 @@ void CoursePageStudent(const int screenWidth, const int screenHeight, account& C
 		}
 
 		if (actionOK && yearnametmp && semesternametmp) {
-			cntCourse = countCoursesOfAStudent(CurrentUser.userName, yearnametmp, semesternametmp);
-			courses = viewCoursesOfAStudent(CurrentUser.userName, yearnametmp, semesternametmp);
+			if (checkSemesterAndSchoolYear(semesternametmp, yearnametmp)) {
+				cntCourse = countCoursesOfAStudent(CurrentUser.userName, yearnametmp, semesternametmp);
+				courses = viewCoursesOfAStudent(CurrentUser.userName, yearnametmp, semesternametmp);
+			}
+			else {
+				cntCourse = 0;
+				courses = nullptr;
+			}
 			actionOK = false;
 		}
 
+		if (cntCourse == 0) {
+			DrawText("No Data Available !!!", 420, 470, 70, RED);
+		}
 
 		for (int i = 0; i < cntCourse; ++i) {
 			DrawLine(x_course + 111, y_course + j - 24, x_course + 111, y_course + j + 38, BLACK);
@@ -544,9 +553,7 @@ void CoursePageStudent(const int screenWidth, const int screenHeight, account& C
 			j += 61;
 		}
 		
-		if (cntCourse == 0) {
-			DrawText("No Data Available !!!", 420, 470, 70, RED);
-		}
+	
 
 		backtopreviouspage.workbutton(mousePoint, CurrentUser, ProfilePageStudent);
 		EndDrawing();
@@ -734,19 +741,28 @@ void ScoreboardStudent(const int screenWidth, const int screenHeight, account& C
 			}
 		}
 		if (actionOK && yearnametmp && semesternametmp) {
-			cntCourse = countCoursesOfAStudent(CurrentUser.userName, yearnametmp, semesternametmp);
-			courses = viewCoursesOfAStudent(CurrentUser.userName, yearnametmp, semesternametmp);
-			ScoreBoard = GetsaveScore(CurrentUser.userName, yearnametmp, semesternametmp);
-			double_to_char(getSemesterGPA(CurrentUser.userName, yearnametmp, semesternametmp), semesterGPA);
+			if (checkSemesterAndSchoolYear(semesternametmp, yearnametmp)) {
+				cntCourse = countCoursesOfAStudent(CurrentUser.userName, yearnametmp, semesternametmp);
+				courses = viewCoursesOfAStudent(CurrentUser.userName, yearnametmp, semesternametmp);
+				ScoreBoard = GetsaveScore(CurrentUser.userName, yearnametmp, semesternametmp);
+				double_to_char(getSemesterGPA(CurrentUser.userName, yearnametmp, semesternametmp), semesterGPA);
+				GPA = true;
+			}
+			else {
+				cntCourse = 0;
+				courses = nullptr;
+				ScoreBoard = nullptr;
+				GPA = false;
+			}
 			actionOK = false;
-			GPA = true;
 		}
 
 		if (GPA) {
-			DrawText(semesterGPA, 1050, 116, 24, DARKBLUE);
+			DrawText(semesterGPA, 1043, 116, 24, DARKBLUE);
 		}
-		else {
-			DrawText("0.0", 1050, 116, 24, DARKBLUE);
+
+		if (cntCourse==0){
+			DrawText("No Data Available !!!", 420, 470, 70, RED);
 		}
 
 		for (int i = 0; i < cntCourse; ++i) {
@@ -1495,16 +1511,16 @@ void ClassPage(const int screenWidth, const int screenHeight, account& CurrentUs
 	Button4 AddAStu;
 	AddAStu.button = { 1137, 100,313,50};
 
-	Rectangle turnOffScore = { 1400, 80, 91, 76 };
+	Rectangle turnOffScore = { 1400, 180, 91, 76 };
 	Button10* studentbutton = new Button10 [n];
 
 	int scrollspeed = 35;
 	int x_student = 11;
-	int y_student = 255;
+	int y_student = 355;
 	while (!WindowShouldClose()) {
 		y_student += (int(GetMouseWheelMove()) * scrollspeed);
 		if (x_student > 11) x_student = 11;
-		if (y_student > 255) y_student = 255;
+		if (y_student > 355) y_student = 355;
 		ClearBackground(WHITE);
 		BeginDrawing();
 
@@ -1695,55 +1711,60 @@ void ClassPage(const int screenWidth, const int screenHeight, account& CurrentUs
 					stateOK = false;
 				}
 
-				DrawRectangleGradientV(24, 60, 1462, 878, DARKBLUE, BLUE);
-				DrawRectangleLines(24, 60, 1462, 878, BLACK);
-				DrawText("Back", 1400, 80, 30, WHITE);
-				DrawText("Last name:", 34, 69, 24, WHITE);
-				DrawText(listStudents[i].Student.lastName, 175, 69, 24, WHITE);
-				DrawText("First name:", 34, 109, 24, WHITE);
-				DrawText(listStudents[i].Student.firstName, 175, 109, 24, WHITE);
-				DrawText("Student ID:", 34, 149, 24, WHITE);
-				DrawText(listStudents[i].stuID, 175, 149, 24, WHITE);
+				DrawRectangleGradientV(24, 160, 1462, 878, DARKBLUE, BLUE);
+				DrawRectangleLines(23, 159, 1464, 880, BLACK);
+				DrawRectangleLines(23-1, 159-1, 1464+2, 880+2, BLACK);
+				DrawRectangleLines(23-2, 159-2, 1464+4, 880+4, BLACK);
+				DrawRectangleLines(23-3, 159-3, 1464+6, 880+6, BLACK);
+				DrawRectangle(24, 402, 1462, 536, WHITE);
+
+				DrawText("Back", 1400, 180, 30, WHITE);
+				DrawText("Last name:", 34, 209, 24, WHITE);
+				DrawText(listStudents[i].Student.lastName, 175, 209, 24, WHITE);
+				DrawText("First name:", 34, 249, 24, WHITE);
+				DrawText(listStudents[i].Student.firstName, 175, 249, 24, WHITE);
+				DrawText("Student ID:", 34, 289, 24, WHITE);
+				DrawText(listStudents[i].stuID, 175, 289, 24, WHITE);
 				// Calculate button frame rectangle to draw depending on button state
 
-				DrawRectangle(836, 163, 252, 55, WHITE);
-				DrawText("Semester GPA:", 847, 178, 24, DARKBLUE);
+				DrawRectangle(836, 263, 252, 55, WHITE);
+				DrawText("Semester GPA:", 847, 278, 24, DARKBLUE);
 				char* semestergpa = new char[5];
 				double_to_char(semesterGPA[i], semestergpa);
-				DrawText(semestergpa, 1028, 178, 24, DARKBLUE);
-				DrawRectangle(1190, 163, 252, 55, WHITE);
-				DrawText("Overall GPA:", 1201, 178, 24, DARKBLUE);
+				DrawText(semestergpa, 1028, 278, 24, DARKBLUE);
+				DrawRectangle(1190, 263, 252, 55, WHITE);
+				DrawText("Overall GPA:", 1201, 278, 24, DARKBLUE);
 				char* overallgpa = new char[5];
 				double_to_char(semesterGPA[i], overallgpa);
-				DrawText(overallgpa, 1363, 178, 24, DARKBLUE);
+				DrawText(overallgpa, 1363, 278, 24, DARKBLUE);
 
-				DrawRectangle(24, 260, 121, 42, LIGHTGRAY);
-				DrawRectangleLines(24, 260, 121, 42, BLACK);
-				DrawText("Course ID", 35, 272, 20, DARKBLUE);
+				DrawRectangle(24, 360, 121, 42, LIGHTGRAY);
+				DrawRectangleLines(24, 360, 121, 42, BLACK);
+				DrawText("Course ID", 35, 372, 20, DARKBLUE);
 
-				DrawRectangle(145, 260, 519, 42, LIGHTGRAY);
-				DrawRectangleLines(145, 260, 519, 42, BLACK);
-				DrawText("Course name", 339, 272, 20, DARKBLUE);
+				DrawRectangle(145, 360, 519, 42, LIGHTGRAY);
+				DrawRectangleLines(145, 360, 519, 42, BLACK);
+				DrawText("Course name", 339, 372, 20, DARKBLUE);
 
-				DrawRectangle(664, 260, 198, 42, LIGHTGRAY);
-				DrawRectangleLines(664, 260, 198, 42, BLACK);
-				DrawText("Class name", 705, 272, 20, DARKBLUE);
+				DrawRectangle(664, 360, 198, 42, LIGHTGRAY);
+				DrawRectangleLines(664, 360, 198, 42, BLACK);
+				DrawText("Class name", 705, 372, 20, DARKBLUE);
 
-				DrawRectangle(862, 260, 180, 42, LIGHTGRAY);
-				DrawRectangleLines(862, 260, 180, 42, BLACK);
-				DrawText("Credits", 914, 272, 20, DARKBLUE);
+				DrawRectangle(862, 360, 180, 42, LIGHTGRAY);
+				DrawRectangleLines(862, 360, 180, 42, BLACK);
+				DrawText("Credits", 914, 372, 20, DARKBLUE);
 
-				DrawRectangle(1042, 260, 148, 42, LIGHTGRAY);
-				DrawRectangleLines(1042, 260, 148, 42, BLACK);
-				DrawText("Total Mark", 1060, 272, 20, DARKBLUE);
+				DrawRectangle(1042, 360, 148, 42, LIGHTGRAY);
+				DrawRectangleLines(1042, 360, 148, 42, BLACK);
+				DrawText("Total Mark", 1060, 372, 20, DARKBLUE);
 
-				DrawRectangle(1190, 260, 148, 42, LIGHTGRAY);
-				DrawRectangleLines(1190, 260, 148, 42, BLACK);
-				DrawText("Final Mark", 1214, 272, 20, DARKBLUE);
+				DrawRectangle(1190, 360, 148, 42, LIGHTGRAY);
+				DrawRectangleLines(1190, 360, 148, 42, BLACK);
+				DrawText("Final Mark", 1214, 372, 20, DARKBLUE);
 
-				DrawRectangle(1338, 260, 148, 42, LIGHTGRAY);
-				DrawRectangleLines(1338, 260, 148, 42, BLACK);
-				DrawText("Midterm Mark", 1344, 272, 20, DARKBLUE);
+				DrawRectangle(1338, 360, 148, 42, LIGHTGRAY);
+				DrawRectangleLines(1338, 360, 148, 42, BLACK);
+				DrawText("Midterm Mark", 1344, 372, 20, DARKBLUE);
 
 				int j1 = 0;
 				for (int i1 = 0; i1 < cntCourse[i]; ++i1) {
@@ -1755,8 +1776,7 @@ void ClassPage(const int screenWidth, const int screenHeight, account& CurrentUs
 					DrawLine(x_student + 1327, y_student + j1 + 47, x_student + 1327, y_student + j1 + 109, BLACK);
 					DrawLine(x_student + 1475, y_student + j1 + 47, x_student + 1475, y_student + j1 + 109, BLACK);
 
-					DrawRectangleLines(0, y_student + j1 + 47, 1486, 62, BLACK);
-					DrawRectangleLines(0, y_student + j1 + 47, 1486, 62, BLACK);
+					DrawRectangleLines(24, y_student + j1 + 47, 1464, 62, BLACK);
 					DrawText(SemesterCourses_Class[i][i1].courseID, x_student + 23, y_student + j1 + 67, 20, BLACK);
 					DrawText(SemesterCourses_Class[i][i1].courseName, x_student + 160, y_student + j1 + 67, 20, BLACK);
 					DrawText(SemesterCourses_Class[i][i1].className, x_student + 709, y_student + j1 + 67, 20, BLACK);
