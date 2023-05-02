@@ -197,7 +197,8 @@ struct Button10 {
 	const int screenHeight = 982;
 	Rectangle button;
 	bool mouseonbutton = false;
-	bool state = true; // check if the button out of bounds
+	bool state = true;
+	bool state1 = true; // check if the button out of bounds
 	bool action = false; // move to another page
 	bool action1 = false; // open a small window to do something
 	bool remove = false; // delete course

@@ -175,8 +175,8 @@ void Button9::workbutton(Vector2 mousePoint, account& CurrentUser, char*& a, cha
 }
 
 void Button10::workbutton(Vector2 mousePoint) {
-	if (CheckCollisionPointRec(mousePoint, button) && state) {          // Check button state
-		if (IsMouseButtonPressed(MOUSE_BUTTON_LEFT)) {
+	if (CheckCollisionPointRec(mousePoint, button)) {          // Check button state
+		if (IsMouseButtonPressed(MOUSE_BUTTON_LEFT) && state && state1) {
 			action = true;
 		}
 	}

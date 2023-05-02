@@ -1704,8 +1704,8 @@ void ClassPage(const int screenWidth, const int screenHeight, account& CurrentUs
 		}
 		for (int i = 0; i < n; ++i) {
 			if (studentbutton[i].action) {
-				for (int i = 0; i < n; ++i) {
-					studentbutton[i].state = false;
+				for (int i2 = 0; i2 < n; ++i2) {
+					studentbutton[i2].state1 = false;
 				}
 				AddStuCSV.state = false;
 				AddAStu.state = false;
@@ -1808,8 +1808,8 @@ void ClassPage(const int screenWidth, const int screenHeight, account& CurrentUs
 				if (CheckCollisionPointRec(mousePoint, turnOffScore)) {
 					if (IsMouseButtonPressed(MOUSE_BUTTON_LEFT)) {
 						studentbutton[i].action = false;
-						for (int i = 0; i < n; ++i) {
-							studentbutton[i].state = true;
+						for (int i2 = 0; i2 < n; ++i2) {
+							studentbutton[i2].state1 = true;
 						}
 						AddStuCSV.state = true;
 						AddAStu.state = true;
