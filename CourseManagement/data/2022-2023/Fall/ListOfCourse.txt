@@ -1,1 +1,5 @@
-asdas,adasd,asdasds,asdasd,3,50,sadasd,asd
+Introduction to Computer Science,CS161,22TT2,Dinh Ba Tien,4,60,MON,S1
+Calculus I,MTH251,22TT2,Nguyen Le Hoang Anh,4,60,TUE,S1
+General Physics I,PH211,22TT2,Vu Thi Hanh Thu,4,60,WED,S1
+Communication Management,CM101,22TT,Duong Nguyen Vu,4,120,SAT,S3
+Marxist - Leninist Philosophy,BAA00101,22TT,Nguyen Dinh Quoc Cuong,3,120,FRI,S3

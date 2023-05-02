@@ -178,28 +178,8 @@ void Button10::workbutton(Vector2 mousePoint) {
 	if (CheckCollisionPointRec(mousePoint, button) && state) {          // Check button state
 		if (IsMouseButtonPressed(MOUSE_BUTTON_LEFT)) {
 			action = true;
-			action1 = false;
-		}
-		if (IsMouseButtonPressed(MOUSE_BUTTON_RIGHT)) {
-			x = GetMouseX();
-			y = GetMouseY();
-			action1 = true;
-			action = false;
 		}
 	}
-	if (CheckCollisionPointRec(GetMousePosition(), { float(x),float(y),160,25 })) {
-		action = false;
-		if (IsMouseButtonPressed(MOUSE_BUTTON_LEFT)) {
-			remove = true;
-		}
-	}
-	else if (CheckCollisionPointRec(GetMousePosition(), { float(x),float(y) + 25,160,25 })) {
-		action = false;
-		if (IsMouseButtonPressed(MOUSE_BUTTON_LEFT)) {
-			update = true;
-		}
-	}
-	else if (IsMouseButtonPressed(MOUSE_BUTTON_LEFT)) action1 = false;
 }
 // Textbox
 void Textbox1::worktextbox(bool& somethingfalsedisplay) {
