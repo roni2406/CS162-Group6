@@ -27,7 +27,12 @@ void Button1::workbutton(Vector2 mousePoint, account& CurrentUser, void(*func)(c
 	sourceRec.y = state * frameHeight;
 	DrawTextureRec(texture, sourceRec, { btnBounds.x, btnBounds.y }, WHITE); // Draw button frame
 }
-
+void Button1_5::workbutton(Vector2 mousePoint, account& CurrentUser) {
+	if (CheckCollisionPointRec(mousePoint, button)) {          // Check button state
+		if (IsMouseButtonPressed(MOUSE_BUTTON_LEFT)) action = true;
+	}
+	else action = false;
+}
 void Button2::workbutton(Vector2 mousePoint, account& CurrentUser, void(*func)(const int screenWidth, const int screenHeight, account& CurrentUser)) {
 	if (CheckCollisionPointRec(mousePoint, button)) {          // Check button state
 		if (IsMouseButtonPressed(MOUSE_BUTTON_LEFT)) action = true;

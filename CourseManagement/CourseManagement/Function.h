@@ -1,5 +1,10 @@
 #pragma once
 
+#define _CRTDBG_MAP_ALLOC
+#include <stdlib.h>
+#include <crtdbg.h>
+
+
 #include <iostream>
 #include <fstream>
 #include <raylib.h>
@@ -85,7 +90,15 @@ struct Button1 {
 	bool action = false;			
 	void workbutton(Vector2 mousePoint, account& CurrentUser, void(*func)(const int screenWidth, const int screenHeight, account& CurrentUser));
 };
+struct Button1_5 {
+	const int screenWidth = 1512;
+	const int screenHeight = 982;
+	Rectangle button = { 0, 0, 0, 0 };
+	bool mouseonbutton = false;
+	bool action = false;
+	void workbutton(Vector2 mousePoint, account& CurrentUser);
 
+};
 // used for just-text button
 struct Button2 {
 	const int screenWidth = 1512;
