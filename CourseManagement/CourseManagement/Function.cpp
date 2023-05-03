@@ -599,6 +599,9 @@ void CoursePageStudent(const int screenWidth, const int screenHeight, account& C
 	CloseWindow();
 }
 void ScoreboardStudent(const int screenWidth, const int screenHeight, account& CurrentUser) {
+	Font bold = LoadFontEx("../Montserrat/static/Montserrat-Bold.ttf", 120, 0, 250);
+	Font light = LoadFontEx("../Montserrat/static/Montserrat-Light.ttf", 120, 0, 250);
+	Font medium = LoadFontEx("../Montserrat/static/Montserrat-Medium.ttf", 120, 0, 250);
 	Rectangle background = { 0,0,float(screenWidth),float(screenHeight) };
 	Vector2 mousePoint = { 0.0f, 0.0f };
 	int cntCourse = 0;
@@ -641,57 +644,57 @@ void ScoreboardStudent(const int screenWidth, const int screenHeight, account& C
 		BeginDrawing();
 		DrawRectangleGradientEx(background, SKYBLUE, DARKBLUE, DARKBLUE, SKYBLUE);
 		DrawRectangle(0, 0, screenWidth, 60, WHITE);
-		DrawText("COURSE MANAGEMENT SYSTEM", 430, 10, 40, DARKBLUE);
+		DrawTextEx(bold, "COURSE MANAGEMENT SYSTEM", { 430, 10 }, 40, 1, DARKBLUE);
 
 		DrawRectangleRec(schoolyears, WHITE);
-		DrawText("Years", 420, 115, 20, DARKBLUE);
+		DrawTextEx(bold, "Years", { 430 , 113 }, 25, 0, DARKBLUE);
 		DrawRectangleRec(semesters, WHITE);
-		DrawText("Semesters", 105, 115, 20, DARKBLUE);
+		DrawTextEx(bold, "Semesters", { 103, 113 }, 25, 0, DARKBLUE);
 		DrawRectangleRec(ok, DARKBLUE);
-		DrawText("OK", 690, 115, 20, WHITE);
+		DrawTextEx(bold, "OK", { 687, 113 }, 25, 0, WHITE);
 		int z = 0, r = 0, j = 0;
 
 		DrawRectangle(846, 101, 252, 55, WHITE);
-		DrawText("Semester GPA:", 857, 116, 24, DARKBLUE);
+		DrawTextEx(bold, "Semester GPA:", { 855, 114 }, 25,0, DARKBLUE);
 		DrawRectangle(1195, 101, 220, 55, WHITE);
-		DrawText("Overall GPA:", 1203, 116, 24, DARKBLUE);
+		DrawTextEx(bold, "Overall GPA:", { 1201, 114}, 25,0, DARKBLUE);
 
 		DrawRectangle(0, 189, 231, 65, LIGHTGRAY);
 		DrawRectangleLines(0, 189, 231, 65, BLACK);
-		DrawText("Course ID", 56, 210, 24, DARKBLUE);
+		DrawTextEx(bold, "Course ID", { 56, 210 }, 27,0, DARKBLUE);
 
 		DrawRectangle(231, 189, 646, 65, LIGHTGRAY);
 		DrawRectangleLines(231, 189, 646, 65, BLACK);
-		DrawText("Course Name", 497, 210, 24, DARKBLUE);
+		DrawTextEx(bold, "Course Name", { 497, 210 }, 27,0, DARKBLUE);
 
 		DrawRectangle(877, 189, 124, 65, LIGHTGRAY);
 		DrawRectangleLines(877, 189, 124, 65, BLACK);
-		DrawText("Credits", 899, 210, 24, DARKBLUE);
+		DrawTextEx(bold, "Credits", { 899, 210 }, 27,0, DARKBLUE);
 
 		DrawRectangle(1001, 189, 169, 65, LIGHTGRAY);
 		DrawRectangleLines(1001, 189, 169, 65, BLACK);
-		DrawText("Class", 1055, 210, 24, DARKBLUE);
+		DrawTextEx(bold, "Class", { 1055, 210 }, 27,0, DARKBLUE);
 
 		DrawRectangle(1170, 189, 231, 65, LIGHTGRAY);
 		DrawRectangleLines(1170, 189, 231, 65, BLACK);
-		DrawText("Total", 1183, 210, 24, DARKBLUE);
+		DrawTextEx(bold, "Total", { 1183, 210 }, 27,0, DARKBLUE);
 
 		DrawRectangle(1256, 189, 85, 65, LIGHTGRAY);
 		DrawRectangleLines(1256, 189, 85, 65, BLACK);
-		DrawText("F", 1290, 210, 24, DARKBLUE);
+		DrawTextEx(bold, "F", { 1290, 210 }, 27,0, DARKBLUE);
 
 		DrawRectangle(1341, 189, 85, 65, LIGHTGRAY);
 		DrawRectangleLines(1341, 189, 85, 65, BLACK);
-		DrawText("M", 1375, 210, 24, DARKBLUE);
+		DrawTextEx(bold, "M", { 1375, 210 }, 27,0, DARKBLUE);
 
 		DrawRectangle(1426, 189, 86, 65, LIGHTGRAY);
 		DrawRectangleLines(1426, 189, 86, 65, BLACK);
-		DrawText("O", 1460, 210, 24, DARKBLUE);
+		DrawTextEx(bold, "O", { 1460, 210 }, 27,0, DARKBLUE);
 
 		DrawRectangle(0, 255, 1512, 751, WHITE);
 
 		double_to_char(overallGPAd, overallGPA);
-		DrawText(overallGPA, 1360, 116, 24, DARKBLUE);
+		DrawTextEx(medium, overallGPA, { 1357, 113 }, 27,0, DARKBLUE);
 
 
 
@@ -796,11 +799,11 @@ void ScoreboardStudent(const int screenWidth, const int screenHeight, account& C
 		}
 
 		if (GPA) {
-			DrawText(semesterGPA, 1043, 116, 24, DARKBLUE);
+			DrawTextEx(medium, semesterGPA, { 1040, 113 }, 27,0, DARKBLUE);
 		}
 
 		if (cntCourse == 0) {
-			DrawText("No Data Available !!!", 420, 470, 70, RED);
+			DrawTextEx(bold, "NO DATA AVAILABLE !!!", { 410, 450 }, 70, 0, RED);
 		}
 
 		for (int i = 0; i < cntCourse; ++i) {
@@ -850,7 +853,7 @@ void ScoreboardStudent(const int screenWidth, const int screenHeight, account& C
 			delete[] tmp4;
 		}
 
-		DrawText("Back to the previous page", 1200, 20, 20, DARKBLUE);
+		DrawTextEx(bold, "Back to the previous page", { 1200, 20 }, 25,0, DARKBLUE);
 		backtopreviouspage.workbutton(mousePoint, CurrentUser, ProfilePageStudent);
 		EndDrawing();
 	}
