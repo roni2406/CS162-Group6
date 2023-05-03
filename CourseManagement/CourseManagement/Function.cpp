@@ -356,6 +356,9 @@ void ProfilePageStudent(const int screenWidth, const int screenHeight, account& 
 	CloseWindow();
 }
 void CoursePageStudent(const int screenWidth, const int screenHeight, account& CurrentUser) {
+	Font bold = LoadFontEx("../Montserrat/static/Montserrat-Bold.ttf", 120, 0, 250);
+	Font light = LoadFontEx("../Montserrat/static/Montserrat-Light.ttf", 120, 0, 250);
+	Font medium = LoadFontEx("../Montserrat/static/Montserrat-Medium.ttf", 120, 0, 250);
 	Rectangle background = { 0,0,float(screenWidth),float(screenHeight) };
 	Vector2 mousePoint = { 0.0f, 0.0f };
 	int cntCourse = 0;
@@ -392,51 +395,52 @@ void CoursePageStudent(const int screenWidth, const int screenHeight, account& C
 		BeginDrawing();
 		DrawRectangleGradientEx(background, SKYBLUE, DARKBLUE, DARKBLUE, SKYBLUE);
 		DrawRectangle(0, 0, screenWidth, 60, WHITE);
-		DrawText("COURSE MANAGEMENT SYSTEM", 430, 10, 40, DARKBLUE);
+		DrawTextEx(bold, "COURSE MANAGEMENT SYSTEM", { 430, 10 }, 40,1, DARKBLUE);
 
 		DrawRectangleRec(schoolyears, WHITE);
-		DrawText("Years", 420, 115, 20, DARKBLUE);
+		DrawTextEx(bold, "Years", { 430 , 113}, 25,0, DARKBLUE);
 		DrawRectangleRec(semesters, WHITE);
-		DrawText("Semesters", 105, 115, 20, DARKBLUE);
+		DrawTextEx(bold, "Semesters", { 103, 113}, 25,0, DARKBLUE);
 		DrawRectangleRec(ok, DARKBLUE);
-		DrawText("OK", 690, 115, 20, WHITE);
+		DrawTextEx(bold, "OK", { 687, 113 }, 25,0, WHITE);
 		int z = 0, r = 0, j = 0;
 
+		DrawRectangleLines(0, 189, 1512, 0, BLACK);
 		DrawRectangle(0, 189, 121, 42, LIGHTGRAY);
 		DrawRectangleLines(0, 189, 121, 42, BLACK);
-		DrawText("ID", 45, 203, 20, DARKBLUE);
+		DrawTextEx(bold, "ID", { 43, 198 }, 25,0, DARKBLUE);
 
 		DrawRectangle(121, 189, 486, 42, LIGHTGRAY);
 		DrawRectangleLines(121, 189, 486, 42, BLACK);
-		DrawText("Course name", 311, 203, 20, DARKBLUE);
+		DrawTextEx(bold, "Course name", { 309, 198 }, 25,0, DARKBLUE);
 
 		DrawRectangle(607, 189, 132, 42, LIGHTGRAY);
 		DrawRectangleLines(607, 189, 132, 42, BLACK);
-		DrawText("Class name", 617, 203, 20, DARKBLUE);
+		DrawTextEx(bold, "Class name", { 613, 198 }, 25,0, DARKBLUE);
 
 		DrawRectangle(739, 189, 327, 42, LIGHTGRAY);
 		DrawRectangleLines(739, 189, 327, 42, BLACK);
-		DrawText("Teacher name", 835, 203, 20, DARKBLUE);
+		DrawTextEx(bold, "Teacher name", { 832, 198 }, 25,0, DARKBLUE);
 
 		DrawRectangle(1066, 189, 83, 42, LIGHTGRAY);
 		DrawRectangleLines(1066, 189, 83, 42, BLACK);
-		DrawText("Credits", 1071, 203, 20, DARKBLUE);
+		DrawTextEx(bold, "Credits", { 1069, 198 }, 25,0, DARKBLUE);
 
 		DrawRectangle(1149, 189, 144, 42, LIGHTGRAY);
 		DrawRectangleLines(1149, 189, 144, 42, BLACK);
-		DrawText("Max students", 1153, 203, 20, DARKBLUE);
+		DrawTextEx(bold, "Max students", { 1149, 198 }, 25,0, DARKBLUE);
 
 		DrawRectangle(1293, 189, 131, 42, LIGHTGRAY);
 		DrawRectangleLines(1293, 189, 131, 42, BLACK);
-		DrawText("Course day", 1300, 203, 20, DARKBLUE);
+		DrawTextEx(bold, "Course day", { 1298, 198 }, 25,0, DARKBLUE);
 
 		DrawRectangle(1424, 189, 88, 42, LIGHTGRAY);
 		DrawRectangleLines(1424, 189, 88, 42, BLACK);
-		DrawText("Session", 1430, 203, 20, DARKBLUE);
+		DrawTextEx(bold, "Session", { 1428, 198 }, 25,0, DARKBLUE);
 
 		DrawRectangle(0, 231, 1512, 751, WHITE);
 
-		DrawText("Back to the previous page", 1200, 20, 20, DARKBLUE);
+		DrawTextEx(bold, "Back to the previous page", { 1200, 20 }, 25,0, DARKBLUE);
 
 
 		if (CheckCollisionPointRec(mousePoint, schoolyears)) {
@@ -463,7 +467,7 @@ void CoursePageStudent(const int screenWidth, const int screenHeight, account& C
 			}
 			if (actionYear[k]) {
 				DrawRectangleRec(schoolyears, DARKBLUE);
-				DrawText(YearName[k], 410, 115, 20, WHITE);
+				DrawTextEx(bold, YearName[k], { 408, 113 }, 25,0, WHITE);
 				action1 = false;
 				yearnametmp = _strdup(YearName[k]);
 			}
@@ -492,7 +496,7 @@ void CoursePageStudent(const int screenWidth, const int screenHeight, account& C
 		}
 		if (actionF) {
 			DrawRectangleRec(semesters, DARKBLUE);
-			DrawText("Fall", 130, 115, 20, WHITE);
+			DrawTextEx(bold, "Fall", { 120, 113 }, 25, 0, WHITE);
 			action = false;
 			semesternametmp = (char*)"Fall";
 		}
@@ -502,7 +506,7 @@ void CoursePageStudent(const int screenWidth, const int screenHeight, account& C
 		}
 		if (actionS) {
 			DrawRectangleRec(semesters, DARKBLUE);
-			DrawText("Summer", 130, 115, 20, WHITE);
+			DrawTextEx(bold, "Summer", { 120, 113 }, 25,0, WHITE);
 			action = false;
 			semesternametmp = (char*)"Summer";
 		}
@@ -512,7 +516,7 @@ void CoursePageStudent(const int screenWidth, const int screenHeight, account& C
 		}
 		if (actionA) {
 			DrawRectangleRec(semesters, DARKBLUE);
-			DrawText("Autumn", 130, 115, 20, WHITE);
+			DrawTextEx(bold, "Autumn", { 120, 113 }, 25, 0, WHITE);
 			action = false;
 			semesternametmp = (char*)"Autumn";
 		}
@@ -536,7 +540,7 @@ void CoursePageStudent(const int screenWidth, const int screenHeight, account& C
 		}
 
 		if (cntCourse == 0) {
-			DrawText("No Data Available !!!", 420, 470, 70, RED);
+			DrawTextEx(bold,"NO DATA AVAILABLE !!!", {410, 450}, 70,0, RED);
 		}
 
 		for (int i = 0; i < cntCourse; ++i) {
