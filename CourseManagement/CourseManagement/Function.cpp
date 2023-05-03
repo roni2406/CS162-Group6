@@ -48,6 +48,9 @@ void StudentorStaffPage(const int screenWidth, const int screenHeight, account& 
 
 }
 void LogInPageStudent(const int screenWidth, const int screenHeight, account& CurrentUser) {
+	Font bold = LoadFontEx("../Montserrat/static/Montserrat-Bold.ttf", 120, 0, 250);
+	Font light = LoadFontEx("../Montserrat/static/Montserrat-Light.ttf", 120, 0, 250);
+	Font medium = LoadFontEx("../Montserrat/static/Montserrat-Medium.ttf", 120, 0, 250);
 	Rectangle background = { 0,0,float(screenWidth),float(screenHeight) };
 
 	//Initialize textbox-------------------------------------------------------
@@ -61,13 +64,13 @@ void LogInPageStudent(const int screenWidth, const int screenHeight, account& Cu
 	viewPass.texture = LoadTexture("showpass.png");
 	viewPass.frameHeight = (float)viewPass.texture.height;
 	viewPass.sourceRec = { 0, 0, (float)viewPass.texture.width, viewPass.frameHeight };
-	viewPass.btnBounds = { 665, 410, (float)viewPass.texture.width, viewPass.frameHeight };
+	viewPass.btnBounds = { 650, 410, (float)viewPass.texture.width, viewPass.frameHeight };
 
 	Button0 hidePass;
 	hidePass.texture = LoadTexture("hidepass.png");
 	hidePass.frameHeight = (float)hidePass.texture.height;
 	hidePass.sourceRec = { 0, 0, (float)hidePass.texture.width, hidePass.frameHeight };
-	hidePass.btnBounds = { 665, 406, (float)hidePass.texture.width, hidePass.frameHeight };
+	hidePass.btnBounds = { 650, 406, (float)hidePass.texture.width, hidePass.frameHeight };
 
 	Button2 backtopreviouspage;
 	backtopreviouspage.button = { 1200, 20, 300, 30 };
@@ -98,13 +101,13 @@ void LogInPageStudent(const int screenWidth, const int screenHeight, account& Cu
 		DrawRectangleGradientEx(background, SKYBLUE, DARKBLUE, DARKBLUE, SKYBLUE);
 		DrawRectangle(347, 173, 818, 560, WHITE);
 		DrawRectangle(0, 0, screenWidth, 60, WHITE);
-		DrawText("  Call us : (028) 3835 4266         E - mail : info@fit.hcmus.edu.vn", 0, 20, 20, DARKBLUE);
+		DrawTextEx(medium, "  Call us : (028) 3835 4266         E - mail : info@fit.hcmus.edu.vn", { 5, 20 },25,0, DARKBLUE);
 		DrawRectangleRec(username.textbox, LIGHTGRAY);
 		DrawRectangleRec(backtopreviouspage.button, WHITE);
-		DrawText("Back to the previous page", 1200, 20, 20, DARKBLUE);
+		DrawTextEx(bold, "Back to the previous page", { 1200, 20 }, 25,0, DARKBLUE);
 		DrawRectangleRec(password.textbox, LIGHTGRAY);
-		DrawText("* Username", 477, 250, 30, DARKBLUE);
-		DrawText("* Password", 477, 414, 30, DARKBLUE);
+		DrawTextEx(medium, "* Username", { 477, 245 }, 35,0, DARKBLUE);
+		DrawTextEx(medium, "* Password", { 477, 409 }, 35,0, DARKBLUE);
 
 		////Function_of_TextInputBoxes_----------------------------------------------------------------------------------------------------------------------
 		username.worktextbox(isLoginFalseDisplay);
@@ -112,16 +115,16 @@ void LogInPageStudent(const int screenWidth, const int screenHeight, account& Cu
 		viewPass.workbutton(mousePoint);
 
 
-		DrawText(username.text, 500, 320, 40, DARKBLUE);
-		DrawText(TextFormat("%i/%i", username.lettercount, MAX_INPUT_CHARS), 1050, 330, 20, DARKBLUE);
+		DrawTextEx(medium, username.text, { 500, 320 }, 45,0, DARKBLUE);
+		//DrawText(TextFormat("%i/%i", username.lettercount, MAX_INPUT_CHARS), 1050, 330, 20, DARKBLUE);
 		if (viewPass.hidden) {
-			DrawText(password.hiddentext, 500, 490, 40, DARKBLUE);
+			DrawTextEx(medium, password.hiddentext, { 500, 490 }, 40,0, DARKBLUE);
 		}
 		if (!viewPass.hidden) {
 			DrawTextureRec(hidePass.texture, hidePass.sourceRec, { hidePass.btnBounds.x,hidePass.btnBounds.y }, WHITE);
-			DrawText(password.text, 500, 490, 40, DARKBLUE);
+			DrawTextEx(medium, password.text, { 500, 485 }, 45, 0, DARKBLUE);
 		}
-		DrawText(TextFormat("%i/%i", password.lettercount, MAX_INPUT_CHARS), 1050, 500, 20, DARKBLUE);
+		//DrawText(TextFormat("%i/%i", password.lettercount, MAX_INPUT_CHARS), 1050, 500, 20, DARKBLUE);
 
 		////Function of login button-------------------------------------------------------------------------------------------------------------------------
 		mousePoint = GetMousePosition();
@@ -159,6 +162,9 @@ void LogInPageStudent(const int screenWidth, const int screenHeight, account& Cu
 	CloseWindow();
 }
 void LogInPageStaff(const int screenWidth, const int screenHeight, account& CurrentUser) {
+	Font bold = LoadFontEx("../Montserrat/static/Montserrat-Bold.ttf", 120, 0, 250);
+	Font light = LoadFontEx("../Montserrat/static/Montserrat-Light.ttf", 120, 0, 250);
+	Font medium = LoadFontEx("../Montserrat/static/Montserrat-Medium.ttf", 120, 0, 250);
 	Rectangle background = { 0,0,float(screenWidth),float(screenHeight) };
 
 	//Initialize textbox-------------------------------------------------------
@@ -172,13 +178,13 @@ void LogInPageStaff(const int screenWidth, const int screenHeight, account& Curr
 	viewPass.texture = LoadTexture("showpass.png");
 	viewPass.frameHeight = (float)viewPass.texture.height;
 	viewPass.sourceRec = { 0, 0, (float)viewPass.texture.width, viewPass.frameHeight };
-	viewPass.btnBounds = { 665, 410, (float)viewPass.texture.width, viewPass.frameHeight };
+	viewPass.btnBounds = { 650, 410, (float)viewPass.texture.width, viewPass.frameHeight };
 
 	Button0 hidePass;
 	hidePass.texture = LoadTexture("hidepass.png");
 	hidePass.frameHeight = (float)hidePass.texture.height;
 	hidePass.sourceRec = { 0, 0, (float)hidePass.texture.width, hidePass.frameHeight };
-	hidePass.btnBounds = { 665, 406, (float)hidePass.texture.width, hidePass.frameHeight };
+	hidePass.btnBounds = { 650, 406, (float)hidePass.texture.width, hidePass.frameHeight };
 
 	Button2 backtopreviouspage;
 	backtopreviouspage.button = { 1200, 20, 300, 30 };
@@ -209,13 +215,13 @@ void LogInPageStaff(const int screenWidth, const int screenHeight, account& Curr
 		DrawRectangleGradientEx(background, SKYBLUE, DARKBLUE, DARKBLUE, SKYBLUE);
 		DrawRectangle(347, 173, 818, 560, WHITE);
 		DrawRectangle(0, 0, screenWidth, 60, WHITE);
-		DrawText("  Call us : (028) 3835 4266         E - mail : info@fit.hcmus.edu.vn", 0, 20, 20, DARKBLUE);
+		DrawTextEx(medium, "  Call us : (028) 3835 4266         E - mail : info@fit.hcmus.edu.vn", { 5, 20 }, 25, 0, DARKBLUE);
 		DrawRectangleRec(username.textbox, LIGHTGRAY);
 		DrawRectangleRec(backtopreviouspage.button, WHITE);
-		DrawText("Back to the previous page", 1200, 20, 20, DARKBLUE);
+		DrawTextEx(bold, "Back to the previous page", { 1200, 20 }, 25, 0, DARKBLUE);
 		DrawRectangleRec(password.textbox, LIGHTGRAY);
-		DrawText("* Username", 477, 250, 30, DARKBLUE);
-		DrawText("* Password", 477, 414, 30, DARKBLUE);
+		DrawTextEx(medium, "* Username", { 477, 245 }, 35, 0, DARKBLUE);
+		DrawTextEx(medium, "* Password", { 477, 409 }, 35, 0, DARKBLUE);
 
 		////Function_of_TextInputBoxes_----------------------------------------------------------------------------------------------------------------------
 		username.worktextbox(isLoginFalseDisplay);
@@ -223,16 +229,16 @@ void LogInPageStaff(const int screenWidth, const int screenHeight, account& Curr
 		viewPass.workbutton(mousePoint);
 
 
-		DrawText(username.text, 500, 320, 40, DARKBLUE);
-		DrawText(TextFormat("%i/%i", username.lettercount, MAX_INPUT_CHARS), 1050, 330, 20, DARKBLUE);
+		DrawTextEx(medium, username.text, { 500, 320 }, 40, 0, DARKBLUE);
+		//DrawText(TextFormat("%i/%i", username.lettercount, MAX_INPUT_CHARS), 1050, 330, 20, DARKBLUE);
 		if (viewPass.hidden) {
-			DrawText(password.hiddentext, 500, 490, 40, DARKBLUE);
+			DrawTextEx(medium, password.hiddentext, { 500, 490 }, 40, 0, DARKBLUE);
 		}
 		if (!viewPass.hidden) {
 			DrawTextureRec(hidePass.texture, hidePass.sourceRec, { hidePass.btnBounds.x,hidePass.btnBounds.y }, WHITE);
-			DrawText(password.text, 500, 490, 40, DARKBLUE);
+			DrawTextEx(medium, password.text, { 500, 485 }, 40, 0, DARKBLUE);
 		}
-		DrawText(TextFormat("%i/%i", password.lettercount, MAX_INPUT_CHARS), 1050, 500, 20, DARKBLUE);
+		//DrawText(TextFormat("%i/%i", password.lettercount, MAX_INPUT_CHARS), 1050, 500, 20, DARKBLUE);
 
 		////Function of login button-------------------------------------------------------------------------------------------------------------------------
 		mousePoint = GetMousePosition();
@@ -269,9 +275,11 @@ void LogInPageStaff(const int screenWidth, const int screenHeight, account& Curr
 	}
 	CloseWindow();
 }
-
 void ProfilePageStudent(const int screenWidth, const int screenHeight, account& CurrentUser) {
 	////Initialize variable---------------------------------------------------------------------------------------------
+	Font bold = LoadFontEx("../Montserrat/static/Montserrat-Bold.ttf", 120, 0, 250);
+	Font light = LoadFontEx("../Montserrat/static/Montserrat-Light.ttf", 120, 0, 250);
+	Font medium = LoadFontEx("../Montserrat/static/Montserrat-Medium.ttf", 120, 0, 250);
 	Texture2D avatar;
 	avatar = LoadTexture("avatar.png");
 
@@ -310,9 +318,10 @@ void ProfilePageStudent(const int screenWidth, const int screenHeight, account& 
 		ClearBackground(WHITE);
 
 		BeginDrawing();
-		DrawText("WELCOME!", 670, 15, 40, DARKBLUE);
 
 		DrawRectangleGradientEx(background, SKYBLUE, DARKBLUE, DARKBLUE, SKYBLUE);
+		DrawRectangle(0, 0, 1512, 60, WHITE);
+		DrawTextEx(bold, "WELCOME!", { 670, 15 }, 40, 0, DARKBLUE);
 
 		DrawRectangle(70, 170, 360, 750, WHITE);
 		DrawRectangleLines(69, 169, 362, 752, BLACK);
@@ -325,14 +334,14 @@ void ProfilePageStudent(const int screenWidth, const int screenHeight, account& 
 		DrawRectangle(480, 108, 250, 60, WHITE);
 		DrawRectangleLines(479, 107, 252, 62, BLACK);
 		DrawRectangleLines(478, 106, 254, 64, BLACK);
-		DrawText("  STUDENT", 500, 123, 30, DARKBLUE);
+		DrawTextEx(bold, "STUDENT", { 525, 118 }, 40,0, DARKBLUE);
 
 		DrawTexture(scoreboardIcon, 595, 216, WHITE);
 		DrawTexture(courseIcon, 595, 567, WHITE);
 
-		DrawTexture(avatar, 150, 100, WHITE);
-		DrawText("Username: ", 90, 330, 20, DARKBLUE);
-		DrawText(CurrentUser.userName, 200, 330, 20, DARKGRAY);
+		DrawTexture(avatar, 150, 107, WHITE);
+		DrawTextEx(medium, "Username: ", { 118, 337 }, 30,0, DARKBLUE);
+		DrawTextEx(medium, CurrentUser.userName, { 268, 337 }, 30,0, DARKGRAY);
 
 		mousePoint = GetMousePosition();
 		////change password button function-----------------------------------------------------------------------------------------------------------
@@ -846,6 +855,9 @@ void ScoreboardStudent(const int screenWidth, const int screenHeight, account& C
 	CloseWindow();
 }
 void ProfilePageStaff(const int screenWidth, const int screenHeight, account& CurrentUser) {
+	Font bold = LoadFontEx("../Montserrat/static/Montserrat-Bold.ttf", 120, 0, 250);
+	Font light = LoadFontEx("../Montserrat/static/Montserrat-Light.ttf", 120, 0, 250);
+	Font medium = LoadFontEx("../Montserrat/static/Montserrat-Medium.ttf", 120, 0, 250);
 	////Initialize variable---------------------------------------------------------------------------------------------
 	Texture2D avatar;
 	avatar = LoadTexture("avatar.png");
@@ -857,13 +869,13 @@ void ProfilePageStaff(const int screenWidth, const int screenHeight, account& Cu
 	ChangePass.texture = LoadTexture("changePassBtn.png");
 	ChangePass.frameHeight = (float)ChangePass.texture.height;
 	ChangePass.sourceRec = { 0, 0, (float)ChangePass.texture.width, ChangePass.frameHeight };
-	ChangePass.btnBounds = { 170, 800, (float)ChangePass.texture.width, ChangePass.frameHeight };
+	ChangePass.btnBounds = { 170, 500, (float)ChangePass.texture.width, ChangePass.frameHeight };
 
 	Button1 LogOut;
 	LogOut.texture = LoadTexture("logOutBtn.png");
 	LogOut.frameHeight = (float)LogOut.texture.height;
 	LogOut.sourceRec = { 0, 0, (float)LogOut.texture.width,LogOut.frameHeight };
-	LogOut.btnBounds = { 170, 730, (float)LogOut.texture.width,LogOut.frameHeight };
+	LogOut.btnBounds = { 170, 430, (float)LogOut.texture.width,LogOut.frameHeight };
 
 
 	Button1 Classes;
@@ -886,13 +898,14 @@ void ProfilePageStaff(const int screenWidth, const int screenHeight, account& Cu
 		ClearBackground(WHITE);
 
 		BeginDrawing();
-		DrawText("WELCOME!", 670, 15, 40, DARKBLUE);
 
 		DrawRectangleGradientEx(background, SKYBLUE, DARKBLUE, DARKBLUE, SKYBLUE);
+		DrawRectangle(0, 0, 1512, 60, WHITE);
+		DrawTextEx(bold, "WELCOME!", { 670, 15 }, 40, 0, DARKBLUE);
 
-		DrawRectangle(70, 170, 360, 750, WHITE);
-		DrawRectangleLines(69, 169, 362, 752, BLACK);
-		DrawRectangleLines(68, 168, 364, 754, BLACK);
+		DrawRectangle(70, 170, 360, 450, WHITE);
+		DrawRectangleLines(69, 169, 362, 452, BLACK);
+		DrawRectangleLines(68, 168, 364, 454, BLACK);
 
 		DrawRectangle(480, 170, 980, 750, WHITE);
 		DrawRectangleLines(479, 169, 982, 752, BLACK);
@@ -901,11 +914,11 @@ void ProfilePageStaff(const int screenWidth, const int screenHeight, account& Cu
 		DrawRectangle(480, 108, 250, 60, WHITE);
 		DrawRectangleLines(479, 107, 252, 62, BLACK);
 		DrawRectangleLines(478, 106, 254, 64, BLACK);
-		DrawText("    STAFF   ", 500, 123, 30, DARKBLUE);
+		DrawTextEx(bold, "STAFF", { 555, 118 }, 40, 0, DARKBLUE);
 
-		DrawTexture(avatar, 150, 100, WHITE);
-		DrawText("Username: ", 90, 330, 20, DARKBLUE);
-		DrawText(CurrentUser.userName, 200, 330, 20, DARKGRAY);
+		DrawTexture(avatar, 150, 107, WHITE);
+		DrawTextEx(medium, "Username: ", { 118, 337 }, 30, 0, DARKBLUE);
+		DrawTextEx(medium, CurrentUser.userName, { 268, 337 }, 30, 0, DARKGRAY);
 
 		DrawTexture(Calendar, 560, 220, WHITE);
 		DrawTexture(classimage, 560, 580, WHITE);
@@ -925,6 +938,9 @@ void ProfilePageStaff(const int screenWidth, const int screenHeight, account& Cu
 	CloseWindow();
 }
 void ChangePasswordPageStudent(const int screenWidth, const int screenHeight, account& CurrentUser) {
+	Font bold = LoadFontEx("../Montserrat/static/Montserrat-Bold.ttf", 120, 0, 250);
+	Font light = LoadFontEx("../Montserrat/static/Montserrat-Light.ttf", 120, 0, 250);
+	Font medium = LoadFontEx("../Montserrat/static/Montserrat-Medium.ttf", 120, 0, 250);
 	Rectangle background = { 0,0,float(screenWidth),float(screenHeight) };
 	Vector2 mousePoint = { 0.0f, 0.0f };
 
@@ -992,17 +1008,17 @@ void ChangePasswordPageStudent(const int screenWidth, const int screenHeight, ac
 
 		DrawRectangleGradientEx(background, SKYBLUE, DARKBLUE, DARKBLUE, SKYBLUE);
 		DrawRectangle(0, 0, screenWidth, 60, WHITE);
-		DrawText("  Call us : (028) 3835 4266         E - mail : info@fit.hcmus.edu.vn", 0, 20, 20, DARKBLUE);
+		DrawTextEx(medium, "  Call us : (028) 3835 4266         E - mail : info@fit.hcmus.edu.vn", { 5, 20 }, 25, 0, DARKBLUE);
 		DrawRectangleRec(backtoprofilepage.button, WHITE);
-		DrawText("Back to Profile Page", 1280, 20, 20, DARKBLUE);
+		DrawTextEx(bold, "Back to the previous page", { 1200, 20 }, 25, 0, DARKBLUE);
 
 		DrawRectangle(347, 173, 818, 630, WHITE);
 		DrawRectangleRec(oldpass.textbox, LIGHTGRAY);
 		DrawRectangleRec(newpass.textbox, LIGHTGRAY);
 		DrawRectangleRec(confirmnewpass.textbox, LIGHTGRAY);
-		DrawText("* Old Password", 477, 200, 30, DARKBLUE);
-		DrawText("* New Password", 477, 364, 30, DARKBLUE);
-		DrawText("* Confirm New Password", 477, 528, 30, DARKBLUE);
+		DrawTextEx(medium, "* Old Password", { 477, 195 }, 35,0, DARKBLUE);
+		DrawTextEx(medium, "* New Password", { 477, 356 }, 35,0, DARKBLUE);
+		DrawTextEx(medium, "* Confirm New Password", { 477, 523 }, 35,0, DARKBLUE);
 
 		////Textbox function-----------------------------------------------------------------------------------------------------------------------------------------
 		oldpass.worktextbox(isChangePassFalseDisplay);
@@ -1013,30 +1029,30 @@ void ChangePasswordPageStudent(const int screenWidth, const int screenHeight, ac
 		viewPass3.workbutton(mousePoint);
 
 		if (viewPass1.hidden) {
-			DrawText(oldpass.hiddentext, 500, 270, 40, DARKBLUE);
+			DrawTextEx(medium, oldpass.hiddentext, { 500, 270 }, 40,0, DARKBLUE);
 		}
 		if (!viewPass1.hidden) {
-			DrawText(oldpass.text, 500, 270, 40, DARKBLUE);
+			DrawTextEx(medium, oldpass.text, { 500, 270 }, 40,0, DARKBLUE);
 			DrawTextureRec(hidePass1.texture, hidePass1.sourceRec, { hidePass1.btnBounds.x,hidePass1.btnBounds.y }, WHITE);
 		}
 		if (viewPass2.hidden) {
-			DrawText(newpass.hiddentext, 500, 434, 40, DARKBLUE);
+			DrawTextEx(medium, newpass.hiddentext, { 500, 434 }, 40,0, DARKBLUE);
 		}
 		if (!viewPass2.hidden) {
-			DrawText(newpass.text, 500, 434, 40, DARKBLUE);
+			DrawTextEx(medium, newpass.text, { 500, 434 }, 40,0, DARKBLUE);
 			DrawTextureRec(hidePass2.texture, hidePass2.sourceRec, { hidePass2.btnBounds.x,hidePass2.btnBounds.y }, WHITE);
 		}
 		if (viewPass3.hidden) {
-			DrawText(confirmnewpass.hiddentext, 500, 598, 40, DARKBLUE);
+			DrawTextEx(medium, confirmnewpass.hiddentext, { 500, 598 }, 40,0, DARKBLUE);
 		}
 		if (!viewPass3.hidden) {
-			DrawText(confirmnewpass.text, 500, 598, 40, DARKBLUE);
+			DrawTextEx(medium, confirmnewpass.text, { 500, 598 }, 40,0, DARKBLUE);
 			DrawTextureRec(hidePass3.texture, hidePass3.sourceRec, { hidePass3.btnBounds.x,hidePass3.btnBounds.y }, WHITE);
 		}
 
-		DrawText(TextFormat("%i/%i", oldpass.lettercount, MAX_INPUT_CHARS), 1050, 280, 20, DARKBLUE);
+		/*DrawText(TextFormat("%i/%i", oldpass.lettercount, MAX_INPUT_CHARS), 1050, 280, 20, DARKBLUE);
 		DrawText(TextFormat("%i/%i", newpass.lettercount, MAX_INPUT_CHARS), 1050, 444, 20, DARKBLUE);
-		DrawText(TextFormat("%i/%i", confirmnewpass.lettercount, MAX_INPUT_CHARS), 1050, 608, 20, DARKBLUE);
+		DrawText(TextFormat("%i/%i", confirmnewpass.lettercount, MAX_INPUT_CHARS), 1050, 608, 20, DARKBLUE);*/
 		////-------------------------------------------------------------------------------------------------------------------------
 
 		mousePoint = GetMousePosition();
@@ -1057,7 +1073,7 @@ void ChangePasswordPageStudent(const int screenWidth, const int screenHeight, ac
 				isChangePassFalseDisplay = true;
 			}
 		}
-		if (isChangePassFalseDisplay) DrawText("Please try again!", 477, 685, 20, RED);
+		if (isChangePassFalseDisplay) DrawTextEx(bold, "Please try again!", { 477, 685 }, 20,0, RED);
 
 		// Calculate button frame rectangle to draw depending on button state
 		sourceRecconfirmBtn.y = confirmBtnState * frameHeightconfirmBtn;
@@ -1072,6 +1088,9 @@ void ChangePasswordPageStudent(const int screenWidth, const int screenHeight, ac
 	CloseWindow();
 }
 void ChangePasswordPageStaff(const int screenWidth, const int screenHeight, account& CurrentUser) {
+	Font bold = LoadFontEx("../Montserrat/static/Montserrat-Bold.ttf", 120, 0, 250);
+	Font light = LoadFontEx("../Montserrat/static/Montserrat-Light.ttf", 120, 0, 250);
+	Font medium = LoadFontEx("../Montserrat/static/Montserrat-Medium.ttf", 120, 0, 250);
 	Rectangle background = { 0,0,float(screenWidth),float(screenHeight) };
 	Vector2 mousePoint = { 0.0f, 0.0f };
 
@@ -1140,17 +1159,17 @@ void ChangePasswordPageStaff(const int screenWidth, const int screenHeight, acco
 
 		DrawRectangleGradientEx(background, SKYBLUE, DARKBLUE, DARKBLUE, SKYBLUE);
 		DrawRectangle(0, 0, screenWidth, 60, WHITE);
-		DrawText("  Call us : (028) 3835 4266         E - mail : info@fit.hcmus.edu.vn", 0, 20, 20, DARKBLUE);
+		DrawTextEx(medium, "  Call us : (028) 3835 4266         E - mail : info@fit.hcmus.edu.vn", { 5, 20 }, 25, 0, DARKBLUE);
 		DrawRectangleRec(backtoprofilepage.button, WHITE);
-		DrawText("Back to Profile Page", 1280, 20, 20, DARKBLUE);
+		DrawTextEx(bold, "Back to the previous page", { 1200, 20 }, 25, 0, DARKBLUE);
 
 		DrawRectangle(347, 173, 818, 630, WHITE);
 		DrawRectangleRec(oldpass.textbox, LIGHTGRAY);
 		DrawRectangleRec(newpass.textbox, LIGHTGRAY);
 		DrawRectangleRec(confirmnewpass.textbox, LIGHTGRAY);
-		DrawText("* Old Password", 477, 200, 30, DARKBLUE);
-		DrawText("* New Password", 477, 364, 30, DARKBLUE);
-		DrawText("* Confirm New Password", 477, 528, 30, DARKBLUE);
+		DrawTextEx(medium, "* Old Password", { 477, 195 }, 35, 0, DARKBLUE);
+		DrawTextEx(medium, "* New Password", { 477, 356 }, 35, 0, DARKBLUE);
+		DrawTextEx(medium, "* Confirm New Password", { 477, 523 }, 35, 0, DARKBLUE);
 
 		////Textbox function-----------------------------------------------------------------------------------------------------------------------------------------
 		oldpass.worktextbox(isChangePassFalseDisplay);
@@ -1161,30 +1180,30 @@ void ChangePasswordPageStaff(const int screenWidth, const int screenHeight, acco
 		viewPass3.workbutton(mousePoint);
 
 		if (viewPass1.hidden) {
-			DrawText(oldpass.hiddentext, 500, 270, 40, DARKBLUE);
+			DrawTextEx(medium, oldpass.hiddentext, { 500, 270 }, 40, 0, DARKBLUE);
 		}
 		if (!viewPass1.hidden) {
-			DrawText(oldpass.text, 500, 270, 40, DARKBLUE);
+			DrawTextEx(medium, oldpass.text, { 500, 270 }, 40, 0, DARKBLUE);
 			DrawTextureRec(hidePass1.texture, hidePass1.sourceRec, { hidePass1.btnBounds.x,hidePass1.btnBounds.y }, WHITE);
 		}
 		if (viewPass2.hidden) {
-			DrawText(newpass.hiddentext, 500, 434, 40, DARKBLUE);
+			DrawTextEx(medium, newpass.hiddentext, { 500, 434 }, 40, 0, DARKBLUE);
 		}
 		if (!viewPass2.hidden) {
-			DrawText(newpass.text, 500, 434, 40, DARKBLUE);
+			DrawTextEx(medium, newpass.text, { 500, 434 }, 40, 0, DARKBLUE);
 			DrawTextureRec(hidePass2.texture, hidePass2.sourceRec, { hidePass2.btnBounds.x,hidePass2.btnBounds.y }, WHITE);
 		}
 		if (viewPass3.hidden) {
-			DrawText(confirmnewpass.hiddentext, 500, 598, 40, DARKBLUE);
+			DrawTextEx(medium, confirmnewpass.hiddentext, { 500, 598 }, 40, 0, DARKBLUE);
 		}
 		if (!viewPass3.hidden) {
-			DrawText(confirmnewpass.text, 500, 598, 40, DARKBLUE);
+			DrawTextEx(medium, confirmnewpass.text, { 500, 598 }, 40, 0, DARKBLUE);
 			DrawTextureRec(hidePass3.texture, hidePass3.sourceRec, { hidePass3.btnBounds.x,hidePass3.btnBounds.y }, WHITE);
 		}
 
-		DrawText(TextFormat("%i/%i", oldpass.lettercount, MAX_INPUT_CHARS), 1050, 280, 20, DARKBLUE);
+		/*DrawText(TextFormat("%i/%i", oldpass.lettercount, MAX_INPUT_CHARS), 1050, 280, 20, DARKBLUE);
 		DrawText(TextFormat("%i/%i", newpass.lettercount, MAX_INPUT_CHARS), 1050, 444, 20, DARKBLUE);
-		DrawText(TextFormat("%i/%i", confirmnewpass.lettercount, MAX_INPUT_CHARS), 1050, 608, 20, DARKBLUE);
+		DrawText(TextFormat("%i/%i", confirmnewpass.lettercount, MAX_INPUT_CHARS), 1050, 608, 20, DARKBLUE);*/
 		////-------------------------------------------------------------------------------------------------------------------------
 
 		mousePoint = GetMousePosition();
@@ -1205,7 +1224,7 @@ void ChangePasswordPageStaff(const int screenWidth, const int screenHeight, acco
 				isChangePassFalseDisplay = true;
 			}
 		}
-		if (isChangePassFalseDisplay) DrawText("Please try again!", 477, 685, 20, RED);
+		if (isChangePassFalseDisplay) DrawTextEx(bold, "Please try again!", { 477, 685 }, 20, 0, RED);
 
 		// Calculate button frame rectangle to draw depending on button state
 		sourceRecconfirmBtn.y = confirmBtnState * frameHeightconfirmBtn;
