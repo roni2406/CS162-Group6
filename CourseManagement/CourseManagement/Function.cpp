@@ -1307,7 +1307,7 @@ void CreateSchoolYearPage(const int screenWidth, const int screenHeight, account
 			}
 			else confirmBtnFalseDisplay = true;
 		}
-		if (confirmBtnFalseDisplay) DrawTextEx(bold, "School year must be in right form. Try again!", { 495, 359 }, 25,0, RED);
+		if (confirmBtnFalseDisplay) DrawTextEx(bold, "Invalid data or this year already existed. Try again!", { 495, 359 }, 25,0, RED);
 		// Calculate button frame rectangle to draw depending on button state
 		sourceRecconfirmBtn.y = confirmBtnState * frameHeightconfirmBtn;
 		DrawTextureRec(confirmBtn, sourceRecconfirmBtn, { btnBoundsconfirmBtn.x, btnBoundsconfirmBtn.y }, WHITE); // Draw button frame
@@ -1455,7 +1455,7 @@ void createClassPage(const int screenWidth, const int screenHeight, account& Cur
 			}
 			else confirmBtnFalseDisplay = true;
 		}
-		if (confirmBtnFalseDisplay) DrawText("This class was created before!", 480, 560, 20, RED);
+		if (confirmBtnFalseDisplay) DrawTextEx(bold, "This class was created before!", { 500, 360 }, 25,0, RED);
 		// Calculate button frame rectangle to draw depending on button state
 		sourceRecconfirmBtn.y = confirmBtnState * frameHeightconfirmBtn;
 		DrawTextureRec(confirmBtn, sourceRecconfirmBtn, { btnBoundsconfirmBtn.x, btnBoundsconfirmBtn.y }, WHITE); // Draw button frame
@@ -1940,6 +1940,9 @@ void ClassPage(const int screenWidth, const int screenHeight, account& CurrentUs
 	CloseWindow();
 }
 void addStudentPage(const int screenWidth, const int screenHeight, account& CurrentUser, char*& classname) {
+	Font bold = LoadFontEx("../Montserrat/static/Montserrat-Bold.ttf", 120, 0, 250);
+	Font light = LoadFontEx("../Montserrat/static/Montserrat-Light.ttf", 120, 0, 250);
+	Font medium = LoadFontEx("../Montserrat/static/Montserrat-Medium.ttf", 120, 0, 250);
 	Vector2 mousePoint = { 0.0f, 0.0f };
 	Rectangle background = { 0,0,float(screenWidth),float(screenHeight) };
 
@@ -1971,27 +1974,26 @@ void addStudentPage(const int screenWidth, const int screenHeight, account& Curr
 		ClearBackground(WHITE);
 		BeginDrawing();
 
-		DrawText("  Call us : (028) 3835 4266         E - mail : info@fit.hcmus.edu.vn", 0, 20, 20, DARKBLUE);
 		DrawRectangleGradientEx(background, SKYBLUE, DARKBLUE, DARKBLUE, SKYBLUE);
 		DrawRectangle(0, 0, screenWidth, 60, WHITE);
 
 		DrawRectangleRec(backtoClasspage.button, WHITE);
-		DrawText("Back to your class", 1280, 20, 20, DARKBLUE);
-		DrawText("Add a student", 620, 12, 40, DARKBLUE);
+		DrawTextEx(bold, "Back to your class", { 1280, 20 }, 25,0, DARKBLUE);
+		DrawTextEx(bold, "Add a student", { 620, 12 }, 40,0, DARKBLUE);
 
 		DrawRectangle(142, 148, 1227, 720, WHITE);
 		DrawRectangleRec(Lastname.textbox, LIGHTGRAY);
-		DrawText("* Last name", 284, 174, 30, DARKBLUE);
+		DrawTextEx(medium, "* Last name", { 284, 174 }, 35,0, DARKBLUE);
 		DrawRectangleRec(Firstname.textbox, LIGHTGRAY);
-		DrawText("* First name", 610, 174, 30, DARKBLUE);
+		DrawTextEx(medium, "* First name", { 610, 174 }, 35,0, DARKBLUE);
 		DrawRectangleRec(studentID.textbox, LIGHTGRAY);
-		DrawText("* Student ID", 284, 312, 30, DARKBLUE);
+		DrawTextEx(medium, "* Student ID", { 284, 312 }, 35,0, DARKBLUE);
 		DrawRectangleRec(socialID.textbox, LIGHTGRAY);
-		DrawText("* Social ID", 284, 450, 30, DARKBLUE);
+		DrawTextEx(medium, "* Social ID", { 284, 450 }, 35,0, DARKBLUE);
 		DrawRectangleRec(birth.textbox, LIGHTGRAY);
-		DrawText("* Date of birth", 604, 588, 30, DARKBLUE);
+		DrawTextEx(medium, "* Date of birth", { 604, 588 }, 35,0, DARKBLUE);
 		DrawRectangleRec(Gender.textbox, LIGHTGRAY);
-		DrawText("* Gender", 284, 588, 30, DARKBLUE);
+		DrawTextEx(medium, "* Gender", { 284, 588 }, 35,0, DARKBLUE);
 
 		////Function_of_TextInputBoxes_----------------------------------------------------------------------------------------------------------------------
 		Lastname.worktextbox(confirmBtnFalseDisplay);
@@ -2001,12 +2003,12 @@ void addStudentPage(const int screenWidth, const int screenHeight, account& Curr
 		birth.worktextbox(confirmBtnFalseDisplay);
 		Gender.worktextbox(confirmBtnFalseDisplay);
 
-		DrawText(Lastname.text, 314, 233, 40, DARKBLUE);
-		DrawText(Firstname.text, 640, 233, 40, DARKBLUE);
-		DrawText(studentID.text, 314, 371, 40, DARKBLUE);
-		DrawText(socialID.text, 314, 509, 40, DARKBLUE);
-		DrawText(birth.text, 634, 647, 40, DARKBLUE);
-		DrawText(Gender.text, 314, 647, 40, DARKBLUE);
+		DrawTextEx(medium, Lastname.text, { 314, 233 }, 40,0, DARKBLUE);
+		DrawTextEx(medium, Firstname.text, { 640, 233 }, 40,0, DARKBLUE);
+		DrawTextEx(medium, studentID.text, { 314, 371 }, 40,0, DARKBLUE);
+		DrawTextEx(medium, socialID.text, { 314, 509 }, 40,0, DARKBLUE);
+		DrawTextEx(medium, birth.text, { 634, 647 }, 40,0, DARKBLUE);
+		DrawTextEx(medium, Gender.text, { 314, 647 }, 40,0, DARKBLUE);
 
 		////Function of buttons------------	------------------------------------------------------------------------------------------------------------------
 		mousePoint = GetMousePosition();
@@ -2026,7 +2028,7 @@ void addStudentPage(const int screenWidth, const int screenHeight, account& Curr
 			else confirmBtnFalseDisplay = true;
 
 		}
-		if (confirmBtnFalseDisplay) DrawText("This class was created before!", 480, 560, 20, RED);
+		if (confirmBtnFalseDisplay) DrawTextEx(bold, "Invalid Data !", { 310, 720 }, 25,0, RED);
 		// Calculate button frame rectangle to draw depending on button state
 		sourceRecconfirmBtn.y = confirmBtnState * frameHeightconfirmBtn;
 		DrawTextureRec(confirmBtn, sourceRecconfirmBtn, { btnBoundsconfirmBtn.x, btnBoundsconfirmBtn.y }, WHITE); // Draw button frame
@@ -2041,6 +2043,9 @@ void addStudentPage(const int screenWidth, const int screenHeight, account& Curr
 }
 
 void addStudentCSV(const int screenWidth, const int screenHeight, account& CurrentUser, char*& classname) {
+	Font bold = LoadFontEx("../Montserrat/static/Montserrat-Bold.ttf", 120, 0, 250);
+	Font light = LoadFontEx("../Montserrat/static/Montserrat-Light.ttf", 120, 0, 250);
+	Font medium = LoadFontEx("../Montserrat/static/Montserrat-Medium.ttf", 120, 0, 250);
 	Vector2 mousePoint = { 0.0f, 0.0f };
 	Rectangle background = { 0,0,float(screenWidth),float(screenHeight) };
 
@@ -2066,20 +2071,19 @@ void addStudentCSV(const int screenWidth, const int screenHeight, account& Curre
 		ClearBackground(WHITE);
 		BeginDrawing();
 
-		DrawText("  Call us : (028) 3835 4266         E - mail : info@fit.hcmus.edu.vn", 0, 20, 20, DARKBLUE);
 		DrawRectangleGradientEx(background, SKYBLUE, DARKBLUE, DARKBLUE, SKYBLUE);
 		DrawRectangle(0, 0, screenWidth, 60, WHITE);
 
 		DrawRectangleRec(backtoClasspage.button, WHITE);
-		DrawText("Back to your class", 1280, 20, 20, DARKBLUE);
-		DrawText("Add student(s)", 620, 12, 40, DARKBLUE);
+		DrawTextEx(bold, "Back to your class", { 1280, 20 }, 25,0, DARKBLUE);
+		DrawTextEx(bold, "Add student(s)", { 620, 12 }, 40,0, DARKBLUE);
 
 		DrawRectangle(347, 173, 818, 380, WHITE);
 		DrawRectangleRec(filename.textbox, LIGHTGRAY);
-		DrawText("* File name", 420, 235, 30, DARKBLUE);
+		DrawTextEx(medium, "* File name", { 420, 235 },35,0, DARKBLUE);
 
 		filename.worktextbox(confirmBtnFalseDisplay);
-		DrawText(filename.text, 450, 300, 40, DARKBLUE);
+		DrawTextEx(medium, filename.text, { 450, 300 }, 40,0, DARKBLUE);
 
 		////Function of buttons------------------------------------------------------------------------------------------------------------------------------
 		mousePoint = GetMousePosition();
@@ -2103,7 +2107,7 @@ void addStudentCSV(const int screenWidth, const int screenHeight, account& Curre
 			}
 			else confirmBtnFalseDisplay = true;
 		}
-		if (confirmBtnFalseDisplay) DrawText("File name is invalid!!!", 440, 380, 20, RED);
+		if (confirmBtnFalseDisplay) DrawTextEx(bold, "File name is invalid!!!", { 440, 380 }, 25,0, RED);
 		// Calculate button frame rectangle to draw depending on button state
 		sourceRecconfirmBtn.y = confirmBtnState * frameHeightconfirmBtn;
 		DrawTextureRec(confirmBtn, sourceRecconfirmBtn, { btnBoundsconfirmBtn.x, btnBoundsconfirmBtn.y }, WHITE); // Draw button frame
