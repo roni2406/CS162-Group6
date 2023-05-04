@@ -654,6 +654,7 @@ void ScoreboardStudent(const int screenWidth, const int screenHeight, account& C
 		DrawTextEx(bold, "OK", { 687, 113 }, 25, 0, WHITE);
 		int z = 0, r = 0, j = 0;
 
+		DrawRectangleLines(0, 189, 1512, 0, BLACK);
 		DrawRectangle(846, 101, 252, 55, WHITE);
 		DrawTextEx(bold, "Semester GPA:", { 855, 114 }, 25,0, DARKBLUE);
 		DrawRectangle(1195, 101, 220, 55, WHITE);
@@ -722,7 +723,7 @@ void ScoreboardStudent(const int screenWidth, const int screenHeight, account& C
 			}
 			if (actionYear[k]) {
 				DrawRectangleRec(schoolyears, DARKBLUE);
-				DrawText(YearName[k], 410, 115, 20, WHITE);
+				DrawTextEx(bold, YearName[k], { 407, 113 }, 25,0, WHITE);
 				action1 = false;
 				yearnametmp = _strdup(YearName[k]);
 			}
@@ -751,7 +752,7 @@ void ScoreboardStudent(const int screenWidth, const int screenHeight, account& C
 		}
 		if (actionF) {
 			DrawRectangleRec(semesters, DARKBLUE);
-			DrawText("Fall", 130, 115, 20, WHITE);
+			DrawTextEx(bold, "Fall", { 120, 113 }, 25, 0, WHITE);
 			action = false;
 			semesternametmp = (char*)"Fall";
 		}
@@ -761,7 +762,7 @@ void ScoreboardStudent(const int screenWidth, const int screenHeight, account& C
 		}
 		if (actionS) {
 			DrawRectangleRec(semesters, DARKBLUE);
-			DrawText("Summer", 130, 115, 20, WHITE);
+			DrawTextEx(bold, "Summer", { 120, 113 }, 25, 0, WHITE);
 			action = false;
 			semesternametmp = (char*)"Summer";
 		}
@@ -771,7 +772,7 @@ void ScoreboardStudent(const int screenWidth, const int screenHeight, account& C
 		}
 		if (actionA) {
 			DrawRectangleRec(semesters, DARKBLUE);
-			DrawText("Autumn", 130, 115, 20, WHITE);
+			DrawTextEx(bold, "Autumn", { 120, 113 }, 25, 0, WHITE);
 			action = false;
 			semesternametmp = (char*)"Autumn";
 		}
