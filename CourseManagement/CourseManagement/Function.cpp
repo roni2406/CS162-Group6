@@ -2951,7 +2951,7 @@ void CoursePage(const int screenWidth, const int screenHeight, account& CurrentU
 
 		if (exportListStu.action) {
 			for (int i = 0; i < n; ++i) {
-				studentbutton[i].state = false;
+				studentbutton[i].state1 = false;
 			}
 
 			DrawRectangleGradientV(165, 220, 1161, 370, DARKBLUE, BLUE);
@@ -2978,7 +2978,7 @@ void CoursePage(const int screenWidth, const int screenHeight, account& CurrentU
 				DrawText("Could not export to the folder!", 242, 448, 20, RED);
 			}
 			if (confirmBtnFalseDisplay1) {
-				DrawRectangle(238, 444, 635, 28, WHITE);
+				DrawRectangle(238, 444, 949, 28, WHITE);
 				DrawText("File is exported to the folder! File name is: ", 242, 448, 20, GREEN);
 				DrawText(filename, 692, 448, 20, GREEN);
 			}
@@ -2991,7 +2991,7 @@ void CoursePage(const int screenWidth, const int screenHeight, account& CurrentU
 				if (IsMouseButtonPressed(MOUSE_BUTTON_LEFT)) {
 					exportListStu.action = false;
 					for (int i = 0; i < n; ++i) {
-						studentbutton[i].state = true;
+						studentbutton[i].state1 = true;
 					}
 				}
 			}
