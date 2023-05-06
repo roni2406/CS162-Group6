@@ -60,4 +60,5 @@ void OutputToFileCoursesAndScores(char* stuID, char* schoolYear, char* semester)
 double getSemesterGPA(char* stuID, char* schoolYear, char* semester);
 double getOverallGPA(char* stuID);
 double getTransferScaleTenToFour(double totalMark);
+double getScaleFourGPA(char* stuID);
 #endif

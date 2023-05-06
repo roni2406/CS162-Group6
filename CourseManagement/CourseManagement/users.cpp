@@ -320,6 +320,22 @@ double getSemesterGPA(char* stuID, char* schoolYear, char* semester)
 	return SemesterGPA;
 }
 
+double getScaleFourGPA(char* stuID)
+{
+	double ScaleFourGPA = 0;
+	int numOfStudyingCourses = countOverallNumberOfCourses(stuID);
+	course* ListOfStudyingCourses = GetOverallCourseListFromStart(stuID);
+	scoreboard* ListOfStudyingScores = GetOverallScoresListFromStart(stuID);
+	int numOfOverallCredits = 0;
+	for (int i = 0; i < numOfStudyingCourses; ++i)
+	{
+		double FourMark = getTransferScaleTenToFour(ListOfStudyingScores[i].totalMark);
+		numOfOverallCredits += ListOfStudyingCourses[i].numOfCre;
+		ScaleFourGPA += ListOfStudyingCourses[i].numOfCre * FourMark;
+	}
+	ScaleFourGPA /= numOfOverallCredits;
+	return ScaleFourGPA;
+}
 
 double getTransferScaleTenToFour(double totalMark)
 {
