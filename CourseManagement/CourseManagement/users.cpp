@@ -320,6 +320,32 @@ double getSemesterGPA(char* stuID, char* schoolYear, char* semester)
 	return SemesterGPA;
 }
 
+
+double getTransferScaleTenToFour(double totalMark)
+{
+	if (totalMark >= 8.5)
+		return 4;
+	else if (8 <= totalMark && totalMark < 8.5)
+		return 3.67;
+	else if (7.5 <= totalMark && totalMark < 8)
+		return 3.33;
+	else if (7 <= totalMark && totalMark < 7.5)
+		return 3;
+	else if (6.5 <= totalMark && totalMark < 7)
+		return 2.67;
+	else if (6 <= totalMark && totalMark < 6.5)
+		return 2.33;
+	else if (5.5 <= totalMark && totalMark < 6)
+		return 2;
+	else if (5 <= totalMark && totalMark < 5.5)
+		return 1.67;
+	else if (4.5 <= totalMark && totalMark < 5)
+		return 1.33;
+	else if (4 <= totalMark && totalMark < 4.5)
+		return 1;
+	else return 0;
+}
+
 double getOverallGPA(char* stuID)
 {
 	double OverallGPA = 0;

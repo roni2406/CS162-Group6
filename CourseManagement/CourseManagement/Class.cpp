@@ -379,6 +379,8 @@ double* GetOverallGPA_Class(char* className)
 		OverallGPA_Class[i] = getOverallGPA(StuInAClass[i].stuID);
 	return OverallGPA_Class;
 }
+
+
 bool CheckClassName(char* className) {
 	if (strlen(className) > 10)
 		return false;
