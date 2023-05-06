@@ -49,4 +49,6 @@ course** GetSemesterCourses_Class(char* className, char* schoolYear, char* semes
 scoreboard** GetSemesterScore_Class(char* className, char* schoolYear, char* semester);
 double* GetSemesterGPA_Class(char* className, char* schoolYear, char* semester);
 double* GetOverallGPA_Class(char* className);
+
+double* GetScaleFour_SemesterGPA_Class(char* className, char* schoolYear, char* semester);
 #endif
