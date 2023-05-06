@@ -320,21 +320,20 @@ double getSemesterGPA(char* stuID, char* schoolYear, char* semester)
 	return SemesterGPA;
 }
 
-double getScaleFourGPA(char* stuID)
+double getOverallGPA(char* stuID)
 {
-	double ScaleFourGPA = 0;
+	double OverallGPA = 0;
 	int numOfStudyingCourses = countOverallNumberOfCourses(stuID);
 	course* ListOfStudyingCourses = GetOverallCourseListFromStart(stuID);
 	scoreboard* ListOfStudyingScores = GetOverallScoresListFromStart(stuID);
 	int numOfOverallCredits = 0;
 	for (int i = 0; i < numOfStudyingCourses; ++i)
 	{
-		double FourMark = getTransferScaleTenToFour(ListOfStudyingScores[i].totalMark);
 		numOfOverallCredits += ListOfStudyingCourses[i].numOfCre;
-		ScaleFourGPA += ListOfStudyingCourses[i].numOfCre * FourMark;
+		OverallGPA += ListOfStudyingCourses[i].numOfCre * ListOfStudyingScores[i].totalMark;
 	}
-	ScaleFourGPA /= numOfOverallCredits;
-	return ScaleFourGPA;
+	OverallGPA /= numOfOverallCredits;
+	return OverallGPA;
 }
 
 double getTransferScaleTenToFour(double totalMark)
@@ -362,20 +361,38 @@ double getTransferScaleTenToFour(double totalMark)
 	else return 0;
 }
 
-double getOverallGPA(char* stuID)
+double getScaleFour_SemesterGPA(char* stuID, char* schoolYear, char* semester)
 {
-	double OverallGPA = 0;
+	double ScaleFour_SemesterGPA = 0;
+	course* ListOfStudyingCourses = viewCoursesOfAStudent(stuID, schoolYear, semester);
+	scoreboard* ListOfStudyingScores = GetsaveScore(stuID, schoolYear, semester);
+	int numOfStudyingCourses = countCoursesOfAStudent(stuID, schoolYear, semester);
+	int numOfSemesterCredits = 0;
+	for (int i = 0; i < numOfStudyingCourses; ++i)
+	{
+		double FourMark = getTransferScaleTenToFour(ListOfStudyingScores[i].totalMark);
+		numOfSemesterCredits += ListOfStudyingCourses[i].numOfCre;
+		ScaleFour_SemesterGPA += ListOfStudyingCourses[i].numOfCre * FourMark;
+	}
+	ScaleFour_SemesterGPA /= numOfSemesterCredits;
+	return ScaleFour_SemesterGPA;
+}
+
+double getScaleFour_OverallGPA(char* stuID)
+{
+	double ScaleFour_OverallGPA = 0;
 	int numOfStudyingCourses = countOverallNumberOfCourses(stuID);
 	course* ListOfStudyingCourses = GetOverallCourseListFromStart(stuID);
 	scoreboard* ListOfStudyingScores = GetOverallScoresListFromStart(stuID);
 	int numOfOverallCredits = 0;
 	for (int i = 0; i < numOfStudyingCourses; ++i)
 	{
+		double FourMark = getTransferScaleTenToFour(ListOfStudyingScores[i].totalMark);
 		numOfOverallCredits += ListOfStudyingCourses[i].numOfCre;
-		OverallGPA += ListOfStudyingCourses[i].numOfCre * ListOfStudyingScores[i].totalMark;
+		ScaleFour_OverallGPA += ListOfStudyingCourses[i].numOfCre * FourMark;
 	}
-	OverallGPA /= numOfOverallCredits;
-	return OverallGPA;
+	ScaleFour_OverallGPA /= numOfOverallCredits;
+	return ScaleFour_OverallGPA;
 }
 
 void OutputToFileCoursesAndScores(char* stuID, char* schoolYear, char* semester, char* filename)
