@@ -362,6 +362,10 @@ bool addStudentsToCourseWithCSV(char* fileNameIn, char* schoolYear, char* semest
 	fileNameOutAddressChar[fileNameOutAddress.size()] = '\0';
 
 	while (!fin.eof()) {
+		if (fin.fail()) {
+			fin.clear();
+			return 0;
+		}
 		student s;
 		s.inputStudentsWithCSVFile(fin);
 		if (checkStudentExistInCourse(s, schoolYear, semester, course)) {

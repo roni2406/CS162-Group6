@@ -1447,7 +1447,7 @@ void createClassPage(const int screenWidth, const int screenHeight, account& Cur
 		else if (IsKeyPressed(KEY_ENTER)) confirmBtnAction = true;
 		else confirmBtnState = 0;
 		if (confirmBtnAction) {
-			if (!CheckClassExisted(classname.text)) {
+			if (!CheckClassExisted(classname.text) && CheckClassName(classname.text)) {
 				confirmBtnFalseDisplay = false;
 				CreateAClass(classname.text);
 				EndDrawing();
@@ -1455,7 +1455,7 @@ void createClassPage(const int screenWidth, const int screenHeight, account& Cur
 			}
 			else confirmBtnFalseDisplay = true;
 		}
-		if (confirmBtnFalseDisplay) DrawTextEx(bold, "This class was created before!", { 500, 360 }, 25,0, RED);
+		if (confirmBtnFalseDisplay) DrawTextEx(bold, "This class was created before or wrong name format!", { 500, 360 }, 25,0, RED);
 		// Calculate button frame rectangle to draw depending on button state
 		sourceRecconfirmBtn.y = confirmBtnState * frameHeightconfirmBtn;
 		DrawTextureRec(confirmBtn, sourceRecconfirmBtn, { btnBoundsconfirmBtn.x, btnBoundsconfirmBtn.y }, WHITE); // Draw button frame
@@ -2175,8 +2175,8 @@ void dataExistedPage(const int screenWidth, const int screenHeight, account& Cur
 		}
 
 		DrawRectangle(0, 0, 1512, 60, WHITE);
-		DrawTextEx(bold, "These students have already existed in class", { 10, 10 }, 40,0, RED);
-		DrawText(classname, 970, 10, 40, RED);
+		DrawTextEx(bold, "These students have already existed in class or cannot be in class!", { 10, 10 }, 30,0, RED);
+		DrawText(classname, 1108, 10, 40, RED);
 
 		DrawRectangleRec(backtoClasspage.button, WHITE);
 		DrawTextEx(bold, "Back to your class", { 1280, 20 }, 25, 0, DARKBLUE);
@@ -3249,7 +3249,7 @@ void dataExistedPageforCourse(const int screenWidth, const int screenHeight, acc
 		}
 
 		DrawRectangle(0, 0, 1512, 60, WHITE);
-		DrawTextEx(bold, "These students have already existed in this course", { 10, 10 }, 40,0, RED);
+		DrawTextEx(bold, "These students have already existed in this course or file format error", { 10, 10 }, 30,0, RED);
 
 		DrawRectangleRec(backtoCoursepage.button, WHITE);
 		DrawTextEx(bold, "Back to Course Page", { 1280, 20 }, 25,0, DARKBLUE);

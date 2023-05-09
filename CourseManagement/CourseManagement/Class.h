@@ -16,6 +16,7 @@ void sortClasses(Class* classList);
 // 2
 void InputAClass(char* classID, Class& className); 
 void CreateAClass(char* classID);       // front end
+bool CheckClassName(char* className);
 bool CheckClassExisted(char* ClassID); // front end
 void AddAClassToList(Class className, ofstream& fout);
 void CreateASingleClassList(Class className, ofstream& fout);

@@ -111,7 +111,7 @@ int countClasses()
 //---------------------------------------
 bool addAStudentToClass(char* className, char* first_name, char* last_name, char* Gender, char* DoB,
 	char* social_ID, char* student_id) {
-
+	if (className[0] != student_id[0] || className[1] != student_id[1]) return false;
 	if (!checkDateInput(DoB) || (strcmp(Gender, "Male") != 0 && strcmp(Gender, "Female") != 0))
 		return false;
 
@@ -159,6 +159,12 @@ bool addStudentsWithCSV(char* fileNameIn, char* fileNameOut, student*& stuArr, i
 	while (!fin.eof()) {
 		student s;
 		s.inputStudentsWithCSVFile(fin);
+		if (s.stuID[0] != fileNameOut[0] || s.stuID[1] != fileNameOut[1]) {
+			returnValue = 0;
+			stuArr[numOfDupsStu] = s;
+			++numOfDupsStu;
+			continue;
+		}
 		if (checkStudentExistInClass(s, fileNameOut)) {
 			account stuAcc;
 			stuAcc.userName = _strdup(s.stuID);
@@ -170,6 +176,11 @@ bool addStudentsWithCSV(char* fileNameIn, char* fileNameOut, student*& stuArr, i
 			returnValue = 0;
 			stuArr[numOfDupsStu] = s;
 			++numOfDupsStu;
+		}
+		if (fin.fail()) {
+			fin.clear();
+			fin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+			return 0;
 		}
 	}
 	delete[] fileNameOutAddressChar;
