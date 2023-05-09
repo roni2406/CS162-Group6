@@ -380,7 +380,7 @@ double* GetOverallGPA_Class(char* className)
 	return OverallGPA_Class;
 }
 bool CheckClassName(char* className) {
-	if (strlen(className) > 10)
+	if (strlen(className) > 10 || strlen(className) < 3)
 		return false;
 	if ((className[0] >= 48 && className[0] <= 57) && (className[1] >= 48 && className[1] <= 57)) {
 		for (int i = 2; i < strlen(className); i++) {
