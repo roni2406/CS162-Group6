@@ -59,4 +59,8 @@ scoreboard* GetsaveScore(char* stuID, char* schoolYear, char* semester);
 void OutputToFileCoursesAndScores(char* stuID, char* schoolYear, char* semester);
 double getSemesterGPA(char* stuID, char* schoolYear, char* semester);
 double getOverallGPA(char* stuID);
+
+double getTransferScaleTenToFour(double totalMark);
+double getScaleFour_SemesterGPA(char* stuID, char* schoolYear, char* semester);
+double getScaleFour_OverallGPA(char* stuID);
 #endif

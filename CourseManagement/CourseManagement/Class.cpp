@@ -379,6 +379,27 @@ double* GetOverallGPA_Class(char* className)
 		OverallGPA_Class[i] = getOverallGPA(StuInAClass[i].stuID);
 	return OverallGPA_Class;
 }
+
+double* GetScaleFour_SemesterGPA_Class(char* className, char* schoolYear, char* semester)
+{
+	student* StuInAClass = viewStudentsInClass(className);
+	int numOfStuInClass = countStudentInClass(className);
+	double* ScaleFour_SemesterGPA_Class = new double[numOfStuInClass];
+	for (int i = 0; i < numOfStuInClass; ++i)
+		ScaleFour_SemesterGPA_Class[i] = getScaleFour_SemesterGPA(StuInAClass[i].stuID, schoolYear, semester);
+	return ScaleFour_SemesterGPA_Class;
+}
+
+double* GetScaleFour_OverallGPA_Class(char* className)
+{
+	student* StuInAClass = viewStudentsInClass(className);
+	int numOfStuInClass = countStudentInClass(className);
+	double* ScaleFour_OverallGPA_Class = new double[numOfStuInClass];
+	for (int i = 0; i < numOfStuInClass; ++i)
+		ScaleFour_OverallGPA_Class[i] = getScaleFour_OverallGPA(StuInAClass[i].stuID);
+	return ScaleFour_OverallGPA_Class;
+}
+
 bool CheckClassName(char* className) {
 	if (strlen(className) > 10 || strlen(className) < 3)
 		return false;

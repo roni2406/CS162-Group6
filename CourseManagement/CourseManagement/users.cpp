@@ -336,6 +336,65 @@ double getOverallGPA(char* stuID)
 	return OverallGPA;
 }
 
+double getTransferScaleTenToFour(double totalMark)
+{
+	if (totalMark >= 8.5)
+		return 4;
+	else if (8 <= totalMark && totalMark < 8.5)
+		return 3.67;
+	else if (7.5 <= totalMark && totalMark < 8)
+		return 3.33;
+	else if (7 <= totalMark && totalMark < 7.5)
+		return 3;
+	else if (6.5 <= totalMark && totalMark < 7)
+		return 2.67;
+	else if (6 <= totalMark && totalMark < 6.5)
+		return 2.33;
+	else if (5.5 <= totalMark && totalMark < 6)
+		return 2;
+	else if (5 <= totalMark && totalMark < 5.5)
+		return 1.67;
+	else if (4.5 <= totalMark && totalMark < 5)
+		return 1.33;
+	else if (4 <= totalMark && totalMark < 4.5)
+		return 1;
+	else return 0;
+}
+
+double getScaleFour_SemesterGPA(char* stuID, char* schoolYear, char* semester)
+{
+	double ScaleFour_SemesterGPA = 0;
+	course* ListOfStudyingCourses = viewCoursesOfAStudent(stuID, schoolYear, semester);
+	scoreboard* ListOfStudyingScores = GetsaveScore(stuID, schoolYear, semester);
+	int numOfStudyingCourses = countCoursesOfAStudent(stuID, schoolYear, semester);
+	int numOfSemesterCredits = 0;
+	for (int i = 0; i < numOfStudyingCourses; ++i)
+	{
+		double FourMark = getTransferScaleTenToFour(ListOfStudyingScores[i].totalMark);
+		numOfSemesterCredits += ListOfStudyingCourses[i].numOfCre;
+		ScaleFour_SemesterGPA += ListOfStudyingCourses[i].numOfCre * FourMark;
+	}
+	ScaleFour_SemesterGPA /= numOfSemesterCredits;
+	return ScaleFour_SemesterGPA;
+}
+
+double getScaleFour_OverallGPA(char* stuID)
+{
+	double ScaleFour_OverallGPA = 0;
+	int numOfStudyingCourses = countOverallNumberOfCourses(stuID);
+	course* ListOfStudyingCourses = GetOverallCourseListFromStart(stuID);
+	scoreboard* ListOfStudyingScores = GetOverallScoresListFromStart(stuID);
+	int numOfOverallCredits = 0;
+	for (int i = 0; i < numOfStudyingCourses; ++i)
+	{
+		double FourMark = getTransferScaleTenToFour(ListOfStudyingScores[i].totalMark);
+		numOfOverallCredits += ListOfStudyingCourses[i].numOfCre;
+		ScaleFour_OverallGPA += ListOfStudyingCourses[i].numOfCre * FourMark;
+	}
+	ScaleFour_OverallGPA /= numOfOverallCredits;
+	return ScaleFour_OverallGPA;
+}
+
 void OutputToFileCoursesAndScores(char* stuID, char* schoolYear, char* semester, char* filename)
 {
 	ofstream fout;
