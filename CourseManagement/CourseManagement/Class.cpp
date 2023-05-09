@@ -423,3 +423,13 @@ bool CheckClassName(char* className) {
 	}
 	return false;
 }
+bool HaveEmptyLine(string filename) {// return 1 if have empty line
+	ifstream f(filename);
+	char s[100];
+	while (!f.eof()) {
+		f.getline(s, 100);
+		if (string(s).empty())
+			return true;
+	}
+	f.close();
+}
