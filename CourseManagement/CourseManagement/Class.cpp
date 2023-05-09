@@ -440,3 +440,51 @@ bool CheckValidName(char* name) {
 	}
 	return true;
 }
+bool CheckFileFormat(string file) {
+	if (HaveEmptyLine(file) == 1)return false;
+	ifstream f(file);
+	int check_int;
+	char check_char;
+	char check_string[100];
+	while (!f.eof()) {
+		f >> check_int;
+		if (check_int == 0) return false;
+
+		f >> check_char;
+		if (check_char != ',')return false;
+
+		f >> check_int;
+		if (check_int == 0) return false;
+
+		f >> check_char;
+		if (check_char != ',')return false;
+
+		f.get(check_string, 100, ',');
+		if (CheckValidName(check_string) == 0)return false;
+
+		f >> check_char;
+		if (check_char != ',')return false;
+
+		f.get(check_string, 100, ',');
+		if (CheckValidName(check_string) == 0)return false;
+
+		f >> check_char;
+		if (check_char != ',')return false;
+
+		f.get(check_string, 100, ',');
+		if (string(check_string) != "Male" && string(check_string) != "Female")return false;
+
+		f >> check_char;
+		if (check_char != ',')return false;
+
+		f.get(check_string, 100, ',');
+		if (checkDateInput(check_string) == 0)return false;
+
+		f >> check_char;
+		if (check_char != ',')return false;
+
+		f >> check_int;
+		if (check_int == 0)return false;
+	}
+	return true;
+}
