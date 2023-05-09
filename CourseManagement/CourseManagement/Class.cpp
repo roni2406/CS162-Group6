@@ -435,7 +435,8 @@ bool HaveEmptyLine(string filename) {// return 1 if have empty line
 }
 bool CheckValidName(char* name) {
 	for (int i = 0; i < strlen(name); i++) {
-		if (name[i] < 65 || (name[i] > 90 && name[i] < 97) || name[i]>122)
+		if ((name[i] != 32 && name[i] < 65) || (name[i] > 90 && name[i] < 97) || name[i] > 122)
 			return false;
 	}
+	return true;
 }
