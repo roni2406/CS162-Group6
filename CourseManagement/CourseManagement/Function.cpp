@@ -2066,6 +2066,7 @@ void addStudentCSV(const int screenWidth, const int screenHeight, account& Curre
 	int confirmBtnState = 0;               // Button state: 0-NORMAL, 1-MOUSE_HOVER, 2-PRESSED
 	bool confirmBtnAction = false;         // Button action should be activated
 	bool confirmBtnFalseDisplay = false;
+	bool confirmBtnTrueDisplay = false;
 
 	while (!WindowShouldClose()) {
 		ClearBackground(WHITE);
@@ -2099,7 +2100,8 @@ void addStudentCSV(const int screenWidth, const int screenHeight, account& Curre
 			if (checkdata_FileName(filename.text)) {
 				confirmBtnFalseDisplay = false;
 				if (addStudentsWithCSV(filename.text, classname, dupstu, numDupStu)) {
-					ClassPage(screenWidth, screenHeight, CurrentUser, classname);
+					//ClassPage(screenWidth, screenHeight, CurrentUser, classname);
+					confirmBtnTrueDisplay = true;
 				}
 				else {
 					dataExistedPage(screenWidth, screenHeight, CurrentUser, classname, numDupStu, dupstu);
@@ -2108,6 +2110,7 @@ void addStudentCSV(const int screenWidth, const int screenHeight, account& Curre
 			else confirmBtnFalseDisplay = true;
 		}
 		if (confirmBtnFalseDisplay) DrawTextEx(bold, "File name is invalid!!!", { 440, 380 }, 25,0, RED);
+		if (confirmBtnTrueDisplay) DrawTextEx(bold, "File is added successfully! Please back to your class.", { 400, 380 }, 25, 0, GREEN);
 		// Calculate button frame rectangle to draw depending on button state
 		sourceRecconfirmBtn.y = confirmBtnState * frameHeightconfirmBtn;
 		DrawTextureRec(confirmBtn, sourceRecconfirmBtn, { btnBoundsconfirmBtn.x, btnBoundsconfirmBtn.y }, WHITE); // Draw button frame
@@ -3172,7 +3175,8 @@ void addStudentCSVForCourse(const int screenWidth, const int screenHeight, accou
 			if (checkdata_FileName(filename.text)) {
 				confirmBtnFalseDisplay = false;
 				if (addStudentsToCourseWithCSV(filename.text, Year, Semester, fileCourse, dupstu, numDupStu)) {
-					CoursePage(screenWidth, screenHeight, CurrentUser, Year, Semester, Course);
+					//CoursePage(screenWidth, screenHeight, CurrentUser, Year, Semester, Course);
+					DrawTextEx(bold, "File is added successfully! Please back to your course.", { 400, 380 }, 25, 0, GREEN);
 				}
 				else {
 					dataExistedPageforCourse(screenWidth, screenHeight, CurrentUser, Year, Semester, Course, numDupStu, dupstu);

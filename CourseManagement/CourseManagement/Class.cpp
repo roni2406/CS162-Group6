@@ -177,11 +177,6 @@ bool addStudentsWithCSV(char* fileNameIn, char* fileNameOut, student*& stuArr, i
 			stuArr[numOfDupsStu] = s;
 			++numOfDupsStu;
 		}
-		if (fin.fail()) {
-			fin.clear();
-			fin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
-			return 0;
-		}
 	}
 	delete[] fileNameOutAddressChar;
 	fin.close();
