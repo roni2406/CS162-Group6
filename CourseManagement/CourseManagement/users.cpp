@@ -183,6 +183,11 @@ bool checkSemesterAndSchoolYear(char* semester, char* schoolyear) {
 		file_schoolyear.ignore(500, '\n');
 		if (strcmp(tmp_schoolyear, schoolyear) == 0) {
 			ifstream file_semester("../data/" + (string)(schoolyear)+"/Semester.csv");
+			if (!file_semester.is_open()) {
+				delete[] tmp_schoolyear;
+				return false;
+			}
+
 			file_semester.get();
 			while (!file_semester.eof()) {
 				++numSemester;

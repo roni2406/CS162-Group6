@@ -489,9 +489,9 @@ int countOverallNumberOfCourses(char* stuID)
 	char** schoolYear = nullptr;
 	getStudyingSchoolYear(stuID, numOfSchoolYear, schoolYear);
 	string* Semester = new string[3];
-	Semester[0] = "Autumn";
-	Semester[1] = "Fall";
-	Semester[2] = "Summer";
+	Semester[0] = "Fall";
+	Semester[1] = "Summer";
+	Semester[2] = "Autumn";
 	char** semester = new char* [3];
 	for (int i = 0; i < 3; ++i)
 		semester[i] = new char[10];
@@ -506,7 +506,8 @@ int countOverallNumberOfCourses(char* stuID)
 	for (int i = 0; i < numOfSchoolYear; ++i)
 	{
 		for (int j = 0; j < 3; ++j)
-			numCoursesFromStart += countCoursesOfAStudent(stuID, schoolYear[i], semester[j]);
+			if(checkSemesterAndSchoolYear(semester[j], schoolYear[i]))
+				numCoursesFromStart += countCoursesOfAStudent(stuID, schoolYear[i], semester[j]);
 	}
 	return numCoursesFromStart;
 }
@@ -541,13 +542,15 @@ course* GetOverallCourseListFromStart(char* stuID)
 	{
 		for (int j = 0; j < 3; ++j)
 		{
-			int numOfCoursesOfCurrentSemester = countCoursesOfAStudent(stuID, schoolYear[i], semester[j]);
-			course* CoursesOfCurrentSemester = viewCoursesOfAStudent(stuID, schoolYear[i], semester[j]);
-			for (int k = 0; k < numOfCoursesOfCurrentSemester; ++k)
-				AllCoursesFromStart[cnt + k] = CoursesOfCurrentSemester[k];
-			cnt += numOfCoursesOfCurrentSemester;
-			delete[]CoursesOfCurrentSemester;
-			CoursesOfCurrentSemester = nullptr;
+			if (checkSemesterAndSchoolYear(semester[j], schoolYear[i])) {
+				int numOfCoursesOfCurrentSemester = countCoursesOfAStudent(stuID, schoolYear[i], semester[j]);
+				course* CoursesOfCurrentSemester = viewCoursesOfAStudent(stuID, schoolYear[i], semester[j]);
+				for (int k = 0; k < numOfCoursesOfCurrentSemester; ++k)
+					AllCoursesFromStart[cnt + k] = CoursesOfCurrentSemester[k];
+				cnt += numOfCoursesOfCurrentSemester;
+				delete[]CoursesOfCurrentSemester;
+				CoursesOfCurrentSemester = nullptr;
+			}
 		}
 	}
 	return AllCoursesFromStart;
@@ -584,13 +587,15 @@ scoreboard* GetOverallScoresListFromStart(char* stuID)
 	{
 		for (int j = 0; j < 3; ++j)
 		{
-			int numOfCoursesOfCurrentSemester = countCoursesOfAStudent(stuID, schoolYear[i], semester[j]);
-			scoreboard* ScoresOfCurrentSemester = GetsaveScore(stuID, schoolYear[i], semester[j]);
-			for (int k = 0; k < numOfCoursesOfCurrentSemester; ++k)
-				AllScoresFromStart[cnt + k] = ScoresOfCurrentSemester[k];
-			cnt += numOfCoursesOfCurrentSemester;
-			delete[]ScoresOfCurrentSemester;
-			ScoresOfCurrentSemester = nullptr;
+			if (checkSemesterAndSchoolYear(semester[j], schoolYear[i])) {
+				int numOfCoursesOfCurrentSemester = countCoursesOfAStudent(stuID, schoolYear[i], semester[j]);
+				scoreboard* ScoresOfCurrentSemester = GetsaveScore(stuID, schoolYear[i], semester[j]);
+				for (int k = 0; k < numOfCoursesOfCurrentSemester; ++k)
+					AllScoresFromStart[cnt + k] = ScoresOfCurrentSemester[k];
+				cnt += numOfCoursesOfCurrentSemester;
+				delete[]ScoresOfCurrentSemester;
+				ScoresOfCurrentSemester = nullptr;
+			}
 		}
 	}
 	return AllScoresFromStart;
