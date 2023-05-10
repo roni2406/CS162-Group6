@@ -83,11 +83,16 @@ bool LoginFunction(char* userName, char* password, bool staffOrStu) {
 
 void addinfo(account person, char* filename)
 {
+	ifstream fin;
+	fin.open(filename, ios::app);
 	ofstream fout;
 	fout.open(filename, ios::app);
-	fout << endl;
+	fin.get();
+	if(!fin.eof()) fout << endl;
 	fout << person.userName << endl;
 	fout << person.password;
+
+	fin.close();
 	fout.close();
 }
 
