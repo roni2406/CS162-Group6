@@ -6,7 +6,7 @@ using namespace std;
 
 struct scoreboard 
 {
-    char courseName[50];
+    char courseName[50] = {};
     double totalMark = -1;
     double finalMark = -1;
     double midtermMark = -1;

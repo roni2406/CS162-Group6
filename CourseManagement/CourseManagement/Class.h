@@ -21,7 +21,6 @@ bool CheckClassExisted(char* ClassID); // front end
 void AddAClassToList(Class className, ofstream& fout);
 void CreateASingleClassList(Class className, ofstream& fout);
 
-
 // 15
 void viewClasses_PrepareData_SavedToClassArray(Class*& ClassList, ifstream& fin, int& numOfClasses); 
 Class* viewClasses(); // front end

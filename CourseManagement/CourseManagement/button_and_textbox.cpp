@@ -211,11 +211,13 @@ void Textbox1::worktextbox(bool& somethingfalsedisplay) {
 
 		if (IsKeyPressed(KEY_BACKSPACE))
 		{
+			somethingfalsedisplay = false;
 			lettercount--;
 			if (lettercount < 0) lettercount = 0;
 			text[lettercount] = '\0';
 		}
 		if (IsKeyDown(KEY_BACKSPACE)) {
+			somethingfalsedisplay = false;
 			if (delay_time < BACKSPACE_DELAY) {
 				delay_time += GetFrameTime();
 			}
@@ -227,9 +229,10 @@ void Textbox1::worktextbox(bool& somethingfalsedisplay) {
 		}
 		else delay_time = 0.0f;
 		if (IsKeyDown(KEY_LEFT_CONTROL) && IsKeyDown(KEY_V)) {
+			somethingfalsedisplay = false;
 			lettercount = 0;
 			const char* a = GetClipboardText();
-			if (a[0] == '\'') {
+			if (a[0] == '\'' || a[0] == '\"') {
 				for (int i = 1; i < strlen(a) - 1; ++i) {
 					text[lettercount++] = a[i];
 				}
@@ -243,6 +246,7 @@ void Textbox1::worktextbox(bool& somethingfalsedisplay) {
 			}
 		}
 		if (IsKeyDown(KEY_LEFT_CONTROL) && IsKeyDown(KEY_Z)) {
+			somethingfalsedisplay = false;
 			text[0] = '\0';
 			lettercount = 0;
 		}
@@ -251,7 +255,6 @@ void Textbox1::worktextbox(bool& somethingfalsedisplay) {
 		DrawRectangleLines((int)textbox.x, (int)textbox.y, (int)textbox.width, (int)textbox.height, BLUE);
 		DrawRectangleLines((int)textbox.x - 1, (int)textbox.y - 1, (int)textbox.width + 2, (int)textbox.height + 2, BLUE);
 		DrawRectangleLines((int)textbox.x - 2, (int)textbox.y - 2, (int)textbox.width + 4, (int)textbox.height + 4, BLUE);
-		somethingfalsedisplay = false;
 	}
 	else DrawRectangleLines((int)textbox.x, (int)textbox.y, (int)textbox.width, (int)textbox.height, DARKGRAY);
 
@@ -286,6 +289,7 @@ void Textbox2::worktextbox(bool& somethingfalsedisplay) {
 
 		if (IsKeyPressed(KEY_BACKSPACE))
 		{
+			somethingfalsedisplay = false;
 			lettercount--;
 			if (lettercount < 0) lettercount = 0;
 			text[lettercount] = '\0';
@@ -295,6 +299,7 @@ void Textbox2::worktextbox(bool& somethingfalsedisplay) {
 			hiddentext[lettercounthidden] = '\0';
 		}
 		if (IsKeyDown(KEY_BACKSPACE)) {
+			somethingfalsedisplay = false;
 			if (delay_time < BACKSPACE_DELAY) {
 				delay_time += GetFrameTime();
 			}
@@ -310,10 +315,11 @@ void Textbox2::worktextbox(bool& somethingfalsedisplay) {
 		}
 		else delay_time = 0.0f;
 		if (IsKeyDown(KEY_LEFT_CONTROL) && IsKeyDown(KEY_V)) {
+			somethingfalsedisplay = false;
 			lettercounthidden = 0;
 			lettercount = 0;
 			const char* a = GetClipboardText();
-			if (a[0] == '\'') {
+			if (a[0] == '\'' || a[0] == '\"') {
 				for (int i = 1; i < strlen(a) - 1; ++i) {
 					text[lettercount++] = a[i];
 					hiddentext[lettercounthidden++] = '*';
@@ -331,6 +337,7 @@ void Textbox2::worktextbox(bool& somethingfalsedisplay) {
 			}
 		}
 		if (IsKeyDown(KEY_LEFT_CONTROL) && IsKeyDown(KEY_Z)) {
+			somethingfalsedisplay = false;
 			text[0] = '\0';
 			hiddentext[0] = '\0';
 			lettercount = 0;
@@ -342,7 +349,6 @@ void Textbox2::worktextbox(bool& somethingfalsedisplay) {
 		DrawRectangleLines((int)textbox.x, (int)textbox.y, (int)textbox.width, (int)textbox.height, BLUE);
 		DrawRectangleLines((int)textbox.x - 1, (int)textbox.y - 1, (int)textbox.width + 2, (int)textbox.height + 2, BLUE);
 		DrawRectangleLines((int)textbox.x - 2, (int)textbox.y - 2, (int)textbox.width + 4, (int)textbox.height + 4, BLUE);
-		somethingfalsedisplay = false;
 	}
 	else DrawRectangleLines((int)textbox.x, (int)textbox.y, (int)textbox.width, (int)textbox.height, DARKGRAY);
 }
@@ -371,11 +377,13 @@ void Textbox3::worktextbox(bool& somethingfalsedisplay) {
 
 		if (IsKeyPressed(KEY_BACKSPACE))
 		{
+			somethingfalsedisplay = false;
 			lettercount--;
 			if (lettercount < 0) lettercount = 0;
 			text[lettercount] = '\0';
 		}
 		if (IsKeyDown(KEY_BACKSPACE)) {
+			somethingfalsedisplay = false;
 			if (delay_time < BACKSPACE_DELAY) {
 				delay_time += GetFrameTime();
 			}
@@ -389,7 +397,7 @@ void Textbox3::worktextbox(bool& somethingfalsedisplay) {
 		if (IsKeyDown(KEY_LEFT_CONTROL) && IsKeyDown(KEY_V)) {
 			lettercount = 0;
 			const char* a = GetClipboardText();
-			if (a[0] == '\'') {
+			if (a[0] == '\'' || a[0] == '\"') {
 				for (int i = 1; i < strlen(a) - 1; ++i) {
 					text[lettercount++] = a[i];
 				}
@@ -401,10 +409,12 @@ void Textbox3::worktextbox(bool& somethingfalsedisplay) {
 				}
 				text[lettercount] = '\0';
 			}
+			somethingfalsedisplay = false;
 		}
 		if (IsKeyDown(KEY_LEFT_CONTROL) && IsKeyDown(KEY_Z)) {
 			text[0] = '\0';
 			lettercount = 0;
+			somethingfalsedisplay = false;
 		}
 
 	}
@@ -412,7 +422,6 @@ void Textbox3::worktextbox(bool& somethingfalsedisplay) {
 		DrawRectangleLines((int)textbox.x, (int)textbox.y, (int)textbox.width, (int)textbox.height, BLUE);
 		DrawRectangleLines((int)textbox.x - 1, (int)textbox.y - 1, (int)textbox.width + 2, (int)textbox.height + 2, BLUE);
 		DrawRectangleLines((int)textbox.x - 2, (int)textbox.y - 2, (int)textbox.width + 4, (int)textbox.height + 4, BLUE);
-		somethingfalsedisplay = false;
 	}
 	else DrawRectangleLines((int)textbox.x, (int)textbox.y, (int)textbox.width, (int)textbox.height, DARKGRAY);
 

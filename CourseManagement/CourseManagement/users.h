@@ -21,11 +21,11 @@ struct person {
 };
 
 struct student {
-    account stuAcc;
-    int No;
-    person Student;
+    account stuAcc{};
+    int No = 0;
+    person Student{};
     char* stuID = nullptr;
-    scoreboard mark;
+    scoreboard mark{};
 
     void inputAStudent(char* student_id, char* first_name, char* last_name, 
         bool Gender, char* DoB, char* social_ID);
@@ -56,11 +56,16 @@ void InputScoreBoardWithCSV(char* addressOfOutputFile, char* schoolYear, char* s
 // 24
 void viewPersonalStudentScoreboard(char* stuID, char* schoolYear, char* semester, scoreboard*& saveScore);
 scoreboard* GetsaveScore(char* stuID, char* schoolYear, char* semester);
-void OutputToFileCoursesAndScores(char* stuID, char* schoolYear, char* semester);
+void OutputToFileCoursesAndScores(char* stuID, char* schoolYear, char* semester, char* filename);
 double getSemesterGPA(char* stuID, char* schoolYear, char* semester);
 double getOverallGPA(char* stuID);
 
 double getTransferScaleTenToFour(double totalMark);
 double getScaleFour_SemesterGPA(char* stuID, char* schoolYear, char* semester);
 double getScaleFour_OverallGPA(char* stuID);
+
+// Check file from user
+bool HaveEmptyLine(string filename);
+bool CheckValidName(char* name);
+bool CheckFileFormat(string file);
 #endif

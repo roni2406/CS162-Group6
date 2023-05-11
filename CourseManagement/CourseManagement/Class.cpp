@@ -249,7 +249,7 @@ bool CheckData_InputStudents(char* No, char* student_id, char* Gender, char* DoB
 	int GenderStu = atoi(Gender);
 	if (GenderStu != 0 && GenderStu != 1) return false;
 
-	Date tmp;
+	Date tmp{};
 	tmp.inputADateWithChar(DoB);
 	if (checkDateInput(DoB) == false || tmp.checkdata() == false) return false;
 
@@ -417,69 +417,4 @@ bool CheckClassName(char* className) {
 		return true;
 	}
 	return false;
-}
-bool HaveEmptyLine(string filename) {// return 1 if have empty line
-	ifstream f(filename);
-	char s[100];
-	while (!f.eof()) {
-		f.getline(s, 100);
-		if (string(s).empty())
-			return true;
-	}
-	f.close();
-}
-bool CheckValidName(char* name) {
-	for (int i = 0; i < strlen(name); i++) {
-		if ((name[i] != 32 && name[i] < 65) || (name[i] > 90 && name[i] < 97) || name[i] > 122)
-			return false;
-	}
-	return true;
-}
-bool CheckFileFormat(string file) {
-	if (HaveEmptyLine(file) == 1)return false;
-	ifstream f(file);
-	int check_int;
-	char check_char;
-	char check_string[100];
-	while (!f.eof()) {
-		f >> check_int;
-		if (check_int == 0) return false;
-
-		f >> check_char;
-		if (check_char != ',')return false;
-
-		f >> check_int;
-		if (check_int == 0) return false;
-
-		f >> check_char;
-		if (check_char != ',')return false;
-
-		f.get(check_string, 100, ',');
-		if (CheckValidName(check_string) == 0)return false;
-
-		f >> check_char;
-		if (check_char != ',')return false;
-
-		f.get(check_string, 100, ',');
-		if (CheckValidName(check_string) == 0)return false;
-
-		f >> check_char;
-		if (check_char != ',')return false;
-
-		f.get(check_string, 100, ',');
-		if (string(check_string) != "Male" && string(check_string) != "Female")return false;
-
-		f >> check_char;
-		if (check_char != ',')return false;
-
-		f.get(check_string, 100, ',');
-		if (checkDateInput(check_string) == 0)return false;
-
-		f >> check_char;
-		if (check_char != ',')return false;
-
-		f >> check_int;
-		if (check_int == 0)return false;
-	}
-	return true;
 }

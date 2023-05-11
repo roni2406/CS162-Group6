@@ -11,9 +11,9 @@ struct course {
     char* courseName = nullptr;
     char* className = nullptr;
     char* teacherName = nullptr;
-    int numOfCre;
+    int numOfCre = 0;
     int numOfStu = 0;
-    int maxStu;
+    int maxStu = 0;
     char* dayofweek = nullptr;
     char* sessionHour = nullptr;
     // S1 (07:30), S2 (09:30), S3(13:30) and S4 (15:30)).
@@ -44,9 +44,9 @@ bool checkStudentExistInCourse(student x, char* schoolYear, char* semester, char
 bool checkStuHaveClass(char* stuID);
 //front end
 int countStudentInCourse(char* schoolYear, char* semester, char* course);
-bool addAStudentToCourse(char* schoolYear, char* semester, char* course,
+bool addAStudentToCourse(course& Course, char* schoolYear, char* semester, char* course_name,
     char* first_name, char* last_name, char* Gender, char* DoB, char* social_ID, char* student_id);
-bool addStudentsToCourseWithCSV(char* fileNameIn, char* schoolYear, char* semester, char* course,
+bool addStudentsToCourseWithCSV(char* fileNameIn, char* schoolYear, char* semester, char* course_name, course& Course,
     student*& stuArr, int& numOfDupsStu);
 void Load_stu(course& Course, char* year, char* semester, student*& liststudents);
 void Return_stu(course& Course, char* year, char* semester);

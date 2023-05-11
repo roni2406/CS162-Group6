@@ -257,8 +257,8 @@ void outputStudentAndScoreToFile(char* filename, student& s)
 	fout << s.No << ",";
 	fout << s.stuID << ",";
 	fout << s.Student.lastName << "," << s.Student.firstName << ",";
-	if (s.Student.gender == 1) fout << "male,";
-	else fout << "female,";
+	if (s.Student.gender == 1) fout << "Male,";
+	else fout << "Female,";
 	s.Student.dob.outputADateToFile(fout);
 	fout << "," << s.Student.socialID << ",";
 	s.mark.outputScoreBoardToFile(fout);
@@ -421,4 +421,88 @@ void OutputToFileCoursesAndScores(char* stuID, char* schoolYear, char* semester,
 			fout << '\n';
 	}
 	fout.close();
+}
+
+bool HaveEmptyLine(string filename) {// return 1 if have empty line
+	ifstream fin(filename);
+	if (!fin.is_open()) return true;
+	string s;
+	while (!fin.eof()) {
+		getline(fin, s);
+		if (s.empty())
+			return true;
+	}
+	fin.close();
+	return false;
+}
+bool CheckValidName(char* name) {
+	for (int i = 0; i < strlen(name); i++) {
+		if (name[i] >= '0' && name[i] <= '9')
+			return false;
+	}
+	return true;
+}
+bool CheckFileFormat(string file) {
+	//if (HaveEmptyLine(file) == 1)return false;
+	ifstream f(file);
+	while (!f.eof()) {
+		int check_int = 0;
+		char check_char = '\0';
+		char check_string[100];
+
+		f >> check_int;
+
+		if (check_int == 0) return false;
+		check_int = 0;
+
+		f >> check_char;
+		if (check_char != ',')return false;
+		check_char = '\0';
+
+		
+		f.get(check_string, 100, ',');
+		if (strlen(check_string) != 8) return false;
+		for (int i = 0; i < 8; i++) {
+			if (check_string[i] < '0' || check_string[i] > '9') return false;
+		}
+
+		f >> check_char;
+		if (check_char != ',')return false;
+		check_char = '\0';
+
+		f.get(check_string, 100, ',');
+		if (CheckValidName(check_string) == 0)return false;
+
+		f >> check_char;
+		if (check_char != ',')return false;
+		check_char = '\0';
+
+		f.get(check_string, 100, ',');
+		if (CheckValidName(check_string) == 0)return false;
+
+		f >> check_char;
+		if (check_char != ',')return false;
+		check_char = '\0';
+
+		f.get(check_string, 100, ',');
+		if (string(check_string) != "Male" && string(check_string) != "Female")return false;
+
+		f >> check_char;
+		if (check_char != ',')return false;
+		check_char = '\0';
+
+		f.get(check_string, 100, ',');
+		if (checkDateInput(check_string) == 0)return false;
+
+		f >> check_char;
+		if (check_char != ',')return false;
+		check_char = '\0';
+
+		f.get(check_string, 100, '\n');
+		if (strlen(check_string) != 12) return false;
+		// Them check diem nhap vao
+		f.ignore(500, '\n');
+	}
+	f.close();
+	return true;
 }

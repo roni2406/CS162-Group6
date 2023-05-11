@@ -4,7 +4,6 @@
 #include <fstream>
 #include <string>
 #include "semester.h"
-//#include "Function.h"
 #include "users.h"
 #include<string>
 using namespace std;
@@ -194,39 +193,6 @@ void deleteStudent(course& course, int no, int& n, char* Year, char* Semester) {
 	n--;
 	Return_stu(course, Year, Semester);
 }
-//void course::add_stu(char* year, char* semester, int No, char* stuID, char lastName, char* firstName, bool gen, int d, int m, int y, char* socialID) {
-//	ofstream fout;
-//	fout.open("../data/" + (string)(year)+"/" + (string)(semester)+"/" + (string)(courseName)+"-" + string(className) + ".csv", ios::app);
-//	int maxstu = stoi(maxStu);
-//	if (numOfStu < maxstu) {
-//		fout << No << ","
-//			<< stuID << ","
-//			<< lastName << ","
-//			<< firstName << ","
-//			<< gen << ","
-//			<< d << ","
-//			<< m << ","
-//			<< y << ","
-//			<< socialID << "\n";
-//	}
-//	fout.close();
-//	Load_stu(year, semester);
-//}
-
-/*
-bool FileDrop(char*&filename) {
-	bool is_drop = 0;
-	if (IsFileDropped())
-	{
-		FilePathList droppedFiles = LoadDroppedFiles();
-		TextCopy(filename, droppedFiles.paths[0]);
-		is_drop = 1;
-		UnloadDroppedFiles(droppedFiles);
-	}
-	return is_drop;
-}
-*/
-
 bool CheckValidCourse(char* coursename, char* ID, char* classname, char* nofc, char* maxstudents, char* Year, char* semester) {
 	for (int i = 0; i < strlen(nofc); ++i) {
 		if (nofc[i] < 48 || nofc[i] > 57) return 0;
@@ -317,34 +283,35 @@ bool checkStuHaveClass(char* stuID) {
 	return false;
 }
 
-bool addAStudentToCourse(char* schoolYear, char* semester, char* course, 
+bool addAStudentToCourse(course& Course, char* schoolYear, char* semester, char* course_name,
 	char* first_name, char* last_name, char* Gender, char* DoB, char* social_ID, char* student_id) {
 
-	if (!checkDateInput(DoB) || (strcmp(Gender, "Male") != 0 && strcmp(Gender, "Female") != 0))
+	if (Course.numOfStu >= Course.maxStu) return false;
+	if (!checkDateInput(DoB) || (strcmp(Gender, "Male") != 0 && strcmp(Gender, "Female") != 0)) 
 		return false;
-
 	bool gender;
 	if (strcmp(Gender, "Male") == 0) {
 		gender = 1;
 	}
 	else gender = 0;
 
-	string fileName = "../data/" + string(schoolYear) + "/" + string(semester) + "/" + string(course) + ".csv";
+	string fileName = "../data/" + string(schoolYear) + "/" + string(semester) + "/" + string(course_name) + ".csv";
 
 	student s;
 	s.inputAStudent(student_id, first_name, last_name, gender, DoB, social_ID);
 
 	if (!s.checkData() || !checkStuHaveClass(s.stuID)) return false;
-	if (!checkStudentExistInCourse(s, schoolYear, semester, course)) return false;
+	if (!checkStudentExistInCourse(s, schoolYear, semester, course_name)) return false;
 
 	ofstream fout;
 	fout.open(fileName, ios::app);
 	s.outputAStudentToFile((char*)fileName.c_str());
 	fout.close();
+	++Course.numOfStu;
 	return true;
 }
 
-bool addStudentsToCourseWithCSV(char* fileNameIn, char* schoolYear, char* semester, char* course, 
+bool addStudentsToCourseWithCSV(char* fileNameIn, char* schoolYear, char* semester, char* course_name, course& Course,
 	student*& stuArr, int& numOfDupsStu) {
 	bool returnValue = 1;
 	// return true if no duplicate => stuArr = nullptr and numOfDupsStu = 0
@@ -354,7 +321,7 @@ bool addStudentsToCourseWithCSV(char* fileNameIn, char* schoolYear, char* semest
 
 	ifstream fin;
 	fin.open(fileNameIn);
-	string fileNameOutAddress = "../data/" + string(schoolYear) + "/" + string(semester) + "/" + string(course) + ".csv";
+	string fileNameOutAddress = "../data/" + string(schoolYear) + "/" + string(semester) + "/" + string(course_name) + ".csv";
 	char* fileNameOutAddressChar = new char[100];
 	for (int i = 0; i < fileNameOutAddress.size(); i++) {
 		fileNameOutAddressChar[i] = fileNameOutAddress[i];
@@ -362,15 +329,14 @@ bool addStudentsToCourseWithCSV(char* fileNameIn, char* schoolYear, char* semest
 	fileNameOutAddressChar[fileNameOutAddress.size()] = '\0';
 
 	while (!fin.eof()) {
-		if (fin.fail()) {
-			fin.clear();
-			return 0;
-		}
 		student s;
 		s.inputStudentsWithCSVFile(fin);
-		if (checkStudentExistInCourse(s, schoolYear, semester, course)) {
+		if (checkStudentExistInCourse(s, schoolYear, semester, course_name) && checkStuHaveClass(s.stuID) 
+			&& Course.numOfStu < Course.maxStu) {
 			s.outputAStudentToFile(fileNameOutAddressChar);
 			s.mark.outputScoreBoardToFile(fileNameOutAddressChar);
+			++Course.numOfStu;
+
 		}
 		else {
 			returnValue = 0;
