@@ -3,4 +3,4 @@ Calculus I,MTH251,22TT2,Nguyen Le Hoang Anh,4,60,TUE,S1
 General Physics I,PH211,22TT2,Vu Thi Hanh Thu,4,60,WED,S1
 Communication Management,CM101,22TT,Duong Nguyen Vu,4,120,SAT,S3
 Marxist - Leninist Philosophy,BAA00101,22TT,Nguyen Dinh Quoc Cuong,3,49,FRI,S3
-aosdis,CS160,asdisadio,Phan Phuc Bao,4,25,MON,S1
+aosdis,CS160,asdisadio,Phan Phuc Bao,4,50,MON,S1

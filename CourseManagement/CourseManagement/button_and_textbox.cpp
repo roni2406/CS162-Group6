@@ -1,6 +1,7 @@
 #include "Function.h"
 void Button0::workbutton(Vector2 mousePoint) {
 	if (CheckCollisionPointRec(mousePoint, btnBounds)) {          // Check button state
+		DrawRectangleLines((int)btnBounds.x, (int)btnBounds.y, (int)btnBounds.width, (int)btnBounds.height, BLACK);
 		if (IsMouseButtonPressed(MOUSE_BUTTON_LEFT) && hidden) {
 			action = true;
 			hidden = false;
@@ -16,6 +17,7 @@ void Button0::workbutton(Vector2 mousePoint) {
 }
 void Button1::workbutton(Vector2 mousePoint, account& CurrentUser, void(*func)(const int screenWidth, const int screenHeight, account& CurrentUser)) {
 	if (CheckCollisionPointRec(mousePoint, btnBounds)) {          // Check button state
+		DrawRectangleLines((int)btnBounds.x, (int)btnBounds.y, (int)btnBounds.width, (int)btnBounds.height, BLACK);
 		if (IsMouseButtonPressed(MOUSE_BUTTON_LEFT)) action = true;
 	}
 	else state = 0;
@@ -29,12 +31,14 @@ void Button1::workbutton(Vector2 mousePoint, account& CurrentUser, void(*func)(c
 }
 void Button1_5::workbutton(Vector2 mousePoint, account& CurrentUser) {
 	if (CheckCollisionPointRec(mousePoint, button)) {          // Check button state
+		DrawRectangleLines((int)button.x, (int)button.y, (int)button.width, (int)button.height, BLACK);
 		if (IsMouseButtonPressed(MOUSE_BUTTON_LEFT)) action = true;
 	}
 	else action = false;
 }
 void Button2::workbutton(Vector2 mousePoint, account& CurrentUser, void(*func)(const int screenWidth, const int screenHeight, account& CurrentUser)) {
 	if (CheckCollisionPointRec(mousePoint, button)) {          // Check button state
+		DrawRectangleLines((int)button.x, (int)button.y, (int)button.width, (int)button.height, BLACK);
 		if (IsMouseButtonPressed(MOUSE_BUTTON_LEFT)) action = true;
 	}
 	else action = false;
@@ -46,6 +50,7 @@ void Button2::workbutton(Vector2 mousePoint, account& CurrentUser, void(*func)(c
 }
 void Button3::workbutton(Vector2 mousePoint, account& CurrentUser, char*& a, void(*func)(const int screenWidth, const int screenHeight, account& CurrentUser, char*& a)) {
 	if (CheckCollisionPointRec(mousePoint, btnBounds)) {          // Check button state
+		DrawRectangleLines((int)btnBounds.x, (int)btnBounds.y, (int)btnBounds.width, (int)btnBounds.height, BLACK);
 		if (IsMouseButtonPressed(MOUSE_BUTTON_LEFT)) action = true;
 	}
 	else state = 0;
@@ -59,6 +64,7 @@ void Button3::workbutton(Vector2 mousePoint, account& CurrentUser, char*& a, voi
 }
 void Button4::workbutton(Vector2 mousePoint, account& CurrentUser, char*& a, void(*func)(const int screenWidth, const int screenHeight, account& CurrentUser, char*& a)) {
 	if (CheckCollisionPointRec(mousePoint, button) && state) {          // Check button state
+		DrawRectangleLines((int)button.x, (int)button.y, (int)button.width, (int)button.height, BLACK);
 		if (IsMouseButtonPressed(MOUSE_BUTTON_LEFT)) action = true;
 	}
 	else action = false;
@@ -71,6 +77,7 @@ void Button4::workbutton(Vector2 mousePoint, account& CurrentUser, char*& a, voi
 
 void Button5::workbutton(Vector2 mousePoint, account& CurrentUser, char*& a, char*& b, void(*func)(const int screenWidth, const int screenHeight, account& CurrentUser, char*& a, char*& b)) {
 	if (CheckCollisionPointRec(mousePoint, btnBounds)) {          // Check button state
+		DrawRectangleLines((int)btnBounds.x, (int)btnBounds.y, (int)btnBounds.width, (int)btnBounds.height, BLACK);
 		if (IsMouseButtonPressed(MOUSE_BUTTON_LEFT)) action = true;
 	}
 	else state = 0;
@@ -84,6 +91,7 @@ void Button5::workbutton(Vector2 mousePoint, account& CurrentUser, char*& a, cha
 }
 void Button6::workbutton(Vector2 mousePoint, account& CurrentUser, char*& a, char*& b, void(*func)(const int screenWidth, const int screenHeight, account& CurrentUser, char*& a, char*& b)) {
 	if (CheckCollisionPointRec(mousePoint, button)) {          // Check button state
+		DrawRectangleLines((int)button.x, (int)button.y, (int)button.width, (int)button.height, BLACK);
 		if (IsMouseButtonPressed(MOUSE_BUTTON_LEFT)) action = true;
 	}
 	else action = false;
@@ -96,6 +104,7 @@ void Button6::workbutton(Vector2 mousePoint, account& CurrentUser, char*& a, cha
 void Button7::workbutton(Vector2 mousePoint, account& CurrentUser, course& d, char*& a, char*& b, 
 	void(*func)(const int screenWidth, const int screenHeight, account& CurrentUser, char*& a, char*& b, course& d)) {
 	if (CheckCollisionPointRec(mousePoint, btnBounds)) {          // Check button state
+		DrawRectangleLines((int)btnBounds.x, (int)btnBounds.y, (int)btnBounds.width, (int)btnBounds.height, BLACK);
 		if (IsMouseButtonPressed(MOUSE_BUTTON_LEFT)) action = true;
 	}
 	else state = 0;
@@ -124,12 +133,14 @@ void Button8::workbutton(Vector2 mousePoint, account& CurrentUser, char*& a, cha
 		action = false;
 	}
 	if (CheckCollisionPointRec(GetMousePosition(), { float(x),float(y),160,25 })) {
+		DrawRectangleLines(x, y, 160, 25, BLACK);
 		action = false;
 		if (IsMouseButtonPressed(MOUSE_BUTTON_LEFT)) {
 			remove = true;
 		}
 	}
 	else if (CheckCollisionPointRec(GetMousePosition(), { float(x),float(y) + 25,160,25 })) {
+		DrawRectangleLines(x, y + 25, 160, 25, BLACK);
 		action = false;
 		if (IsMouseButtonPressed(MOUSE_BUTTON_LEFT)) {
 			update = true;
@@ -181,6 +192,7 @@ void Button9::workbutton(Vector2 mousePoint, account& CurrentUser, char*& a, cha
 
 void Button10::workbutton(Vector2 mousePoint) {
 	if (CheckCollisionPointRec(mousePoint, button)) {          // Check button state
+		DrawRectangleLines((int)button.x, (int)button.y, (int)button.width, (int)button.height, BLACK);
 		if (IsMouseButtonPressed(MOUSE_BUTTON_LEFT) && state && state1) {
 			action = true;
 		}

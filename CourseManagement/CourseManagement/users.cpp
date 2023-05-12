@@ -247,7 +247,7 @@ void outputStudentAndScoreToFile(char* filename, student& s)
 	fin.get();
 	while (!fin.eof()) {
 		cnt++;
-		fin.ignore(200, '\n');
+		fin.ignore(500, '\n');
 	}
 	s.No = cnt + 1;
 	fin.close();
@@ -265,16 +265,28 @@ void outputStudentAndScoreToFile(char* filename, student& s)
 	fout.close();
 }
 
-void InputScoreBoardWithCSV(char* addressOfOutputFile, char* schoolYear, char* semester, char* courseName)
+void InputScoreBoardWithCSV(char* addressOfInputFile, char* addressOfOutputFile)
 {
 	ifstream fin;
-	fin.open(addressOfOutputFile);
+	ofstream fout;
+	fin.open(addressOfInputFile);
+	fout.open(addressOfOutputFile);
 	while (!fin.eof()) 
 	{
 		student s;
 		inputStudentAndScoreWithCSV(fin, s);
+		if (s.No != 1) fout << endl;
+		fout << s.No << ",";
+		fout << s.stuID << ",";
+		fout << s.Student.lastName << "," << s.Student.firstName << ",";
+		if (s.Student.gender == 1) fout << "Male,";
+		else fout << "Female,";
+		s.Student.dob.outputADateToFile(fout);
+		fout << "," << s.Student.socialID;
+		s.mark.outputScoreBoardToFile(fout);
 	}
 	fin.close();
+	fout.close();
 }
 
 // 24
