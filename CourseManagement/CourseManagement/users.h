@@ -68,4 +68,6 @@ double getScaleFour_OverallGPA(char* stuID);
 bool HaveEmptyLine(string filename);
 bool CheckValidName(char* name);
 bool CheckFileFormat(string file);
+bool checkMark(char* mark);
+bool CheckFileFormatWithScoreboard(string file);
 #endif

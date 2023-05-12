@@ -518,3 +518,114 @@ bool CheckFileFormat(string file) {
 	f.close();
 	return true;
 }
+
+bool checkMark(char* mark) {
+	// check -1 and other mark from 0 to 10.
+	if (strcmp(mark, "-1") == 0) return true;
+	if (strlen(mark) > 4) return false;
+
+	int numofDot = 0;
+	for (int i = 0; i < strlen(mark); i++) {
+		if (mark[i] == '.') ++numofDot;
+		else if (mark[i] < '0' || mark[i] > '9') return false;
+	}
+
+	if (numofDot > 1) return false;
+	else if (numofDot == 1) {
+		int i = 0;
+		// before dot
+		// Ex: 7.4 -> check 7
+		char* getBeforeDot = new char[5];
+		while (mark[i] != '.') {
+			getBeforeDot[i] = mark[i];
+			++i;
+		}
+		getBeforeDot[i] = '\0';
+		int beforeMark = atoi(getBeforeDot);
+		delete[] getBeforeDot;
+		if (beforeMark < 0 || beforeMark > 10) return false;
+		// no need to check after dot because it has already checked by strlen must <= 4.
+	}
+	else {
+		int intMark = atoi(mark);
+		if (intMark < 0 || intMark > 10) return false;
+	}
+	return true;
+}
+
+bool CheckFileFormatWithScoreboard(string file) {
+	//if (HaveEmptyLine(file) == 1)return false;
+	ifstream fin;
+	fin.open(file);
+	while (!fin.eof()) {
+		int check_int = 0;
+		char check_char = '\0';
+		char check_string[100];
+
+		fin >> check_int;
+
+		if (check_int == 0) return false;
+		check_int = 0;
+
+		fin >> check_char;
+		if (check_char != ',') return false;
+		check_char = '\0';
+
+
+		fin.get(check_string, 100, ',');
+		if (strlen(check_string) != 8) return false;
+		for (int i = 0; i < 8; i++) {
+			if (check_string[i] < '0' || check_string[i] > '9') return false;
+		}
+
+		fin >> check_char;
+		if (check_char != ',') return false;
+		check_char = '\0';
+
+		fin.get(check_string, 100, ',');
+		if (CheckValidName(check_string) == 0) return false;
+
+		fin >> check_char;
+		if (check_char != ',') return false;
+		check_char = '\0';
+
+		fin.get(check_string, 100, ',');
+		if (CheckValidName(check_string) == 0) return false;
+
+		fin >> check_char;
+		if (check_char != ',') return false;
+		check_char = '\0';
+
+		fin.get(check_string, 100, ',');
+		if (string(check_string) != "Male" && string(check_string) != "Female") return false;
+
+		fin >> check_char;
+		if (check_char != ',') return false;
+		check_char = '\0';
+
+		fin.get(check_string, 100, ',');
+		if (checkDateInput(check_string) == 0) return false;
+
+		fin >> check_char;
+		if (check_char != ',') return false;
+		check_char = '\0';
+
+		fin.get(check_string, 100, ',');
+		if (strlen(check_string) != 12) return false;
+		
+		// check scoreboard
+		for (int i = 1; i <= 4; i++) {
+			fin >> check_char;
+			if (check_char != ',')return false;
+			check_char = '\0';
+
+			if (i == 4) fin.get(check_string, 100, '\0');
+			else fin.get(check_string, 100, ',');
+			
+			if (!checkMark(check_string)) return false;
+		}
+		fin.ignore(500, '\n');
+	}
+	fin.close();
+	return true;
+}
