@@ -14,14 +14,12 @@ void scoreboard::inputScoreBoardWithCSV(ifstream& fin)
 	fin >> otherMark;
 	fin.ignore(10, '\n');
 }
-
 void scoreboard::inputScoreBoard(double midterm_mark, double final_mark, double other_mark, double total_mark) {
 	totalMark = total_mark;
 	finalMark = final_mark;
 	midtermMark = midterm_mark;
 	otherMark = other_mark;
 }
-
 void scoreboard::outputScoreBoardToFile(char* fileName) 
 {
 	ofstream fout;
@@ -29,7 +27,6 @@ void scoreboard::outputScoreBoardToFile(char* fileName)
 	fout << "," << totalMark << "," << finalMark << "," << midtermMark << "," << otherMark;
 	fout.close();
 }
-
 void scoreboard::outputScoreBoardToFile(ofstream& fout) {
 	fout << "," << totalMark << "," << finalMark << "," << midtermMark << "," << otherMark;
 }

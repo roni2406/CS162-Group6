@@ -8,8 +8,7 @@
 #include<string>
 using namespace std;
 
-void AddCourseToFile(char* coursename, char* id, char* classname, char* teacher, char* nofc, char* maxstu, char* courseday,
-	char* sshour, char*& Year, char*& semester) {
+void AddCourseToFile(char* coursename, char* id, char* classname, char* teacher, char* nofc, char* maxstu, char* courseday, char* sshour, char*& Year, char*& semester) {
 	ifstream fin;
 	fin.open("../data/" + (string)(Year)+"/" + (string)(semester)+"/ListOfCourse.txt");
 	ofstream f;
@@ -42,7 +41,6 @@ int countCourse(char*year, char*semester) {
 	return num;
 	fin.close();
 }
-
 course* viewCoursesInSemester(char* year, char* semester)
 {
 	int numOfCourses = countCourse(year, semester);
@@ -50,7 +48,6 @@ course* viewCoursesInSemester(char* year, char* semester)
 	LoadCourseFromFile(year, semester, numOfCourses, TotalCoursesInSemester);
 	return TotalCoursesInSemester;
 }
-
 void LoadCourseFromFile(char* year, char* semester, int& num, course* &courses) {
 	ofstream fout;
 	fout.open("../data/" + (string)(year)+"/" + (string)(semester)+"/ListOfCourse.txt", ios::app);
@@ -133,7 +130,6 @@ void Load_stu(course& Course, char* year, char* semester, student*& liststudents
 	sortToStuID(Course.stuOfCourse, Course.numOfStu);
 	liststudents = Course.stuOfCourse;
 } 
-
 void Return_stu(course& Course, char* year, char* semester) {
 	sortToStuID(Course.stuOfCourse, Course.numOfStu);
 	ofstream f;
@@ -212,26 +208,37 @@ bool CheckValidCourse(char* coursename, char* ID, char* classname, char* nofc, c
 	}
 	return 1;
 }
-
-bool exportStudentsInCourseToFile(char* addressOfOutputFile, char* schoolYear, char* semester, char* courseName) {
+bool exportStudentsInCourseToFile(char* addressOfOutputFile, char* schoolYear, char* semester, course& Course) {
 	ifstream fin;
 	fin.open("../data/" + string(schoolYear) + "/" + string(semester)
-		+ "/" + string(courseName) + ".csv");
+		+ "/" + string(Course.courseName) + "-" + string(Course.className) + ".csv");
 	if (!fin) return false;
+	fin.get();
+	if (fin.eof()) return false;
+	fin.close();
+	fin.open("../data/" + string(schoolYear) + "/" + string(semester)
+		+ "/" + string(Course.courseName) + "-" + string(Course.className) + ".csv");
 	ofstream fout;
-	string tmp = string(addressOfOutputFile) + "/" + string(courseName) + ".csv";
+	string tmp = string(addressOfOutputFile) + "/" + string(Course.courseName) + "-" + string(Course.className) + ".csv";
 	fout.open(tmp);
 	if (!fout) return false;
-	while (!fin.eof()) {
-		student s;
-		s.inputStudentsWithCSVFile(fin);
-		char* filename = (char*)tmp.c_str();
-		s.outputAStudentToFile(filename);
-	}
-	fin.close();
 	fout.close();
+	student* stuArr = new student[Course.numOfStu];
+	int cnt = 0;
+
+	while (!fin.eof()) {
+		if (cnt < Course.numOfStu) stuArr[cnt++].inputStudentsWithCSVFile(fin);
+	}
+	char* filename = (char*)tmp.c_str();
+	sortToStuID(stuArr, cnt);
+	for (int i = 0; i < cnt; ++i) {
+		stuArr[i].outputAStudentToFile(filename);
+	}
+	delete[] stuArr;
+	fin.close();
 	return true;
 }
+
 //---------------------------------------------------------------
 int countStudentInCourse(char* schoolYear, char* semester, char* course) {
 	int numOfStu = 0;
@@ -245,7 +252,6 @@ int countStudentInCourse(char* schoolYear, char* semester, char* course) {
 	fin.close();
 	return numOfStu;
 }
-
 bool checkStudentExistInCourse(student x, char* schoolYear, char* semester, char* course) {
 	//return true if the student haven't existed
 	//return false if the student have existed
@@ -263,7 +269,6 @@ bool checkStudentExistInCourse(student x, char* schoolYear, char* semester, char
 	fin.close();
 	return true;
 }
-
 bool checkStuHaveClass(char* stuID) {
 	// return false if the student is not in any class
 	ifstream fin;
@@ -282,9 +287,7 @@ bool checkStuHaveClass(char* stuID) {
 	fin.close();
 	return false;
 }
-
-bool addAStudentToCourse(course& Course, char* schoolYear, char* semester, char* course_name,
-	char* first_name, char* last_name, char* Gender, char* DoB, char* social_ID, char* student_id) {
+bool addAStudentToCourse(course& Course, char* schoolYear, char* semester, char* course_name, char* first_name, char* last_name, char* Gender, char* DoB, char* social_ID, char* student_id) {
 
 	if (Course.numOfStu >= Course.maxStu) return false;
 	if (!checkDateInput(DoB) || (strcmp(Gender, "Male") != 0 && strcmp(Gender, "Female") != 0)) 
@@ -310,9 +313,7 @@ bool addAStudentToCourse(course& Course, char* schoolYear, char* semester, char*
 	++Course.numOfStu;
 	return true;
 }
-
-bool addStudentsToCourseWithCSV(char* fileNameIn, char* schoolYear, char* semester, char* course_name, course& Course,
-	student*& stuArr, int& numOfDupsStu) {
+bool addStudentsToCourseWithCSV(char* fileNameIn, char* schoolYear, char* semester, char* course_name, course& Course, student*& stuArr, int& numOfDupsStu) {
 	bool returnValue = 1;
 	// return true if no duplicate => stuArr = nullptr and numOfDupsStu = 0
 	// return false if there are dups => update stuArr and numofDupsStu
@@ -395,7 +396,6 @@ int countCoursesOfAStudent(char* stuID, char* schoolYear, char* semester)
 	}
 	return numOfCoursesOfAStudent;
 }
-
 course* viewCoursesOfAStudent(char* stuID, char* schoolYear, char* semester)
 {
 	if (schoolYear == nullptr || semester == nullptr) return nullptr;
@@ -421,7 +421,6 @@ course* viewCoursesOfAStudent(char* stuID, char* schoolYear, char* semester)
 	}
 	return saveCourse;
 }
-
 bool checkDataUpdateStudent(char* mark) {
 	for (int i = 0; i < strlen(mark); ++i) {
 		if (i == 1) {
@@ -436,10 +435,10 @@ bool checkDataUpdateStudent(char* mark) {
 }
 bool UpdateStudentMark(student& s, char* totalMark, char* finalMark, char* midtermMark, char* otherMark) {
 	// check data
-	if (!checkDataUpdateStudent(totalMark)) return false;
-	if (!checkDataUpdateStudent(finalMark)) return false;
-	if (!checkDataUpdateStudent(midtermMark)) return false;
-	if (!checkDataUpdateStudent(otherMark)) return false;
+	if (!checkMark(totalMark)) return false;
+	if (!checkMark(finalMark)) return false;
+	if (!checkMark(midtermMark)) return false;
+	if (!checkMark(otherMark)) return false;
 	if (totalMark[0] != '\0')		s.mark.totalMark = atof(totalMark);
 	if (finalMark[0] != '\0')		s.mark.finalMark = atof(finalMark);
 	if (midtermMark[0] != '\0')		s.mark.midtermMark = atof(midtermMark);
@@ -477,7 +476,6 @@ int countOverallNumberOfCourses(char* stuID)
 	}
 	return numCoursesFromStart;
 }
-
 course* GetOverallCourseListFromStart(char* stuID)
 {
 	int numCoursesFromStart = countOverallNumberOfCourses(stuID);
@@ -521,8 +519,6 @@ course* GetOverallCourseListFromStart(char* stuID)
 	}
 	return AllCoursesFromStart;
 }
-
-
 scoreboard* GetOverallScoresListFromStart(char* stuID)
 {
 	int numCoursesFromStart = countOverallNumberOfCourses(stuID);

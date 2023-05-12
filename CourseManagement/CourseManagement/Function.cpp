@@ -1,6 +1,4 @@
 #include "Function.h"
-#include "users.h"
-using namespace std;
 
 
 //FRONT_END--------------------------------------------------------
@@ -591,6 +589,8 @@ void CoursePageStudent(const int screenWidth, const int screenHeight, account& C
 	}
 	delete[] YearName;
 	delete[] actionYear;
+	delete[] yearnametmp;
+	delete[] semesternametmp;
 	 
 	 
 	CloseWindow();
@@ -858,8 +858,17 @@ void ScoreboardStudent(const int screenWidth, const int screenHeight, account& C
 		backtopreviouspage.workbutton(mousePoint, CurrentUser, ProfilePageStudent);
 		EndDrawing();
 	}
-	 
-	
+	delete[] courses;
+	delete[] ScoreBoard;
+	for (int i = 0; i < cntYears; ++i) {
+		delete[] YearName[i];
+	}
+	delete[] YearName;
+	delete[] actionYear;
+	delete[] yearnametmp;
+	delete[] semesternametmp;
+	delete[] overallGPA;
+	delete[] semesterGPA;
 	CloseWindow();
 }
 void ProfilePageStaff(const int screenWidth, const int screenHeight, account& CurrentUser) {
@@ -1113,7 +1122,7 @@ void ChangePasswordPageStaff(const int screenWidth, const int screenHeight, acco
 	confirmnewpass.textbox = { 477, 567, 558, 106 };
 
 	Button2 backtoprofilepage;
-	backtoprofilepage.button = { 1270, 20, 200, 30 };
+	backtoprofilepage.button = { 1194, 18, 294, 30 };
 
 	Button0 viewPass1;
 	viewPass1.texture = LoadTexture("showpass.png");
@@ -1248,7 +1257,6 @@ void ChangePasswordPageStaff(const int screenWidth, const int screenHeight, acco
 	
 	CloseWindow();
 }
-
 void CreateSchoolYearPage(const int screenWidth, const int screenHeight, account& CurrentUser) {
 	Font bold = LoadFontEx("../Montserrat/static/Montserrat-Bold.ttf", 120, 0, 250);
 	Font light = LoadFontEx("../Montserrat/static/Montserrat-Light.ttf", 120, 0, 250);
@@ -1395,7 +1403,6 @@ void ViewSchoolYearsPage(const int screenWidth, const int screenHeight, account&
 	CloseWindow();
 
 }
-
 void createClassPage(const int screenWidth, const int screenHeight, account& CurrentUser) {
 	Font bold = LoadFontEx("../Montserrat/static/Montserrat-Bold.ttf", 120, 0, 250);
 	Font light = LoadFontEx("../Montserrat/static/Montserrat-Light.ttf", 120, 0, 250);
@@ -1407,8 +1414,8 @@ void createClassPage(const int screenWidth, const int screenHeight, account& Cur
 	classname.textbox = { 477, 239, 558, 106 };
 
 
-	Button2 backtoprofilepage;
-	backtoprofilepage.button = { 1270, 20, 200, 30 };
+	Button2 backtoclasspage;
+	backtoclasspage.button = { 1194, 19, 294, 30 };
 
 	Texture2D confirmBtn = LoadTexture("confirmBtn.png");
 	float frameHeightconfirmBtn = (float)confirmBtn.height;
@@ -1426,7 +1433,7 @@ void createClassPage(const int screenWidth, const int screenHeight, account& Cur
 		DrawRectangle(0, 0, screenWidth, 60, WHITE);
 		DrawTextEx(medium, "  Call us : (028) 3835 4266         E - mail : info@fit.hcmus.edu.vn", { 5, 20 }, 25, 0, DARKBLUE);
 
-		DrawRectangleRec(backtoprofilepage.button, WHITE);
+		DrawRectangleRec(backtoclasspage.button, WHITE);
 		DrawTextEx(bold, "Back to the previous page", { 1200, 20 }, 25, 0, DARKBLUE);
 
 		DrawRectangle(347, 173, 818, 350, WHITE);
@@ -1465,7 +1472,7 @@ void createClassPage(const int screenWidth, const int screenHeight, account& Cur
 		DrawTextureRec(confirmBtn, sourceRecconfirmBtn, { btnBoundsconfirmBtn.x, btnBoundsconfirmBtn.y }, WHITE); // Draw button frame
 
 		/// Back to profile page button
-		backtoprofilepage.workbutton(mousePoint, CurrentUser, ViewClassesPage);
+		backtoclasspage.workbutton(mousePoint, CurrentUser, ViewClassesPage);
 		EndDrawing();
 	}
 	 
@@ -1485,7 +1492,7 @@ void ViewClassesPage(const int screenWidth, const int screenHeight, account& Cur
 	Rectangle background = { 0,0,float(screenWidth),float(screenHeight) };
 
 	Button2 backtoprofilepage;
-	backtoprofilepage.button = { 1270, 20, 200, 30 };
+	backtoprofilepage.button = { 1270, 19, 238, 30 };
 	Texture2D backgroundtmp = LoadTexture("background11.png");
 
 
@@ -1595,7 +1602,7 @@ void ClassPage(const int screenWidth, const int screenHeight, account& CurrentUs
 	Button4 AddAStu;
 	AddAStu.button = { 1137, 100,313,50 };
 
-	Rectangle turnOffScore = { 1400, 180, 91, 76 };
+	Rectangle turnOffScore = { 1394, 179, 86, 35 };
 	Button10* studentbutton = new Button10[n];
 
 	int scrollspeed = 35;
@@ -1665,16 +1672,18 @@ void ClassPage(const int screenWidth, const int screenHeight, account& CurrentUs
 				studentbutton[i].workbutton(mousePoint);
 			//}
 			j += 61;
+			delete[] stuNo;
 		}
 		DrawRectangle(0, 0, screenWidth, 60, WHITE);
 
 		DrawTextEx(bold, Classname, { 670, 15 }, 40,0, DARKBLUE);
+		DrawTextEx(bold, "Please wait a moment to load data when press OK!", {5, 15}, 25, 0, RED);
 		DrawRectangleRec(backtoViewClasspage.button, WHITE);
 		DrawTextEx(bold, "Back to Classes Page", { 1200, 20 }, 25,0, DARKBLUE);
 		DrawTexture(background2, 0, 60, WHITE);
 
 		DrawRectangleRec(schoolyears, WHITE);
-		DrawTextEx(bold, "Years", { 430, 113 }, 25,0, DARKBLUE);
+		DrawTextEx(bold, "Years", { 427, 113 }, 25,0, DARKBLUE);
 		DrawRectangleRec(semesters, WHITE);
 		DrawTextEx(bold,"Semesters", { 105, 113 }, 25, 0, DARKBLUE);
 		DrawRectangleRec(ok, DARKBLUE);
@@ -1716,6 +1725,7 @@ void ClassPage(const int screenWidth, const int screenHeight, account& CurrentUs
 		DrawTextEx(bold, "Social ID", { 1345, 205 }, 24,0, DARKBLUE);
 
 		if (CheckCollisionPointRec(mousePoint, schoolyears)) {
+			DrawRectangleLines((int)schoolyears.x, (int)schoolyears.y, (int)schoolyears.width, (int)schoolyears.height, BLACK);
 			if (IsMouseButtonPressed(MOUSE_BUTTON_LEFT) && state1) {
 				action1 = true;
 				for (int i = 0; i < cntYears; ++i) {
@@ -1724,17 +1734,25 @@ void ClassPage(const int screenWidth, const int screenHeight, account& CurrentUs
 			}
 		}
 		if (action1) {
+			for (int i = 0; i < n; ++i) {
+				studentbutton[i].state1 = false;
+			}
 			for (int i = 0; i < cntYears; ++i) {
 				DrawRectangle(360, 150 + r, 200, 50, DARKBLUE);
 				DrawText(YearName[i], 410, 165 + r, 20, WHITE);
 				r += 50;
 			}
 		}
+		else for (int i = 0; i < n; ++i) {
+			studentbutton[i].state1 = true;
+		}
 
 		for (int k = 0; k < cntYears; ++k) {
-			if (CheckCollisionPointRec(mousePoint, { 420, (float)(150 + 50 * k),200,50 }) && action1) {
+			if (CheckCollisionPointRec(mousePoint, { 360, (float)(150 + 50 * k), 200, 50 }) && action1) {
+				DrawRectangleLines(360, 150+50*k, 200, 50, BLACK);
 				if (IsMouseButtonPressed(MOUSE_BUTTON_LEFT)) {
 					actionYear[k] = true;
+					action1 = false;
 				}
 			}
 			if (actionYear[k]) {
@@ -1746,6 +1764,7 @@ void ClassPage(const int screenWidth, const int screenHeight, account& CurrentUs
 		}
 
 		if (CheckCollisionPointRec(mousePoint, semesters)) {
+			DrawRectangleLines((int)semesters.x, (int)semesters.y, (int)semesters.width, (int)semesters.height, BLACK);
 			if (IsMouseButtonPressed(MOUSE_BUTTON_LEFT) && state0) {
 				action0 = true;
 				actionA = false;
@@ -1763,7 +1782,8 @@ void ClassPage(const int screenWidth, const int screenHeight, account& CurrentUs
 			}
 		}
 
-		if (CheckCollisionPointRec(mousePoint, { 60,150,200, 50 }) && action0) {
+		if (CheckCollisionPointRec(mousePoint, { 60, 150, 200, 50 }) && action0) {
+			DrawRectangleLines(60, 150, 200, 50, BLACK);
 			if (IsMouseButtonPressed(MOUSE_BUTTON_LEFT)) actionF = true;
 		}
 		if (actionF) {
@@ -1773,17 +1793,19 @@ void ClassPage(const int screenWidth, const int screenHeight, account& CurrentUs
 			semesternametmp = (char*)"Fall";
 		}
 
-		if (CheckCollisionPointRec(mousePoint, { 60,200,200, 50 }) && action0 && (n1 != 2 || n1 == 3)) {
+		if (CheckCollisionPointRec(mousePoint, { 60, 200, 200, 50 }) && action0 && (n1 != 2 || n1 == 3)) {
+			DrawRectangleLines(60, 200, 200, 50, BLACK);
 			if (IsMouseButtonPressed(MOUSE_BUTTON_LEFT)) actionS = true;
 		}
 		if (actionS) {
 			DrawRectangleRec(semesters, DARKBLUE);
-			DrawText("Summer", 130, 115, 20, WHITE);
+			DrawText("Summer", 125, 115, 20, WHITE);
 			action0 = false;
 			semesternametmp = (char*)"Summer";
 		}
 
 		if (CheckCollisionPointRec(mousePoint, { 60,250,200, 50 }) && action0 && n1 == 3) {
+			DrawRectangleLines(60, 250, 200, 50, BLACK);
 			if (IsMouseButtonPressed(MOUSE_BUTTON_LEFT)) {
 				actionA = true;
 				for (int i = 0; i < n; ++i) {
@@ -1793,12 +1815,13 @@ void ClassPage(const int screenWidth, const int screenHeight, account& CurrentUs
 		}
 		if (actionA) {
 			DrawRectangleRec(semesters, DARKBLUE);
-			DrawText("Autumn", 130, 115, 20, WHITE);
+			DrawText("Autumn", 126, 115, 20, WHITE);
 			action0 = false;
 			semesternametmp = (char*)"Autumn";
 		}
 
 		if (CheckCollisionPointRec(mousePoint, ok)) {
+			DrawRectangleLines((int)ok.x, (int)ok.y, (int)ok.width, (int)ok.height, BLACK);
 			if (IsMouseButtonPressed(MOUSE_BUTTON_LEFT)) {
 				actionOK = true;
 			}
@@ -1911,6 +1934,7 @@ void ClassPage(const int screenWidth, const int screenHeight, account& CurrentUs
 				}
 
 				if (CheckCollisionPointRec(mousePoint, turnOffScore)) {
+					DrawRectangleLines((int)turnOffScore.x, (int)turnOffScore.y, (int)turnOffScore.width, (int)turnOffScore.height, BLACK);
 					if (IsMouseButtonPressed(MOUSE_BUTTON_LEFT)) {
 						studentbutton[i].action = false;
 						for (int i2 = 0; i2 < n; ++i2) {
@@ -1934,12 +1958,17 @@ void ClassPage(const int screenWidth, const int screenHeight, account& CurrentUs
 
 		EndDrawing();
 	}
+
+	delete[] listStudents;
+	delete[] cntCourse;
+	delete[] semesterGPA;
+	delete[] overallGPA;
+	delete[] actionYear;
+	delete[] yearnametmp;
+	delete[] semesternametmp;
 	delete[] studentbutton;
 	delete[] SemesterCourses_Class;
 	delete[] SemesterScore_Class;
-	//delete[] listStudents;
-	 
-	 
 	CloseWindow();
 }
 void addStudentPage(const int screenWidth, const int screenHeight, account& CurrentUser, char*& classname) {
@@ -1963,7 +1992,7 @@ void addStudentPage(const int screenWidth, const int screenHeight, account& Curr
 	socialID.textbox = { 284,489,943,84 };
 
 	Button4 backtoClasspage;
-	backtoClasspage.button = { 1270, 20, 200, 30 };
+	backtoClasspage.button = { 1276, 18, 202, 30 };
 
 	Texture2D confirmBtn = LoadTexture("confirmBtn.png");
 	float frameHeightconfirmBtn = (float)confirmBtn.height;
@@ -2045,7 +2074,6 @@ void addStudentPage(const int screenWidth, const int screenHeight, account& Curr
 	 
 	CloseWindow();
 }
-
 void addStudentCSV(const int screenWidth, const int screenHeight, account& CurrentUser, char*& classname) {
 	Font bold = LoadFontEx("../Montserrat/static/Montserrat-Bold.ttf", 120, 0, 250);
 	Font light = LoadFontEx("../Montserrat/static/Montserrat-Light.ttf", 120, 0, 250);
@@ -2057,7 +2085,7 @@ void addStudentCSV(const int screenWidth, const int screenHeight, account& Curre
 	filename.textbox = { 420,280,650,84 };
 
 	Button4 backtoClasspage;
-	backtoClasspage.button = { 1270, 20, 200, 30 };
+	backtoClasspage.button = { 1276, 18, 202, 30 };
 
 	student* dupstu = nullptr;
 	int numDupStu = 0;
@@ -2375,7 +2403,6 @@ void ViewSemestersPage(const int screenWidth, const int screenHeight, account& C
 	CloseWindow();
 
 }
-
 void CreateCoursePage(const int screenWidth, const int screenHeight, account& CurrentUser, char*& Year, char*& Semester) {
 	Font bold = LoadFontEx("../Montserrat/static/Montserrat-Bold.ttf", 120, 0, 250);
 	Font light = LoadFontEx("../Montserrat/static/Montserrat-Light.ttf", 120, 0, 250);
@@ -2513,7 +2540,6 @@ void CreateCoursePage(const int screenWidth, const int screenHeight, account& Cu
 	 
 	CloseWindow();
 }
-
 void ViewCoursesPage(const int screenWidth, const int screenHeight, account& CurrentUser, char*& Year, char*& Semester) {
 	Font bold = LoadFontEx("../Montserrat/static/Montserrat-Bold.ttf", 120, 0, 250);
 	Font light = LoadFontEx("../Montserrat/static/Montserrat-Light.ttf", 120, 0, 250);
@@ -2584,8 +2610,8 @@ void ViewCoursesPage(const int screenWidth, const int screenHeight, account& Cur
 			j += 61;
 
 			if (coursebutton[i].action1 == true) {
-				for (int j = 0; j < n; ++j) {
-					if (j != i) coursebutton[j].action1 = false;
+				for (int k = 0; k < n; ++k) {
+					if (k != i) coursebutton[k].action1 = false;
 				}
 				x = coursebutton[i].x;
 				y = coursebutton[i].y;
@@ -2860,7 +2886,7 @@ void CoursePage(const int screenWidth, const int screenHeight, account& CurrentU
 	int confirmBtnState = 0;               // Button state: 0-NORMAL, 1-MOUSE_HOVER, 2-PRESSED
 	bool confirmBtnAction = false;         // Button action should be activated
 	bool confirmBtnFalseDisplay = false;
-	bool confirmBtnFalseDisplay1 = false;
+	bool confirmBtnTrueDisplay = false;
 
 	Rectangle turnOffexport = { 1204, 238, 75, 35 };
 	Button9* studentbutton = new Button9[n];
@@ -2917,10 +2943,17 @@ void CoursePage(const int screenWidth, const int screenHeight, account& CurrentU
 			else studentbutton[i].state = true;
 			studentbutton[i].workbutton(mousePoint, CurrentUser, Year, Semester, Course, listStudents[i], updateStudent);
 			j += 61;
-
+			if (studentbutton[i].action1 == false) {
+				for (int k = 0; k < n; ++k) {
+					if (k != i) studentbutton[k].state1 = true;
+				}
+			}
 			if (studentbutton[i].action1 == true) {
-				for (int j = 0; j < n; ++j) {
-					if (j != i) studentbutton[j].action1 = false;
+				for (int k = 0; k < n; ++k) {
+					if (k != i) {
+						studentbutton[k].action1 = false;
+						studentbutton[k].state1 = false;
+					}
 				}
 				x = studentbutton[i].x;
 				y = studentbutton[i].y;
@@ -2988,9 +3021,14 @@ void CoursePage(const int screenWidth, const int screenHeight, account& CurrentU
 		string tmp = string(Course.courseName) + "-" + string(Course.className);
 		char* filename = (char*)tmp.c_str();
 
+		if (!exportListStu.action) {
+			for (int i = 0; i < n; ++i) {
+				studentbutton[i].state2 = true;
+			}
+		}
 		if (exportListStu.action) {
 			for (int i = 0; i < n; ++i) {
-				studentbutton[i].state1 = false;
+				studentbutton[i].state2 = false;
 			}
 
 			DrawRectangleGradientV(165, 220, 1161, 370, DARKBLUE, BLUE);
@@ -3006,25 +3044,26 @@ void CoursePage(const int screenWidth, const int screenHeight, account& CurrentU
 				DrawRectangleLines((int)btnBoundsconfirmBtn.x, (int)btnBoundsconfirmBtn.y, (int)btnBoundsconfirmBtn.width, (int)btnBoundsconfirmBtn.height, BLACK);
 				if (IsMouseButtonPressed(MOUSE_BUTTON_LEFT)) confirmBtnAction = true;
 			}
-			else if (IsMouseButtonPressed(KEY_ENTER)) confirmBtnAction = true;
 			else confirmBtnState = 0;
+		    if (IsMouseButtonPressed(KEY_ENTER)) confirmBtnAction = true;
 			if (confirmBtnAction) {
-				if (exportStudentsInCourseToFile(ExportStu.text, Year, Semester, filename)) {
-					confirmBtnFalseDisplay1 = true;
+				if (exportStudentsInCourseToFile(ExportStu.text, Year, Semester, Course)) {
+					confirmBtnTrueDisplay = true;
+					confirmBtnFalseDisplay = false;
 				}
-				else confirmBtnFalseDisplay = true;
+				else {
+					confirmBtnFalseDisplay = true;
+					confirmBtnTrueDisplay = false;
+				}
 			}
 			if (confirmBtnFalseDisplay) {
 				DrawRectangle(238, 444, 335, 28, YELLOW);
 				DrawTextEx(bold, "Could not export to the folder!", { 242, 448 }, 25,0, RED);
 			}
-			if (confirmBtnFalseDisplay1) {
+			if (confirmBtnTrueDisplay) {
 				DrawRectangle(238, 444, 949, 28, WHITE);
 				DrawTextEx(bold, "File is exported to the folder! File name is: ", { 242, 448 }, 25,0, GREEN);
 				DrawTextEx(bold, filename, { 692, 448 }, 25,0, GREEN);
-			}
-			if (ExportStu.mouseontextbox) {
-				confirmBtnFalseDisplay1 = false;
 			}
 			// Calculate button frame rectangle to draw depending on button state
 
@@ -3073,7 +3112,7 @@ void addStudentPageForCourse(const int screenWidth, const int screenHeight, acco
 	socialID.textbox = { 284,489,943,84 };
 
 	Button8 backtoCoursepage;
-	backtoCoursepage.button = { 1270, 20, 200, 30 };
+	backtoCoursepage.button = { 1272, 19, 234, 30 };
 
 	Texture2D confirmBtn = LoadTexture("confirmBtn.png");
 	float frameHeightconfirmBtn = (float)confirmBtn.height;
@@ -3169,7 +3208,7 @@ void addStudentCSVForCourse(const int screenWidth, const int screenHeight, accou
 	filename.textbox = { 420,280,650,84 };
 
 	Button8 backtoCoursepage;
-	backtoCoursepage.button = { 1270, 20, 200, 30 };
+	backtoCoursepage.button = { 1254, 19, 240, 30 };
 
 	Texture2D confirmBtn = LoadTexture("confirmBtn.png");
 	float frameHeightconfirmBtn = (float)confirmBtn.height;
@@ -3189,7 +3228,7 @@ void addStudentCSVForCourse(const int screenWidth, const int screenHeight, accou
 		DrawRectangle(0, 0, screenWidth, 60, WHITE);
 
 		DrawRectangleRec(backtoCoursepage.button, WHITE);
-		DrawTextEx(bold, "Back to Course Page", { 1280, 20 }, 25,0, DARKBLUE);
+		DrawTextEx(bold, "Back to Course Page", { 1261, 20 }, 25,0, DARKBLUE);
 		DrawTextEx(bold, "Add student(s)", { 620, 12 }, 40,0, DARKBLUE);
 
 		DrawRectangle(347, 173, 818, 380, WHITE);
@@ -3292,7 +3331,7 @@ void dataExistedPageforCourse(const int screenWidth, const int screenHeight, acc
 		}
 
 		DrawRectangle(0, 0, 1512, 60, WHITE);
-		DrawTextEx(bold, "These students are invalid or the number of students exceeds max students!", { 10, 10 }, 30,0, RED);
+		DrawTextEx(bold, "These students have already existed or the number of students exceeds max students!", { 10, 10 }, 30,0, RED);
 
 		DrawRectangleRec(backtoCoursepage.button, WHITE);
 		DrawTextEx(bold, "Back to Course Page", { 1280, 20 }, 25,0, DARKBLUE);
@@ -3346,7 +3385,7 @@ void importScoreboardPage(const int screenWidth, const int screenHeight, account
 	filename.textbox = { 420,280,650,84 };
 
 	Button8 backtoCoursepage;
-	backtoCoursepage.button = { 1270, 20, 200, 30 };
+	backtoCoursepage.button = { 1272, 19, 234, 30 };
 
 	Texture2D confirmBtn = LoadTexture("confirmBtn.png");
 	float frameHeightconfirmBtn = (float)confirmBtn.height;
@@ -3388,7 +3427,7 @@ void importScoreboardPage(const int screenWidth, const int screenHeight, account
 		else if (IsKeyPressed(KEY_ENTER)) confirmBtnAction = true;
 		else confirmBtnState = 0;
 		if (confirmBtnAction) {
-			if (checkdata_FileName(filename.text)) {
+			if (checkdata_FileName(filename.text) && CheckFileFormatWithScoreboard(filename.text)) {
 				confirmBtnFalseDisplay = false;
 				InputScoreBoardWithCSV(filename.text, fileCourse);
 				confirmBtnTrueDisplay = true;
@@ -3424,8 +3463,8 @@ void updateStudent(const int screenWidth, const int screenHeight, account& Curre
 	Textbox3 otherMark;
 	otherMark.textbox = { 1124, 369, 137, 47 };
 
-	Button8 backtocoursepage;
-	backtocoursepage.button = { 1200, 20, 200, 30 };
+	Button8 backtoCoursepage;
+	backtoCoursepage.button = { 1272, 19, 234, 30 };
 
 	Texture2D confirmBtn = LoadTexture("confirmBtn1.png");
 	float frameHeightconfirmBtn = (float)confirmBtn.height;
@@ -3441,11 +3480,11 @@ void updateStudent(const int screenWidth, const int screenHeight, account& Curre
 		DrawRectangleGradientEx(background, SKYBLUE, DARKBLUE, DARKBLUE, SKYBLUE);
 		DrawRectangle(0, 0, screenWidth, 60, WHITE);
 
-		DrawRectangleRec(backtocoursepage.button, WHITE);
+		DrawRectangleRec(backtoCoursepage.button, WHITE);
 		DrawTextEx(medium, Course.courseID, { 30, 05 }, 25,0, DARKBLUE);
 		DrawTextEx(medium, Course.className, { 30, 35 }, 25,0, DARKBLUE);
 		DrawTextEx(bold, s.stuID, { 662, 15 }, 40,0, DARKBLUE);
-		DrawTextEx(bold, "Back to Course Page", { 1230, 20 }, 25,0, DARKBLUE);
+		DrawTextEx(bold, "Back to Course Page", { 1280, 20 }, 25, 0, DARKBLUE);
 
 		DrawRectangle(126, 264, 1260, 316, WHITE);
 		DrawTextEx(medium, "* Total Mark: ", { 233, 335 }, 30,0, DARKBLUE);
@@ -3521,7 +3560,7 @@ void updateStudent(const int screenWidth, const int screenHeight, account& Curre
 		DrawTextureRec(confirmBtn, sourceRecconfirmBtn, { btnBoundsconfirmBtn.x, btnBoundsconfirmBtn.y }, WHITE); // Draw button frame
 
 		/// Back to profile page button
-		backtocoursepage.workbutton(mousePoint, CurrentUser, Year, Semester, Course, CoursePage);
+		backtoCoursepage.workbutton(mousePoint, CurrentUser, Year, Semester, Course, CoursePage);
 
 		EndDrawing();
 	}

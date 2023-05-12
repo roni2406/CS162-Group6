@@ -40,10 +40,6 @@ int countStudentInClass(char* className); // front end
 bool CheckData_InputStudents(char* No, char* student_id, char* Gender, char* DoB, char* social_ID);
 
 // 23 
-/*
-void viewStuWithScore(char* className, char* schoolYear, char* semester, int*& numOfCoursesPerStudent,
-    scoreboard**& ScoresInSemester_Class, course**& CoursesInSemester_Class);
-*/
 int* GetNumOfCoursesPerStudent(char* className, char* schoolYear, char* semester);
 course** GetSemesterCourses_Class(char* className, char* schoolYear, char* semester);
 scoreboard** GetSemesterScore_Class(char* className, char* schoolYear, char* semester);

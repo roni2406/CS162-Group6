@@ -3,8 +3,6 @@
 #define _CRTDBG_MAP_ALLOC
 #include <stdlib.h>
 #include <crtdbg.h>
-
-
 #include <iostream>
 #include <fstream>
 #include <raylib.h>
@@ -12,6 +10,7 @@
 #include "account.h"
 #include "schoolYear.h"
 #include "semester.h"
+#include "users.h"
 #include "course.h"
 #include <string.h>
 #include "Class.h"
@@ -62,10 +61,8 @@ void addStudentCSVForCourse(const int screenWidth, const int screenHeight, accou
 void importScoreboardPage(const int screenWidth, const int screenHeight, account& CurrentUser, char*& Year, char*& Semester, course& Course);
 void dataExistedPageforCourse(const int screenWidth, const int screenHeight, account& CurrentUser, char* Year, char* Semester, course Course, int numDupStu, student* dupstu);
 void updateStudent(const int screenWidth, const int screenHeight, account& CurrentUser, char*& Year, char*& Semester, course& Course, student& s);
-//// Objects
 
 /// button:
-
 // used for create a page in a page
 struct Button0 {
 	const int screenWidth = 1512;
@@ -74,7 +71,7 @@ struct Button0 {
 	float frameHeight = 0;
 	Rectangle sourceRec = { 0, 0, 0, 0 };
 	Rectangle btnBounds = { 0, 0, 0, 0 };
-	int state = 0;					
+	int state = 0;
 	bool action = false;
 	bool hidden = true;
 	void workbutton(Vector2 mousePoint);
@@ -87,8 +84,8 @@ struct Button1 {
 	float frameHeight = 0;
 	Rectangle sourceRec = { 0, 0, 0, 0 };
 	Rectangle btnBounds = { 0, 0, 0, 0 };
-	int state = 0;					
-	bool action = false;			
+	int state = 0;
+	bool action = false;
 	void workbutton(Vector2 mousePoint, account& CurrentUser, void(*func)(const int screenWidth, const int screenHeight, account& CurrentUser));
 };
 struct Button1_5 {
@@ -110,7 +107,6 @@ struct Button2 {
 	void workbutton(Vector2 mousePoint, account& CurrentUser, void(*func)(const int screenWidth, const int screenHeight, account& CurrentUser));
 
 };
-
 // used for "bo-goc" button that need to update an information
 struct Button3 {
 	const int screenWidth = 1512;
@@ -123,7 +119,6 @@ struct Button3 {
 	bool action = false;			// Button action should be activated
 	void workbutton(Vector2 mousePoint, account& CurrentUser, char*& a, void(*func)(const int screenWidth, const int screenHeight, account& CurrentUser, char*& a));
 };
-
 //used for button that need to update information Year
 struct Button4 {
 	const int screenWidth = 1512;
@@ -132,9 +127,8 @@ struct Button4 {
 	bool mouseonbutton = false;
 	bool action = false;
 	bool state = true;
-	void workbutton(Vector2 mousePoint, account& CurrentUser, char* &a, void(*func)(const int screenWidth, const int screenHeight, account& CurrentUser, char* &a));
+	void workbutton(Vector2 mousePoint, account& CurrentUser, char*& a, void(*func)(const int screenWidth, const int screenHeight, account& CurrentUser, char*& a));
 };
-
 // used for "bo-goc" button that need to update information Year, Semester
 struct Button5 {
 	const int screenWidth = 1512;
@@ -166,10 +160,9 @@ struct Button7 {
 	Rectangle btnBounds = { 0, 0, 0, 0 };
 	int state = 0;					// Button state: 0-NORMAL, 1-MOUSE_HOVER, 2-PRESSED
 	bool action = false;			// Button action should be activated
-	void workbutton(Vector2 mousePoint, account& CurrentUser, course& d, char*& a, char*& b, 
+	void workbutton(Vector2 mousePoint, account& CurrentUser, course& d, char*& a, char*& b,
 		void(*func)(const int screenWidth, const int screenHeight, account& CurrentUser, char*& a, char*& b, course& d));
 };
-
 struct Button8 {
 	int x = 0;
 	int y = 0;
@@ -182,10 +175,9 @@ struct Button8 {
 	bool action1 = false; // open a small window to do something
 	bool remove = false; // delete course
 	bool update = false;
-	void workbutton(Vector2 mousePoint, account& CurrentUser, char*&a, char*& b, course& c, void(*func)(const int screenWidth, const int screenHeight, account& CurrentUser, char*& a, char*& b, course& c));
+	void workbutton(Vector2 mousePoint, account& CurrentUser, char*& a, char*& b, course& c, void(*func)(const int screenWidth, const int screenHeight, account& CurrentUser, char*& a, char*& b, course& c));
 
 };
-
 struct Button9 {
 	int x = 0;
 	int y = 0;
@@ -195,6 +187,7 @@ struct Button9 {
 	bool mouseonbutton = false;
 	bool state = true;
 	bool state1 = true; // check if the button out of bounds
+	bool state2 = true;
 	bool action = false; // move to another page
 	bool action1 = false; // open a small window to do something
 	bool remove = false; // delete course
@@ -202,7 +195,6 @@ struct Button9 {
 	void workbutton(Vector2 mousePoint, account& CurrentUser, char*& a, char*& b, course& c, student& s, void(*func)(const int screenWidth, const int screenHeight, account& CurrentUser, char*& a, char*& b, course& c, student& s));
 
 };
-
 struct Button10 {
 	int x = 0;
 	int y = 0;
@@ -219,8 +211,8 @@ struct Button10 {
 	void workbutton(Vector2 mousePoint);
 
 };
-/// textbox
 
+/// textbox
 // used for normal-text textbox
 struct Textbox1 {
 	char text[MAX_INPUT_CHARS + 1] = "\0";
@@ -230,7 +222,6 @@ struct Textbox1 {
 	bool mouseontextbox = false;
 	void worktextbox(bool& somethingfalsedisplay);
 };
-
 // used for hidden-text textbox (such as password)
 struct Textbox2 {
 	char text[MAX_INPUT_CHARS + 1] = "\0";
@@ -242,7 +233,6 @@ struct Textbox2 {
 	bool mouseontextbox = false;
 	void worktextbox(bool& somethingfalsedisplay);
 };
-
 // used for update student's result
 struct Textbox3 {
 	char text[5] = "\0";

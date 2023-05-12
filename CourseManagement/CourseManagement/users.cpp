@@ -47,7 +47,6 @@ void person::outputAPersonToFile(ofstream& fout) {
 	dob.outputADateToFile(fout);
 	fout << "," << socialID;
 }
-
 bool person::checkData() {
 	if (!dob.checkdata() || strlen(socialID) != 12)
 		return false;
@@ -55,12 +54,10 @@ bool person::checkData() {
 }
 
 //student
-void student::inputAStudent(char* student_id, char* first_name, char* last_name, 
-	bool Gender, char* DoB, char* social_ID) {
+void student::inputAStudent(char* student_id, char* first_name, char* last_name, bool Gender, char* DoB, char* social_ID) {
 	stuID = _strdup(student_id);
 	Student.inputAPerson(first_name, last_name, Gender, DoB, social_ID);
 }
-
 void student::inputStudentsWithCSVFile(ifstream& fin) {
 	fin >> No;
 	stuID = new char[100];
@@ -70,7 +67,6 @@ void student::inputStudentsWithCSVFile(ifstream& fin) {
 	fin.ignore(100, ',');
 	Student.inputPersonsWithCSVFile(fin);
 }
-
 void student::outputAStudentToFile(char* filename) {
 	ifstream fin;
 	fin.open(filename);
@@ -90,7 +86,6 @@ void student::outputAStudentToFile(char* filename) {
 	Student.outputAPersonToFile(fout);
 	fout.close();
 }
-
 bool student::checkData() {
 	if (!Student.checkData() || strlen(stuID) != 8)
 		return false;
@@ -122,7 +117,6 @@ void sortToStuID(student*& StudentArray, int numOfStudents)
 	for (int i = 0; i < numOfStudents; ++i)
 		StudentArray[i].No = i + 1;
 }
-
 bool checkdata_FileName(char* fileNameIn)
 {
 	int n = (int)strlen(fileNameIn);
@@ -130,7 +124,6 @@ bool checkdata_FileName(char* fileNameIn)
 		&& fileNameIn[n - 2] == 's' && fileNameIn[n - 1] == 'v') return true;
 	else return false;
 }
-
 void getStudyingSchoolYear(char* stuID, int& numOfschoolYear, char**& schoolYear) {
 	char* first2degitOfstuID = new char[3];
 	first2degitOfstuID[0] = stuID[0];
@@ -238,7 +231,6 @@ void inputStudentAndScoreWithCSV(ifstream& fin, student& s)
 
 	s.mark.inputScoreBoardWithCSV(fin);
 }
-
 void outputStudentAndScoreToFile(char* filename, student& s)
 {
 	ifstream fin;
@@ -264,7 +256,6 @@ void outputStudentAndScoreToFile(char* filename, student& s)
 	s.mark.outputScoreBoardToFile(fout);
 	fout.close();
 }
-
 void InputScoreBoardWithCSV(char* addressOfInputFile, char* addressOfOutputFile)
 {
 	ifstream fin;
@@ -313,14 +304,12 @@ void viewPersonalStudentScoreboard(char* stuID, char* schoolYear, char* semester
 		}
 	}
 }
-
 scoreboard* GetsaveScore(char* stuID, char* schoolYear, char* semester)
 {
 	scoreboard* saveScore = nullptr;
 	viewPersonalStudentScoreboard(stuID, schoolYear, semester, saveScore);
 	return saveScore;
 }
-
 double getSemesterGPA(char* stuID, char* schoolYear, char* semester)
 {
 	double SemesterGPA = 0;
@@ -336,7 +325,6 @@ double getSemesterGPA(char* stuID, char* schoolYear, char* semester)
 	SemesterGPA /= numOfSemesterCredits;
 	return SemesterGPA;
 }
-
 double getOverallGPA(char* stuID)
 {
 	double OverallGPA = 0;
@@ -352,7 +340,6 @@ double getOverallGPA(char* stuID)
 	OverallGPA /= numOfOverallCredits;
 	return OverallGPA;
 }
-
 double getTransferScaleTenToFour(double totalMark)
 {
 	if (totalMark >= 8.5)
@@ -377,7 +364,6 @@ double getTransferScaleTenToFour(double totalMark)
 		return 1;
 	else return 0;
 }
-
 double getScaleFour_SemesterGPA(char* stuID, char* schoolYear, char* semester)
 {
 	double ScaleFour_SemesterGPA = 0;
@@ -394,7 +380,6 @@ double getScaleFour_SemesterGPA(char* stuID, char* schoolYear, char* semester)
 	ScaleFour_SemesterGPA /= numOfSemesterCredits;
 	return ScaleFour_SemesterGPA;
 }
-
 double getScaleFour_OverallGPA(char* stuID)
 {
 	double ScaleFour_OverallGPA = 0;
@@ -411,7 +396,6 @@ double getScaleFour_OverallGPA(char* stuID)
 	ScaleFour_OverallGPA /= numOfOverallCredits;
 	return ScaleFour_OverallGPA;
 }
-
 void OutputToFileCoursesAndScores(char* stuID, char* schoolYear, char* semester, char* filename)
 {
 	ofstream fout;
@@ -434,7 +418,6 @@ void OutputToFileCoursesAndScores(char* stuID, char* schoolYear, char* semester,
 	}
 	fout.close();
 }
-
 bool HaveEmptyLine(string filename) {// return 1 if have empty line
 	ifstream fin(filename);
 	if (!fin.is_open()) return true;
@@ -518,7 +501,6 @@ bool CheckFileFormat(string file) {
 	f.close();
 	return true;
 }
-
 bool checkMark(char* mark) {
 	// check -1 and other mark from 0 to 10.
 	if (strcmp(mark, "-1") == 0) return true;
@@ -544,7 +526,10 @@ bool checkMark(char* mark) {
 		int beforeMark = atoi(getBeforeDot);
 		delete[] getBeforeDot;
 		if (beforeMark < 0 || beforeMark > 10) return false;
-		// no need to check after dot because it has already checked by strlen must <= 4.
+		++i;
+		if (beforeMark == 10) {
+			if (mark[i] != '0') return false;
+		}
 	}
 	else {
 		int intMark = atoi(mark);
@@ -552,7 +537,6 @@ bool checkMark(char* mark) {
 	}
 	return true;
 }
-
 bool CheckFileFormatWithScoreboard(string file) {
 	//if (HaveEmptyLine(file) == 1)return false;
 	ifstream fin;
@@ -619,7 +603,7 @@ bool CheckFileFormatWithScoreboard(string file) {
 			if (check_char != ',')return false;
 			check_char = '\0';
 
-			if (i == 4) fin.get(check_string, 100, '\0');
+			if (i == 4) fin.get(check_string, 100, '\n');
 			else fin.get(check_string, 100, ',');
 			
 			if (!checkMark(check_string)) return false;

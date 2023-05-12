@@ -8,7 +8,6 @@ using namespace std;
 void schoolYear::inputASchoolYear(char* year) {
 	sYear = string(year);
 }
-
 bool schoolYear::checkdata() {
     string* Years = new string[100];
     int n;
@@ -33,7 +32,6 @@ bool schoolYear::checkdata() {
     }
     return true;
 }
-
 void schoolYear::createASchoolYear() {
     ofstream fout;
     fout.open("../data/schoolYear.txt", ios::app);
@@ -53,7 +51,6 @@ void getSchoolYear(string* sYear, int& n) {
         getline(fin, sYear[n++]);
     }
 }
-
 char** changestrtochar(string* sYear) {
     int n = countSchoolYear();
     char** get = new char* [n];
@@ -67,7 +64,6 @@ char** changestrtochar(string* sYear) {
     }
     return get;
 }
-
 bool createASchoolYear(char* schoolyear) {
     schoolYear s;
     s.inputASchoolYear(schoolyear);
@@ -77,7 +73,6 @@ bool createASchoolYear(char* schoolyear) {
     }
     return false;
 }
-
 int countSchoolYear() {
     string* Years = new string[100];
     int cnt;
@@ -85,7 +80,6 @@ int countSchoolYear() {
     delete[] Years;
     return cnt;
 }
-
 char** getSchoolYearArr() {
     string* schoolYearArr = new string[countSchoolYear()];
     int n;

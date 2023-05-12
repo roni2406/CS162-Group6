@@ -15,6 +15,7 @@ void input1Account(account& data, ifstream& fin);
 void inputAccounts(account* login_data, int& numberOfAccount, ifstream& fin);
 bool isDataTheSame(account data1, account data2);
 bool login(account* login_data, int n, account inputLoginData);
+
 // front_end use: (staffOrStu = 1 if it's a staff, staffOrStu = 0 if it's a student)
 bool LoginFunction(char* userName, char* password, bool staffOrStu);
 

@@ -12,7 +12,6 @@ void semester::inputASemester(char* Year, char* start_date, char* end_date) {
 	startDate.inputADateWithChar(start_date);
 	endDate.inputADateWithChar(end_date);
 }
-
 void semester::inputASemesterWithCSVFile(ifstream& fin) {
 	fin >> No;
 	char* tmp = new char[20];
@@ -24,7 +23,6 @@ void semester::inputASemesterWithCSVFile(ifstream& fin) {
 	endDate.inputADateWithChar(tmp);
 	delete[] tmp;
 }
-
 void semester::outputASemesterToCSVFile(char* school_year) {
 	ofstream fout;
 	fout.open("../data/" + (string)(school_year)+"/Semester.csv", ios::app);
@@ -59,12 +57,10 @@ void semester::outputASemesterToCSVFile(char* school_year) {
 	endDate.outputADateToFile(fout);
 	fout.close();
 }
-
 bool semester::checkdata() {
 	if (!startDate.checkdata() || !endDate.checkdata()) return false;
 	return true;
 }
-
 bool createASemester(char* school_year, char* start_date, char* end_date) {
 	if (!checkDateInput(start_date) || !checkDateInput(end_date)) return false;
 	semester s;
@@ -73,7 +69,6 @@ bool createASemester(char* school_year, char* start_date, char* end_date) {
 	s.outputASemesterToCSVFile(school_year);
 	return true;
 }
-
 int countSemester(char* school_year) {
 	ofstream fout;
 	fout.open("../data/" + (string)(school_year)+"/Semester.csv", ios::app);
@@ -90,7 +85,6 @@ int countSemester(char* school_year) {
 	fin.close();
 	return numSemester;
 }
-
 void getsemestername(char** semestername, int n) {
 	const char* tmp1 = "Fall";
 	const char* tmp2 = "Summer";

@@ -13,7 +13,6 @@ void input1Account(account& data) {
 	data.password = new char[21];
 	cin.get(data.password, 21, '\n');
 }
-
 void input1Account(account& data, ifstream& fin)
 {
 	data.userName = new char[21];
@@ -22,7 +21,6 @@ void input1Account(account& data, ifstream& fin)
 	data.password = new char[21];
 	fin.get(data.password, 21, '\n');
 }
-
 void inputAccounts(account* login_data, int& numberOfAccount, ifstream& fin)
 {
 	numberOfAccount = 0;
@@ -32,7 +30,6 @@ void inputAccounts(account* login_data, int& numberOfAccount, ifstream& fin)
 		++numberOfAccount;
 	}
 }
-
 bool isDataTheSame(account data1, account data2)
 {
 	bool checkUserName = false;
@@ -48,7 +45,6 @@ bool isDataTheSame(account data1, account data2)
 	else
 		return false;
 }
-
 bool login(account* login_data, int n, account inputLoginData)
 {
 	for (int i = 0; i < n; i++)
@@ -56,7 +52,6 @@ bool login(account* login_data, int n, account inputLoginData)
 			return true;
 	return false;
 }
-
 bool LoginFunction(char* userName, char* password, bool staffOrStu) {
 	account x;
 	x.userName = _strdup(userName);
@@ -80,7 +75,6 @@ bool LoginFunction(char* userName, char* password, bool staffOrStu) {
 		return false;
 	}
 }
-
 void addinfo(account person, char* filename)
 {
 	ifstream fin;
@@ -95,7 +89,6 @@ void addinfo(account person, char* filename)
 	fin.close();
 	fout.close();
 }
-
 bool signUp(account* login_data, int n, account newAcc, char* confirmPass) {
 	if (strcmp(newAcc.password, confirmPass) != 0)
 		return false;
@@ -104,7 +97,6 @@ bool signUp(account* login_data, int n, account newAcc, char* confirmPass) {
 			return false;
 	return true;
 }
-
 bool StaffSignup(account newAcc, char* confirmPass) {
 	ifstream fin;
 	fin.open("../data/staff_account.txt");
@@ -122,7 +114,6 @@ bool StaffSignup(account newAcc, char* confirmPass) {
 		return false;
 	}
 }
-
 bool changePass(account& Acc, char* oldPass, char* newPass, char* checkNewPass) {
 	if (strcmp(oldPass, Acc.password) != 0 || strcmp(newPass, checkNewPass) != 0) {
 		return false;
@@ -130,7 +121,6 @@ bool changePass(account& Acc, char* oldPass, char* newPass, char* checkNewPass) 
 	Acc.password = newPass;
 	return true;
 }
-
 void updateAccToFile(account* login_data, int n, char* filename) {
 	ofstream fout;
 	fout.open(filename);
@@ -141,7 +131,6 @@ void updateAccToFile(account* login_data, int n, char* filename) {
 	}
 	fout.close();
 }
-
 bool usechangePassFunction(account& Acc, char* oldPass, char* newPass, char* checkNewPass, bool staffOrStu) {
 	char* filename = new char[100];
 	if (staffOrStu == 1) filename = _strdup("../data/staff_account.txt");

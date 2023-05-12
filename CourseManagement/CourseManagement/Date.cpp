@@ -7,7 +7,6 @@ void Date::inputADate(int day, int month, int year) {
 	m = month;
 	y = year;
 }
-
 void Date::inputADateWithChar(char* date) {
 	int i = 0;
 	int cnt = 0;
@@ -34,12 +33,10 @@ void Date::inputADateWithChar(char* date) {
 
 	delete[] get;
 }
-
 void Date::outputADateToFile(ofstream& fout) {
 	// Ex: 1/2/2023
 	fout << d << '/' << m << '/' << y;
 }
-
 bool Date::checkdata() {
 	if (y < 0) return false;
 	if (m < 0 || m > 12) return false;
@@ -63,7 +60,6 @@ bool Date::checkdata() {
 	}
 	return true;
 }
-
 bool checkDateInput(char* date) {
 	int cnt = 0;
 	for (int i = 0; date[i] != '\0'; i++) {
@@ -97,7 +93,6 @@ void double_to_char(double num, char* result) {
 	result[4] = '\0';
 	return;
 }
-
 void int_to_char(int num, char* result) {
 	int temp = num;
 	int len = 0;
@@ -114,7 +109,6 @@ void int_to_char(int num, char* result) {
 
 	result[len] = '\0';
 }
-
 char* dateToChar(Date date) {
 	char* day = new char[10];
 	char* month = new char[10];
@@ -137,7 +131,6 @@ char* dateToChar(Date date) {
 
 	return ans;
 }
-
 void getNowDate(Date& now) {
 	char c[9];
 	_strdate_s(c);

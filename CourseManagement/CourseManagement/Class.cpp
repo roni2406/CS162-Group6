@@ -10,7 +10,6 @@ void InputAClass(char* classID, Class &className)
 {
 	className.classID = _strdup(classID);
 }
-
 void CreateAClass(char* classID)
 {
 	Class Object;
@@ -19,13 +18,11 @@ void CreateAClass(char* classID)
 	CreateASingleClassList(Object, fout);
 	AddAClassToList(Object, fout);
 }
-
 void CreateASingleClassList(Class className, ofstream& fout)
 {
 	fout.open("../data/Classes/" + string(className.classID) + ".csv");
 	fout.close();
 }
-
 void AddAClassToList(Class className, ofstream& fout)
 {
 	ifstream fin;
@@ -39,7 +36,6 @@ void AddAClassToList(Class className, ofstream& fout)
 	fin.close();
 	fout.close();
 }
-
 bool CheckClassExisted(char* ClassID)
 {
 	ifstream fin;
@@ -73,7 +69,6 @@ void viewClasses_PrepareData_SavedToClassArray(Class*& ClassList, ifstream& fin,
 	}
 	fin.close();
 }
-
 void sortClasses(Class* classList) {
 	int numOfClasses = countClasses();
 	for (int i = 0; i < numOfClasses; i++) {
@@ -83,7 +78,6 @@ void sortClasses(Class* classList) {
 			}
 	}
 }
-
 Class* viewClasses()
 {
 	ifstream fin;
@@ -93,7 +87,6 @@ Class* viewClasses()
 	sortClasses(ClassList);
 	return ClassList;
 }
-
 int countClasses()
 {
 	ifstream fin;
@@ -109,8 +102,7 @@ int countClasses()
 }
 
 //---------------------------------------
-bool addAStudentToClass(char* className, char* first_name, char* last_name, char* Gender, char* DoB,
-	char* social_ID, char* student_id) {
+bool addAStudentToClass(char* className, char* first_name, char* last_name, char* Gender, char* DoB, char* social_ID, char* student_id) {
 	if (className[0] != student_id[0] || className[1] != student_id[1]) return false;
 	if (!checkDateInput(DoB) || (strcmp(Gender, "Male") != 0 && strcmp(Gender, "Female") != 0))
 		return false;
@@ -139,7 +131,6 @@ bool addAStudentToClass(char* className, char* first_name, char* last_name, char
 	fout.close();
 	return true;
 }
-
 bool addStudentsWithCSV(char* fileNameIn, char* fileNameOut, student*& stuArr, int& numOfDupsStu) {
 	bool returnValue = 1;
 	// return true if no duplicate => stuArr = nullptr and numOfDupsStu = 0
@@ -186,7 +177,6 @@ bool addStudentsWithCSV(char* fileNameIn, char* fileNameOut, student*& stuArr, i
 	}
 	return returnValue;
 }
-
 bool checkStudentExistInClass(student x, char* className) {
 	//return true if the student haven't existed
 	//return false if the student have existed
@@ -224,7 +214,6 @@ student* viewStudentsInClass(char* className)
 	sortToStuID(Class, n);
 	return Class;
 }
-
 int countStudentInClass(char* className) {
 	int numOfStu = 0;
 	ifstream fin;
@@ -237,7 +226,6 @@ int countStudentInClass(char* className) {
 	fin.close();
 	return numOfStu;
 }
-
 bool CheckData_InputStudents(char* No, char* student_id, char* Gender, char* DoB, char* social_ID)
 {
 	int NoStu = atoi(No);
@@ -260,76 +248,6 @@ bool CheckData_InputStudents(char* No, char* student_id, char* Gender, char* DoB
 }
 
 // 23 
-// Old Code
-/*
-void viewStuWithScore(char* className, char* schoolYear, char* semester, int*& numOfCoursesPerStudent,
-	scoreboard**& ScoresInSemester_Class, course**& CoursesInSemester_Class)
-{
-	int numOfStuInClass = countStudentInClass(className);
-	int numOfCourses = countCourse(schoolYear, semester);
-	ScoresInSemester_Class = new scoreboard * [numOfStuInClass];
-	CoursesInSemester_Class = new course* [numOfStuInClass];
-	for (int i = 0; i < numOfStuInClass; ++i)			
-	{													
-		ScoresInSemester_Class[i] = new scoreboard[numOfCourses];
-		CoursesInSemester_Class[i] = new course [numOfCourses];
-	}
-	numOfCoursesPerStudent = new int[numOfStuInClass] {0};
-
-
-	student* StuInAClass = viewStudentsInClass(className);
-	course* CoursesListInSemester = viewCoursesInSemester(schoolYear, semester);
-	for (int i = 0; i < numOfCourses; ++i)
-	{
-		countStu(CoursesListInSemester[i], schoolYear, semester);
-		int numOfStuInCourse = CoursesListInSemester[i].numOfStu;
-		student* StuInCourse = nullptr;
-		Load_stu(CoursesListInSemester[i], schoolYear, semester, StuInCourse);
-		for (int j = 0; j < numOfStuInCourse; ++j)
-		{
-			for (int k = 0; k < numOfStuInClass; ++k)
-			{
-				if (strcmp(StuInAClass[k].stuID, StuInCourse[j].stuID) == 0)
-				{
-					ScoresInSemester_Class[k][numOfCoursesPerStudent[k]] = StuInCourse[j].mark;
-					CoursesInSemester_Class[k][numOfCoursesPerStudent[k]] = CoursesListInSemester[i];
-					++numOfCoursesPerStudent[k];
-					break;
-				}
-			}
-		}
-	}
-}
-
-int* GetNumOfCoursesPerStudent(char* className, char* schoolYear, char* semester)
-{
-	int* numOfCoursesPerStudent = nullptr;
-	scoreboard** SemesterScores_Class = nullptr;
-	course** SemesterCourses_Class = nullptr;
-	viewStuWithScore(className, schoolYear, semester, numOfCoursesPerStudent, SemesterScores_Class, SemesterCourses_Class);
-	return numOfCoursesPerStudent;
-}
-
-scoreboard** GetSemesterScore_Class(char* className, char* schoolYear, char* semester)
-{
-	int* numOfCoursesPerStudent = nullptr;
-	scoreboard** SemesterScores_Class = nullptr;
-	course** SemesterCourses_Class = nullptr;
-	viewStuWithScore(className, schoolYear, semester, numOfCoursesPerStudent, SemesterScores_Class, SemesterCourses_Class);
-	return SemesterScores_Class;
-}
-
-course** GetSemesterCourses_Class(char* className, char* schoolYear, char* semester)
-{
-	int* numOfCoursesPerStudent = nullptr;
-	scoreboard** SemesterScores_Class = nullptr;
-	course** SemesterCourses_Class = nullptr;
-	viewStuWithScore(className, schoolYear, semester, numOfCoursesPerStudent, SemesterScores_Class, SemesterCourses_Class);
-	return SemesterCourses_Class;
-}
-*/
-
-// New Version
 int* GetNumOfCoursesPerStudent(char* className, char* schoolYear, char* semester)
 {
 	student* StuInAClass = viewStudentsInClass(className);
@@ -339,7 +257,6 @@ int* GetNumOfCoursesPerStudent(char* className, char* schoolYear, char* semester
 		numOfCoursesPerStudent[i] = countCoursesOfAStudent(StuInAClass[i].stuID, schoolYear, semester);
 	return numOfCoursesPerStudent;
 }
-
 course** GetSemesterCourses_Class(char* className, char* schoolYear, char* semester)
 {
 	student* StuInAClass = viewStudentsInClass(className);
@@ -352,7 +269,6 @@ course** GetSemesterCourses_Class(char* className, char* schoolYear, char* semes
 	}
 	return SemesterCourses_Class;
 }
-
 scoreboard** GetSemesterScore_Class(char* className, char* schoolYear, char* semester)
 {
 	student* StuInAClass = viewStudentsInClass(className);
@@ -365,7 +281,6 @@ scoreboard** GetSemesterScore_Class(char* className, char* schoolYear, char* sem
 	}
 	return SemesterScores_Class;
 }
-
 double* GetSemesterGPA_Class(char* className, char* schoolYear, char* semester)
 {
 	student* StuInAClass = viewStudentsInClass(className);
@@ -375,7 +290,6 @@ double* GetSemesterGPA_Class(char* className, char* schoolYear, char* semester)
 		SemesterGPA_Class[i] = getSemesterGPA(StuInAClass[i].stuID, schoolYear, semester);
 	return SemesterGPA_Class;
 }
-
 double* GetOverallGPA_Class(char* className)
 {
 	student* StuInAClass = viewStudentsInClass(className);
@@ -385,7 +299,6 @@ double* GetOverallGPA_Class(char* className)
 		OverallGPA_Class[i] = getOverallGPA(StuInAClass[i].stuID);
 	return OverallGPA_Class;
 }
-
 double* GetScaleFour_SemesterGPA_Class(char* className, char* schoolYear, char* semester)
 {
 	student* StuInAClass = viewStudentsInClass(className);
@@ -395,7 +308,6 @@ double* GetScaleFour_SemesterGPA_Class(char* className, char* schoolYear, char* 
 		ScaleFour_SemesterGPA_Class[i] = getScaleFour_SemesterGPA(StuInAClass[i].stuID, schoolYear, semester);
 	return ScaleFour_SemesterGPA_Class;
 }
-
 double* GetScaleFour_OverallGPA_Class(char* className)
 {
 	student* StuInAClass = viewStudentsInClass(className);
@@ -405,7 +317,6 @@ double* GetScaleFour_OverallGPA_Class(char* className)
 		ScaleFour_OverallGPA_Class[i] = getScaleFour_OverallGPA(StuInAClass[i].stuID);
 	return ScaleFour_OverallGPA_Class;
 }
-
 bool CheckClassName(char* className) {
 	if (strlen(className) > 10 || strlen(className) < 3)
 		return false;
