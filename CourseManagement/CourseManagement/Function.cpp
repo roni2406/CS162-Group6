@@ -3070,6 +3070,8 @@ void CoursePage(const int screenWidth, const int screenHeight, account& CurrentU
 			if (CheckCollisionPointRec(mousePoint, turnOffexport)) {
 				DrawRectangleLines((int)turnOffexport.x, (int)turnOffexport.y, (int)turnOffexport.width, (int)turnOffexport.height, BLACK);
 				if (IsMouseButtonPressed(MOUSE_BUTTON_LEFT)) {
+					confirmBtnFalseDisplay = false;
+					confirmBtnFalseDisplay = false;
 					exportListStu.action = false;
 					for (int i = 0; i < n; ++i) {
 						studentbutton[i].state1 = true;
