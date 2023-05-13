@@ -96,17 +96,6 @@ bool student::checkData() {
 	return true;
 }
 
-//staff
-void staff::inputAStaff(char* staff_id, person sta) {
-	Staff = sta;
-	staffID = _strdup(staff_id);
-}
-void staff::outputAStaffToFile(ofstream& fout) {
-	fout << endl;
-	Staff.outputAPersonToFile(fout);
-	fout << "," << staffID;
-}
-
 //other
 void sortToStuID(student*& StudentArray, int numOfStudents)
 {

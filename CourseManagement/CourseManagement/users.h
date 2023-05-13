@@ -21,7 +21,6 @@ struct person {
 };
 
 struct student {
-    account stuAcc{};
     int No = 0;
     person Student{};
     char* stuID = nullptr;
@@ -32,15 +31,6 @@ struct student {
     void inputStudentsWithCSVFile(ifstream& fin);
     void outputAStudentToFile(char* filename);
     bool checkData();
-};
-
-struct staff {
-    account staffAcc;
-    person Staff;
-    char* staffID = nullptr;
-
-    void inputAStaff(char* staff_id, person sta);
-    void outputAStaffToFile(ofstream& fout);
 };
 
 void sortToStuID(student*& StudentArray, int numOfStudents);
