@@ -319,8 +319,11 @@ double getSemesterGPA(char* stuID, char* schoolYear, char* semester)
 	int numOfSemesterCredits = 0;
 	for (int i = 0; i < numOfStudyingCourses; ++i)
 	{
-		numOfSemesterCredits += ListOfStudyingCourses[i].numOfCre;
-		SemesterGPA += ListOfStudyingCourses[i].numOfCre * ListOfStudyingScores[i].totalMark;
+		if (ListOfStudyingScores[i].totalMark >= 0)
+		{
+			numOfSemesterCredits += ListOfStudyingCourses[i].numOfCre;
+			SemesterGPA += ListOfStudyingCourses[i].numOfCre * ListOfStudyingScores[i].totalMark;
+		}
 	}
 	SemesterGPA /= numOfSemesterCredits;
 	return SemesterGPA;
@@ -334,8 +337,11 @@ double getOverallGPA(char* stuID)
 	int numOfOverallCredits = 0;
 	for (int i = 0; i < numOfStudyingCourses; ++i)
 	{
-		numOfOverallCredits += ListOfStudyingCourses[i].numOfCre;
-		OverallGPA += ListOfStudyingCourses[i].numOfCre * ListOfStudyingScores[i].totalMark;
+		if (ListOfStudyingScores[i].totalMark >= 0)
+		{
+			numOfOverallCredits += ListOfStudyingCourses[i].numOfCre;
+			OverallGPA += ListOfStudyingCourses[i].numOfCre * ListOfStudyingScores[i].totalMark;
+		}
 	}
 	OverallGPA /= numOfOverallCredits;
 	return OverallGPA;
@@ -373,9 +379,12 @@ double getScaleFour_SemesterGPA(char* stuID, char* schoolYear, char* semester)
 	int numOfSemesterCredits = 0;
 	for (int i = 0; i < numOfStudyingCourses; ++i)
 	{
-		double FourMark = getTransferScaleTenToFour(ListOfStudyingScores[i].totalMark);
-		numOfSemesterCredits += ListOfStudyingCourses[i].numOfCre;
-		ScaleFour_SemesterGPA += ListOfStudyingCourses[i].numOfCre * FourMark;
+		if (ListOfStudyingScores[i].totalMark >= 0)
+		{
+			double FourMark = getTransferScaleTenToFour(ListOfStudyingScores[i].totalMark);
+			numOfSemesterCredits += ListOfStudyingCourses[i].numOfCre;
+			ScaleFour_SemesterGPA += ListOfStudyingCourses[i].numOfCre * FourMark;
+		}
 	}
 	ScaleFour_SemesterGPA /= numOfSemesterCredits;
 	return ScaleFour_SemesterGPA;
@@ -389,9 +398,12 @@ double getScaleFour_OverallGPA(char* stuID)
 	int numOfOverallCredits = 0;
 	for (int i = 0; i < numOfStudyingCourses; ++i)
 	{
-		double FourMark = getTransferScaleTenToFour(ListOfStudyingScores[i].totalMark);
-		numOfOverallCredits += ListOfStudyingCourses[i].numOfCre;
-		ScaleFour_OverallGPA += ListOfStudyingCourses[i].numOfCre * FourMark;
+		if (ListOfStudyingScores[i].totalMark >= 0)
+		{
+			double FourMark = getTransferScaleTenToFour(ListOfStudyingScores[i].totalMark);
+			numOfOverallCredits += ListOfStudyingCourses[i].numOfCre;
+			ScaleFour_OverallGPA += ListOfStudyingCourses[i].numOfCre * FourMark;
+		}
 	}
 	ScaleFour_OverallGPA /= numOfOverallCredits;
 	return ScaleFour_OverallGPA;
