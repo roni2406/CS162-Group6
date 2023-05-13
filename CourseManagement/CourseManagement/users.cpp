@@ -438,69 +438,68 @@ bool CheckValidName(char* name) {
 	return true;
 }
 bool CheckFileFormat(string file) {
-	//if (HaveEmptyLine(file) == 1)return false;
-	ifstream f(file);
-	while (!f.eof()) {
-		int check_int = 0;
-		char check_char = '\0';
-		char check_string[100];
+		//if (HaveEmptyLine(file) == 1)return false;
+		ifstream f(file);
+		while (!f.eof()) {
+			int check_int = 0;
+			char check_char = '\0';
+			char check_string[100];
 
-		f >> check_int;
+			f >> check_int;
 
-		if (check_int == 0) return false;
-		check_int = 0;
+			if (check_int == 0) return false;
+			check_int = 0;
 
-		f >> check_char;
-		if (check_char != ',')return false;
-		check_char = '\0';
+			f >> check_char;
+			if (check_char != ',')return false;
+			check_char = '\0';
 
 		
-		f.get(check_string, 100, ',');
-		if (strlen(check_string) != 8) return false;
-		for (int i = 0; i < 8; i++) {
-			if (check_string[i] < '0' || check_string[i] > '9') return false;
+			f.get(check_string, 100, ',');
+			if (strlen(check_string) != 8) return false;
+			for (int i = 0; i < 8; i++) {
+				if (check_string[i] < '0' || check_string[i] > '9') return false;
+			}
+
+			f >> check_char;
+			if (check_char != ',')return false;
+			check_char = '\0';
+
+			f.get(check_string, 100, ',');
+			if (CheckValidName(check_string) == 0)return false;
+
+			f >> check_char;
+			if (check_char != ',')return false;
+			check_char = '\0';
+
+			f.get(check_string, 100, ',');
+			if (CheckValidName(check_string) == 0)return false;
+
+			f >> check_char;
+			if (check_char != ',')return false;
+			check_char = '\0';
+
+			f.get(check_string, 100, ',');
+			if (string(check_string) != "Male" && string(check_string) != "Female")return false;
+
+			f >> check_char;
+			if (check_char != ',')return false;
+			check_char = '\0';
+
+			f.get(check_string, 100, ',');
+			if (checkDateInput(check_string) == 0)return false;
+
+			f >> check_char;
+			if (check_char != ',')return false;
+			check_char = '\0';
+
+			f.get(check_string, 100, '\n');
+			if (strlen(check_string) != 12) return false;
+			f.ignore(500, '\n');
 		}
-
-		f >> check_char;
-		if (check_char != ',')return false;
-		check_char = '\0';
-
-		f.get(check_string, 100, ',');
-		if (CheckValidName(check_string) == 0)return false;
-
-		f >> check_char;
-		if (check_char != ',')return false;
-		check_char = '\0';
-
-		f.get(check_string, 100, ',');
-		if (CheckValidName(check_string) == 0)return false;
-
-		f >> check_char;
-		if (check_char != ',')return false;
-		check_char = '\0';
-
-		f.get(check_string, 100, ',');
-		if (string(check_string) != "Male" && string(check_string) != "Female")return false;
-
-		f >> check_char;
-		if (check_char != ',')return false;
-		check_char = '\0';
-
-		f.get(check_string, 100, ',');
-		if (checkDateInput(check_string) == 0)return false;
-
-		f >> check_char;
-		if (check_char != ',')return false;
-		check_char = '\0';
-
-		f.get(check_string, 100, '\n');
-		if (strlen(check_string) != 12) return false;
-		// Them check diem nhap vao
-		f.ignore(500, '\n');
+		f.close();
+		return true;
 	}
-	f.close();
-	return true;
-}
 bool checkMark(char* mark) {
 	// check -1 and other mark from 0 to 10.
 	if (strcmp(mark, "-1") == 0) return true;

@@ -1865,7 +1865,7 @@ void ClassPage(const int screenWidth, const int screenHeight, account& CurrentUs
 				DrawRectangle(1190, 263, 252, 55, WHITE);
 				DrawTextEx(bold, "Overall GPA:", { 1201, 278 }, 24,0, DARKBLUE);
 				if (overallGPA) {
-					double_to_char(semesterGPA[i], overallgpa);
+					double_to_char(overallGPA[i], overallgpa);
 					DrawTextEx(medium, overallgpa, { 1363, 273 }, 30,0, DARKBLUE);
 				}
 
