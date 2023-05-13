@@ -1896,33 +1896,34 @@ void ClassPage(const int screenWidth, const int screenHeight, account& CurrentUs
 				DrawRectangle(1338, 360, 148, 42, LIGHTGRAY);
 				DrawRectangleLines(1338, 360, 148, 42, BLACK);
 				DrawTextEx(bold, "Midterm Mark", { 1340, 372 }, 24,0, DARKBLUE);
+				int j1 = 0;
 				if (SemesterCourses_Class && SemesterScore_Class) {
 					for (int i1 = 0; i1 < cntCourse[i]; ++i1) {
-						DrawLine(x_course + 134, y_course + 147, x_course + 134, y_course + 209, BLACK);
-						DrawLine(x_course + 653, y_course + 147, x_course + 653, y_course + 209, BLACK);
-						DrawLine(x_course + 851, y_course + 147, x_course + 851, y_course + 209, BLACK);
-						DrawLine(x_course + 1031, y_course + 147, x_course + 1031, y_course + 209, BLACK);
-						DrawLine(x_course + 1179, y_course + 147, x_course + 1179, y_course + 209, BLACK);
-						DrawLine(x_course + 1327, y_course + 147, x_course + 1327, y_course + 209, BLACK);
-						DrawLine(x_course + 1475, y_course + 147, x_course + 1475, y_course + 209, BLACK);
+						DrawLine(x_course + 134, y_course + 147 + j1, x_course + 134, y_course + 209 + j1, BLACK);
+						DrawLine(x_course + 653, y_course + 147 + j1, x_course + 653, y_course + 209 + j1, BLACK);
+						DrawLine(x_course + 851, y_course + 147 + j1, x_course + 851, y_course + 209 + j1, BLACK);
+						DrawLine(x_course + 1031, y_course + 147 + j1, x_course + 1031, y_course + 209 + j1, BLACK);
+						DrawLine(x_course + 1179, y_course + 147 + j1, x_course + 1179, y_course + 209 + j1, BLACK);
+						DrawLine(x_course + 1327, y_course + 147 + j1, x_course + 1327, y_course + 209 + j1, BLACK);
+						DrawLine(x_course + 1475, y_course + 147 + j1, x_course + 1475, y_course + 209+ j1, BLACK);
 
-						DrawRectangleLines(24, y_course + 147, 1464, 62, BLACK);
-						DrawText(SemesterCourses_Class[i][i1].courseID, x_course + 23, y_course + 167, 20, BLACK);
-						DrawText(SemesterCourses_Class[i][i1].courseName, x_course + 160, y_course + 167, 20, BLACK);
-						DrawText(SemesterCourses_Class[i][i1].className, x_course + 709, y_course + 167, 20, BLACK);
+						DrawRectangleLines(24, y_course + 147 + j1, 1464, 62, BLACK);
+						DrawText(SemesterCourses_Class[i][i1].courseID, x_course + 23, y_course + 167 + j1, 20, BLACK);
+						DrawText(SemesterCourses_Class[i][i1].courseName, x_course + 160, y_course + 167 + j1, 20, BLACK);
+						DrawText(SemesterCourses_Class[i][i1].className, x_course + 709, y_course + 167 + j1, 20, BLACK);
 						char* nofc = new char[10];
 						int_to_char(SemesterCourses_Class[i][i1].numOfCre, nofc);
-						DrawText(nofc, x_course + 930, y_course + 167, 20, BLACK);
+						DrawText(nofc, x_course + 930, y_course + 167 + j1, 20, BLACK);
 						char* total = new char[10];
 						double_to_char(SemesterScore_Class[i][i1].totalMark, total);
-						DrawText(total, x_course + 1102, y_course + 167, 20, BLACK);
+						DrawText(total, x_course + 1102, y_course + 167 + j1, 20, BLACK);
 						char* Final = new char[10];
 						double_to_char(SemesterScore_Class[i][i1].finalMark, Final);
-						DrawText(Final, x_course + 1240, y_course + 167, 20, BLACK);
+						DrawText(Final, x_course + 1240, y_course + 167 + j1, 20, BLACK);
 						char* Midterm = new char[10];
 						double_to_char(SemesterScore_Class[i][i1].midtermMark, Midterm);
-						DrawText(Midterm, x_course + 1384, y_course + 167, 20, BLACK);
-
+						DrawText(Midterm, x_course + 1384, y_course + 167 + j1, 20, BLACK);
+						j1 += 61;
 						delete[] nofc;
 						delete[] total;
 						delete[] Final;
