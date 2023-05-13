@@ -84,6 +84,10 @@ void student::outputAStudentToFile(char* filename) {
 	fout << No << ",";
 	fout << stuID << ",";
 	Student.outputAPersonToFile(fout);
+	fout << "," << "-1";
+	fout << "," << "-1";
+	fout << "," << "-1";
+	fout << "," << "-1";
 	fout.close();
 }
 bool student::checkData() {

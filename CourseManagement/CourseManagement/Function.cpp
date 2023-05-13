@@ -971,7 +971,7 @@ void ChangePasswordPageStudent(const int screenWidth, const int screenHeight, ac
 	confirmnewpass.textbox = { 477, 567, 558, 106 };
 
 	Button2 backtoprofilepage;
-	backtoprofilepage.button = { 1270, 20, 200, 30 };
+	backtoprofilepage.button = { 1194, 19, 300, 30 };
 
 	Button0 viewPass1;
 	viewPass1.texture = LoadTexture("showpass.png");
@@ -2799,7 +2799,9 @@ void UpdateCoursePage(const int screenWidth, const int screenHeight, account& Cu
 		else if (IsKeyPressed(KEY_ENTER)) confirmBtnAction = true;
 		else confirmBtnState = 0;
 		if (confirmBtnAction) {
-			int maxStu = atoi(maxstudents.text);
+			int maxStu;
+			if (maxstudents.text[0] == '\0') maxStu = Course[i].maxStu;
+			else maxStu = atoi(maxstudents.text);
 			if (maxStu < Course[i].numOfStu) warning = true;
 			else {
 				if (!CheckValidCourse(coursename.text, id.text, classname.text, nofc.text, maxstudents.text, Year, Semester)) {
@@ -3288,7 +3290,7 @@ void dataExistedPageforCourse(const int screenWidth, const int screenHeight, acc
 	Vector2 mousePoint = { 0.0f, 0.0f };
 
 	Button8 backtoCoursepage;
-	backtoCoursepage.button = { 1270, 20, 200, 30 };
+	backtoCoursepage.button = { 1274, 19, 235, 30 };
 
 	int scrollspeed = 35;
 	int x_student = 11;
