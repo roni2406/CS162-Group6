@@ -1,2 +1,2 @@
-ads,asd,asd,sad,4,50,sda,sad
-132,213,321,123,4,34,231,312
+Course 1 2019-2020,C1 19-20,19CLC01,Teacher A,4,55,Tue,S1
+Course 2 2019-2020,C2 19-20,20CLC02,Teacher B,3,40,Mon,S4

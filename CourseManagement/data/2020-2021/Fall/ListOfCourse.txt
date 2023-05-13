@@ -1,1 +1,2 @@
-Calculus 1,MTH251,20TT,Nguyen Le Hoang Anh,4,50,TUE,S1
+Course 1 2020-2021,C1 20-21,19CLC01,Teacher A,4,55,Tue,S1
+Course 2 2020-2021,C2 20-21,20CLC02,Teacher B,3,40,Mon,S4

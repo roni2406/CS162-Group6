@@ -1,0 +1,2 @@
+Course 3 2019-2020,C3 19-20,19CLC01,Teacher C,4,50,Friday,S3
+Course 4 2019-2020,C4 19-20,19CLC02,Teacher A,4,50,Friday,S1
