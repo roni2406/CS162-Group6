@@ -34,15 +34,6 @@ struct student {
     bool checkData();
 };
 
-struct staff {
-    account staffAcc;
-    person Staff;
-    char* staffID = nullptr;
-
-    void inputAStaff(char* staff_id, person sta);
-    void outputAStaffToFile(ofstream& fout);
-};
-
 void sortToStuID(student*& StudentArray, int numOfStudents);
 void getStudyingSchoolYear(char* stuID, int& numOfschoolYear, char**& schoolYear);
 bool checkSemesterAndSchoolYear(char* semester, char* schoolyear);

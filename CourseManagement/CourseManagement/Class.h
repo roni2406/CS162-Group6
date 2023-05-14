@@ -27,17 +27,18 @@ Class* viewClasses(); // front end
 int countClasses(); // front end
 
 //---------------------------------
+// 3, 4, 5
 bool addAStudentToClass(char* className, char* first_name, char* last_name, char* Gender, char* DoB,
     char* social_ID, char* student_id);
 bool addStudentsWithCSV(char* fileNameIn, char* fileNameOut, student*& stuArr, int& numOfDupsStu);
 // staff will input fileNameIn, fileNameOut is used for adding to class or course
 bool checkStudentExistInClass(student x, char* className);
+bool CheckData_InputStudents(char* No, char* student_id, char* Gender, char* DoB, char* social_ID);
 
 //---------------------------------
 // 16
 student* viewStudentsInClass(char* className); // front end
 int countStudentInClass(char* className); // front end
-bool CheckData_InputStudents(char* No, char* student_id, char* Gender, char* DoB, char* social_ID);
 
 // 23 
 int* GetNumOfCoursesPerStudent(char* className, char* schoolYear, char* semester);
