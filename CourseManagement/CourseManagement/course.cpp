@@ -309,6 +309,7 @@ bool addAStudentToCourse(course& Course, char* schoolYear, char* semester, char*
 	ofstream fout;
 	fout.open(fileName, ios::app);
 	s.outputAStudentToFile((char*)fileName.c_str());
+	s.mark.outputScoreBoardToFile((char*)fileName.c_str());
 	fout.close();
 	++Course.numOfStu;
 	return true;

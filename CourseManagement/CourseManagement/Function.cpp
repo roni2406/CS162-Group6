@@ -1520,6 +1520,7 @@ void ViewClassesPage(const int screenWidth, const int screenHeight, account& Cur
 	Button2 backtoprofilepage;
 	backtoprofilepage.button = { 1270, 19, 238, 30 };
 	Texture2D backgroundtmp = LoadTexture("background11.png");
+	Texture2D backgroundtmp2 = LoadTexture("background4.png");
 
 
 	Button1 CreateClass;
@@ -1563,6 +1564,7 @@ void ViewClassesPage(const int screenWidth, const int screenHeight, account& Cur
 		DrawRectangleRec(backtoprofilepage.button, WHITE);
 		DrawTextEx(bold, "Back to Profile Page", { 1280, 20 }, 25, 0, DARKBLUE);
 		DrawTexture(backgroundtmp, 0, 60, WHITE);
+		DrawTexture(backgroundtmp2, 30, 939, WHITE);
 		/// Back to profile page button
 
 		backtoprofilepage.workbutton(mousePoint, CurrentUser, ProfilePageStaff);
@@ -1591,6 +1593,8 @@ void ClassPage(const int screenWidth, const int screenHeight, account& CurrentUs
 	scoreboard** SemesterScore_Class = nullptr;
 	double* semesterGPA = nullptr;
 	double* overallGPA = nullptr;
+	double* semesterGPAScaleFour = nullptr;
+	double* overallGPAScaleFour = nullptr;
 
 	int cntYears = 0;
 	char** YearName = nullptr;
@@ -1603,6 +1607,9 @@ void ClassPage(const int screenWidth, const int screenHeight, account& CurrentUs
 	Rectangle ok = { 660,100,80,50 };
 	Rectangle semesters = { 60,100,200,50 };
 	Rectangle schoolyears = { 360,100,200,50 };
+	Rectangle modeScore = { 700, 263, 110, 55 }; 
+	bool modeScaleFour = false;
+	bool modeScaleTen = true;
 	bool action0 = false;
 	bool actionF = false;
 	bool actionS = false;
@@ -1655,6 +1662,8 @@ void ClassPage(const int screenWidth, const int screenHeight, account& CurrentUs
 				SemesterScore_Class = GetSemesterScore_Class(Classname, yearnametmp, semesternametmp);
 				semesterGPA = GetSemesterGPA_Class(Classname, yearnametmp, semesternametmp);
 				overallGPA = GetOverallGPA_Class(Classname);
+				semesterGPAScaleFour = GetScaleFour_SemesterGPA_Class(Classname, yearnametmp, semesternametmp);
+				overallGPAScaleFour = GetScaleFour_OverallGPA_Class(Classname);
 			}
 			else {
 				cntCourse = nullptr;
@@ -1662,6 +1671,8 @@ void ClassPage(const int screenWidth, const int screenHeight, account& CurrentUs
 				SemesterScore_Class = nullptr;
 				semesterGPA = nullptr;
 				overallGPA = nullptr;
+				semesterGPAScaleFour = nullptr;
+				overallGPAScaleFour = nullptr;
 			}
 			actionOK = false;
 		}
@@ -1703,7 +1714,7 @@ void ClassPage(const int screenWidth, const int screenHeight, account& CurrentUs
 		DrawRectangle(0, 0, screenWidth, 60, WHITE);
 
 		DrawTextEx(bold, Classname, { 670, 15 }, 40,0, DARKBLUE);
-		DrawTextEx(bold, "Please wait a moment to load data when press OK!", {5, 15}, 25, 0, RED);
+		DrawTextEx(bold, "Please wait about 15s to load data after pressing OK!", {5, 15}, 25, 0, RED);
 		DrawRectangleRec(backtoViewClasspage.button, WHITE);
 		DrawTextEx(bold, "Back to Classes Page", { 1200, 20 }, 25,0, DARKBLUE);
 		DrawTexture(background2, 0, 60, WHITE);
@@ -1880,21 +1891,46 @@ void ClassPage(const int screenWidth, const int screenHeight, account& CurrentUs
 				DrawTextEx(medium, listStudents[i].stuID, { 175, 289 }, 27,0, WHITE);
 				// Calculate button frame rectangle to draw depending on button state
 
+				DrawRectangleRec(modeScore, WHITE);
+				if (modeScaleFour) {
+					DrawTextEx(bold, "Scale 4", { 714, 278 }, 25, 0, DARKBLUE);
+				}
+				else DrawTextEx(bold, "Scale 10", { 714, 278 }, 25, 0, DARKBLUE);
+				if (CheckCollisionPointRec(mousePoint, modeScore)) DrawRectangleLines((int)modeScore.x, (int)modeScore.y, (int)modeScore.width, (int)modeScore.height, BLACK);
+				if (CheckCollisionPointRec(mousePoint, modeScore)) {
+					if (IsMouseButtonPressed(MOUSE_BUTTON_LEFT) && modeScaleFour) {
+						modeScaleFour = false;
+						modeScaleTen = true;
+					}
+					else if (IsMouseButtonPressed(MOUSE_BUTTON_LEFT) && modeScaleTen) {
+						modeScaleFour = true;
+						modeScaleTen = false;
+					}
+				}
 				DrawRectangle(836, 263, 252, 55, WHITE);
 				DrawTextEx(bold, "Semester GPA:", { 847, 278 }, 24,0, DARKBLUE);
 				char* semestergpa = new char[5];
 				char* overallgpa = new char[5];
 				if (semesterGPA) {
-					double_to_char(semesterGPA[i], semestergpa);
-					DrawTextEx(medium, semestergpa, { 1028, 273 }, 30,0, DARKBLUE);
+					if (modeScaleTen) {
+						double_to_char(semesterGPA[i], semestergpa);
+					}
+					else {
+						double_to_char(semesterGPAScaleFour[i], semestergpa);
+					}
 				}
+				DrawTextEx(medium, semestergpa, { 1028, 273 }, 30, 0, DARKBLUE);
 				DrawRectangle(1190, 263, 252, 55, WHITE);
 				DrawTextEx(bold, "Overall GPA:", { 1201, 278 }, 24,0, DARKBLUE);
 				if (overallGPA) {
-					double_to_char(overallGPA[i], overallgpa);
-					DrawTextEx(medium, overallgpa, { 1363, 273 }, 30,0, DARKBLUE);
+					if (modeScaleTen) {
+						double_to_char(overallGPA[i], overallgpa);
+					}
+					else {
+						double_to_char(overallGPAScaleFour[i], overallgpa);
+					}
 				}
-
+				DrawTextEx(medium, overallgpa, { 1363, 273 }, 30, 0, DARKBLUE);
 				DrawRectangle(24, 360, 121, 42, LIGHTGRAY);
 				DrawRectangleLines(24, 360, 121, 42, BLACK);
 				DrawTextEx(bold, "Course ID", { 35, 372 }, 24,0, DARKBLUE);
@@ -1989,6 +2025,8 @@ void ClassPage(const int screenWidth, const int screenHeight, account& CurrentUs
 	delete[] listStudents;
 	delete[] cntCourse;
 	delete[] semesterGPA;
+	delete[] semesterGPAScaleFour;
+	delete[] overallGPAScaleFour;
 	delete[] overallGPA;
 	delete[] actionYear;
 	delete[] yearnametmp;
