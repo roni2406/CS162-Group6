@@ -96,11 +96,11 @@ void double_to_char(double num, char* result) {
 void int_to_char(int num, char* result) {
 	int temp = num;
 	int len = 0;
-	/*if (temp == 0) {
+	if (temp == 0) {
 		result[0] = '0';
 		result[1] = '\0';
 		return;
-	}*/
+	}
 	while (temp > 0) {
 		len++;
 		temp /= 10;

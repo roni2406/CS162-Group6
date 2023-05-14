@@ -2067,6 +2067,7 @@ void addStudentPage(const int screenWidth, const int screenHeight, account& Curr
 	int confirmBtnState = 0;               // Button state: 0-NORMAL, 1-MOUSE_HOVER, 2-PRESSED
 	bool confirmBtnAction = false;         // Button action should be activated
 	bool confirmBtnFalseDisplay = false;
+	bool confirmBtnTrueDisplay = false;
 	while (!WindowShouldClose()) {
 		ClearBackground(WHITE);
 		BeginDrawing();
@@ -2120,13 +2121,13 @@ void addStudentPage(const int screenWidth, const int screenHeight, account& Curr
 		else confirmBtnState = 0;
 		if (confirmBtnAction) {
 			if (addAStudentToClass(classname, Firstname.text, Lastname.text, Gender.text, birth.text, socialID.text, studentID.text)) {
-				confirmBtnFalseDisplay = false;
-				ClassPage(screenWidth, screenHeight, CurrentUser, classname);
+				confirmBtnTrueDisplay = true;
 			}
 			else confirmBtnFalseDisplay = true;
 
 		}
 		if (confirmBtnFalseDisplay) DrawTextEx(bold, "Invalid Data !", { 310, 720 }, 25,0, RED);
+		if (confirmBtnTrueDisplay) DrawTextEx(bold, "The student is added to the class! Please back to the class.", { 310, 720 }, 25, 0, GREEN);
 		// Calculate button frame rectangle to draw depending on button state
 		sourceRecconfirmBtn.y = confirmBtnState * frameHeightconfirmBtn;
 		DrawTextureRec(confirmBtn, sourceRecconfirmBtn, { btnBoundsconfirmBtn.x, btnBoundsconfirmBtn.y }, WHITE); // Draw button frame
@@ -3191,6 +3192,7 @@ void addStudentPageForCourse(const int screenWidth, const int screenHeight, acco
 	int confirmBtnState = 0;               // Button state: 0-NORMAL, 1-MOUSE_HOVER, 2-PRESSED
 	bool confirmBtnAction = false;         // Button action should be activated
 	bool confirmBtnFalseDisplay = false;
+	bool confirmBtnTrueDisplay = false;
 	while (!WindowShouldClose()) {
 		ClearBackground(WHITE);
 		BeginDrawing();
@@ -3244,13 +3246,13 @@ void addStudentPageForCourse(const int screenWidth, const int screenHeight, acco
 		else confirmBtnState = 0;
 		if (confirmBtnAction) {
 			if (addAStudentToCourse(Course, Year, Semester, filename, Firstname.text, Lastname.text, Gender.text, birth.text, socialID.text, studentID.text)) {
-				confirmBtnFalseDisplay = false;
-				CoursePage(screenWidth, screenHeight, CurrentUser, Year, Semester, Course);
+				confirmBtnTrueDisplay = true;
 			}
 			else confirmBtnFalseDisplay = true;
 
 		}
-		if (confirmBtnFalseDisplay) DrawTextEx(bold, "Wrong input or max students enrolled in the course!", { 330, 720 }, 25,0, RED);
+		if (confirmBtnFalseDisplay) DrawTextEx(bold, "Wrong input or max students enrolled in the course!", { 310, 720 }, 25,0, RED);
+		if (confirmBtnTrueDisplay) DrawTextEx(bold, "The student is added to the course! Please back to the course.", { 310, 720 }, 25, 0, GREEN);
 		// Calculate button frame rectangle to draw depending on button state
 		sourceRecconfirmBtn.y = confirmBtnState * frameHeightconfirmBtn;
 		DrawTextureRec(confirmBtn, sourceRecconfirmBtn, { btnBoundsconfirmBtn.x, btnBoundsconfirmBtn.y }, WHITE); // Draw button frame
