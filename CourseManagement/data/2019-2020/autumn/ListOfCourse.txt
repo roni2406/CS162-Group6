@@ -1,0 +1,2 @@
+Course 5 2019-2020,C5 19-20,19CLC01,Teacher D,4,50,Mon,S3
+Course 6 2019-2020,C6 19-20,19CLC02,Teacher B,4,50,Sat,S1

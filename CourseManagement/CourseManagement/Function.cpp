@@ -613,6 +613,7 @@ void ScoreboardStudent(const int screenWidth, const int screenHeight, account& C
 	Rectangle ok = { 660,100,80,50 };
 	Rectangle semesters = { 60,100,200,50 };
 	Rectangle schoolyears = { 360,100,200,50 };
+	Rectangle modeScore = { 820, 100, 110, 50 };
 	bool action = false;
 	bool actionF = false;
 	bool actionS = false;
@@ -621,8 +622,10 @@ void ScoreboardStudent(const int screenWidth, const int screenHeight, account& C
 	bool* actionYear = new bool[cntYears] {0};
 	bool actionOK = false;
 	bool GPA = false;
-
-	double overallGPAd = getOverallGPA(CurrentUser.userName);
+	bool modeScaleFour = false;
+	bool modeScaleTen = true;
+	double overallGPAdTen = getOverallGPA(CurrentUser.userName);
+	double overallGPAdFour = getScaleFour_OverallGPA(CurrentUser.userName);
 	char* yearnametmp = nullptr;
 	char* semesternametmp = nullptr;
 
@@ -649,13 +652,29 @@ void ScoreboardStudent(const int screenWidth, const int screenHeight, account& C
 		DrawTextEx(bold, "Semesters", { 103, 113 }, 25, 0, DARKBLUE);
 		DrawRectangleRec(ok, DARKBLUE);
 		DrawTextEx(bold, "OK", { 684, 113 }, 25, 0, WHITE);
+		DrawRectangleRec(modeScore, DARKBLUE);
+		if (modeScaleFour) {
+			DrawTextEx(bold, "Scale 4", { 834, 113 }, 25, 0, WHITE);
+		}
+		else DrawTextEx(bold, "Scale 10", { 834, 113 }, 25, 0, WHITE);
+		if (CheckCollisionPointRec(mousePoint, modeScore)) DrawRectangleLines((int)modeScore.x, (int)modeScore.y, (int)modeScore.width, (int)modeScore.height, BLACK);
+		if (CheckCollisionPointRec(mousePoint, modeScore)) {
+			if (IsMouseButtonPressed(MOUSE_BUTTON_LEFT) && modeScaleFour) {
+				modeScaleFour = false;
+				modeScaleTen = true;
+			}
+			else if (IsMouseButtonPressed(MOUSE_BUTTON_LEFT) && modeScaleTen) {
+				modeScaleFour = true;
+				modeScaleTen = false;
+			}
+		}
 		int z = 0, r = 0, j = 0;
 
 		DrawRectangleLines(0, 189, 1512, 0, BLACK);
-		DrawRectangle(846, 101, 252, 55, WHITE);
-		DrawTextEx(bold, "Semester GPA:", { 855, 114 }, 25,0, DARKBLUE);
-		DrawRectangle(1195, 101, 220, 55, WHITE);
-		DrawTextEx(bold, "Overall GPA:", { 1201, 114}, 25,0, DARKBLUE);
+		DrawRectangle(950, 101, 230, 50, WHITE);
+		DrawTextEx(bold, "Semester GPA:", { 956, 114 }, 25,0, DARKBLUE);
+		DrawRectangle(1232, 101, 220, 50, WHITE);
+		DrawTextEx(bold, "Overall GPA:", { 1238, 114}, 25,0, DARKBLUE);
 
 		DrawRectangle(0, 189, 231, 65, LIGHTGRAY);
 		DrawRectangleLines(0, 189, 231, 65, BLACK);
@@ -691,13 +710,19 @@ void ScoreboardStudent(const int screenWidth, const int screenHeight, account& C
 
 		DrawRectangle(0, 255, 1512, 751, WHITE);
 
-		double_to_char(overallGPAd, overallGPA);
-		DrawTextEx(medium, overallGPA, { 1357, 113 }, 27,0, DARKBLUE);
+		if (modeScaleTen) {
+			double_to_char(overallGPAdTen, overallGPA);
+		}
+		else {
+			double_to_char(overallGPAdFour, overallGPA);
+		}
+		DrawTextEx(medium, overallGPA, { 1380, 113 }, 27, 0, DARKBLUE);
 
 		if (CheckCollisionPointRec(mousePoint, { 360, 100, 200, 50 })) DrawRectangleLines(360, 100, 200, 50, BLACK);
 		if (CheckCollisionPointRec(mousePoint, schoolyears)) {
 			if (IsMouseButtonPressed(MOUSE_BUTTON_LEFT)) {
 				action1 = true;
+				actionOK = false;
 				for (int i = 0; i < cntYears; ++i) {
 					actionYear[i] = 0;
 				}
@@ -732,6 +757,7 @@ void ScoreboardStudent(const int screenWidth, const int screenHeight, account& C
 				actionA = false;
 				actionF = false;
 				actionS = false;
+				actionOK = false;
 			}
 		}
 		if (action) {
@@ -787,7 +813,8 @@ void ScoreboardStudent(const int screenWidth, const int screenHeight, account& C
 				cntCourse = countCoursesOfAStudent(CurrentUser.userName, yearnametmp, semesternametmp);
 				courses = viewCoursesOfAStudent(CurrentUser.userName, yearnametmp, semesternametmp);
 				ScoreBoard = GetsaveScore(CurrentUser.userName, yearnametmp, semesternametmp);
-				double_to_char(getSemesterGPA(CurrentUser.userName, yearnametmp, semesternametmp), semesterGPA);
+				if (modeScaleTen) double_to_char(getSemesterGPA(CurrentUser.userName, yearnametmp, semesternametmp), semesterGPA);
+				else if (modeScaleFour) double_to_char(getScaleFour_SemesterGPA(CurrentUser.userName, yearnametmp, semesternametmp), semesterGPA);
 				GPA = true;
 			}
 			else {
@@ -796,11 +823,10 @@ void ScoreboardStudent(const int screenWidth, const int screenHeight, account& C
 				ScoreBoard = nullptr;
 				GPA = false;
 			}
-			actionOK = false;
 		}
 
 		if (GPA) {
-			DrawTextEx(medium, semesterGPA, { 1040, 113 }, 27,0, DARKBLUE);
+			DrawTextEx(medium, semesterGPA, { 1125, 113 }, 27,0, DARKBLUE);
 		}
 
 		if (cntCourse == 0) {
@@ -971,7 +997,7 @@ void ChangePasswordPageStudent(const int screenWidth, const int screenHeight, ac
 	confirmnewpass.textbox = { 477, 567, 558, 106 };
 
 	Button2 backtoprofilepage;
-	backtoprofilepage.button = { 1270, 20, 200, 30 };
+	backtoprofilepage.button = { 1194, 19, 300, 30 };
 
 	Button0 viewPass1;
 	viewPass1.texture = LoadTexture("showpass.png");
@@ -2799,7 +2825,9 @@ void UpdateCoursePage(const int screenWidth, const int screenHeight, account& Cu
 		else if (IsKeyPressed(KEY_ENTER)) confirmBtnAction = true;
 		else confirmBtnState = 0;
 		if (confirmBtnAction) {
-			int maxStu = atoi(maxstudents.text);
+			int maxStu;
+			if (maxstudents.text[0] == '\0') maxStu = Course[i].maxStu;
+			else maxStu = atoi(maxstudents.text);
 			if (maxStu < Course[i].numOfStu) warning = true;
 			else {
 				if (!CheckValidCourse(coursename.text, id.text, classname.text, nofc.text, maxstudents.text, Year, Semester)) {
@@ -3288,7 +3316,7 @@ void dataExistedPageforCourse(const int screenWidth, const int screenHeight, acc
 	Vector2 mousePoint = { 0.0f, 0.0f };
 
 	Button8 backtoCoursepage;
-	backtoCoursepage.button = { 1270, 20, 200, 30 };
+	backtoCoursepage.button = { 1274, 19, 235, 30 };
 
 	int scrollspeed = 35;
 	int x_student = 11;

@@ -21,7 +21,6 @@ struct person {
 };
 
 struct student {
-    account stuAcc{};
     int No = 0;
     person Student{};
     char* stuID = nullptr;

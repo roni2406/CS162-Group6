@@ -84,23 +84,16 @@ void student::outputAStudentToFile(char* filename) {
 	fout << No << ",";
 	fout << stuID << ",";
 	Student.outputAPersonToFile(fout);
+	fout << "," << "-1";
+	fout << "," << "-1";
+	fout << "," << "-1";
+	fout << "," << "-1";
 	fout.close();
 }
 bool student::checkData() {
 	if (!Student.checkData() || strlen(stuID) != 8)
 		return false;
 	return true;
-}
-
-//staff
-void staff::inputAStaff(char* staff_id, person sta) {
-	Staff = sta;
-	staffID = _strdup(staff_id);
-}
-void staff::outputAStaffToFile(ofstream& fout) {
-	fout << endl;
-	Staff.outputAPersonToFile(fout);
-	fout << "," << staffID;
 }
 
 //other
